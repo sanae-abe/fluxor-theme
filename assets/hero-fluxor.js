@@ -11,9 +11,14 @@ class HeroFluxor extends HTMLElement {
     this.current = 0;
     this.timer = null;
     this.duration = parseInt(this.dataset.duration || '5000', 10);
+    this._onResize = this._setUtilityBarHeight.bind(this);
   }
 
   connectedCallback() {
+    // utility-bar の高さを CSS 変数にセット（リサイズ対応）
+    this._setUtilityBarHeight();
+    window.addEventListener('resize', this._onResize, { passive: true });
+
     if (this.slides.length <= 1) return;
 
     this.dots.forEach((dot, i) => {
@@ -35,6 +40,13 @@ class HeroFluxor extends HTMLElement {
 
   disconnectedCallback() {
     this.pause();
+    window.removeEventListener('resize', this._onResize);
+  }
+
+  _setUtilityBarHeight() {
+    const bar = document.querySelector('.utility-bar');
+    const height = bar ? bar.offsetHeight : 0;
+    document.documentElement.style.setProperty('--utility-bar-height', `${height}px`);
   }
 
   goTo(index) {
