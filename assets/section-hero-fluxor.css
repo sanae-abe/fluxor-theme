@@ -1,0 +1,181 @@
+/* ============================================================
+   Hero Fluxor — Section Styles
+   Dermaceutical × Minimalism × Authority
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   Section: Full-height container
+   ---------------------------------------------------------- */
+
+.hero-fluxor {
+  display: flex;
+  flex-direction: column;
+  min-height: 100svh; /* mobile address bar対応 */
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------
+   Content Area
+   ---------------------------------------------------------- */
+
+.hero-fluxor__content {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 4rem 2rem 3rem;
+  gap: 1.5rem;
+}
+
+/* Heading: FLUXOR */
+.hero-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(3.5rem, 9vw, 9rem);
+  letter-spacing: 0.3em;
+  line-height: 1;
+  margin: 0;
+  text-transform: uppercase;
+}
+
+/* Tagline */
+.hero-fluxor__tagline {
+  font-family: var(--font-body-family);
+  font-weight: var(--font-body-weight);
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  letter-spacing: 0.12em;
+  line-height: 1.6;
+  margin: 0;
+  text-transform: uppercase;
+  opacity: 0.75;
+}
+
+/* Ghost CTA Button */
+.hero-fluxor__cta {
+  display: inline-block;
+  margin-top: 0.5rem;
+  padding: 0.75rem 2.5rem;
+  font-family: var(--font-body-family);
+  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: currentColor;
+  border: 1px solid currentColor;
+  background: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  .hero-fluxor__cta:hover {
+    background-color: currentColor;
+    /* テキスト色はカラースキームによって反転 */
+    color: var(--color-background);
+  }
+}
+
+.hero-fluxor__cta:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ----------------------------------------------------------
+   Ticker Section
+   ---------------------------------------------------------- */
+
+.hero-fluxor__ticker-section {
+  flex-shrink: 0;
+}
+
+.hero-fluxor__ticker-wrapper {
+  overflow: hidden;
+  border-top: 1px solid currentColor;
+  opacity: 0.35;
+}
+
+.hero-fluxor__ticker-wrapper:first-child {
+  border-top-width: 1px;
+}
+
+.hero-fluxor__ticker-track {
+  display: flex;
+  white-space: nowrap;
+  width: max-content;
+}
+
+.hero-fluxor__ticker-item {
+  display: inline-block;
+  padding: 0.6rem 0;
+  font-family: var(--font-body-family);
+  font-size: clamp(0.7rem, 1vw, 0.875rem);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  /* 各 item の末尾スペースを padding で代替 */
+  padding-right: 2rem;
+}
+
+/* ----------------------------------------------------------
+   Animation
+   prefers-reduced-motion: no-preference 内で定義（Dawnパターン準拠）
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  @keyframes hero-ticker-left {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  .hero-fluxor__ticker-track {
+    animation: hero-ticker-left var(--ticker-speed, 40s) linear infinite;
+  }
+
+  .hero-fluxor__ticker-track--reverse {
+    animation-direction: reverse;
+  }
+}
+
+/* ----------------------------------------------------------
+   Reduced Motion: 複製分を非表示
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fluxor__ticker-item + .hero-fluxor__ticker-item {
+    display: none;
+  }
+
+  .hero-fluxor__ticker-track {
+    overflow: hidden;
+    flex-wrap: nowrap;
+  }
+
+  .hero-fluxor__ticker-item {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100vw;
+  }
+}
+
+/* ----------------------------------------------------------
+   Responsive
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .hero-fluxor__content {
+    padding: 5rem 3rem 4rem;
+    gap: 2rem;
+  }
+
+  .hero-fluxor__ticker-item {
+    padding: 0.75rem 0;
+    padding-right: 3rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .hero-fluxor__content {
+    padding: 6rem 4rem 5rem;
+  }
+}
