@@ -1,8 +1,24 @@
+{%- style -%}
+  #BrandStory-{{ section.id }} {
+    --overlay-opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+  {%- if section.settings.bg_image != blank -%}
+    #BrandStory-{{ section.id }} .brand-story-fluxor__bg {
+      background-image: url({{ section.settings.bg_image | image_url: width: 2400 }});
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
 {{ 'brand-story-fluxor.css' | asset_url | stylesheet_tag }}
 
 <div
-  class="brand-story-fluxor color-{{ section.settings.color_scheme }} gradient{% if section.settings.text_align == 'left' %} brand-story-fluxor--align-left{% endif %}"
+  id="BrandStory-{{ section.id }}"
+  class="brand-story-fluxor color-{{ section.settings.color_scheme }} gradient{% if section.settings.text_align == 'left' %} brand-story-fluxor--align-left{% endif %}{% if section.settings.bg_image != blank %} brand-story-fluxor--has-bg{% endif %}"
 >
+  {%- if section.settings.bg_image != blank -%}
+    <div class="brand-story-fluxor__bg" aria-hidden="true"></div>
+  {%- endif -%}
+
   <div class="brand-story-fluxor__inner">
     {%- if section.settings.heading != blank -%}
       <h2 class="brand-story-fluxor__heading">
@@ -48,6 +64,25 @@
         { "value": "left", "label": "左" }
       ],
       "default": "center"
+    },
+    {
+      "type": "header",
+      "content": "背景画像（任意）"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "背景画像"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "オーバーレイの暗さ",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 55
     },
     {
       "type": "header",

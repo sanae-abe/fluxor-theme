@@ -4,6 +4,7 @@
    ============================================================ */
 
 .brand-story-fluxor {
+  position: relative;
   padding: 6rem 2rem;
   text-align: center;
 }
@@ -12,7 +13,42 @@
   text-align: left;
 }
 
+/* ----------------------------------------------------------
+   背景画像
+   ---------------------------------------------------------- */
+
+/* Dawn の div:empty { display: none } を上書き（詳細度 0-2-0） */
+.brand-story-fluxor .brand-story-fluxor__bg {
+  display: block;
+}
+
+.brand-story-fluxor__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.brand-story-fluxor__bg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.55));
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+   コンテンツ（背景より前面に）
+   ---------------------------------------------------------- */
+
 .brand-story-fluxor__inner {
+  position: relative;
+  z-index: 1;
   max-width: 48rem;
   margin: 0 auto;
   display: flex;
@@ -50,6 +86,11 @@
   opacity: 0.75;
   margin: 0;
   white-space: pre-line;
+}
+
+/* 背景画像あり時はopacityを上げて視認性確保 */
+.brand-story-fluxor--has-bg .brand-story-fluxor__body {
+  opacity: 0.9;
 }
 
 /* ----------------------------------------------------------
