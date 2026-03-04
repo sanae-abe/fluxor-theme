@@ -305,20 +305,39 @@
 }
 
 /* ----------------------------------------------------------
-   デバッグ情報表示（一時的）
+   プレースホルダー画像（デフォルト表示）
    ---------------------------------------------------------- */
 
-.header .mega-menu__debug {
-  margin-top: 1rem !important;
-  padding: 1rem !important;
-  background-color: #f0f0f0 !important;
-  border-radius: 4px !important;
-  font-family: monospace !important;
-  font-size: 0.75rem !important;
-  line-height: 1.3 !important;
-  color: #333 !important;
+.header .mega-menu__image--placeholder {
+  background: linear-gradient(135deg,
+    var(--color-base-background-2, #EAE7E1) 0%,
+    var(--color-base-background-1, #F6F4F0) 100%) !important;
+  border: 1px solid rgba(26, 23, 20, 0.1) !important;
 }
 
-.header .mega-menu__debug p {
-  margin: 0.25rem 0 !important;
+.header .mega-menu__placeholder {
+  display: flex !important;
+  flex-direction: column !important;
+  align-items: center !important;
+  justify-content: center !important;
+  height: 200px !important;
+  padding: 2rem !important;
+  text-align: center !important;
+}
+
+.header .mega-menu__placeholder-icon {
+  margin-bottom: 1rem !important;
+  opacity: 0.3 !important;
+  color: var(--color-base-text) !important;
+}
+
+.header .mega-menu__placeholder-text {
+  font-family: var(--font-body-family) !important;
+  font-size: clamp(0.9rem, 1.1vw, 1rem) !important;
+  font-weight: 500 !important;
+  letter-spacing: 0.08em !important;
+  text-transform: uppercase !important;
+  color: var(--color-base-text) !important;
+  margin: 0 !important;
+  opacity: 0.6 !important;
 }
