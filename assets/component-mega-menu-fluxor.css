@@ -72,16 +72,16 @@
 .header .mega-menu__content {
   position: absolute !important;
   top: 100% !important;
-  left: 0 !important;
-  right: 0 !important;
-  z-index: 3 !important;
+  left: 50% !important;
+  width: 100vw !important;
+  transform: translateX(-50%) translateY(-10px) !important;
+  z-index: 1000 !important;
   margin-top: 0 !important;
   padding: 3rem 0 !important;
   border-top: 1px solid rgba(26, 23, 20, 0.1) !important;
   min-height: 300px !important;
   opacity: 0 !important;
   visibility: hidden !important;
-  transform: translateY(-10px) !important;
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
   pointer-events: none !important;
   background-color: var(--color-base-background-1) !important;
@@ -93,7 +93,7 @@
   .header .mega-menu.mega-menu--hovered .mega-menu__content {
     opacity: 1 !important;
     visibility: visible !important;
-    transform: translateY(0) !important;
+    transform: translateX(-50%) translateY(0) !important;
     pointer-events: all !important;
   }
 }
@@ -102,7 +102,7 @@
 .header .mega-menu[open] .mega-menu__content {
   opacity: 1 !important;
   visibility: visible !important;
-  transform: translateY(0) !important;
+  transform: translateX(-50%) translateY(0) !important;
   pointer-events: all !important;
 }
 
