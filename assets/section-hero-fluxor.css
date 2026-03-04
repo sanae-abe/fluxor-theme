@@ -36,8 +36,7 @@
 .hero-fluxor__overlay {
   position: absolute;
   inset: 0;
-  background-color: #000;
-  opacity: var(--overlay-opacity, 0.4);
+  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.4));
 }
 
 /* ----------------------------------------------------------

@@ -1,7 +1,7 @@
 {%- style -%}
   #HeroFluxor-{{ section.id }} {
     --ticker-speed: {{ section.settings.ticker_speed }}s;
-    --overlay-opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+    --overlay-opacity: {{ section.settings.image_overlay_opacity | default: 40 | divided_by: 100.0 }};
   }
 {%- endstyle -%}
 
