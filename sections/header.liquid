@@ -9,6 +9,7 @@
 
 {%- if section.settings.menu_type_desktop == 'mega' -%}
   <link rel="stylesheet" href="{{ 'component-mega-menu.css' | asset_url }}" media="print" onload="this.media='all'">
+  <link rel="stylesheet" href="{{ 'component-mega-menu-fluxor.css' | asset_url }}" media="print" onload="this.media='all'">
 {%- endif -%}
 
 
@@ -97,6 +98,10 @@
 {%- endstyle -%}
 
 <script src="{{ 'cart-notification.js' | asset_url }}" defer="defer"></script>
+
+{%- if section.settings.menu_type_desktop == 'mega' -%}
+  <script src="{{ 'mega-menu-hover-fluxor.js' | asset_url }}" defer="defer"></script>
+{%- endif -%}
 
 {%- liquid
   for block in section.blocks

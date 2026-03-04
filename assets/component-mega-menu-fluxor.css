@@ -1,0 +1,259 @@
+/* ============================================================
+   Mega Menu — Fluxor Override (Hover-enabled)
+   Dermaceutical × Minimalism + Authority styling
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   メインメニュー項目（ホバー対応）
+   ---------------------------------------------------------- */
+
+.header__menu-item {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 1rem 2rem;
+  transition: opacity 0.2s ease;
+}
+
+/* ホバーエフェクト（タッチデバイス対応） */
+@media (any-hover: hover) {
+  .header__menu-item:hover {
+    opacity: 0.7;
+  }
+}
+
+.header__menu-item:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.header__active-menu-item {
+  position: relative;
+}
+
+.header__active-menu-item::after {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background-color: currentColor;
+}
+
+/* ----------------------------------------------------------
+   メガメニュー構造の上書き（ホバー有効化）
+   ---------------------------------------------------------- */
+
+.mega-menu {
+  position: relative;
+}
+
+/* デフォルトの details 動作を無効化 */
+@media (any-hover: hover) {
+  .mega-menu > summary {
+    pointer-events: none;
+    list-style: none;
+  }
+
+  .mega-menu > summary::-webkit-details-marker {
+    display: none;
+  }
+
+  /* summary内のリンクは有効にする */
+  .mega-menu > summary .header__menu-item {
+    pointer-events: all;
+  }
+}
+
+/* メガメニューコンテンツ */
+.mega-menu__content {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  z-index: 3;
+  margin-top: 0;
+  padding: 3rem 0;
+  border-top: 1px solid rgba(26, 23, 20, 0.1);
+  min-height: 300px;
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+  pointer-events: none;
+}
+
+/* ホバー時の表示制御 */
+@media (any-hover: hover) {
+  .mega-menu:hover .mega-menu__content {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+    pointer-events: all;
+  }
+}
+
+/* タッチデバイス用（クリックで表示） */
+.mega-menu[open] .mega-menu__content {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+  pointer-events: all;
+}
+
+/* ホバー領域を拡張してマウスアウトを防ぐ */
+.mega-menu::before {
+  content: '';
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+  height: 20px;
+  z-index: 2;
+}
+
+.mega-menu__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 3rem 2rem;
+  max-width: none;
+  padding: 0 2rem;
+}
+
+@media screen and (min-width: 990px) {
+  .mega-menu__list {
+    grid-template-columns: repeat(4, 1fr);
+    padding: 0 6rem;
+  }
+}
+
+/* カテゴリセクション（レベル2項目）*/
+.mega-menu__link--level-2 {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: currentColor;
+  text-decoration: none;
+  display: block;
+  margin-bottom: 1.5rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(26, 23, 20, 0.15);
+  transition: opacity 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  .mega-menu__link--level-2:hover {
+    opacity: 0.7;
+  }
+}
+
+/* サブカテゴリ項目（レベル3項目）*/
+.mega-menu__link:not(.mega-menu__link--level-2) {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.8rem, 0.9vw, 0.85rem);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: currentColor;
+  text-decoration: none;
+  display: block;
+  padding: 0.5rem 0;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+  line-height: 1.5;
+}
+
+@media (any-hover: hover) {
+  .mega-menu__link:not(.mega-menu__link--level-2):hover {
+    opacity: 0.6;
+    transform: translateX(4px);
+  }
+}
+
+.mega-menu__link:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.mega-menu__link--active {
+  font-weight: 500;
+  opacity: 0.8;
+}
+
+/* ----------------------------------------------------------
+   カラースキーム対応
+   ---------------------------------------------------------- */
+
+/* ライトスキーム（scheme-1, scheme-2） */
+.color-scheme-1 .mega-menu__content,
+.color-scheme-2 .mega-menu__content {
+  background: var(--color-base-background-1);
+  color: var(--color-base-text);
+  border-top-color: rgba(26, 23, 20, 0.1);
+}
+
+.color-scheme-1 .mega-menu__link--level-2,
+.color-scheme-2 .mega-menu__link--level-2 {
+  border-bottom-color: rgba(26, 23, 20, 0.15);
+}
+
+/* ダークスキーム（scheme-3, scheme-4, scheme-5） */
+.color-scheme-3 .mega-menu__content,
+.color-scheme-4 .mega-menu__content,
+.color-scheme-5 .mega-menu__content {
+  background: var(--color-base-background-1);
+  color: var(--color-base-text);
+  border-top-color: rgba(246, 244, 240, 0.15);
+}
+
+.color-scheme-3 .mega-menu__link--level-2,
+.color-scheme-4 .mega-menu__link--level-2,
+.color-scheme-5 .mega-menu__link--level-2 {
+  border-bottom-color: rgba(246, 244, 240, 0.2);
+}
+
+/* ----------------------------------------------------------
+   動作軽減対応
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .mega-menu__content {
+    transition: none;
+  }
+
+  .header__menu-item,
+  .mega-menu__link {
+    transition: none;
+  }
+
+  .mega-menu__link:not(.mega-menu__link--level-2):hover {
+    transform: none;
+  }
+}
+
+/* ----------------------------------------------------------
+   モバイル対応（768px未満では非表示）
+   ---------------------------------------------------------- */
+
+@media screen and (max-width: 767px) {
+  .header__inline-menu {
+    display: none;
+  }
+}
+
+/* ----------------------------------------------------------
+   デスクトップでの間隔調整
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 990px) {
+  .list-menu--inline {
+    gap: 0.5rem;
+  }
+
+  .header__menu-item {
+    padding: 1rem 1.5rem;
+  }
+}
