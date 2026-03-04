@@ -102,17 +102,6 @@
         "heading": "カテゴリから探す"
       }
     },
-    "featured_collection_fluxor_MdghFy": {
-      "type": "featured-collection-fluxor",
-      "name": "Collection - Fluxor",
-      "settings": {
-        "color_scheme": "",
-        "heading": "Featued Collection",
-        "collection": "",
-        "products_to_show": 4,
-        "show_view_all": true
-      }
-    },
     "brand_story_fluxor_fRznNx": {
       "type": "brand-story-fluxor",
       "name": "Brand Story - Fluxor",
@@ -125,6 +114,17 @@
         "body": "皮膚科学に基づいた製品だけを、\n世界中からセレクトしています。\n流行より、エビデンス。",
         "button_label": "",
         "button_link": ""
+      }
+    },
+    "featured_collection_fluxor_MdghFy": {
+      "type": "featured-collection-fluxor",
+      "name": "Collection - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "Featued Collection",
+        "collection": "",
+        "products_to_show": 4,
+        "show_view_all": true
       }
     },
     "ingredient_spotlight_fluxor_9MrtCf": {
@@ -191,8 +191,8 @@
   "order": [
     "hero_fluxor_HmAj7w",
     "category_nav_fluxor_9Xhd3h",
-    "featured_collection_fluxor_MdghFy",
     "brand_story_fluxor_fRznNx",
+    "featured_collection_fluxor_MdghFy",
     "ingredient_spotlight_fluxor_9MrtCf",
     "featured_collection_fluxor_RWyeiT",
     "featured_collection_fluxor_DzgHFR"
