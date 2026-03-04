@@ -84,7 +84,7 @@
   visibility: hidden !important;
   transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease !important;
   pointer-events: none !important;
-  background-color: var(--color-base-background-1) !important;
+  background-color: var(--color-base-background-1, #F6F4F0) !important;
 }
 
 /* ホバー時の表示制御 */
@@ -192,8 +192,8 @@
 /* ライトスキーム（scheme-1, scheme-2） */
 .color-scheme-1 .header .mega-menu__content,
 .color-scheme-2 .header .mega-menu__content {
-  background: var(--color-base-background-1) !important;
-  color: var(--color-base-text) !important;
+  background: var(--color-base-background-1, #F6F4F0) !important;
+  color: var(--color-base-text, #1A1714) !important;
   border-top-color: rgba(26, 23, 20, 0.1) !important;
 }
 
@@ -206,8 +206,8 @@
 .color-scheme-3 .header .mega-menu__content,
 .color-scheme-4 .header .mega-menu__content,
 .color-scheme-5 .header .mega-menu__content {
-  background: var(--color-base-background-1) !important;
-  color: var(--color-base-text) !important;
+  background: var(--color-base-background-1, #1A1714) !important;
+  color: var(--color-base-text, #F6F4F0) !important;
   border-top-color: rgba(246, 244, 240, 0.15) !important;
 }
 
