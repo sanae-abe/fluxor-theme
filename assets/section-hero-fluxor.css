@@ -45,6 +45,11 @@
    Background image (per slide)
    ---------------------------------------------------------- */
 
+/* Dawn の div:empty { display: none } を上書き（詳細度 0-2-0 > 0-1-1） */
+.hero-fluxor .hero-fluxor__bg {
+  display: block;
+}
+
 .hero-fluxor__bg {
   /* モバイル: スライド全体を覆う絶対配置 */
   position: absolute;
