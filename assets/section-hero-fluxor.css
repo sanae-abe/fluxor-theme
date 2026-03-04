@@ -136,7 +136,6 @@
   font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  opacity: 0.6;
   margin: 0;
 }
 
@@ -155,7 +154,6 @@
   font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: 0.08em;
   line-height: 1.6;
-  opacity: 0.7;
   margin: 0;
   max-width: 36ch;
 }
