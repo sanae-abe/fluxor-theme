@@ -93,7 +93,11 @@
   display: block;
   position: absolute;
   inset: 0;
-  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.5));
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgba(0, 0, 0, var(--overlay-opacity, 0.4)) 100%
+  );
   pointer-events: none;
 }
 
@@ -112,7 +116,7 @@
   gap: 1rem;
 }
 
-/* テキスト背景オーバーレイ（可読性確保） */
+/* テキスト背景オーバーレイ（可読性確保、軽微） */
 .hero-fluxor__content::before {
   content: '';
   position: absolute;
@@ -120,8 +124,8 @@
   background: linear-gradient(
     180deg,
     transparent 0%,
-    rgba(0, 0, 0, 0.3) 50%,
-    rgba(0, 0, 0, 0.6) 100%
+    rgba(0, 0, 0, 0.1) 70%,
+    rgba(0, 0, 0, 0.2) 100%
   );
   z-index: -1;
   pointer-events: none;
@@ -213,29 +217,24 @@
     z-index: 1;
   }
 
-  /* PC: テキストエリア専用の強いオーバーレイ */
+  /* PC: テキストエリアの軽微なオーバーレイ（背景画像でメインオーバーレイ済み） */
   .hero-fluxor__content::before {
     background: linear-gradient(
       90deg,
-      rgba(0, 0, 0, 0.7) 0%,
-      rgba(0, 0, 0, 0.4) 70%,
-      rgba(0, 0, 0, 0.2) 100%
+      rgba(0, 0, 0, 0.2) 0%,
+      rgba(0, 0, 0, 0.1) 60%,
+      transparent 100%
     );
   }
 
-  /* PC時は背景画像のオーバーレイを復活させる（テキストの可読性確保） */
+  /* PC時は横方向グラデーションオーバーレイ（テキスト側濃く、画像側薄く） */
   .hero-fluxor__bg::after {
-    content: '';
-    display: block;
-    position: absolute;
-    inset: 0;
     background: linear-gradient(
       90deg,
-      rgba(0, 0, 0, var(--overlay-opacity, 0.4)) 0%,
-      rgba(0, 0, 0, calc(var(--overlay-opacity, 0.4) * 0.5)) 50%,
-      transparent 100%
+      rgba(0, 0, 0, calc(var(--overlay-opacity, 0.4) * 1.2)) 0%,
+      rgba(0, 0, 0, var(--overlay-opacity, 0.4)) 50%,
+      rgba(0, 0, 0, calc(var(--overlay-opacity, 0.4) * 0.3)) 100%
     );
-    pointer-events: none;
   }
 }
 
