@@ -33,7 +33,9 @@
   display: block;
 }
 
-.hero-fluxor__overlay {
+/* overlayはDawnのdiv:empty { display: none }を避けるため::afterで実装 */
+.hero-fluxor__bg::after {
+  content: '';
   display: block;
   position: absolute;
   inset: 0;
