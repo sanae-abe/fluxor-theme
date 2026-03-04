@@ -88,7 +88,7 @@
 
 .hero-fluxor__brand {
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   opacity: 0.6;
@@ -107,7 +107,7 @@
 
 .hero-fluxor__tagline {
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: 0.08em;
   line-height: 1.6;
   opacity: 0.7;
@@ -121,7 +121,7 @@
   margin-top: 0.5rem;
   padding: 0.75rem 2rem;
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
