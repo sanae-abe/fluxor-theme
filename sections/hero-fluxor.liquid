@@ -1,6 +1,7 @@
 {%- style -%}
   #HeroFluxor-{{ section.id }} {
     --ticker-speed: {{ section.settings.ticker_speed }}s;
+    --overlay-opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
   }
 {%- endstyle -%}
 
@@ -10,6 +11,22 @@
   id="HeroFluxor-{{ section.id }}"
   class="hero-fluxor color-{{ section.settings.color_scheme }} gradient"
 >
+  {%- if section.settings.image != blank -%}
+    <div class="hero-fluxor__bg" aria-hidden="true">
+      {{
+        section.settings.image
+        | image_url: width: 3840
+        | image_tag:
+          loading: 'eager',
+          fetchpriority: 'high',
+          class: 'hero-fluxor__bg-image',
+          widths: '375, 750, 1100, 1500, 1780, 2000, 3000, 3840',
+          sizes: '100vw'
+      }}
+      <div class="hero-fluxor__overlay"></div>
+    </div>
+  {%- endif -%}
+
   <div class="hero-fluxor__content">
     {%- if section.settings.heading != blank -%}
       <h1 class="hero-fluxor__heading">{{ section.settings.heading | escape }}</h1>
@@ -59,6 +76,25 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-4"
+    },
+    {
+      "type": "header",
+      "content": "Background Image"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "Image overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 40
     },
     {
       "type": "header",

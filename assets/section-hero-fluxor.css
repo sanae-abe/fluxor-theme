@@ -8,6 +8,7 @@
    ---------------------------------------------------------- */
 
 .hero-fluxor {
+  position: relative;
   display: flex;
   flex-direction: column;
   min-height: 100svh; /* mobile address bar対応 */
@@ -15,10 +16,37 @@
 }
 
 /* ----------------------------------------------------------
+   Background Image
+   ---------------------------------------------------------- */
+
+.hero-fluxor__bg {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+}
+
+.hero-fluxor__bg-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+.hero-fluxor__overlay {
+  position: absolute;
+  inset: 0;
+  background-color: currentColor;
+  opacity: var(--overlay-opacity, 0.4);
+}
+
+/* ----------------------------------------------------------
    Content Area
    ---------------------------------------------------------- */
 
 .hero-fluxor__content {
+  position: relative;
+  z-index: 1;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -87,6 +115,8 @@
    ---------------------------------------------------------- */
 
 .hero-fluxor__ticker-section {
+  position: relative;
+  z-index: 1;
   flex-shrink: 0;
 }
 
