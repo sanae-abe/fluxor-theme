@@ -2,6 +2,13 @@
   #HeroFluxor-{{ section.id }} {
     --overlay-opacity: {{ section.settings.image_overlay_opacity | default: 50 | divided_by: 100.0 }};
   }
+  {%- for block in section.blocks -%}
+    {%- if block.settings.image != blank -%}
+      .hero-fluxor__bg--{{ block.id }} {
+        background-image: url({{ block.settings.image | image_url: width: 2400 }});
+      }
+    {%- endif -%}
+  {%- endfor -%}
 {%- endstyle -%}
 
 {{ 'section-hero-fluxor.css' | asset_url | stylesheet_tag }}
@@ -21,9 +28,8 @@
       >
         {%- if block.settings.image != blank -%}
           <div
-            class="hero-fluxor__bg"
+            class="hero-fluxor__bg hero-fluxor__bg--{{ block.id }}"
             aria-hidden="true"
-            style="background-image: url('{{ block.settings.image | image_url: width: 2400 }}');"
           ></div>
         {%- endif -%}
 
