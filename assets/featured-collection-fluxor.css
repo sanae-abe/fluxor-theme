@@ -1,0 +1,183 @@
+/* ============================================================
+   Featured Collection — Fluxor
+   New Arrivals / Best Sellers 共用
+   ============================================================ */
+
+.featured-collection-fluxor {
+  padding: 5rem 2rem;
+}
+
+/* ----------------------------------------------------------
+   ヘッダー
+   ---------------------------------------------------------- */
+
+.featured-collection-fluxor__header {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  gap: 1rem;
+}
+
+.featured-collection-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+.featured-collection-fluxor__view-all {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: currentColor;
+  opacity: 0.6;
+  white-space: nowrap;
+  border-bottom: 1px solid currentColor;
+  padding-bottom: 0.15em;
+  transition: opacity 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  .featured-collection-fluxor__view-all:hover {
+    opacity: 1;
+  }
+}
+
+.featured-collection-fluxor__view-all:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ----------------------------------------------------------
+   製品グリッド
+   ---------------------------------------------------------- */
+
+.featured-collection-fluxor__grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 1rem 1.5rem;
+}
+
+@media screen and (min-width: 750px) {
+  .featured-collection-fluxor__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem 2rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .featured-collection-fluxor__grid {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+/* ----------------------------------------------------------
+   製品カード
+   ---------------------------------------------------------- */
+
+.fluxor-product-card {
+  display: block;
+  text-decoration: none;
+  color: currentColor;
+}
+
+.fluxor-product-card:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+.fluxor-product-card__image-wrapper {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: var(--color-base-background-2, #EAE7E1);
+  margin-bottom: 1rem;
+}
+
+.fluxor-product-card__image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+@media (any-hover: hover) {
+  .fluxor-product-card:hover .fluxor-product-card__image-wrapper img {
+    transform: scale(1.04);
+  }
+}
+
+.fluxor-product-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fluxor-product-card__vendor {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin: 0;
+}
+
+.fluxor-product-card__title {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.fluxor-product-card__price {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 0.04em;
+  opacity: 0.7;
+  margin: 0.25rem 0 0;
+}
+
+/* ----------------------------------------------------------
+   空状態
+   ---------------------------------------------------------- */
+
+.featured-collection-fluxor__empty {
+  text-align: center;
+  opacity: 0.4;
+  padding: 4rem 0;
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  letter-spacing: 0.06em;
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .featured-collection-fluxor {
+    padding: 6rem 4rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .featured-collection-fluxor {
+    padding: 7rem 6rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .fluxor-product-card__image-wrapper img,
+  .featured-collection-fluxor__view-all {
+    transition: none;
+  }
+}

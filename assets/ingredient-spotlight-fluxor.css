@@ -1,0 +1,131 @@
+/* ============================================================
+   Ingredient Spotlight — Fluxor
+   成分フィーチャー / エディトリアル権威コンテンツ
+   ============================================================ */
+
+.ingredient-spotlight-fluxor {
+  padding: 6rem 2rem;
+}
+
+.ingredient-spotlight-fluxor__inner {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 4rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 750px) {
+  .ingredient-spotlight-fluxor__inner--has-image {
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+  }
+
+  .ingredient-spotlight-fluxor__inner--image-left {
+    direction: rtl;
+  }
+
+  .ingredient-spotlight-fluxor__inner--image-left > * {
+    direction: ltr;
+  }
+}
+
+/* ----------------------------------------------------------
+   テキストコンテンツ
+   ---------------------------------------------------------- */
+
+.ingredient-spotlight-fluxor__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.ingredient-spotlight-fluxor__label {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin: 0;
+}
+
+.ingredient-spotlight-fluxor__name {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(2.5rem, 6vw, 5rem);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.ingredient-spotlight-fluxor__description {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.8;
+  opacity: 0.75;
+  margin: 0;
+  max-width: 36ch;
+}
+
+/* ----------------------------------------------------------
+   効能リスト
+   ---------------------------------------------------------- */
+
+.ingredient-spotlight-fluxor__benefits {
+  list-style: none;
+  margin: 0;
+  padding: 1.5rem 0 0;
+  border-top: 1px solid currentColor;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  opacity: 0.8;
+}
+
+.ingredient-spotlight-fluxor__benefit {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 0.06em;
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+}
+
+.ingredient-spotlight-fluxor__benefit::before {
+  content: '—';
+  opacity: 0.4;
+  flex-shrink: 0;
+}
+
+/* ----------------------------------------------------------
+   画像
+   ---------------------------------------------------------- */
+
+.ingredient-spotlight-fluxor__image-wrapper {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: var(--color-base-background-2, #EAE7E1);
+}
+
+.ingredient-spotlight-fluxor__image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .ingredient-spotlight-fluxor {
+    padding: 8rem 4rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .ingredient-spotlight-fluxor {
+    padding: 10rem 6rem;
+  }
+}

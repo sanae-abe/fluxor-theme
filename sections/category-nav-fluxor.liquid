@@ -1,0 +1,90 @@
+{{ 'category-nav-fluxor.css' | asset_url | stylesheet_tag }}
+
+<div class="category-nav-fluxor color-{{ section.settings.color_scheme }} gradient">
+  {%- if section.settings.heading != blank -%}
+    <div class="category-nav-fluxor__header">
+      <h2 class="category-nav-fluxor__heading">{{ section.settings.heading | escape }}</h2>
+    </div>
+  {%- endif -%}
+
+  <div class="category-nav-fluxor__grid">
+    {%- for block in section.blocks -%}
+      <a
+        href="{{ block.settings.link | default: '#' }}"
+        class="category-nav-fluxor__item"
+        {{ block.shopify_attributes }}
+      >
+        <div class="category-nav-fluxor__image-wrapper">
+          {%- if block.settings.image != blank -%}
+            {{
+              block.settings.image
+              | image_url: width: 600
+              | image_tag: loading: 'lazy', alt: block.settings.label
+            }}
+          {%- endif -%}
+        </div>
+        {%- if block.settings.label != blank -%}
+          <p class="category-nav-fluxor__label">{{ block.settings.label | escape }}</p>
+        {%- endif -%}
+      </a>
+    {%- endfor -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Category Nav - Fluxor",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "カテゴリから探す"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "category",
+      "name": "カテゴリ",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "画像"
+        },
+        {
+          "type": "text",
+          "id": "label",
+          "label": "ラベル",
+          "default": "Moisturiser"
+        },
+        {
+          "type": "url",
+          "id": "link",
+          "label": "リンク先"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Category Nav - Fluxor",
+      "blocks": [
+        { "type": "category", "settings": { "label": "Cleanser" } },
+        { "type": "category", "settings": { "label": "Moisturiser" } },
+        { "type": "category", "settings": { "label": "Serum" } },
+        { "type": "category", "settings": { "label": "SPF" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,134 @@
+{{ 'ingredient-spotlight-fluxor.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign has_image = false
+  if section.settings.image != blank
+    assign has_image = true
+  endif
+-%}
+
+<div class="ingredient-spotlight-fluxor color-{{ section.settings.color_scheme }} gradient">
+  <div class="ingredient-spotlight-fluxor__inner{% if has_image %} ingredient-spotlight-fluxor__inner--has-image{% if section.settings.image_position == 'left' %} ingredient-spotlight-fluxor__inner--image-left{% endif %}{% endif %}">
+
+    <div class="ingredient-spotlight-fluxor__content">
+      {%- if section.settings.label != blank -%}
+        <p class="ingredient-spotlight-fluxor__label">{{ section.settings.label | escape }}</p>
+      {%- endif -%}
+
+      {%- if section.settings.ingredient_name != blank -%}
+        <h2 class="ingredient-spotlight-fluxor__name">
+          {{- section.settings.ingredient_name | escape -}}
+        </h2>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="ingredient-spotlight-fluxor__description">
+          {{- section.settings.description | escape -}}
+        </p>
+      {%- endif -%}
+
+      {%- if section.blocks.size > 0 -%}
+        <ul class="ingredient-spotlight-fluxor__benefits">
+          {%- for block in section.blocks -%}
+            <li class="ingredient-spotlight-fluxor__benefit" {{ block.shopify_attributes }}>
+              {{- block.settings.text | escape -}}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    </div>
+
+    {%- if has_image -%}
+      <div class="ingredient-spotlight-fluxor__image-wrapper">
+        {{
+          section.settings.image
+          | image_url: width: 800
+          | image_tag: loading: 'lazy', alt: section.settings.ingredient_name
+        }}
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "Ingredient - Fluxor",
+  "tag": "section",
+  "class": "section",
+  "max_blocks": 6,
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-2"
+    },
+    {
+      "type": "header",
+      "content": "コンテンツ"
+    },
+    {
+      "type": "text",
+      "id": "label",
+      "label": "ラベル（小）",
+      "default": "Key Ingredient"
+    },
+    {
+      "type": "text",
+      "id": "ingredient_name",
+      "label": "成分名",
+      "default": "Retinol."
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "説明文",
+      "default": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。"
+    },
+    {
+      "type": "header",
+      "content": "画像（任意）"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "画像"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "画像の位置",
+      "options": [
+        { "value": "right", "label": "右" },
+        { "value": "left", "label": "左" }
+      ],
+      "default": "right"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "benefit",
+      "name": "効能・特徴",
+      "settings": [
+        {
+          "type": "text",
+          "id": "text",
+          "label": "テキスト",
+          "default": "シワや小じわの改善"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Ingredient - Fluxor",
+      "blocks": [
+        { "type": "benefit", "settings": { "text": "シワや小じわの改善" } },
+        { "type": "benefit", "settings": { "text": "毛穴の引き締め" } },
+        { "type": "benefit", "settings": { "text": "肌のハリ・弾力のサポート" } }
+      ]
+    }
+  ]
+}
+{% endschema %}
