@@ -1,28 +1,53 @@
 /* ============================================================
-   Hero Fluxor — Section Styles
+   Hero Fluxor — Slideshow
    Dermaceutical × Minimalism × Authority
    ============================================================ */
 
 /* ----------------------------------------------------------
-   Section: Full-height container
+   Section wrapper
    ---------------------------------------------------------- */
 
 .hero-fluxor {
   position: relative;
+  min-height: 100svh;
+  overflow: hidden;
   display: flex;
   flex-direction: column;
-  min-height: 100svh; /* mobile address bar対応 */
-  overflow: hidden;
 }
 
 /* ----------------------------------------------------------
-   Background Image
+   Slides container
+   ---------------------------------------------------------- */
+
+.hero-fluxor__slides {
+  position: relative;
+  flex: 1;
+  display: grid;
+}
+
+.hero-fluxor__slide {
+  grid-area: 1 / 1;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: 1fr;
+  opacity: 0;
+  transition: opacity 0.7s ease;
+  pointer-events: none;
+}
+
+.hero-fluxor__slide.is-active {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+/* ----------------------------------------------------------
+   Background image (per slide)
    ---------------------------------------------------------- */
 
 .hero-fluxor__bg {
-  position: absolute;
-  inset: 0;
-  z-index: 0;
+  grid-area: 1 / 1;
+  position: relative;
+  overflow: hidden;
 }
 
 .hero-fluxor__bg-image {
@@ -33,64 +58,66 @@
   display: block;
 }
 
-/* overlayはDawnのdiv:empty { display: none }を避けるため::afterで実装 */
 .hero-fluxor__bg::after {
   content: '';
   display: block;
   position: absolute;
   inset: 0;
-  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.4));
+  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.5));
   pointer-events: none;
 }
 
 /* ----------------------------------------------------------
-   Content Area
+   Slide content: モバイル（縦積み）
    ---------------------------------------------------------- */
 
 .hero-fluxor__content {
+  grid-area: 1 / 1;
   position: relative;
   z-index: 1;
-  flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
-  padding: 4rem 2rem 3rem;
-  gap: 1.5rem;
+  justify-content: flex-end;
+  padding: 3rem 2rem 5rem;
+  gap: 1rem;
 }
 
-/* Heading: FLUXOR */
-.hero-fluxor__heading {
+.hero-fluxor__brand {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.65rem, 1vw, 0.75rem);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  opacity: 0.6;
+  margin: 0;
+}
+
+.hero-fluxor__product-name {
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(3.5rem, 9vw, 9rem);
-  letter-spacing: 0.3em;
-  line-height: 1;
+  font-size: clamp(2.2rem, 6vw, 5rem);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
   margin: 0;
-  text-transform: uppercase;
 }
 
-/* Tagline */
 .hero-fluxor__tagline {
   font-family: var(--font-body-family);
-  font-weight: var(--font-body-weight);
-  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
-  letter-spacing: 0.12em;
+  font-size: clamp(0.75rem, 1.1vw, 0.875rem);
+  letter-spacing: 0.08em;
   line-height: 1.6;
+  opacity: 0.7;
   margin: 0;
-  text-transform: uppercase;
-  opacity: 0.75;
+  max-width: 36ch;
 }
 
-/* Ghost CTA Button */
 .hero-fluxor__cta {
   display: inline-block;
+  align-self: flex-start;
   margin-top: 0.5rem;
-  padding: 0.75rem 2.5rem;
+  padding: 0.75rem 2rem;
   font-family: var(--font-body-family);
-  font-size: clamp(0.7rem, 1vw, 0.8rem);
+  font-size: clamp(0.65rem, 1vw, 0.75rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
@@ -103,7 +130,6 @@
 @media (any-hover: hover) {
   .hero-fluxor__cta:hover {
     background-color: currentColor;
-    /* テキスト色はカラースキームによって反転 */
     color: var(--color-background);
   }
 }
@@ -114,101 +140,100 @@
 }
 
 /* ----------------------------------------------------------
-   Ticker Section
-   ---------------------------------------------------------- */
-
-.hero-fluxor__ticker-section {
-  position: relative;
-  z-index: 1;
-  flex-shrink: 0;
-}
-
-.hero-fluxor__ticker-wrapper {
-  overflow: hidden;
-  border-top: 1px solid currentColor;
-  opacity: 0.35;
-}
-
-.hero-fluxor__ticker-wrapper:first-child {
-  border-top-width: 1px;
-}
-
-.hero-fluxor__ticker-track {
-  display: flex;
-  white-space: nowrap;
-  width: max-content;
-}
-
-.hero-fluxor__ticker-item {
-  display: inline-block;
-  padding: 0.6rem 0;
-  font-family: var(--font-body-family);
-  font-size: clamp(0.7rem, 1vw, 0.875rem);
-  letter-spacing: 0.06em;
-  text-transform: uppercase;
-  /* 各 item の末尾スペースを padding で代替 */
-  padding-right: 2rem;
-}
-
-/* ----------------------------------------------------------
-   Animation
-   prefers-reduced-motion: no-preference 内で定義（Dawnパターン準拠）
-   ---------------------------------------------------------- */
-
-@media (prefers-reduced-motion: no-preference) {
-  @keyframes hero-ticker-left {
-    from { transform: translateX(0); }
-    to   { transform: translateX(-50%); }
-  }
-
-  .hero-fluxor__ticker-track {
-    animation: hero-ticker-left var(--ticker-speed, 40s) linear infinite;
-  }
-
-  .hero-fluxor__ticker-track--reverse {
-    animation-direction: reverse;
-  }
-}
-
-/* ----------------------------------------------------------
-   Reduced Motion: 複製分を非表示
-   ---------------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .hero-fluxor__ticker-item + .hero-fluxor__ticker-item {
-    display: none;
-  }
-
-  .hero-fluxor__ticker-track {
-    overflow: hidden;
-    flex-wrap: nowrap;
-  }
-
-  .hero-fluxor__ticker-item {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    max-width: 100vw;
-  }
-}
-
-/* ----------------------------------------------------------
-   Responsive
+   PC（分割レイアウト: 左テキスト・右画像）
    ---------------------------------------------------------- */
 
 @media screen and (min-width: 750px) {
-  .hero-fluxor__content {
-    padding: 5rem 3rem 4rem;
-    gap: 2rem;
+  .hero-fluxor__slide {
+    grid-template-columns: 1fr 1fr;
   }
 
-  .hero-fluxor__ticker-item {
-    padding: 0.75rem 0;
-    padding-right: 3rem;
+  .hero-fluxor__bg {
+    grid-column: 2 / 3;
+    grid-row: 1;
+  }
+
+  .hero-fluxor__content {
+    grid-column: 1 / 2;
+    grid-row: 1;
+    justify-content: center;
+    padding: 5rem 4rem 5rem 5rem;
+    gap: 1.25rem;
+  }
+
+  /* PC時は背景画像のオーバーレイを左側のみに拡張しない */
+  .hero-fluxor__bg::after {
+    display: none;
   }
 }
 
 @media screen and (min-width: 990px) {
   .hero-fluxor__content {
-    padding: 6rem 4rem 5rem;
+    padding: 6rem 5rem 6rem 7rem;
+  }
+
+  .hero-fluxor__product-name {
+    font-size: clamp(3rem, 5vw, 5.5rem);
+  }
+}
+
+/* ----------------------------------------------------------
+   Dot navigation
+   ---------------------------------------------------------- */
+
+.hero-fluxor__dots {
+  position: absolute;
+  bottom: 2rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 2;
+  display: flex;
+  gap: 0.6rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 750px) {
+  .hero-fluxor__dots {
+    left: 5rem;
+    transform: none;
+    bottom: 3rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .hero-fluxor__dots {
+    left: 7rem;
+  }
+}
+
+.hero-fluxor__dot {
+  width: 0.35rem;
+  height: 0.35rem;
+  border-radius: 50%;
+  background-color: currentColor;
+  opacity: 0.3;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+
+.hero-fluxor__dot.is-active {
+  opacity: 1;
+  transform: scale(1.4);
+}
+
+.hero-fluxor__dot:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 3px;
+}
+
+/* ----------------------------------------------------------
+   Reduced motion
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fluxor__slide {
+    transition: none;
   }
 }
