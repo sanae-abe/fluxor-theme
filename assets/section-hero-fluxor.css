@@ -46,16 +46,16 @@
    ---------------------------------------------------------- */
 
 .hero-fluxor__bg {
-  grid-area: 1 / 1;
-  position: relative;
+  /* モバイル: スライド全体を覆う絶対配置 */
+  position: absolute;
+  inset: 0;
   overflow: hidden;
+  z-index: 0;
 }
 
 .hero-fluxor__bg-image {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
   object-fit: cover;
   object-position: center;
   display: block;
@@ -152,6 +152,10 @@
   }
 
   .hero-fluxor__bg {
+    /* PC: absolute → relative に戻し、右グリッド列に配置 */
+    position: relative;
+    inset: auto;
+    z-index: auto;
     grid-column: 2 / 3;
     grid-row: 1;
   }
