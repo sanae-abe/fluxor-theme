@@ -53,8 +53,8 @@
       ],
       "name": "Hero - Fluxor",
       "settings": {
-        "color_scheme": "scheme-2",
-        "image_overlay_opacity": 40,
+        "color_scheme": "scheme-3",
+        "image_overlay_opacity": 25,
         "slide_duration": 5
       }
     },
