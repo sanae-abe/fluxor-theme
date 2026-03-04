@@ -46,7 +46,9 @@
                       >
                         {{ childlink.title | escape }}
                       </a>
+
                       {%- if childlink.links != blank -%}
+                        {%- comment -%} 孫要素がある場合: サブメニュー表示 {%- endcomment -%}
                         <ul class="list-unstyled" role="list">
                           {%- for grandchildlink in childlink.links -%}
                             <li>
@@ -63,6 +65,20 @@
                             </li>
                           {%- endfor -%}
                         </ul>
+                      {%- elsif childlink.object and childlink.object.featured_image -%}
+                        {%- comment -%} 孫要素がない場合: リンク先の画像を表示 {%- endcomment -%}
+                        <div class="mega-menu__image">
+                          <img
+                            src="{{ childlink.object.featured_image | image_url: width: 300, height: 200 }}"
+                            alt="{{ childlink.object.featured_image.alt | default: childlink.title }}"
+                            width="300"
+                            height="200"
+                            loading="lazy"
+                          />
+                          {%- if childlink.object.description != blank -%}
+                            <p class="mega-menu__description">{{ childlink.object.description | truncate: 80 }}</p>
+                          {%- endif -%}
+                        </div>
                       {%- endif -%}
                     </li>
                   {%- endfor -%}

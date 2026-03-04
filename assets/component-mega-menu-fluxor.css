@@ -71,7 +71,7 @@
 /* メガメニューコンテンツ */
 .header .mega-menu__content {
   position: fixed !important;
-  top: var(--header-height, 80px) !important;
+  top: calc(var(--header-height, 80px) + var(--utility-bar-height, 0px)) !important;
   left: 0 !important;
   right: 0 !important;
   width: 100vw !important;
@@ -269,4 +269,37 @@
   right: 0 !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
+}
+
+/* ----------------------------------------------------------
+   メガメニュー画像表示
+   ---------------------------------------------------------- */
+
+.header .mega-menu__image {
+  margin-top: 1rem !important;
+  border-radius: 8px !important;
+  overflow: hidden !important;
+  background-color: var(--color-base-background-2, #EAE7E1) !important;
+}
+
+.header .mega-menu__image img {
+  width: 100% !important;
+  height: auto !important;
+  object-fit: cover !important;
+  transition: transform 0.2s ease !important;
+}
+
+@media (any-hover: hover) {
+  .header .mega-menu__image:hover img {
+    transform: scale(1.05) !important;
+  }
+}
+
+.header .mega-menu__description {
+  padding: 1rem !important;
+  font-family: var(--font-body-family) !important;
+  font-size: clamp(0.8rem, 1vw, 0.9rem) !important;
+  line-height: 1.4 !important;
+  color: var(--color-base-text) !important;
+  margin: 0 !important;
 }
