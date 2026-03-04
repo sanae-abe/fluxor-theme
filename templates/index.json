@@ -119,6 +119,8 @@
       "settings": {
         "color_scheme": "",
         "text_align": "center",
+        "bg_image": "shopify://shop_images/Gemini_Generated_Image_js81ytjs81ytjs81_1.png",
+        "image_overlay_opacity": 55,
         "heading": "私たちは成分を読む。",
         "body": "皮膚科学に基づいた製品だけを、\n世界中からセレクトしています。\n流行より、エビデンス。",
         "button_label": "",
