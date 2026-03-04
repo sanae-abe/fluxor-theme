@@ -64,6 +64,7 @@
         "category_EwWpBN": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_i5sop1i5sop1i5so.png",
             "label": "クレンジング",
             "link": ""
           }
@@ -71,20 +72,23 @@
         "category_Lefkpd": {
           "type": "category",
           "settings": {
-            "label": "トリートメント＆マスク",
+            "image": "shopify://shop_images/giulia-perera-iInpBTLAF9s-unsplash.jpg",
+            "label": "化粧水＆美容液",
             "link": ""
           }
         },
         "category_Ftc63D": {
           "type": "category",
           "settings": {
-            "label": "保湿",
+            "image": "shopify://shop_images/poko-skincare-kfTp6PkwjiM-unsplash.jpg",
+            "label": "乳液＆クリーム",
             "link": ""
           }
         },
         "category_xhrNEg": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_j98ju2j98ju2j98j_58ad4e17-5bb7-418c-b1d8-86b260ba96f6.png",
             "label": "アイケア＆リップケア",
             "link": ""
           }
@@ -92,6 +96,7 @@
         "category_86iFcA": {
           "type": "category",
           "settings": {
+            "image": "shopify://shop_images/arthur-pereira-0oB1h0MA_ZA-unsplash.jpg",
             "label": "サンケア",
             "link": ""
           }
