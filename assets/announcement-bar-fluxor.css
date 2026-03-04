@@ -3,11 +3,6 @@
    Auto-rotate only, no visible arrows（Aesop / Deciem style）
    ============================================================ */
 
-/* 矢印ナビゲーションを非表示 */
-.announcement-bar-section .slider-button {
-  display: none;
-}
-
 /* テキストスタイル */
 .announcement-bar-section .announcement-bar__message {
   font-family: var(--font-body-family);
