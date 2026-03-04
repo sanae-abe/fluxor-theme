@@ -1,3 +1,14 @@
+{%- style -%}
+  #IngredientSpotlight-{{ section.id }} {
+    --overlay-opacity: {{ section.settings.bg_image_overlay_opacity | divided_by: 100.0 }};
+  }
+  {%- if section.settings.bg_image != blank -%}
+    #IngredientSpotlight-{{ section.id }} .ingredient-spotlight-fluxor__bg {
+      background-image: url({{ section.settings.bg_image | image_url: width: 2400 }});
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
 {{ 'ingredient-spotlight-fluxor.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
@@ -7,7 +18,14 @@
   endif
 -%}
 
-<div class="ingredient-spotlight-fluxor color-{{ section.settings.color_scheme }} gradient">
+<div
+  id="IngredientSpotlight-{{ section.id }}"
+  class="ingredient-spotlight-fluxor color-{{ section.settings.color_scheme }} gradient{% if section.settings.bg_image != blank %} ingredient-spotlight-fluxor--has-bg{% endif %}"
+>
+  {%- if section.settings.bg_image != blank -%}
+    <div class="ingredient-spotlight-fluxor__bg" aria-hidden="true"></div>
+  {%- endif -%}
+
   <div class="ingredient-spotlight-fluxor__inner{% if has_image %} ingredient-spotlight-fluxor__inner--has-image{% if section.settings.image_position == 'left' %} ingredient-spotlight-fluxor__inner--image-left{% endif %}{% endif %}">
 
     <div class="ingredient-spotlight-fluxor__content">
@@ -63,6 +81,25 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-2"
+    },
+    {
+      "type": "header",
+      "content": "背景画像（任意）"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "背景画像"
+    },
+    {
+      "type": "range",
+      "id": "bg_image_overlay_opacity",
+      "label": "オーバーレイの暗さ",
+      "min": 30,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 60
     },
     {
       "type": "header",

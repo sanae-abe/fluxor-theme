@@ -4,10 +4,46 @@
    ============================================================ */
 
 .ingredient-spotlight-fluxor {
+  position: relative;
   padding: 6rem 2rem;
 }
 
+/* ----------------------------------------------------------
+   背景画像
+   ---------------------------------------------------------- */
+
+/* Dawn の div:empty { display: none } を上書き（詳細度 0-2-0） */
+.ingredient-spotlight-fluxor .ingredient-spotlight-fluxor__bg {
+  display: block;
+}
+
+.ingredient-spotlight-fluxor__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.ingredient-spotlight-fluxor__bg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.6));
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+   レイアウト（背景より前面に）
+   ---------------------------------------------------------- */
+
 .ingredient-spotlight-fluxor__inner {
+  position: relative;
+  z-index: 1;
   display: grid;
   grid-template-columns: 1fr;
   gap: 4rem;
@@ -68,6 +104,15 @@
   max-width: 36ch;
 }
 
+/* 背景画像あり時は opacityを上げて視認性確保 */
+.ingredient-spotlight-fluxor--has-bg .ingredient-spotlight-fluxor__label {
+  opacity: 0.7;
+}
+
+.ingredient-spotlight-fluxor--has-bg .ingredient-spotlight-fluxor__description {
+  opacity: 0.9;
+}
+
 /* ----------------------------------------------------------
    効能リスト
    ---------------------------------------------------------- */
@@ -81,6 +126,10 @@
   flex-direction: column;
   gap: 0.75rem;
   opacity: 0.8;
+}
+
+.ingredient-spotlight-fluxor--has-bg .ingredient-spotlight-fluxor__benefits {
+  opacity: 0.9;
 }
 
 .ingredient-spotlight-fluxor__benefit {
