@@ -46,13 +46,32 @@ class MegaMenuHover {
       // 既存のイベントリスナーをクリア
       menu.removeEventListener('mouseenter', this.handleMouseEnter.bind(this));
       menu.removeEventListener('mouseleave', this.handleMouseLeave.bind(this));
+      menu.removeEventListener('toggle', this.handleToggle.bind(this));
 
       if (this.isDesktop) {
         // デスクトップ: ホバーイベント
         menu.addEventListener('mouseenter', this.handleMouseEnter.bind(this));
         menu.addEventListener('mouseleave', this.handleMouseLeave.bind(this));
       }
+
+      // 全デバイス: details要素のopen/close時の位置調整（モバイル対応）
+      menu.addEventListener('toggle', this.handleToggle.bind(this));
     });
+  }
+
+  handleToggle(event) {
+    const menu = event.currentTarget;
+
+    if (menu.hasAttribute('open')) {
+      // メニューが開かれた時：位置調整
+      this.adjustMegaMenuPosition(menu);
+    } else {
+      // メニューが閉じられた時：位置調整をリセット
+      const megaMenuContent = menu.querySelector('.mega-menu__content');
+      if (megaMenuContent) {
+        megaMenuContent.style.top = '';
+      }
+    }
   }
 
   handleMouseEnter(event) {
@@ -68,6 +87,9 @@ class MegaMenuHover {
 
     // 他のメガメニューを閉じる
     this.closeAllMenus();
+
+    // メガメニュー位置を動的に調整
+    this.adjustMegaMenuPosition(menu);
 
     // 対象メニューを開く
     menu.setAttribute('open', '');
@@ -94,10 +116,30 @@ class MegaMenuHover {
     }
   }
 
+  adjustMegaMenuPosition(menu) {
+    // 現在のヘッダー全体の高さを動的に計算
+    const header = document.querySelector('.section-header');
+    if (!header) return;
+
+    const headerHeight = header.getBoundingClientRect().bottom;
+    const megaMenuContent = menu.querySelector('.mega-menu__content');
+
+    if (megaMenuContent) {
+      // CSS変数ではなく、リアルタイム計算値を直接適用
+      megaMenuContent.style.top = `${headerHeight}px`;
+    }
+  }
+
   closeAllMenus() {
     this.megaMenus.forEach(menu => {
       menu.removeAttribute('open');
       menu.classList.remove('mega-menu--hovered');
+
+      // 位置調整をリセット
+      const megaMenuContent = menu.querySelector('.mega-menu__content');
+      if (megaMenuContent) {
+        megaMenuContent.style.top = '';
+      }
     });
   }
 

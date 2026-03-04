@@ -333,6 +333,11 @@
 
     setHeaderHeight() {
       document.documentElement.style.setProperty('--header-height', `${this.header.offsetHeight}px`);
+
+      // utility-bar の高さも同時に更新（メガメニュー位置調整）
+      const utilityBar = document.querySelector('.utility-bar');
+      const utilityHeight = utilityBar ? utilityBar.offsetHeight : 0;
+      document.documentElement.style.setProperty('--utility-bar-height', `${utilityHeight}px`);
     }
 
     disconnectedCallback() {
