@@ -15,10 +15,10 @@
         "slide_T67Ypz": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/slide-cream.webp",
+            "image": "shopify://shop_images/hero-slide-quality-analysis.webp",
             "brand": "BRAND NAME",
-            "product_name": "Product Name.",
-            "tagline": "Short description of the product.",
+            "product_name": "Pharmaceutical Grade Quality.",
+            "tagline": "医薬品グレードの品質。",
             "button_label": "Shop Now",
             "button_link": ""
           }
@@ -26,10 +26,10 @@
         "slide_VhwQLT": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/slide-ingredients.webp",
+            "image": "shopify://shop_images/hero-slide-research-lab.webp",
             "brand": "BRAND NAME",
-            "product_name": "Product Name.",
-            "tagline": "Short description of the product.",
+            "product_name": "Evidence-Based Development.",
+            "tagline": "エビデンスに基づく開発。",
             "button_label": "Shop Now",
             "button_link": ""
           }
@@ -37,10 +37,10 @@
         "slide_Qq8nyd": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/slide-serum.webp",
+            "image": "shopify://shop_images/hero-slide-precision-dropper.webp",
             "brand": "BRAND NAME",
-            "product_name": "Product Name.",
-            "tagline": "Short description of the product.",
+            "product_name": "Precision Formulated.",
+            "tagline": "1滴に込められた科学。",
             "button_label": "Shop Now",
             "button_link": ""
           }
@@ -121,7 +121,7 @@
       "settings": {
         "color_scheme": "",
         "text_align": "center",
-        "bg_image": "shopify://shop_images/Gemini_Generated_Image_js81ytjs81ytjs81_1.png",
+        "bg_image": "shopify://shop_images/brand-story-molecules-bg.webp",
         "image_overlay_opacity": 55,
         "heading": "私たちは成分を読む。",
         "body": "皮膚科学に基づいた製品だけを、\n世界中からセレクトしています。\n流行より、エビデンス。",
