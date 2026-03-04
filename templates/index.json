@@ -157,6 +157,8 @@
       "name": "Ingredient - Fluxor",
       "settings": {
         "color_scheme": "",
+        "bg_image": "shopify://shop_images/retinol-petri-bg-small.webp",
+        "bg_image_overlay_opacity": 30,
         "label": "Key Ingredient",
         "ingredient_name": "Retinol.",
         "description": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。",
