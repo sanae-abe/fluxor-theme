@@ -9,7 +9,7 @@
 
 .hero-fluxor {
   position: relative;
-  min-height: 100svh;
+  height: 100svh;
   overflow: hidden;
   display: flex;
   flex-direction: column;
@@ -22,6 +22,7 @@
 .hero-fluxor__slides {
   position: relative;
   flex: 1;
+  min-height: 0;
   display: grid;
 }
 
@@ -29,7 +30,7 @@
   grid-area: 1 / 1;
   display: grid;
   grid-template-columns: 1fr;
-  grid-template-rows: minmax(100svh, 1fr);
+  grid-template-rows: 1fr;
   opacity: 0;
   transition: opacity 0.7s ease;
   pointer-events: none;
