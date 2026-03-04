@@ -11,18 +11,51 @@
   "sections": {
     "hero_fluxor_HmAj7w": {
       "type": "hero-fluxor",
+      "blocks": {
+        "slide_T67Ypz": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/slide-cream.webp",
+            "brand": "BRAND NAME",
+            "product_name": "Product Name.",
+            "tagline": "Short description of the product.",
+            "button_label": "Shop Now",
+            "button_link": ""
+          }
+        },
+        "slide_VhwQLT": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/slide-ingredients.webp",
+            "brand": "BRAND NAME",
+            "product_name": "Product Name.",
+            "tagline": "Short description of the product.",
+            "button_label": "Shop Now",
+            "button_link": ""
+          }
+        },
+        "slide_Qq8nyd": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/slide-serum.webp",
+            "brand": "BRAND NAME",
+            "product_name": "Product Name.",
+            "tagline": "Short description of the product.",
+            "button_label": "Shop Now",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "slide_T67Ypz",
+        "slide_VhwQLT",
+        "slide_Qq8nyd"
+      ],
       "name": "Hero - Fluxor",
       "settings": {
-        "color_scheme": "",
-        "image": "shopify://shop_images/hero-bg.webp",
+        "color_scheme": "scheme-3",
         "image_overlay_opacity": 40,
-        "heading": "FLUXOR",
-        "tagline": "The authority in active skincare.",
-        "button_label": "Shop Now",
-        "button_link": "",
-        "ticker_row_1": "Retinol · Niacinamide · Hyaluronic Acid · Vitamin C · Bakuchiol · Azelaic Acid · Squalane · Ferulic Acid · Centella Asiatica · Tranexamic Acid · Salicylic Acid · レチノール · ナイアシンアミド · ヒアルロン酸 ·",
-        "ticker_row_2": "Ceramide · AHA · BHA · Glycolic Acid · Lactic Acid · Mandelic Acid · Peptides · Resveratrol · Zinc · セラミド · グリコール酸 · バクチオール · スクワラン · アゼライン酸 · センテラアジアティカ ·",
-        "ticker_speed": 40
+        "slide_duration": 5
       }
     },
     "rich_text": {
