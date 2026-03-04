@@ -54,6 +54,15 @@
           {%- endfor -%}
         </ul>
       {%- endif -%}
+
+      {%- if section.settings.button_label != blank -%}
+        <a
+          href="{{ section.settings.button_link | default: '#' }}"
+          class="ingredient-spotlight-fluxor__cta"
+        >
+          {{- section.settings.button_label | escape -}}
+        </a>
+      {%- endif -%}
     </div>
 
     {%- if has_image -%}
@@ -141,6 +150,20 @@
         { "value": "left", "label": "左" }
       ],
       "default": "right"
+    },
+    {
+      "type": "header",
+      "content": "ボタン（任意）"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンテキスト"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "ボタンリンク"
     }
   ],
   "blocks": [

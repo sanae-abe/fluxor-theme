@@ -125,8 +125,8 @@
         "image_overlay_opacity": 40,
         "heading": "私たちは成分を読む。",
         "body": "皮膚科学に基づいた製品だけを、\n世界中からセレクトしています。\n流行より、エビデンス。",
-        "button_label": "",
-        "button_link": ""
+        "button_label": "ブランドストーリー",
+        "button_link": "/pages/about"
       }
     },
     "featured_collection_fluxor_MdghFy": {
@@ -175,7 +175,9 @@
         "label": "Key Ingredient",
         "ingredient_name": "Retinol.",
         "description": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。",
-        "image_position": "right"
+        "image_position": "right",
+        "button_label": "成分について詳しく",
+        "button_link": "/pages/ingredients"
       }
     },
     "featured_collection_fluxor_RWyeiT": {
