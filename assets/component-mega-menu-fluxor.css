@@ -51,6 +51,18 @@
   position: relative !important;
 }
 
+/* キャレットアイコンを右端に配置（全デバイス共通） */
+.header .mega-menu > summary {
+  position: relative !important;
+}
+
+.header .mega-menu > summary .icon-caret {
+  position: absolute !important;
+  right: 0 !important;
+  top: 50% !important;
+  transform: translateY(-50%) !important;
+}
+
 /* デフォルトの details 動作を無効化 */
 @media (any-hover: hover) {
   .header .mega-menu > summary {
