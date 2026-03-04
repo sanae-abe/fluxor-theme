@@ -79,6 +79,14 @@
                             <p class="mega-menu__description">{{ childlink.object.description | truncate: 80 }}</p>
                           {%- endif -%}
                         </div>
+                      {%- else -%}
+                        {%- comment -%} デバッグ情報表示 {%- endcomment -%}
+                        <div class="mega-menu__debug">
+                          <p><strong>デバッグ:</strong> {{ childlink.title }}</p>
+                          <p>URL: {{ childlink.url }}</p>
+                          <p>Object: {% if childlink.object %}{{ childlink.object.object_type }}{% else %}null{% endif %}</p>
+                          <p>画像: {% if childlink.object.featured_image %}あり{% else %}なし{% endif %}</p>
+                        </div>
                       {%- endif -%}
                     </li>
                   {%- endfor -%}
