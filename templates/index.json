@@ -64,34 +64,42 @@
         "category_EwWpBN": {
           "type": "category",
           "settings": {
-            "label": "Cleanser",
+            "label": "クレンジング",
+            "link": ""
+          }
+        },
+        "category_Lefkpd": {
+          "type": "category",
+          "settings": {
+            "label": "トリートメント＆マスク",
             "link": ""
           }
         },
         "category_Ftc63D": {
           "type": "category",
           "settings": {
-            "label": "Moisturiser",
+            "label": "保湿",
             "link": ""
           }
         },
         "category_xhrNEg": {
           "type": "category",
           "settings": {
-            "label": "Serum",
+            "label": "アイケア＆リップケア",
             "link": ""
           }
         },
         "category_86iFcA": {
           "type": "category",
           "settings": {
-            "label": "SPF",
+            "label": "サンケア",
             "link": ""
           }
         }
       },
       "block_order": [
         "category_EwWpBN",
+        "category_Lefkpd",
         "category_Ftc63D",
         "category_xhrNEg",
         "category_86iFcA"
