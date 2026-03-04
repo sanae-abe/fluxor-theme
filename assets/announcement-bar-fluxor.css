@@ -1,0 +1,17 @@
+/* ============================================================
+   Announcement Bar — Fluxor Style
+   Auto-rotate only, no visible arrows（Aesop / Deciem style）
+   ============================================================ */
+
+/* 矢印ナビゲーションを非表示 */
+.announcement-bar-section .slider-button {
+  display: none;
+}
+
+/* テキストスタイル */
+.announcement-bar-section .announcement-bar__message {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.1vw, 1.1rem);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
