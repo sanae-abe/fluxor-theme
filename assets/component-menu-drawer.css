@@ -85,13 +85,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer__navigation {
-  padding: 0.875rem 0;
-}
-
-@media screen and (min-width: 750px) {
-  .menu-drawer__navigation {
-    padding: 1.875rem 0;
-  }
+  padding: 1.875rem 0;
 }
 
 .menu-drawer__inner-submenu {
