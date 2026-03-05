@@ -19,7 +19,13 @@
         <div class="about-transparency-fluxor__item" {{ block.shopify_attributes }}>
           {%- if block.settings.icon != blank -%}
             <div class="about-transparency-fluxor__icon">
-              {{ block.settings.icon }}
+              <img
+                src="{{ block.settings.icon | image_url: width: 64 }}"
+                alt="{{ block.settings.title | escape }}"
+                width="32"
+                height="32"
+                loading="lazy"
+              />
             </div>
           {%- endif -%}
 
@@ -71,10 +77,9 @@
       "name": "透明性ポイント",
       "settings": [
         {
-          "type": "text",
+          "type": "image_picker",
           "id": "icon",
-          "label": "アイコン（絵文字）",
-          "default": "❌"
+          "label": "アイコン画像"
         },
         {
           "type": "text",
@@ -98,7 +103,6 @@
         {
           "type": "transparency_point",
           "settings": {
-            "icon": "❌",
             "title": "誇張しません",
             "description": "「奇跡の効果」は謳いません"
           }
@@ -106,7 +110,6 @@
         {
           "type": "transparency_point",
           "settings": {
-            "icon": "❌",
             "title": "隠しません",
             "description": "製造元、成分濃度を可能な限り公開"
           }
@@ -114,7 +117,6 @@
         {
           "type": "transparency_point",
           "settings": {
-            "icon": "❌",
             "title": "推測しません",
             "description": "確認できないことは「分からない」と言います"
           }

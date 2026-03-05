@@ -24,7 +24,6 @@
         "method_THgMTc": {
           "type": "method",
           "settings": {
-            "icon": "📊",
             "title": "論文検索",
             "description": "PubMed、皮膚科学会誌を調査"
           }
@@ -32,7 +31,6 @@
         "method_CydTyJ": {
           "type": "method",
           "settings": {
-            "icon": "🧪",
             "title": "成分分析",
             "description": "PubMed、皮膚科学会誌を調査"
           }
@@ -40,7 +38,6 @@
         "method_a6haAe": {
           "type": "method",
           "settings": {
-            "icon": "🏭",
             "title": "製造元調査",
             "description": "OEM先、品質管理体制を調査"
           }
@@ -48,7 +45,6 @@
         "method_hkpKgq": {
           "type": "method",
           "settings": {
-            "icon": "💬",
             "title": "口コミ分析",
             "description": "実際のユーザー評価を収集"
           }
@@ -82,7 +78,6 @@
         "transparency_point_DWr7Ne": {
           "type": "transparency_point",
           "settings": {
-            "icon": "❌",
             "title": "誇張しません",
             "description": "「奇跡の効果」は謳いません"
           }
@@ -90,7 +85,6 @@
         "transparency_point_x8pG8V": {
           "type": "transparency_point",
           "settings": {
-            "icon": "❌",
             "title": "隠しません",
             "description": "製造元、成分濃度を可能な限り公開"
           }
@@ -98,7 +92,6 @@
         "transparency_point_q4myt3": {
           "type": "transparency_point",
           "settings": {
-            "icon": "❌",
             "title": "推測しません",
             "description": "確認できないことは「分からない」と言います"
           }
