@@ -8,14 +8,14 @@
 
 .category-nav-fluxor__header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 1.875rem;
 }
 
 .category-nav-fluxor__heading {
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
   letter-spacing: 0.04em;
   margin: 0;
 }
@@ -54,7 +54,7 @@
 }
 
 .category-nav-fluxor__item:focus-visible {
-  outline: 2px solid currentColor;
+  outline: 1px solid currentColor;
   outline-offset: 3px;
 }
 
@@ -80,7 +80,7 @@
 
 .category-nav-fluxor__label {
   font-family: var(--font-body-family);
-  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   letter-spacing: 0.12em;
   text-transform: uppercase;
   text-align: center;
@@ -93,7 +93,7 @@
 
 @media screen and (min-width: 750px) {
   .category-nav-fluxor {
-    padding: 6rem 4rem;
+    padding: 6rem 2.5rem;
   }
 }
 

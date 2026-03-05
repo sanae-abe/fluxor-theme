@@ -87,7 +87,7 @@
   height: 100%;
   justify-content: center;
   align-self: center;
-  padding: 4rem calc(4rem / var(--font-body-scale)) 5rem;
+  padding: 2.5rem calc(2.5rem / var(--font-body-scale)) 5rem;
   position: relative;
   z-index: 1;
 }
@@ -204,13 +204,13 @@
 
   .image-with-text--overlap .image-with-text__text-item {
     display: flex;
-    padding: 3rem 0;
+    padding: 0.875rem 0;
   }
 
   .image-with-text--overlap .image-with-text__content {
     height: auto;
-    width: calc(100% + 4rem);
-    min-width: calc(100% + 4rem);
+    width: calc(100% + 2.5rem);
+    min-width: calc(100% + 2.5rem);
     margin-top: 0;
     margin-left: -4rem;
   }
@@ -360,7 +360,7 @@
 }
 
 .image-with-text__content .image-with-text__text + .button {
-  margin-top: 3rem;
+  margin-top: 0.875rem;
 }
 
 .image-with-text__heading {

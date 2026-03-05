@@ -62,7 +62,7 @@
 
 @media screen and (min-width: 750px) {
   .collapsible-content__heading {
-    margin-bottom: 3rem;
+    margin-bottom: 0.875rem;
   }
 }
 
@@ -93,7 +93,7 @@
 
 .collapsible-row-layout .accordion summary,
 .collapsible-row-layout .accordion .accordion__content {
-  padding: 1.5rem;
+  padding: 0.9375rem;
 }
 
 .collapsible-row-layout .accordion .accordion__content {

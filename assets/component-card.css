@@ -29,7 +29,7 @@
 }
 
 .card--card.card--horizontal {
-  padding: 1.2rem;
+  padding: 0.75rem;
 }
 
 .card--card.card--horizontal.card--text {
@@ -144,7 +144,7 @@
 }
 
 .card-information .card__information-volume-pricing-note {
-  margin-top: 0.6rem;
+  margin-top: 0.375rem;
   line-height: calc(0.5 + 0.4 / var(--font-body-scale));
   color: rgba(var(--color-foreground), 0.75);
 }
@@ -167,7 +167,7 @@
 .card__information-volume-pricing-note--button + .global-settings-popup.quantity-popover__info {
   transform: initial;
   top: auto;
-  bottom: 4rem;
+  bottom: 2.5rem;
   max-width: 20rem;
   width: calc(95% + 2rem);
 }
@@ -241,7 +241,7 @@
     .card--card
     .card__information-volume-pricing-note--button
     + .global-settings-popup.quantity-popover__info {
-    width: calc(100% + var(--border-width) + 4rem);
+    width: calc(100% + var(--border-width) + 2.5rem);
   }
 
   .grid--2-col-tablet-down .card__content quick-add-bulk .quantity {
@@ -312,7 +312,7 @@
 .card--horizontal .card__heading,
 .card--horizontal .price__container .price-item,
 .card--horizontal__quick-add {
-  font-size: calc(var(--font-heading-scale) * 1.2rem);
+  font-size: calc(var(--font-heading-scale) * 0.75rem);
 }
 
 .card--horizontal

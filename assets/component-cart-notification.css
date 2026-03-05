@@ -49,7 +49,7 @@
 
 @media screen and (min-width: 990px) {
   .cart-notification-wrapper:is(.page-width) > .cart-notification {
-    right: 4rem;
+    right: 2.5rem;
   }
 }
 
@@ -98,7 +98,7 @@
 .cart-notification-product {
   align-items: flex-start;
   display: flex;
-  padding-bottom: 3rem;
+  padding-bottom: 0.875rem;
   padding-top: 2rem;
 }
 

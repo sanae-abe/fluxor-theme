@@ -88,12 +88,12 @@
 }
 
 .article-template__content {
-  margin-top: 3rem;
-  margin-bottom: 3rem;
+  margin-top: 0.875rem;
+  margin-bottom: 0.875rem;
 }
 
 .article-template__social-sharing {
-  margin-top: 3rem;
+  margin-top: 0.875rem;
 }
 
 .article-template__social-sharing + header,
@@ -128,7 +128,7 @@
 }
 
 .article-template__comments-fields {
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 .article-template__comments-comment {
@@ -149,14 +149,14 @@
 }
 
 .article-template__comment-fields > * {
-  margin-bottom: 3rem;
+  margin-bottom: 0.875rem;
 }
 
 @media screen and (min-width: 750px) {
   .article-template__comment-fields {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    grid-column-gap: 4rem;
+    grid-column-gap: 2.5rem;
   }
 }
 

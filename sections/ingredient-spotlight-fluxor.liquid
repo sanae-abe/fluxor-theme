@@ -29,14 +29,18 @@
   <div class="ingredient-spotlight-fluxor__inner{% if has_image %} ingredient-spotlight-fluxor__inner--has-image{% if section.settings.image_position == 'left' %} ingredient-spotlight-fluxor__inner--image-left{% endif %}{% endif %}">
 
     <div class="ingredient-spotlight-fluxor__content">
-      {%- if section.settings.label != blank -%}
-        <p class="ingredient-spotlight-fluxor__label">{{ section.settings.label | escape }}</p>
-      {%- endif -%}
+     {%- if section.settings.label != blank or section.settings.ingredient_name != blank  -%}
+        <div class="ingredient-spotlight-fluxor__header">
+          {%- if section.settings.label != blank -%}
+            <p class="ingredient-spotlight-fluxor__label">{{ section.settings.label | escape }}</p>
+          {%- endif -%}
 
-      {%- if section.settings.ingredient_name != blank -%}
-        <h2 class="ingredient-spotlight-fluxor__name">
-          {{- section.settings.ingredient_name | escape -}}
-        </h2>
+          {%- if section.settings.ingredient_name != blank -%}
+            <h2 class="ingredient-spotlight-fluxor__name">
+              {{- section.settings.ingredient_name | escape -}}
+            </h2>
+          {%- endif -%}
+        </div>
       {%- endif -%}
 
       {%- if section.settings.description != blank -%}

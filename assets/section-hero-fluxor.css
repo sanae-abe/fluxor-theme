@@ -112,7 +112,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 3rem 2rem 5rem;
+  padding: 0.875rem 2rem 5rem;
   gap: 1rem;
 }
 
@@ -133,7 +133,7 @@
 
 .hero-fluxor__brand {
   font-family: var(--font-body-family);
-  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin: 0;
@@ -151,7 +151,7 @@
 
 .hero-fluxor__tagline {
   font-family: var(--font-body-family);
-  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   letter-spacing: 0.08em;
   line-height: 1.6;
   margin: 0;
@@ -164,7 +164,7 @@
   margin-top: 0.5rem;
   padding: 0.75rem 2rem;
   font-family: var(--font-body-family);
-  font-size: clamp(1.1rem, 1.3vw, 1.3rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   letter-spacing: 0.18em;
   text-transform: uppercase;
   text-decoration: none;
@@ -182,7 +182,7 @@
 }
 
 .hero-fluxor__cta:focus-visible {
-  outline: 2px solid currentColor;
+  outline: 1px solid currentColor;
   outline-offset: 3px;
 }
 
@@ -209,7 +209,7 @@
     grid-column: 1 / 2;
     grid-row: 1;
     justify-content: center;
-    padding: 5rem 4rem 5rem 5rem;
+    padding: 5rem 2.5rem 5rem 5rem;
     gap: 1.25rem;
     position: relative;
     z-index: 1;
@@ -257,7 +257,7 @@
   transform: translateX(-50%);
   z-index: 2;
   display: flex;
-  gap: 0.6rem;
+  gap: 0.375rem;
   align-items: center;
 }
 
@@ -265,7 +265,7 @@
   .hero-fluxor__dots {
     left: 5rem;
     transform: none;
-    bottom: 3rem;
+    bottom: 0.875rem;
   }
 }
 
@@ -293,7 +293,7 @@
 }
 
 .hero-fluxor__dot:focus-visible {
-  outline: 2px solid currentColor;
+  outline: 1px solid currentColor;
   outline-offset: 3px;
 }
 

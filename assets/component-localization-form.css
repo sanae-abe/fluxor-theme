@@ -67,7 +67,7 @@
   margin-bottom: 1.5rem;
   padding-left: 1rem;
   text-align: left;
-  min-height: calc(4rem + var(--inputs-border-width) * 2);
+  min-height: calc(2.5rem + var(--inputs-border-width) * 2);
   min-width: calc(7rem + var(--inputs-border-width) * 2);
 }
 
@@ -79,7 +79,7 @@
 .localization-form__select .icon-caret {
   position: absolute;
   content: '';
-  height: 0.6rem;
+  height: 0.375rem;
   right: calc(var(--inputs-border-width) + 1.5rem);
   top: calc(50% - 0.2rem);
 }
@@ -91,7 +91,7 @@
   -moz-appearance: none;
   color: rgb(var(--color-foreground));
   width: 100%;
-  padding-right: 4rem;
+  padding-right: 2.5rem;
   padding-bottom: 1.5rem;
 }
 
@@ -116,7 +116,7 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  height: 4rem;
+  height: 2.5rem;
   padding: 0 1.5rem 0 1.5rem;
   font-size: 1.3rem;
   background-color: transparent;
@@ -141,7 +141,7 @@
 .disclosure__list {
   position: relative;
   overflow-y: auto;
-  font-size: 1.4rem;
+  font-size: 0.75rem;
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
   scroll-padding: 0.5rem 0;
@@ -169,7 +169,7 @@
   justify-content: end;
   align-items: center;
   gap: 0.5rem;
-  padding: 1.5rem 1.5rem 0.6rem;
+  padding: 1.5rem 1.5rem 0.375rem;
   position: sticky;
   top: -0.02rem;
   background-color: rgb(var(--color-background));
@@ -282,7 +282,7 @@
   }
 
   .country-filter {
-    padding: 1.5rem 2rem 0.6rem 1.5rem;
+    padding: 1.5rem 2rem 0.375rem 1.5rem;
   }
 }
 
@@ -293,13 +293,13 @@
 }
 
 .countries {
-  padding-top: 0.6rem;
+  padding-top: 0.375rem;
 }
 
 .popular-countries {
   border-bottom: 1px solid rgba(var(--color-foreground), 0.2);
-  padding-bottom: 0.6rem;
-  padding-top: 0.6rem;
+  padding-bottom: 0.375rem;
+  padding-top: 0.375rem;
 }
 
 .disclosure__item {
@@ -344,7 +344,7 @@
 }
 
 .header-localization .disclosure .localization-form__select {
-  font-size: 1.4rem;
+  font-size: 0.75rem;
   letter-spacing: 0.06rem;
   height: auto;
   min-height: initial;
@@ -386,7 +386,7 @@
 }
 
 .js .header-localization:not(.menu-drawer__localization) .localization-form__select {
-  padding: 0 2.7rem 0 1.2rem;
+  padding: 0 2.7rem 0 0.75rem;
   width: max-content;
   height: 3.8rem;
 }

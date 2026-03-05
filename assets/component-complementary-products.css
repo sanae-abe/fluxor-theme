@@ -121,7 +121,7 @@ product-recommendations.is-accordion + .accordion {
 }
 
 .complementary-products__container .quick-add__submit .icon-plus {
-  width: 1.2rem;
+  width: 0.75rem;
 }
 
 .complementary-products__container .icon-wrap {

@@ -28,7 +28,7 @@
 
 @media screen and (max-width: 749px) {
   .blog__post.article {
-    width: calc(100% - 3rem - var(--grid-mobile-horizontal-spacing));
+    width: calc(100% - 0.875rem - var(--grid-mobile-horizontal-spacing));
   }
 }
 
@@ -41,7 +41,7 @@
 }
 
 .blog__button {
-  margin-top: 3rem;
+  margin-top: 0.875rem;
 }
 
 @media screen and (min-width: 750px) {
