@@ -66,11 +66,9 @@
 
 .header details[open]:hover > .header__menu-item {
   text-decoration-thickness: initial !important;
-  text-decoration: none !important;
 }
 
 .header .header__menu-item:hover .header__active-menu-item {
-  text-decoration: none !important;
   text-decoration-thickness: initial !important;
 }
 
