@@ -68,6 +68,7 @@
 }
 
 .header .header__active-menu-item::after {
+  display: block !important;
   content: '' !important;
   position: absolute !important;
   bottom: -0.5rem !important;
