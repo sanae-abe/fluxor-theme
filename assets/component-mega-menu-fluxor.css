@@ -18,11 +18,11 @@
 }
 
 .header .header__menu-item span {
-  position: relative;
+  position: relative !important;
 }
 
 .header__menu-item::after {
-  display: none;
+  display: none !important;
 }
 
 .header .header__active-menu-item span::after {
