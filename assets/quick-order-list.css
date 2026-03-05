@@ -454,7 +454,7 @@ quick-order-list .pagination-wrapper {
   }
 
   .quick-order-list__button {
-    max-width: 36rem;
+    max-width: 22.5rem;
   }
 }
 
@@ -642,7 +642,7 @@ quick-order-list .pagination-wrapper {
 
   .quick-order-list__button-confirm {
     width: 100%;
-    max-width: 36rem;
+    max-width: 22.5rem;
   }
 
   quick-order-list .tax-note {
