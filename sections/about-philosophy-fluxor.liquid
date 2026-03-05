@@ -2,23 +2,62 @@
 
 <div class="about-philosophy-fluxor color-{{ section.settings.color_scheme }} gradient">
   <div class="about-philosophy-fluxor__inner">
-    {%- if section.settings.heading != blank -%}
-      <h2 class="about-philosophy-fluxor__heading">
-        {{- section.settings.heading | escape -}}
-      </h2>
-    {%- endif -%}
+    <!-- 左カラム：テキストコンテンツ -->
+    <div class="about-philosophy-fluxor__content">
+      {%- if section.settings.subtitle != blank -%}
+        <p class="about-philosophy-fluxor__subtitle">
+          {{- section.settings.subtitle | escape -}}
+        </p>
+      {%- endif -%}
 
-    {%- if section.settings.tagline != blank -%}
-      <p class="about-philosophy-fluxor__tagline">
-        {{- section.settings.tagline | escape -}}
-      </p>
-    {%- endif -%}
+      {%- if section.settings.heading != blank -%}
+        <h2 class="about-philosophy-fluxor__heading">
+          {{- section.settings.heading | escape -}}
+        </h2>
+      {%- endif -%}
 
-    {%- if section.settings.description != blank -%}
-      <p class="about-philosophy-fluxor__description">
-        {{- section.settings.description | escape | newline_to_br -}}
-      </p>
-    {%- endif -%}
+      {%- if section.settings.tagline != blank -%}
+        <p class="about-philosophy-fluxor__tagline">
+          {{- section.settings.tagline | escape -}}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.description != blank -%}
+        <p class="about-philosophy-fluxor__description">
+          {{- section.settings.description | escape | newline_to_br -}}
+        </p>
+      {%- endif -%}
+
+      {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+        <a href="{{ section.settings.cta_url }}" class="about-philosophy-fluxor__cta">
+          {{- section.settings.cta_label | escape -}}
+        </a>
+      {%- endif -%}
+    </div>
+
+    <!-- 右カラム：画像 -->
+    <div class="about-philosophy-fluxor__media">
+      {%- if section.settings.image != blank -%}
+        <img
+          src="{{ section.settings.image | image_url: width: 800 }}"
+          alt="{{ section.settings.image.alt | default: section.settings.heading | escape }}"
+          loading="lazy"
+          width="{{ section.settings.image.width }}"
+          height="{{ section.settings.image.height }}"
+          class="about-philosophy-fluxor__image"
+        >
+      {%- else -%}
+        <!-- プレースホルダー -->
+        <div class="about-philosophy-fluxor__placeholder">
+          <svg viewBox="0 0 24 24" width="48" height="48" stroke="currentColor" stroke-width="1" fill="none" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+            <circle cx="8.5" cy="8.5" r="1.5"></circle>
+            <polyline points="21,15 16,10 5,21"></polyline>
+          </svg>
+          <p>画像を選択してください</p>
+        </div>
+      {%- endif -%}
+    </div>
   </div>
 </div>
 
@@ -33,6 +72,12 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-2"
+    },
+    {
+      "type": "text",
+      "id": "subtitle",
+      "label": "小見出し",
+      "default": "一歩進んだスキンケア"
     },
     {
       "type": "text",
@@ -51,6 +96,22 @@
       "id": "description",
       "label": "説明文",
       "default": "私たちは販売数やマーケティングではなく、科学的根拠と実際の使用感に基づいて商品を選んでいます。時間をかけて調査し、納得したもののみを紹介します。"
+    },
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "画像"
+    },
+    {
+      "type": "text",
+      "id": "cta_label",
+      "label": "ボタンラベル",
+      "default": "詳しく見る"
+    },
+    {
+      "type": "url",
+      "id": "cta_url",
+      "label": "ボタンリンク"
     }
   ],
   "presets": [

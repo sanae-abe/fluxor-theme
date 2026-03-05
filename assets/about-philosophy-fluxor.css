@@ -1,23 +1,55 @@
 /* ============================================================
    About Philosophy — Fluxor
-   Core Philosophy & Values
+   2-Column Layout: Text + Image
    ============================================================ */
 
 .about-philosophy-fluxor {
-  padding: 3.75rem 0.875rem;
-  text-align: center;
+  padding: 4rem 1rem;
 }
 
 /* ----------------------------------------------------------
-   コンテナ
+   2カラムレイアウト
    ---------------------------------------------------------- */
 
 .about-philosophy-fluxor__inner {
-  max-width: 48rem;
+  max-width: 75rem;
   margin: 0 auto;
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+  .about-philosophy-fluxor__inner {
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   左カラム：コンテンツ
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__content {
   display: flex;
   flex-direction: column;
-  gap: 2rem;
+  gap: 1.5rem;
+}
+
+/* ----------------------------------------------------------
+   小見出し
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__subtitle {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: currentColor;
+  opacity: 0.7;
+  margin: 0;
 }
 
 /* ----------------------------------------------------------
@@ -28,9 +60,9 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(1.5rem, 4vw, 2.25rem);
-  letter-spacing: 0.06em;
-  line-height: 1.1;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
   margin: 0;
 }
 
@@ -42,30 +74,11 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(1.25rem, 3vw, 1.5rem);
+  font-size: clamp(1.25rem, 3vw, 2rem);
   letter-spacing: 0.08em;
   line-height: 1.2;
   margin: 0;
   opacity: 0.9;
-  position: relative;
-}
-
-@media screen and (min-width: 750px) {
-  .about-philosophy-fluxor__tagline {
-    margin: 1rem 0 0;
-  }
-}
-
-.about-philosophy-fluxor__tagline::before {
-  content: '';
-  position: absolute;
-  bottom: -1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0.875rem;
-  height: 1px;
-  background-color: currentColor;
-  opacity: 0.3;
 }
 
 /* ----------------------------------------------------------
@@ -74,42 +87,159 @@
 
 .about-philosophy-fluxor__description {
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  font-size: clamp(1rem, 1.2vw, 1.125rem);
   letter-spacing: 0.04em;
   line-height: 1.7;
-  opacity: 0.75;
+  opacity: 0.8;
   margin: 0;
+}
+
+/* ----------------------------------------------------------
+   CTAボタン
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__cta {
+  display: inline-block;
+  align-self: flex-start;
   margin-top: 1rem;
+  padding: 0.875rem 2.5rem;
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: currentColor;
+  border: 2px solid currentColor;
+  background: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  .about-philosophy-fluxor__cta:hover {
+    background-color: currentColor;
+    color: var(--color-background);
+    transform: translateY(-1px);
+  }
+}
+
+.about-philosophy-fluxor__cta:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* ----------------------------------------------------------
+   右カラム：画像
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__media {
+  position: relative;
+  width: 100%;
+  height: 400px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: var(--color-base-background-2);
+}
+
+@media screen and (min-width: 768px) {
+  .about-philosophy-fluxor__media {
+    height: 500px;
+  }
+}
+
+.about-philosophy-fluxor__image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transition: transform 0.3s ease;
+}
+
+@media (any-hover: hover) {
+  .about-philosophy-fluxor__image:hover {
+    transform: scale(1.02);
+  }
+}
+
+/* ----------------------------------------------------------
+   プレースホルダー
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__placeholder {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: currentColor;
+  opacity: 0.4;
+  text-align: center;
+  gap: 1rem;
+}
+
+.about-philosophy-fluxor__placeholder p {
+  font-family: var(--font-body-family);
+  font-size: 0.875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   アニメーション軽減
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-philosophy-fluxor__cta {
+    transition: none;
+  }
+
+  .about-philosophy-fluxor__cta:hover {
+    transform: none;
+  }
+
+  .about-philosophy-fluxor__image {
+    transition: none;
+  }
+
+  .about-philosophy-fluxor__image:hover {
+    transform: none;
+  }
 }
 
 /* ----------------------------------------------------------
    レスポンシブ
    ---------------------------------------------------------- */
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .about-philosophy-fluxor {
-    padding: 8rem 2.5rem;
+    padding: 6rem 2rem;
   }
 
-  .about-philosophy-fluxor__inner {
-    gap: 2.5rem;
+  .about-philosophy-fluxor__content {
+    gap: 2rem;
   }
 
-  .about-philosophy-fluxor__tagline::before {
-    width: 2.5rem;
+  .about-philosophy-fluxor__cta {
+    margin-top: 1.5rem;
+    padding: 1rem 3rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .about-philosophy-fluxor {
-    padding: 3.75em 4.375rem;
+    padding: 8rem 4rem;
   }
 
   .about-philosophy-fluxor__inner {
-    gap: 0.875rem;
+    gap: 6rem;
   }
 
-  .about-philosophy-fluxor__description {
+  .about-philosophy-fluxor__content {
+    gap: 2.5rem;
+  }
+
+  .about-philosophy-fluxor__cta {
     margin-top: 2rem;
   }
 }
