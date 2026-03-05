@@ -17,7 +17,7 @@
   transition: opacity 0.2s ease !important;
 }
 
-.header .header__menu-item span {
+.header .header__menu-item > span {
   position: relative !important;
 }
 
