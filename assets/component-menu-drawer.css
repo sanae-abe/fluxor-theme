@@ -85,7 +85,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer__navigation {
-  padding: 3rem 0;
+  padding: 0.875rem 0;
 }
 
 .menu-drawer__inner-submenu {
@@ -99,9 +99,15 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer__menu-item {
-  padding:0.6875rem 3rem;
+  padding:0.6875rem 0.875rem;
   text-decoration: none;
-  font-size: 1.8rem;
+  font-size: 1.125rem;
+}
+
+@media screen and (min-width: 750px) {
+  .menu-drawer__menu-item {
+    font-size: 1.8rem;
+  }
 }
 
 .menu-drawer summary.menu-drawer__menu-item {
@@ -128,7 +134,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 .menu-drawer__menu-item > .svg-wrapper {
   width: 15px;
   position: absolute;
-  right: 3rem;
+  right: 0.875rem;
   top: 50%;
   transform: translateY(-50%);
 }
@@ -151,7 +157,7 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 .menu-drawer__close-button {
   margin-top: 1.5rem;
-  padding: 0.75rem 2.6rem 0.75rem 3rem;
+  padding: 0.75rem 2.6rem 0.75rem 0.875rem;
   text-decoration: none;
   display: flex;
   align-items: center;
@@ -176,18 +182,18 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .header--has-social .menu-drawer__utility-links {
-  padding: 2rem 3rem;
+  padding: 2rem 0.875rem;
 }
 
 @media screen and (max-width: 749px) {
   .header--has-account:where(:not(.header--has-social):not(.header--has-localizations)) .menu-drawer__utility-links {
-    padding: 2rem 3rem;
+    padding: 2rem 0.875rem;
   }
 }
 
 @media screen and (max-width: 989px) {
   .header--has-localizations:where(:not(.header--has-social)) .menu-drawer__utility-links {
-    padding: 2rem 3rem;
+    padding: 2rem 0.875rem;
   }
 }
 
