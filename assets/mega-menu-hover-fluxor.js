@@ -38,6 +38,15 @@ class MegaMenuHover {
       }
     }, 250));
 
+    // スクロール時にメガメニューの位置を再計算
+    window.addEventListener('scroll', this.debounce(() => {
+      // 開いているメガメニューがあれば位置を再調整
+      const openMenu = document.querySelector('.mega-menu[open]');
+      if (openMenu) {
+        this.adjustMegaMenuPosition(openMenu);
+      }
+    }, 100));
+
     this.setupHoverEvents();
   }
 
@@ -117,16 +126,41 @@ class MegaMenuHover {
   }
 
   adjustMegaMenuPosition(menu) {
-    // 現在のヘッダー全体の高さを動的に計算
-    const header = document.querySelector('.section-header');
+    // ヘッダーグループ全体（utility-bar + header）の下端を計算
+    const utilityBar = document.querySelector('.utility-bar');
+    const header = document.querySelector('.header');
+
     if (!header) return;
 
-    const headerHeight = header.getBoundingClientRect().bottom;
-    const megaMenuContent = menu.querySelector('.mega-menu__content');
+    let topPosition = 0;
 
+    // utility-barがある場合はその下端から計算
+    if (utilityBar) {
+      const utilityRect = utilityBar.getBoundingClientRect();
+      const headerRect = header.getBoundingClientRect();
+
+      // utility-bar が画面内にある場合
+      if (utilityRect.bottom > 0) {
+        topPosition = Math.max(utilityRect.bottom, headerRect.bottom);
+      } else {
+        // utility-bar が見えない場合はheaderのみ
+        topPosition = headerRect.bottom;
+      }
+    } else {
+      // utility-barがない場合はheaderのみ
+      topPosition = header.getBoundingClientRect().bottom;
+    }
+
+    const megaMenuContent = menu.querySelector('.mega-menu__content');
     if (megaMenuContent) {
-      // CSS変数ではなく、リアルタイム計算値を直接適用
-      megaMenuContent.style.top = `${headerHeight}px`;
+      megaMenuContent.style.top = `${topPosition}px`;
+
+      // デバッグログ（一時的）
+      console.log('Mega menu position adjusted:', {
+        utilityBarBottom: utilityBar ? utilityBar.getBoundingClientRect().bottom : 'none',
+        headerBottom: header.getBoundingClientRect().bottom,
+        finalPosition: topPosition
+      });
     }
   }
 
