@@ -1581,7 +1581,7 @@ details[open] > .share-button__fallback {
   border-radius: var(--inputs-radius);
   height: 2.8125rem;
   min-height: calc(var(--inputs-border-width) * 2);
-  min-width: calc(7rem + (var(--inputs-border-width) * 2));
+  min-width: calc(4.375rem + (var(--inputs-border-width) * 2));
   position: relative;
   border: 0;
 }
