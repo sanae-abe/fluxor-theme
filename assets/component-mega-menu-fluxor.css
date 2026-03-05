@@ -211,7 +211,7 @@
   text-decoration: none !important;
   display: block !important;
   margin-bottom: 1.2rem !important;
-  padding-bottom: 0 !important;
+  padding-bottom: 0.25rem !important;
   border-bottom: 1px solid rgba(26, 23, 20, 0.15) !important;
   transition: opacity 0.2s ease !important;
 }
