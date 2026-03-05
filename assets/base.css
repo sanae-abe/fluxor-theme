@@ -127,7 +127,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 @media screen and (min-width: 990px) {
   .header:not(.drawer-menu).page-width {
     padding-left: 5rem;
-    padding-right: 5rem;
+    padding-right: 3.125rem;
   }
 
   .page-width--narrow {
@@ -2211,7 +2211,7 @@ input[type='checkbox'] {
 @media screen and (min-width: 990px) {
   body:has(.section-header .header:not(.drawer-menu)) .utility-bar .page-width {
     padding-left: 5rem;
-    padding-right: 5rem;
+    padding-right: 3.125rem;
   }
 
   .announcement-bar-slider {

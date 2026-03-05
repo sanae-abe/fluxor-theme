@@ -410,7 +410,7 @@
 @media screen and (min-width: 750px) {
   :is(.account, .order) {
     padding-left: 5rem;
-    padding-right: 5rem;
+    padding-right: 3.125rem;
   }
 }
 
