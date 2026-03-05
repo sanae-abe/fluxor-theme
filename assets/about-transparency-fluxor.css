@@ -49,7 +49,7 @@
   display: grid;
   grid-template-columns: 1fr;
   gap: 0.875rem;
-  margin-top: 2.5rem;
+  margin-top: 1.625rem;
 }
 
 @media screen and (min-width: 750px) {
