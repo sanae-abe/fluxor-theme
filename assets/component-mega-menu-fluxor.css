@@ -338,7 +338,7 @@
 
 .header .mega-menu > summary .icon-caret {
   position: absolute !important;
-  right: 0 !important;
+  right: 0.25rem !important;
   top: 50% !important;
   transform: translateY(-50%) !important;
 }
