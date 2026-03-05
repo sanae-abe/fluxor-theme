@@ -9,7 +9,7 @@
 
 .header .header__menu-item {
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.875rem, 1.1vw, 1rem) !important;
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem) !important;
   font-weight: 500 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
@@ -213,7 +213,7 @@
 /* サブカテゴリ項目（レベル3項目）*/
 .header .mega-menu__link:not(.mega-menu__link--level-2) {
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.875rem, 1.1vw, 1rem) !important;
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem) !important;
   font-weight: 400 !important;
   letter-spacing: 0.04em !important;
   color: currentColor !important;
@@ -391,7 +391,7 @@
 
 .header .mega-menu__placeholder-text {
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.875rem, 1.1vw, 1rem) !important;
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem) !important;
   font-weight: 500 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
