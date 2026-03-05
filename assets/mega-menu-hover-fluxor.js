@@ -78,7 +78,7 @@ class MegaMenuHover {
       // メニューが閉じられた時：位置調整をリセット
       const megaMenuContent = menu.querySelector('.mega-menu__content');
       if (megaMenuContent) {
-        megaMenuContent.style.top = '';
+        megaMenuContent.style.removeProperty('top');
       }
     }
   }
@@ -136,12 +136,14 @@ class MegaMenuHover {
 
     const megaMenuContent = menu.querySelector('.mega-menu__content');
     if (megaMenuContent) {
-      megaMenuContent.style.top = `${topPosition}px`;
+      // CSS !important を上書きするため setProperty を使用
+      megaMenuContent.style.setProperty('top', `${topPosition}px`, 'important');
 
       // デバッグログ（一時的）
       console.log('Mega menu position adjusted (fixed):', {
         sectionHeaderBottom: topPosition,
-        sectionHeaderHeight: sectionHeaderRect.height
+        sectionHeaderHeight: sectionHeaderRect.height,
+        appliedTop: `${topPosition}px`
       });
     }
   }
@@ -154,7 +156,7 @@ class MegaMenuHover {
       // 位置調整をリセット
       const megaMenuContent = menu.querySelector('.mega-menu__content');
       if (megaMenuContent) {
-        megaMenuContent.style.top = '';
+        megaMenuContent.style.removeProperty('top');
       }
     });
   }
