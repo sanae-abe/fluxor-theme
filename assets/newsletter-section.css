@@ -20,7 +20,7 @@
 }
 
 .newsletter__wrapper > * + .newsletter-form {
-  margin-top: 3rem;
+  margin-top: 0.875rem;
 }
 
 .newsletter__subheading {
@@ -38,7 +38,7 @@
 }
 
 .newsletter__button {
-  margin-top: 3rem;
+  margin-top: 0.875rem;
   width: fit-content;
 }
 

@@ -301,7 +301,7 @@ quick-order-list .pagination-wrapper {
 
 @media screen and (min-width: 990px) {
   .variant-item .loading__spinner {
-    padding-top: 3rem;
+    padding-top: 0.875rem;
     bottom: auto;
   }
 
@@ -522,7 +522,7 @@ quick-order-list .pagination-wrapper {
   }
 
   .quick-order-list-total__confirmation span {
-    margin-right: 3rem;
+    margin-right: 0.875rem;
   }
 
   .quick-order-list__total-items {

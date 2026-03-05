@@ -112,7 +112,7 @@
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 3rem 2rem 5rem;
+  padding: 0.875rem 2rem 5rem;
   gap: 1rem;
 }
 
@@ -209,7 +209,7 @@
     grid-column: 1 / 2;
     grid-row: 1;
     justify-content: center;
-    padding: 5rem 4rem 5rem 5rem;
+    padding: 5rem 2.5rem 5rem 5rem;
     gap: 1.25rem;
     position: relative;
     z-index: 1;
@@ -265,7 +265,7 @@
   .hero-fluxor__dots {
     left: 5rem;
     transform: none;
-    bottom: 3rem;
+    bottom: 0.875rem;
   }
 }
 
