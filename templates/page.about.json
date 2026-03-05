@@ -8,9 +8,18 @@
         "subheading": "だからこそ、徹底的に調べます。",
         "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
       }
+    },
+    "about_method_fluxor": {
+      "type": "about-method-fluxor",
+      "settings": {
+        "color_scheme": "scheme-1",
+        "heading": "私たちの調査方法",
+        "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
+      }
     }
   },
   "order": [
-    "about_hero_fluxor"
+    "about_hero_fluxor",
+    "about_method_fluxor"
   ]
 }
