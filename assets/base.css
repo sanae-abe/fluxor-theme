@@ -2219,7 +2219,7 @@ input[type='checkbox'] {
   }
 
   .announcement-bar .slider-button {
-    height: 3.8rem;
+    height: 2.5rem;
   }
 }
 
@@ -2249,7 +2249,7 @@ input[type='checkbox'] {
   padding: 1rem 0;
   margin: 0;
   letter-spacing: 0.1rem;
-  min-height: 3.8rem;
+  min-height: 2.5rem;
 }
 
 .announcement-bar-slider--fade-in-next .announcement-bar__message,
@@ -2446,6 +2446,7 @@ input[type='checkbox'] {
 }
 
 .header__heading-link .h2 {
+  font-size: 2rem !important; /* 32px */
   line-height: 1;
   color: rgba(var(--color-foreground), 0.75);
 }
@@ -2546,22 +2547,22 @@ input[type='checkbox'] {
 }
 
 .header__icon .icon {
-  height: 2rem;
-  width: 2rem;
+  height: 1.5rem;
+  width: 1.5rem;
   fill: none;
   vertical-align: middle;
 }
 
 .header__icon,
 .header__icon--cart .icon {
-  height: 4.4rem;
-  width: 4.4rem;
+  height: 3.5rem;
+  width: 3.5rem;
   padding: 0;
 }
 
 .header__icon--cart {
   position: relative;
-  margin-right: -1.2rem;
+  margin-right: -0.95rem;
 }
 
 .header__icon--menu[aria-expanded='true']::before {
@@ -2576,7 +2577,7 @@ input[type='checkbox'] {
 }
 
 .header__icon--account shop-user-avatar {
-  --shop-avatar-size: 2.8rem;
+  --shop-avatar-size: 2.1rem;
 }
 
 details .header__icon-close {
