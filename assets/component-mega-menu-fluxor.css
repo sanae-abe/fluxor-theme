@@ -98,18 +98,18 @@
     display: none !important;
   }
 
-  /* summary内のリンクは有効にする */
-  .header .mega-menu > summary .header__menu-item {
+  /* summary自体を有効にする */
+  .header .mega-menu > summary.header__menu-item {
     pointer-events: all !important;
     position: relative !important;
   }
 
-  /* メガメニューアイテムのホバー効果（詳細度を上げて確実に適用） */
-  .header .mega-menu > summary .header__menu-item:hover {
+  /* メガメニューアイテムのホバー効果（summaryがheader__menu-item） */
+  .header .mega-menu > summary.header__menu-item:hover {
     opacity: 0.7 !important;
   }
 
-  .header .mega-menu > summary .header__menu-item:hover::after {
+  .header .mega-menu > summary.header__menu-item:hover::after {
     content: '' !important;
     position: absolute !important;
     bottom: -0.5rem !important;
