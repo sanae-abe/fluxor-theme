@@ -1743,7 +1743,7 @@ details[open] > .share-button__fallback {
 .customer .field input:not(:placeholder-shown) ~ label,
 .customer .field input:-webkit-autofill ~ label {
   font-size: 0.625rem;
-  top: calc(var(--inputs-border-width) + 0.5rem);
+  top: calc(var(--inputs-border-width) + 0.25rem);
   left: calc(var(--inputs-border-width) + 1.25rem);
   letter-spacing: 0.04rem;
 }
