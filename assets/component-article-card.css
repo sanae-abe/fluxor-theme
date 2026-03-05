@@ -84,7 +84,7 @@
 
 @media screen and (min-width: 990px) {
   .article-card__link:not(:only-child) {
-    margin-right: 4rem;
+    margin-right: 2.5rem;
   }
 }
 

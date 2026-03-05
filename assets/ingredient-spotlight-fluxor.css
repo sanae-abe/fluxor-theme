@@ -46,7 +46,7 @@
   z-index: 1;
   display: grid;
   grid-template-columns: 1fr;
-  gap: 4rem;
+  gap: 2.5rem;
   align-items: center;
 }
 
@@ -201,7 +201,7 @@
 
 @media screen and (min-width: 750px) {
   .ingredient-spotlight-fluxor {
-    padding: 8rem 4rem;
+    padding: 8rem 2.5rem;
   }
 }
 

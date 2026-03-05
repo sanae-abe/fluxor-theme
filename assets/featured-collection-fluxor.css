@@ -149,7 +149,7 @@
 .featured-collection-fluxor__empty {
   text-align: center;
   opacity: 0.4;
-  padding: 4rem 0;
+  padding: 2.5rem 0;
   font-family: var(--font-body-family);
   font-size: clamp(1rem, 1.2vw, 1.1rem);
   letter-spacing: 0.06em;
@@ -161,7 +161,7 @@
 
 @media screen and (min-width: 750px) {
   .featured-collection-fluxor {
-    padding: 6rem 4rem;
+    padding: 6rem 2.5rem;
   }
 }
 

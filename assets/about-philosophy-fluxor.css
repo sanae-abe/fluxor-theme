@@ -82,7 +82,7 @@
 
 @media screen and (min-width: 750px) {
   .about-philosophy-fluxor {
-    padding: 8rem 4rem;
+    padding: 8rem 2.5rem;
   }
 
   .about-philosophy-fluxor__inner {
@@ -90,7 +90,7 @@
   }
 
   .about-philosophy-fluxor__tagline::before {
-    width: 4rem;
+    width: 2.5rem;
   }
 }
 

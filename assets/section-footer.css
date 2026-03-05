@@ -18,7 +18,7 @@
 
   .footer-block.grid__item {
     padding: 0;
-    margin: 4rem 0;
+    margin: 2.5rem 0;
     width: 100%;
   }
 
@@ -313,7 +313,7 @@
 }
 
 .footer-block__details-content {
-  margin-bottom: 4rem;
+  margin-bottom: 2.5rem;
 }
 
 @media screen and (min-width: 750px) {

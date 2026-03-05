@@ -91,7 +91,7 @@
   -moz-appearance: none;
   color: rgb(var(--color-foreground));
   width: 100%;
-  padding-right: 4rem;
+  padding-right: 2.5rem;
   padding-bottom: 1.5rem;
 }
 
@@ -116,7 +116,7 @@
   align-items: center;
   cursor: pointer;
   display: flex;
-  height: 4rem;
+  height: 2.5rem;
   padding: 0 1.5rem 0 1.5rem;
   font-size: 1.3rem;
   background-color: transparent;

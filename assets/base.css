@@ -284,7 +284,7 @@ h5,
 }
 
 .h0 {
-  font-size: calc(var(--font-heading-scale) * 4rem);
+  font-size: calc(var(--font-heading-scale) * 2.5rem);
 }
 
 @media only screen and (min-width: 750px) {
@@ -301,7 +301,7 @@ h1,
 @media only screen and (min-width: 750px) {
   h1,
   .h1 {
-    font-size: calc(var(--font-heading-scale) * 4rem);
+    font-size: calc(var(--font-heading-scale) * 2.5rem);
   }
 }
 
@@ -794,7 +794,7 @@ summary::-webkit-details-marker {
 }
 
 .title--primary {
-  margin: 4rem 0;
+  margin: 2.5rem 0;
 }
 
 .title-wrapper--self-padded-tablet-down,
@@ -1862,7 +1862,7 @@ input[type='checkbox'] {
 
 .form-status-list {
   padding: 0;
-  margin: 2rem 0 4rem;
+  margin: 2rem 0 2.5rem;
 }
 
 .form-status-list li {

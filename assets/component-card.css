@@ -167,7 +167,7 @@
 .card__information-volume-pricing-note--button + .global-settings-popup.quantity-popover__info {
   transform: initial;
   top: auto;
-  bottom: 4rem;
+  bottom: 2.5rem;
   max-width: 20rem;
   width: calc(95% + 2rem);
 }
@@ -241,7 +241,7 @@
     .card--card
     .card__information-volume-pricing-note--button
     + .global-settings-popup.quantity-popover__info {
-    width: calc(100% + var(--border-width) + 4rem);
+    width: calc(100% + var(--border-width) + 2.5rem);
   }
 
   .grid--2-col-tablet-down .card__content quick-add-bulk .quantity {

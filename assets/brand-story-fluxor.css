@@ -68,7 +68,7 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(2rem, 5vw, 4rem);
+  font-size: clamp(2rem, 5vw, 2.5rem);
   letter-spacing: 0.04em;
   line-height: 1.1;
   margin: 0;
@@ -135,7 +135,7 @@
 
 @media screen and (min-width: 750px) {
   .brand-story-fluxor {
-    padding: 8rem 4rem;
+    padding: 8rem 2.5rem;
   }
 }
 
