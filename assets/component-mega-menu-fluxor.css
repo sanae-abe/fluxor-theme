@@ -104,7 +104,11 @@
     position: relative !important;
   }
 
-  /* メガメニューを持つアイテムのホバー時アンダーライン */
+  /* メガメニューアイテムのホバー効果（詳細度を上げて確実に適用） */
+  .header .mega-menu > summary .header__menu-item:hover {
+    opacity: 0.7 !important;
+  }
+
   .header .mega-menu > summary .header__menu-item:hover::after {
     content: '' !important;
     position: absolute !important;
@@ -113,7 +117,9 @@
     right: 0 !important;
     height: 1px !important;
     background-color: currentColor !important;
+    z-index: 1 !important;
   }
+
 }
 
 /* メガメニューコンテンツ */
