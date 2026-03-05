@@ -76,9 +76,9 @@
   right: 0 !important;
   width: 100vw !important;
   z-index: 3 !important;
-  margin-top: 0 !important;
-  padding: 3rem 0 !important;
-  border-top: 1px solid rgba(26, 23, 20, 0.1) !important;
+  margin: 0 !important;
+  padding: 3rem 0 0 0 !important;
+  border: none !important;
   min-height: 300px !important;
   opacity: 0 !important;
   visibility: hidden !important;
