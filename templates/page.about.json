@@ -76,11 +76,52 @@
         "tagline": "「流行より、エビデンス。」",
         "description": "私たちは販売数やマーケティングではなく、科学的根拠と実際の使用感に基づいて商品を選んでいます。時間をかけて調査し、納得したもののみを紹介します。"
       }
+    },
+    "about_transparency_fluxor_GWHRLn": {
+      "type": "about-transparency-fluxor",
+      "blocks": {
+        "transparency_point_DWr7Ne": {
+          "type": "transparency_point",
+          "settings": {
+            "icon": "❌",
+            "title": "誇張しません",
+            "description": "「奇跡の効果」は謳いません"
+          }
+        },
+        "transparency_point_x8pG8V": {
+          "type": "transparency_point",
+          "settings": {
+            "icon": "❌",
+            "title": "隠しません",
+            "description": "製造元、成分濃度を可能な限り公開"
+          }
+        },
+        "transparency_point_q4myt3": {
+          "type": "transparency_point",
+          "settings": {
+            "icon": "❌",
+            "title": "推測しません",
+            "description": "確認できないことは「分からない」と言います"
+          }
+        }
+      },
+      "block_order": [
+        "transparency_point_DWr7Ne",
+        "transparency_point_x8pG8V",
+        "transparency_point_q4myt3"
+      ],
+      "name": "Transparency - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "透明性へのこだわり",
+        "description": "調査過程も、分からないことも、正直にお伝えします。"
+      }
     }
   },
   "order": [
     "about_hero_fluxor",
     "about_method_fluxor",
-    "about_philosophy_fluxor_n7REA7"
+    "about_philosophy_fluxor_n7REA7",
+    "about_transparency_fluxor_GWHRLn"
   ]
 }
