@@ -1748,7 +1748,7 @@ line-height: 1;,
   letter-spacing: 0.04rem;
 }
 
-line-height: 1;,
+.field__input:focus ~ .field__label,
 .field__input:not(:placeholder-shown),
 .field__input:-webkit-autofill,
 .customer .field input:focus,
