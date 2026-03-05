@@ -31,6 +31,7 @@
 
 .header .header__active-menu-item {
   position: relative !important;
+  text-decoration: none !important;
 }
 
 .header .header__active-menu-item::after {
@@ -41,6 +42,11 @@
   right: 0 !important;
   height: 1px !important;
   background-color: currentColor !important;
+}
+
+/* Dawnのホバー時text-decoration-thicknessを無効化 */
+.header .header__menu-item:hover .header__active-menu-item {
+  text-decoration: none !important;
 }
 
 /* ----------------------------------------------------------
