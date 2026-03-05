@@ -21,6 +21,10 @@
   position: relative;
 }
 
+.header__menu-item::after {
+  display: none;
+}
+
 .header .header__active-menu-item span::after {
   display: none;
   content: '' !important;
