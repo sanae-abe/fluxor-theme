@@ -1,9 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "about_hero_fluxor": {
       "type": "about-hero-fluxor",
       "settings": {
-        "color_scheme": "scheme-3",
+        "color_scheme": "scheme-1",
+        "image_overlay_opacity": 60,
         "heading": "私たちは専門家ではありません。",
         "subheading": "だからこそ、徹底的に調べます。",
         "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
@@ -11,15 +21,119 @@
     },
     "about_method_fluxor": {
       "type": "about-method-fluxor",
+      "blocks": {
+        "method_THgMTc": {
+          "type": "method",
+          "settings": {
+            "icon": "📊",
+            "title": "論文検索",
+            "description": "PubMed、皮膚科学会誌を調査"
+          }
+        },
+        "method_CydTyJ": {
+          "type": "method",
+          "settings": {
+            "icon": "🧪",
+            "title": "成分分析",
+            "description": "PubMed、皮膚科学会誌を調査"
+          }
+        },
+        "method_a6haAe": {
+          "type": "method",
+          "settings": {
+            "icon": "🏭",
+            "title": "製造元調査",
+            "description": "OEM先、品質管理体制を調査"
+          }
+        },
+        "method_hkpKgq": {
+          "type": "method",
+          "settings": {
+            "icon": "💬",
+            "title": "口コミ分析",
+            "description": "実際のユーザー評価を収集"
+          }
+        }
+      },
+      "block_order": [
+        "method_THgMTc",
+        "method_CydTyJ",
+        "method_a6haAe",
+        "method_hkpKgq"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "heading": "私たちの調査方法",
         "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
       }
+    },
+    "about_philosophy_fluxor_n7REA7": {
+      "type": "about-philosophy-fluxor",
+      "name": "About Philosophy - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "なぜFluxorなのか",
+        "tagline": "「流行より、エビデンス。」",
+        "description": "私たちは販売数やマーケティングではなく、科学的根拠と実際の使用感に基づいて商品を選んでいます。時間をかけて調査し、納得したもののみを紹介します。"
+      }
+    },
+    "about_transparency_fluxor_GWHRLn": {
+      "type": "about-transparency-fluxor",
+      "blocks": {
+        "transparency_point_DWr7Ne": {
+          "type": "transparency_point",
+          "settings": {
+            "icon": "❌",
+            "title": "誇張しません",
+            "description": "「奇跡の効果」は謳いません"
+          }
+        },
+        "transparency_point_x8pG8V": {
+          "type": "transparency_point",
+          "settings": {
+            "icon": "❌",
+            "title": "隠しません",
+            "description": "製造元、成分濃度を可能な限り公開"
+          }
+        },
+        "transparency_point_q4myt3": {
+          "type": "transparency_point",
+          "settings": {
+            "icon": "❌",
+            "title": "推測しません",
+            "description": "確認できないことは「分からない」と言います"
+          }
+        }
+      },
+      "block_order": [
+        "transparency_point_DWr7Ne",
+        "transparency_point_x8pG8V",
+        "transparency_point_q4myt3"
+      ],
+      "name": "Transparency - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "透明性へのこだわり",
+        "description": "調査過程も、分からないことも、正直にお伝えします。"
+      }
+    },
+    "about_community_fluxor_JxFi8T": {
+      "type": "about-community-fluxor",
+      "name": "About Community - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "一緒に学びましょう",
+        "description": "私たちも日々学んでいます。新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。一緒により良いスキンケア選択を見つけていきませんか？",
+        "button_label": "商品を見る",
+        "button_link": "shopify://collections/all"
+      }
     }
   },
   "order": [
     "about_hero_fluxor",
-    "about_method_fluxor"
+    "about_method_fluxor",
+    "about_philosophy_fluxor_n7REA7",
+    "about_transparency_fluxor_GWHRLn",
+    "about_community_fluxor_JxFi8T"
   ]
 }
