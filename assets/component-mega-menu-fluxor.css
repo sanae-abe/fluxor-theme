@@ -58,7 +58,7 @@
 }
 
 .header .header__menu-item:focus-visible {
-  outline: 2px solid currentColor !important;
+  outline: 1px solid currentColor !important;
   outline-offset: 3px !important;
 }
 
@@ -147,7 +147,7 @@
   margin: 0 !important;
   padding: 1rem 0 !important;
   border: none !important;
-  min-height: 248px !important;
+  min-height: 240px !important;
   opacity: 0 !important;
   visibility: hidden !important;
   transform: translateY(-10px) !important;
@@ -248,7 +248,7 @@
 }
 
 .header .mega-menu__link:focus-visible {
-  outline: 2px solid currentColor !important;
+  outline: 1px solid currentColor !important;
   outline-offset: 2px !important;
 }
 
