@@ -64,11 +64,6 @@
   background-color: currentColor !important;
 }
 
-/* Dawnのホバー時text-decorationを無効化 */
-.header .header__menu-item:hover span {
-  text-decoration: none !important;
-}
-
 .header details[open]:hover > .header__menu-item {
   text-decoration-thickness: initial !important;
   text-decoration: none !important;
