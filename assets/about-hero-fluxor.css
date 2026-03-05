@@ -16,7 +16,7 @@
    背景パターン & 背景画像
    ---------------------------------------------------------- */
 
-/* 六角形ハニカムパターン（分子構造暗示） */
+/* 六角形パーティクルアニメーション（分子構造暗示） */
 .about-hero-fluxor::before {
   content: '';
   position: absolute;
@@ -24,10 +24,64 @@
   right: 0;
   bottom: 0;
   left: 0;
-  background-image: url("data:image/svg+xml,%3csvg width='60' height='52' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' fill-rule='evenodd'%3e%3cpath d='M15 0l15 8.66v17.32L15 34.64 0 25.98V8.66L15 0zm30 0l15 8.66v17.32L45 34.64 30 25.98V8.66L45 0z' stroke='%23F6F4F0' stroke-width='0.5' opacity='0.12'/%3e%3cpath d='M15 52l15-8.66V25.98L15 17.32 0 25.98v17.32L15 52zm30 0l15-8.66V25.98L30 17.32l-15 8.66v17.32L30 52z' stroke='%23F6F4F0' stroke-width='0.5' opacity='0.08'/%3e%3c/g%3e%3c/svg%3e");
-  background-size: 120px 104px;
+  background-image:
+    url("data:image/svg+xml,%3csvg width='80' height='70' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' stroke='%23E8E5E0' stroke-width='0.8' opacity='0.25'%3e%3cpath d='M20 5l12 7v14l-12 7-12-7V12l12-7z'/%3e%3c/g%3e%3c/svg%3e"),
+    url("data:image/svg+xml,%3csvg width='60' height='52' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' stroke='%23D4CFC7' stroke-width='0.6' opacity='0.2'%3e%3cpath d='M15 3l10 6v12l-10 6-10-6V9l10-6z'/%3e%3c/g%3e%3c/svg%3e"),
+    url("data:image/svg+xml,%3csvg width='100' height='87' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' stroke='%23F6F4F0' stroke-width='0.4' opacity='0.15'%3e%3cpath d='M25 8l15 9v18l-15 9-15-9V17l15-9z'/%3e%3c/g%3e%3c/svg%3e");
+  background-size: 160px 140px, 120px 104px, 200px 174px;
+  background-position: 0% 0%, 50% 50%, 100% 100%;
   z-index: 0;
-  opacity: var(--pattern-opacity, 0.6);
+  animation: particleFloat1 20s linear infinite,
+             particleFloat2 25s linear infinite,
+             particleFloat3 30s linear infinite;
+}
+
+.about-hero-fluxor::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-image:
+    url("data:image/svg+xml,%3csvg width='70' height='61' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' stroke='%23C2BCB3' stroke-width='0.5' opacity='0.18'%3e%3cpath d='M17.5 4l12 7v14l-12 7-12-7V11l12-7z'/%3e%3c/g%3e%3c/svg%3e"),
+    url("data:image/svg+xml,%3csvg width='90' height='78' xmlns='http://www.w3.org/2000/svg'%3e%3cg fill='none' stroke='%23A69D94' stroke-width='0.3' opacity='0.12'%3e%3cpath d='M22.5 6l15 9v18l-15 9-15-9V15l15-9z'/%3e%3c/g%3e%3c/svg%3e");
+  background-size: 140px 122px, 180px 156px;
+  background-position: 25% 25%, 75% 75%;
+  z-index: 0;
+  animation: particleFloat4 35s linear infinite,
+             particleFloat5 28s linear infinite;
+}
+
+/* パーティクル浮遊アニメーション */
+@keyframes particleFloat1 {
+  0% { background-position: 0% 0%, 50% 50%, 100% 100%; }
+  100% { background-position: -100% -50%, 150% 0%, 0% 50%; }
+}
+
+@keyframes particleFloat2 {
+  0% { opacity: 0.6; }
+  50% { opacity: 0.8; }
+  100% { opacity: 0.6; }
+}
+
+@keyframes particleFloat3 {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-10px) rotate(180deg); }
+  100% { transform: translateY(0px) rotate(360deg); }
+}
+
+@keyframes particleFloat4 {
+  0% { background-position: 25% 25%, 75% 75%; }
+  50% { background-position: 75% 0%, 25% 100%; }
+  100% { background-position: 125% 25%, -25% 75%; }
+}
+
+@keyframes particleFloat5 {
+  0% { transform: scale(1) rotate(0deg); }
+  33% { transform: scale(1.05) rotate(120deg); }
+  66% { transform: scale(0.95) rotate(240deg); }
+  100% { transform: scale(1) rotate(360deg); }
 }
 
 /* Dawn の div:empty { display: none } を上書き（詳細度 0-2-0） */
@@ -140,5 +194,26 @@
 
   .about-hero-fluxor__inner {
     gap: 2.5rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   アニメーション軽減（アクセシビリティ）
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-fluxor::before,
+  .about-hero-fluxor::after {
+    animation: none !important;
+  }
+
+  .about-hero-fluxor::before {
+    background-position: 0% 0%, 50% 50%, 100% 100% !important;
+    opacity: 0.4 !important;
+  }
+
+  .about-hero-fluxor::after {
+    background-position: 25% 25%, 75% 75% !important;
+    opacity: 0.3 !important;
   }
 }
