@@ -48,7 +48,7 @@
   text-decoration: none !important;
 }
 
-.header .header__active-menu-item span::after {
+.header .header__active-menu-item::after {
   content: '' !important;
   position: absolute !important;
   bottom: -0.5rem !important;
