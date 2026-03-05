@@ -24,6 +24,15 @@
   }
 }
 
+/* Dawnデフォルトのメニューアンダーラインを無効化 */
+.header .header__menu-item {
+  text-decoration: none !important;
+}
+
+.header details[open] > .header__menu-item {
+  text-decoration: none !important;
+}
+
 .header .header__menu-item:focus-visible {
   outline: 2px solid currentColor !important;
   outline-offset: 3px !important;
@@ -44,9 +53,19 @@
   background-color: currentColor !important;
 }
 
-/* Dawnのホバー時text-decoration-thicknessを無効化 */
+/* Dawnのホバー時text-decorationを無効化 */
+.header .header__menu-item:hover span {
+  text-decoration: none !important;
+}
+
+.header details[open]:hover > .header__menu-item {
+  text-decoration-thickness: initial !important;
+  text-decoration: none !important;
+}
+
 .header .header__menu-item:hover .header__active-menu-item {
   text-decoration: none !important;
+  text-decoration-thickness: initial !important;
 }
 
 /* ----------------------------------------------------------
@@ -157,6 +176,8 @@
 @media (any-hover: hover) {
   .header .mega-menu__link--level-2:hover {
     opacity: 0.7 !important;
+    text-decoration: none !important;
+    text-decoration-thickness: initial !important;
   }
 }
 
@@ -178,6 +199,8 @@
   .header .mega-menu__link:not(.mega-menu__link--level-2):hover {
     opacity: 0.6 !important;
     transform: translateX(4px) !important;
+    text-decoration: none !important;
+    text-decoration-thickness: initial !important;
   }
 }
 
