@@ -48,7 +48,7 @@
 .about-method-fluxor__grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 1rem;
+  gap: 2.5rem;
   margin-top: 2.5rem;
 }
 
