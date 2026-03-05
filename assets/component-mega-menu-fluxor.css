@@ -42,7 +42,7 @@
     opacity: 0.7 !important;
   }
 
-  .mega-menu--hovered .header .header__active-menu-item:hover > span::after {
+  .header .header__active-menu-item span:hover > span::after {
     display: block !important;
   }
 }
