@@ -72,10 +72,13 @@
       "type": "about-philosophy-fluxor",
       "name": "About Philosophy - Fluxor",
       "settings": {
-        "color_scheme": "",
+        "color_scheme": "scheme-2",
+        "subtitle": "一歩進んだスキンケア",
         "heading": "なぜFluxorなのか",
-        "tagline": "「流行より、エビデンス。」",
-        "description": "私たちは販売数やマーケティングではなく、科学的根拠と実際の使用感に基づいて商品を選んでいます。時間をかけて調査し、納得したもののみを紹介します。"
+        "tagline": "古代の知恵 × 現代の科学。",
+        "description": "ツボクサ（Centella Asiatica）のように、何千年もの伝統と現代の皮膚科学研究。私たちは流行に惑わされず、時の試練を経た成分と確かなエビデンスに基づいて商品を選んでいます。",
+        "cta_label": "成分について詳しく",
+        "cta_url": ""
       }
     },
     "about_transparency_fluxor_GWHRLn": {
