@@ -186,6 +186,7 @@
       "settings": {
         "color_scheme": "",
         "heading": "New Arrivals",
+        "auto_mode": "new_arrivals",
         "collection": "",
         "products_to_show": 4,
         "show_view_all": true
@@ -197,6 +198,7 @@
       "settings": {
         "color_scheme": "",
         "heading": "Best Sellers",
+        "auto_mode": "best_sellers",
         "collection": "",
         "products_to_show": 4,
         "show_view_all": true

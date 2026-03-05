@@ -1,8 +1,25 @@
 {{ 'featured-collection-fluxor.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
-  assign collection = collections[section.settings.collection]
   assign products_count = section.settings.products_to_show
+
+  if section.settings.auto_mode == 'new_arrivals'
+    assign products = collections.all.products | sort: 'created_at' | reverse
+    assign collection = collections.all
+    assign view_all_url = '/collections/all?sort_by=created-desc'
+  elsif section.settings.auto_mode == 'best_sellers'
+    assign products = collections.all.products | sort: 'best-selling'
+    assign collection = collections.all
+    assign view_all_url = '/collections/all?sort_by=best-selling'
+  elsif section.settings.collection != blank
+    assign collection = collections[section.settings.collection]
+    assign products = collection.products
+    assign view_all_url = collection.url
+  else
+    assign collection = null
+    assign products = null
+    assign view_all_url = ''
+  endif
 -%}
 
 <div class="featured-collection-fluxor color-{{ section.settings.color_scheme }} gradient">
@@ -13,16 +30,16 @@
       </h2>
     {%- endif -%}
 
-    {%- if section.settings.show_view_all and collection != blank -%}
-      <a href="{{ collection.url }}" class="featured-collection-fluxor__view-all">
+    {%- if section.settings.show_view_all and view_all_url != blank -%}
+      <a href="{{ view_all_url }}" class="featured-collection-fluxor__view-all">
         すべて見る
       </a>
     {%- endif -%}
   </div>
 
-  {%- if collection != blank and collection.products_count > 0 -%}
+  {%- if products != blank and products.size > 0 -%}
     <div class="featured-collection-fluxor__grid">
-      {%- for product in collection.products limit: products_count -%}
+      {%- for product in products limit: products_count -%}
         <a href="{{ product.url }}" class="fluxor-product-card">
           <div class="fluxor-product-card__image-wrapper">
             {%- if product.featured_image != blank -%}
@@ -45,7 +62,11 @@
     </div>
   {%- else -%}
     <p class="featured-collection-fluxor__empty">
-      テーマカスタマイザーでコレクションを選択してください。
+      {%- if section.settings.auto_mode != 'none' -%}
+        商品が見つかりませんでした。
+      {%- else -%}
+        テーマカスタマイザーでコレクションを選択するか、自動取得モードを設定してください。
+      {%- endif -%}
     </p>
   {%- endif -%}
 </div>
@@ -69,9 +90,31 @@
       "default": "New Arrivals"
     },
     {
+      "type": "select",
+      "id": "auto_mode",
+      "label": "商品取得方法",
+      "options": [
+        {
+          "value": "none",
+          "label": "手動（コレクション選択）"
+        },
+        {
+          "value": "new_arrivals",
+          "label": "新着商品（自動）"
+        },
+        {
+          "value": "best_sellers",
+          "label": "ベストセラー（自動）"
+        }
+      ],
+      "default": "none",
+      "info": "自動取得を選択すると、コレクション設定は無視されます"
+    },
+    {
       "type": "collection",
       "id": "collection",
-      "label": "コレクション"
+      "label": "コレクション",
+      "info": "商品取得方法が「手動」の場合のみ有効"
     },
     {
       "type": "range",
