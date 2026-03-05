@@ -871,7 +871,7 @@ summary::-webkit-details-marker {
 }
 
 .subtitle--medium {
-  font-size: 1.6rem;
+  font-size: 1rem;
   letter-spacing: 0.08rem;
 }
 
@@ -1574,7 +1574,7 @@ details[open] > .share-button__fallback {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: 1.6rem;
+  font-size: 1rem;
   width: 100%;
   box-sizing: border-box;
   transition: box-shadow var(--duration-short) ease;
@@ -1724,7 +1724,7 @@ details[open] > .share-button__fallback {
 
 .field__label,
 .customer .field label {
-  font-size: 1.6rem;
+  font-size: 1rem;
   left: calc(var(--inputs-border-width) + 2rem);
   top: calc(1rem + var(--inputs-border-width));
   margin-bottom: 0;
@@ -1828,7 +1828,7 @@ input[type='checkbox'] {
 }
 
 .form__message--large {
-  font-size: 1.6rem;
+  font-size: 1rem;
 }
 
 .customer .field .form__message {
@@ -1857,7 +1857,7 @@ input[type='checkbox'] {
 
 .form-status {
   margin: 0;
-  font-size: 1.6rem;
+  font-size: 1rem;
 }
 
 .form-status-list {
@@ -1918,7 +1918,7 @@ input[type='checkbox'] {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: 1.6rem;
+  font-size: 1rem;
   font-weight: 500;
   opacity: 0.85;
   text-align: center;
