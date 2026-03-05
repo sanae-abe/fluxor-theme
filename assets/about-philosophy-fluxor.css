@@ -28,7 +28,7 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(1.375rem, 4vw, 2rem);
+  font-size: clamp(1.375rem, 4vw, 2.25rem);
   letter-spacing: 0.06em;
   line-height: 1.1;
   margin: 0;
