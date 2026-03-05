@@ -1,0 +1,109 @@
+/* ============================================================
+   About Philosophy — Fluxor
+   Core Philosophy & Values
+   ============================================================ */
+
+.about-philosophy-fluxor {
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   コンテナ
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ----------------------------------------------------------
+   見出し
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(2rem, 4vw, 3rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   タグライン（強調）
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__tagline {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  letter-spacing: 0.08em;
+  line-height: 1.2;
+  margin: 0;
+  opacity: 0.9;
+  position: relative;
+}
+
+.about-philosophy-fluxor__tagline::before {
+  content: '';
+  position: absolute;
+  bottom: -0.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 3rem;
+  height: 1px;
+  background-color: currentColor;
+  opacity: 0.3;
+}
+
+/* ----------------------------------------------------------
+   説明文
+   ---------------------------------------------------------- */
+
+.about-philosophy-fluxor__description {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  opacity: 0.75;
+  margin: 0;
+  margin-top: 1rem;
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .about-philosophy-fluxor {
+    padding: 8rem 4rem;
+  }
+
+  .about-philosophy-fluxor__inner {
+    gap: 2.5rem;
+  }
+
+  .about-philosophy-fluxor__tagline::before {
+    width: 4rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .about-philosophy-fluxor {
+    padding: 10rem 6rem;
+  }
+
+  .about-philosophy-fluxor__inner {
+    gap: 3rem;
+  }
+
+  .about-philosophy-fluxor__description {
+    margin-top: 1.5rem;
+  }
+}

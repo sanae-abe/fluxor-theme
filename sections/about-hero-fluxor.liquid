@@ -1,0 +1,103 @@
+{%- style -%}
+  #AboutHero-{{ section.id }} {
+    --overlay-opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+  {%- if section.settings.bg_image != blank -%}
+    #AboutHero-{{ section.id }} .about-hero-fluxor__bg {
+      background-image: url({{ section.settings.bg_image | image_url: width: 2400 }});
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
+{{ 'about-hero-fluxor.css' | asset_url | stylesheet_tag }}
+
+<div
+  id="AboutHero-{{ section.id }}"
+  class="about-hero-fluxor color-{{ section.settings.color_scheme }} gradient{% if section.settings.bg_image != blank %} about-hero-fluxor--has-bg{% endif %}"
+>
+  {%- if section.settings.bg_image != blank -%}
+    <div class="about-hero-fluxor__bg" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <div class="about-hero-fluxor__inner">
+    {%- if section.settings.heading != blank -%}
+      <h1 class="about-hero-fluxor__heading">
+        {{- section.settings.heading | escape -}}
+      </h1>
+    {%- endif -%}
+
+    {%- if section.settings.subheading != blank -%}
+      <h2 class="about-hero-fluxor__subheading">
+        {{- section.settings.subheading | escape -}}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <p class="about-hero-fluxor__description">
+        {{- section.settings.description | escape | newline_to_br -}}
+      </p>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Hero - Fluxor",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-3"
+    },
+    {
+      "type": "header",
+      "content": "背景画像（任意）"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "背景画像"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "オーバーレイの暗さ",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "コンテンツ"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "メイン見出し",
+      "default": "私たちは専門家ではありません。"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "サブ見出し",
+      "default": "だからこそ、徹底的に調べます。"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "説明文",
+      "default": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Hero - Fluxor"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,75 @@
+{{ 'about-community-fluxor.css' | asset_url | stylesheet_tag }}
+
+<div class="about-community-fluxor color-{{ section.settings.color_scheme }} gradient">
+  <div class="about-community-fluxor__inner">
+    {%- if section.settings.heading != blank -%}
+      <h2 class="about-community-fluxor__heading">
+        {{- section.settings.heading | escape -}}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.description != blank -%}
+      <p class="about-community-fluxor__description">
+        {{- section.settings.description | escape | newline_to_br -}}
+      </p>
+    {%- endif -%}
+
+    {%- if section.settings.button_label != blank -%}
+      <a
+        href="{{ section.settings.button_link | default: '/collections/all' }}"
+        class="about-community-fluxor__cta"
+      >
+        {{- section.settings.button_label | escape -}}
+      </a>
+    {%- endif -%}
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "About Community - Fluxor",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-5"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "一緒に学びましょう"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "説明文",
+      "default": "私たちも日々学んでいます。新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。一緒により良いスキンケア選択を見つけていきませんか？"
+    },
+    {
+      "type": "header",
+      "content": "ボタン"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンテキスト",
+      "default": "商品を見る"
+    },
+    {
+      "type": "url",
+      "id": "button_link",
+      "label": "ボタンリンク",
+      "default": "/collections/all"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About Community - Fluxor"
+    }
+  ]
+}
+{% endschema %}

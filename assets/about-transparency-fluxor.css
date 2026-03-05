@@ -1,0 +1,126 @@
+/* ============================================================
+   About Transparency — Fluxor
+   Honest Practices & Standards
+   ============================================================ */
+
+.about-transparency-fluxor {
+  padding: 6rem 2rem;
+}
+
+/* ----------------------------------------------------------
+   コンテナ
+   ---------------------------------------------------------- */
+
+.about-transparency-fluxor__inner {
+  max-width: 60rem;
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   ヘッダー
+   ---------------------------------------------------------- */
+
+.about-transparency-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin: 0 0 1rem 0;
+}
+
+.about-transparency-fluxor__description {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  opacity: 0.7;
+  margin: 0 auto 4rem auto;
+  max-width: 36rem;
+}
+
+/* ----------------------------------------------------------
+   透明性グリッド
+   ---------------------------------------------------------- */
+
+.about-transparency-fluxor__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+  margin-top: 4rem;
+}
+
+@media screen and (min-width: 750px) {
+  .about-transparency-fluxor__grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   透明性アイテム
+   ---------------------------------------------------------- */
+
+.about-transparency-fluxor__item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+  padding: 2rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.about-transparency-fluxor__icon {
+  font-size: clamp(2rem, 3vw, 2.5rem);
+  line-height: 1;
+  margin-bottom: 0.5rem;
+}
+
+.about-transparency-fluxor__title {
+  font-family: var(--font-body-family);
+  font-size: clamp(1.1rem, 1.3vw, 1.2rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+  color: currentColor;
+}
+
+.about-transparency-fluxor__text {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  opacity: 0.75;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   ダークスキーム対応
+   ---------------------------------------------------------- */
+
+.color-scheme-3 .about-transparency-fluxor__item,
+.color-scheme-4 .about-transparency-fluxor__item,
+.color-scheme-5 .about-transparency-fluxor__item {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .about-transparency-fluxor {
+    padding: 8rem 4rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .about-transparency-fluxor {
+    padding: 10rem 6rem;
+  }
+}

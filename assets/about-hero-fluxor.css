@@ -1,0 +1,130 @@
+/* ============================================================
+   About Hero — Fluxor
+   Honest × Transparent × Minimalism
+   ============================================================ */
+
+.about-hero-fluxor {
+  position: relative;
+  padding: 6rem 2rem;
+  text-align: center;
+  min-height: 60vh;
+  display: flex;
+  align-items: center;
+}
+
+/* ----------------------------------------------------------
+   背景画像
+   ---------------------------------------------------------- */
+
+/* Dawn の div:empty { display: none } を上書き（詳細度 0-2-0） */
+.about-hero-fluxor .about-hero-fluxor__bg {
+  display: block;
+}
+
+.about-hero-fluxor__bg {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background-size: cover;
+  background-position: center;
+  z-index: 0;
+}
+
+.about-hero-fluxor__bg::after {
+  content: '';
+  display: block;
+  position: absolute;
+  inset: 0;
+  background-color: rgb(0 0 0 / var(--overlay-opacity, 0.6));
+  pointer-events: none;
+}
+
+/* ----------------------------------------------------------
+   コンテンツ（背景より前面に）
+   ---------------------------------------------------------- */
+
+.about-hero-fluxor__inner {
+  position: relative;
+  z-index: 1;
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+/* ----------------------------------------------------------
+   見出し階層
+   ---------------------------------------------------------- */
+
+.about-hero-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1.05;
+  margin: 0;
+}
+
+.about-hero-fluxor__subheading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin: 0;
+  opacity: 0.85;
+}
+
+/* ----------------------------------------------------------
+   説明文
+   ---------------------------------------------------------- */
+
+.about-hero-fluxor__description {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  opacity: 0.75;
+  margin: 0;
+  margin-top: 0.5rem;
+}
+
+/* 背景画像あり時は opacity を上げて視認性確保 */
+.about-hero-fluxor--has-bg .about-hero-fluxor__subheading {
+  opacity: 0.9;
+}
+
+.about-hero-fluxor--has-bg .about-hero-fluxor__description {
+  opacity: 0.85;
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .about-hero-fluxor {
+    padding: 8rem 4rem;
+    min-height: 70vh;
+  }
+
+  .about-hero-fluxor__inner {
+    gap: 2rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .about-hero-fluxor {
+    padding: 10rem 6rem;
+    min-height: 80vh;
+  }
+
+  .about-hero-fluxor__inner {
+    gap: 2.5rem;
+  }
+}

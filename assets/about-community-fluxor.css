@@ -1,0 +1,129 @@
+/* ============================================================
+   About Community — Fluxor
+   Learning Together & Community
+   ============================================================ */
+
+.about-community-fluxor {
+  padding: 6rem 2rem;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   コンテナ
+   ---------------------------------------------------------- */
+
+.about-community-fluxor__inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+/* ----------------------------------------------------------
+   見出し
+   ---------------------------------------------------------- */
+
+.about-community-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   説明文
+   ---------------------------------------------------------- */
+
+.about-community-fluxor__description {
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  letter-spacing: 0.04em;
+  line-height: 1.7;
+  opacity: 0.8;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   CTA ボタン
+   ---------------------------------------------------------- */
+
+.about-community-fluxor__cta {
+  display: inline-block;
+  align-self: center;
+  margin-top: 1rem;
+  padding: 1rem 3rem;
+  font-family: var(--font-body-family);
+  font-size: clamp(1rem, 1.2vw, 1.1rem);
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: currentColor;
+  border: 2px solid currentColor;
+  background: transparent;
+  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+}
+
+@media (any-hover: hover) {
+  .about-community-fluxor__cta:hover {
+    background-color: currentColor;
+    color: var(--color-background);
+    transform: translateY(-1px);
+  }
+}
+
+.about-community-fluxor__cta:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+}
+
+/* ----------------------------------------------------------
+   アニメーション軽減
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-community-fluxor__cta {
+    transition: none;
+  }
+
+  .about-community-fluxor__cta:hover {
+    transform: none;
+  }
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .about-community-fluxor {
+    padding: 8rem 4rem;
+  }
+
+  .about-community-fluxor__inner {
+    gap: 2.5rem;
+  }
+
+  .about-community-fluxor__cta {
+    margin-top: 1.5rem;
+    padding: 1.25rem 3.5rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .about-community-fluxor {
+    padding: 10rem 6rem;
+  }
+
+  .about-community-fluxor__inner {
+    gap: 3rem;
+  }
+
+  .about-community-fluxor__cta {
+    margin-top: 2rem;
+  }
+}
