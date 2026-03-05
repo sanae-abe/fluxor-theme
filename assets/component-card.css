@@ -29,7 +29,7 @@
 }
 
 .card--card.card--horizontal {
-  padding: 1.2rem;
+  padding: 0.75rem;
 }
 
 .card--card.card--horizontal.card--text {
@@ -312,7 +312,7 @@
 .card--horizontal .card__heading,
 .card--horizontal .price__container .price-item,
 .card--horizontal__quick-add {
-  font-size: calc(var(--font-heading-scale) * 1.2rem);
+  font-size: calc(var(--font-heading-scale) * 0.75rem);
 }
 
 .card--horizontal

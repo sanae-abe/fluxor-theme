@@ -111,7 +111,7 @@ quick-order-list .pagination-wrapper {
 .variant-item__media {
   width: 4.5rem;
   height: 2.8125rem;
-  margin-right: 1.2rem;
+  margin-right: 0.75rem;
 }
 
 .variant-item__image {
@@ -204,7 +204,7 @@ quick-order-list .pagination-wrapper {
 
 .quick-order-list-remove-button {
   display: flex;
-  margin: 0 0 0 1.2rem;
+  margin: 0 0 0 0.75rem;
   align-self: center;
 }
 
@@ -273,8 +273,8 @@ quick-order-list .pagination-wrapper {
 }
 
 .variant-remove-total .icon-remove {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 0.75rem;
+  height: 0.75rem;
   margin-right: 0.8rem;
 }
 
@@ -311,7 +311,7 @@ quick-order-list .pagination-wrapper {
 
   .variant-remove-total .loading__spinner {
     left: 2rem;
-    top: 1.2rem;
+    top: 0.75rem;
   }
 
  .variant-remove-total--empty .loading__spinner {
@@ -351,14 +351,14 @@ quick-order-list .pagination-wrapper {
 }
 
 .variant-item__error-text {
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   line-height: calc(1 + 0.2 / var(--font-body-scale));
   order: 1;
 }
 
 .variant-item__error-text + .svg-wrapper {
   flex-shrink: 0;
-  width: 1.2rem;
+  width: 0.75rem;
   margin-right: 0.5rem;
   margin-top: 0.1rem;
 }
@@ -619,7 +619,7 @@ quick-order-list .pagination-wrapper {
 
   .totals__subtotal-value,
   .quick-order-list__total-items span {
-    margin-right: 1.2rem;
+    margin-right: 0.75rem;
   }
 
   .quick-order-list__total-items {

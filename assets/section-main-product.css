@@ -133,7 +133,7 @@ product-info {
 
 .shopify-payment-button__more-options {
   margin: 1.6rem 0 1rem;
-  font-size: 1.2rem;
+  font-size: 0.75rem;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
   letter-spacing: 0.05rem;
   text-decoration: underline;
@@ -171,7 +171,7 @@ product-info {
 .product-form__input {
   flex: 0 0 100%;
   padding: 0;
-  margin: 0 0 1.2rem 0;
+  margin: 0 0 0.75rem 0;
   max-width: 44rem;
   min-width: fit-content;
   border: none;
@@ -360,7 +360,7 @@ a.product__text {
 }
 
 .product-form__quantity-top .form__label {
-  margin-bottom: 1.2rem;
+  margin-bottom: 0.75rem;
 }
 
 .product-form__buttons {
@@ -458,7 +458,7 @@ a.product__text {
 }
 
 .product__media-icon .icon {
-  width: 1.2rem;
+  width: 0.75rem;
   height: 1.4rem;
 }
 
@@ -474,8 +474,8 @@ a.product__text {
   height: 3rem;
   width: 3rem;
   position: absolute;
-  left: 1.2rem;
-  top: 1.2rem;
+  left: 0.75rem;
+  top: 0.75rem;
   z-index: 1;
   transition: color var(--duration-short) ease, opacity var(--duration-short) ease;
 }
@@ -693,7 +693,7 @@ a.product__text {
   justify-content: center;
   cursor: pointer;
   right: 2rem;
-  padding: 1.2rem;
+  padding: 0.75rem;
   position: fixed;
   z-index: 2;
   top: 2rem;
@@ -887,7 +887,7 @@ a.product__text {
   justify-content: center;
   cursor: pointer;
   position: sticky;
-  padding: 1.2rem;
+  padding: 0.75rem;
   z-index: 2;
   top: 1.5rem;
   width: 4rem;
@@ -1121,8 +1121,8 @@ a.product__text {
 }
 
 .thumbnail__badge .icon-3d-model {
-  width: 1.2rem;
-  height: 1.2rem;
+  width: 0.75rem;
+  height: 0.75rem;
 }
 
 .thumbnail__badge {
@@ -1141,8 +1141,8 @@ a.product__text {
   }
 
   .product:not(.product--small) .thumbnail__badge .icon {
-    width: 1.2rem;
-    height: 1.2rem;
+    width: 0.75rem;
+    height: 0.75rem;
   }
 
   .product:not(.product--small) .thumbnail__badge .icon-3d-model {
@@ -1176,8 +1176,8 @@ a.product__text {
 }
 
 .product__view-details .icon {
-  width: 1.2rem;
-  margin-left: 1.2rem;
+  width: 0.75rem;
+  margin-left: 0.75rem;
   flex-shrink: 0;
 }
 
@@ -1425,7 +1425,7 @@ a.product__text {
 
 .recipient-checkbox > svg {
   margin-top: var(--recipient-checkbox-margin-top);
-  margin-right: 1.2rem;
+  margin-right: 0.75rem;
   flex-shrink: 0;
 }
 
