@@ -104,13 +104,13 @@ quick-order-list .pagination-wrapper {
 .variant-item__image-container {
   display: inline-flex;
   align-items: flex-start;
-  height: 4.5rem;
+  height: 2.8125rem;
   width: 4.5rem;
 }
 
 .variant-item__media {
   width: 4.5rem;
-  height: 4.5rem;
+  height: 2.8125rem;
   margin-right: 1.2rem;
 }
 
