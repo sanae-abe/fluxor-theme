@@ -17,6 +17,10 @@
   transition: opacity 0.2s ease !important;
 }
 
+.header .header__menu-item span {
+  position: relative;
+}
+
 /* ホバーエフェクト（タッチデバイス対応） */
 @media (any-hover: hover) {
   .header .header__menu-item:hover {
