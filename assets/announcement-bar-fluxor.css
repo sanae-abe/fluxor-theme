@@ -7,7 +7,7 @@
 .announcement-bar-section .announcement-bar__message {
   font-family: var(--font-body-family);
   font-size: clamp(0.875rem, 1vw, 0.875rem);
-  letter-spacing: 0.15em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   padding: 0.65rem 0 !important; /* 40px程度の高さに調整 */
 }

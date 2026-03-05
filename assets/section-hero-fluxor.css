@@ -143,7 +143,7 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(2.2rem, 6vw, 5rem);
+  font-size: clamp(1.875rem, 6vw, 3.4375rem);
   letter-spacing: 0.04em;
   line-height: 1.05;
   margin: 0;
@@ -162,10 +162,10 @@
   display: inline-block;
   align-self: flex-start;
   margin-top: 0.5rem;
-  padding: 0.75rem 2rem;
+  padding: 0.6rem 1.725rem;
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.3vw, 1rem);
-  letter-spacing: 0.18em;
+  font-size: clamp(0.75rem, 1.3vw, 0.9375rem);
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
   color: currentColor;
@@ -242,7 +242,7 @@
   }
 
   .hero-fluxor__product-name {
-    font-size: clamp(3rem, 5vw, 5.5rem);
+    font-size: clamp(1.875rem, 6vw, 3.4375rem);.hero-fluxor__cta
   }
 }
 

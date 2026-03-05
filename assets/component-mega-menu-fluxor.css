@@ -203,7 +203,7 @@
 /* カテゴリセクション（レベル2項目）*/
 .header .mega-menu__link--level-2 {
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.75rem, 1.2vw, 1rem) !important;
+  font-size: clamp(0.75rem, 1.2vw, 0.9375rem) !important;
   font-weight: 600 !important;
   letter-spacing: 0.12em !important;
   text-transform: uppercase !important;

@@ -31,7 +31,7 @@
 .featured-collection-fluxor__view-all {
   font-family: var(--font-body-family);
   font-size: clamp(0.9rem, 1.1vw, 1rem);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
   color: currentColor;
@@ -120,7 +120,7 @@
 .fluxor-product-card__vendor {
   font-family: var(--font-body-family);
   font-size: clamp(0.8rem, 1vw, 0.9rem);
-  letter-spacing: 0.12em;
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   opacity: 0.5;
   margin: 0;

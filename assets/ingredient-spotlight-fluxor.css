@@ -164,10 +164,10 @@
 .ingredient-spotlight-fluxor__cta {
   display: inline-block;
   align-self: flex-start;
-  padding: 0.75rem 2.5rem;
+  padding: 0.6rem 1.725rem;
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.3vw, 1rem);
-  letter-spacing: 0.18em;
+  font-size: clamp(0.75rem, 1.3vw, 0.9375rem);
+  letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
   color: currentColor;
