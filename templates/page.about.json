@@ -66,10 +66,21 @@
         "heading": "私たちの調査方法",
         "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
       }
+    },
+    "about_philosophy_fluxor_n7REA7": {
+      "type": "about-philosophy-fluxor",
+      "name": "About Philosophy - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "なぜFluxorなのか",
+        "tagline": "「流行より、エビデンス。」",
+        "description": "私たちは販売数やマーケティングではなく、科学的根拠と実際の使用感に基づいて商品を選んでいます。時間をかけて調査し、納得したもののみを紹介します。"
+      }
     }
   },
   "order": [
     "about_hero_fluxor",
-    "about_method_fluxor"
+    "about_method_fluxor",
+    "about_philosophy_fluxor_n7REA7"
   ]
 }
