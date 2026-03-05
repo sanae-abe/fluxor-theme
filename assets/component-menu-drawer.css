@@ -88,6 +88,12 @@ details[open].menu-opening > .menu-drawer__submenu {
   padding: 0.875rem 0;
 }
 
+@media screen and (min-width: 750px) {
+  .menu-drawer__navigation {
+    padding: 1.875rem 0;
+  }
+}
+
 .menu-drawer__inner-submenu {
   height: 100%;
   overflow-x: hidden;
