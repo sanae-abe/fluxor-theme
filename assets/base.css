@@ -1748,7 +1748,7 @@ details[open] > .share-button__fallback {
   letter-spacing: 0.04rem;
 }
 
-.field__input:focus ~ .field__label,
+.field__input:focus,
 .field__input:not(:placeholder-shown),
 .field__input:-webkit-autofill,
 .customer .field input:focus,
