@@ -96,8 +96,8 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 }
 
 .utility-bar__grid.page-width {
-  padding-left: 3rem;
-  padding-right: 3rem;
+  padding-left: 0.875rem;
+  padding-right: 0.875rem;
 }
 
 @media screen and (min-width: 750px) {
@@ -295,7 +295,7 @@ h5,
 
 h1,
 .h1 {
-  font-size: calc(var(--font-heading-scale) * 3rem);
+  font-size: calc(var(--font-heading-scale) * 0.875rem);
 }
 
 @media only screen and (min-width: 750px) {
@@ -769,7 +769,7 @@ summary::-webkit-details-marker {
 /* component-title */
 .title,
 .title-wrapper-with-link {
-  margin: 3rem 0 2rem;
+  margin: 0.875rem 0 2rem;
 }
 
 .title-wrapper-with-link .title {
@@ -781,7 +781,7 @@ summary::-webkit-details-marker {
 }
 
 .title-wrapper {
-  margin-bottom: 3rem;
+  margin-bottom: 0.875rem;
 }
 
 .title-wrapper-with-link {
@@ -789,7 +789,7 @@ summary::-webkit-details-marker {
   justify-content: space-between;
   align-items: flex-end;
   gap: 1rem;
-  margin-bottom: 3rem;
+  margin-bottom: 0.875rem;
   flex-wrap: wrap;
 }
 
@@ -813,7 +813,7 @@ summary::-webkit-details-marker {
 @media screen and (min-width: 990px) {
   .title,
   .title-wrapper-with-link {
-    margin: 5rem 0 3rem;
+    margin: 5rem 0 0.875rem;
   }
 
   .title--primary {
@@ -1067,27 +1067,27 @@ summary::-webkit-details-marker {
 
   .slider--tablet.grid--peek.grid--2-col-tablet-down .grid__item,
   .grid--peek .grid__item {
-    width: calc(50% - var(--grid-mobile-horizontal-spacing) - 3rem);
+    width: calc(50% - var(--grid-mobile-horizontal-spacing) - 0.875rem);
   }
 
   .slider--tablet.grid--peek.grid--1-col-tablet-down .grid__item,
   .slider--mobile.grid--peek.grid--1-col-tablet-down .grid__item {
-    width: calc(100% - var(--grid-mobile-horizontal-spacing) - 3rem);
+    width: calc(100% - var(--grid-mobile-horizontal-spacing) - 0.875rem);
   }
 }
 
 @media screen and (min-width: 750px) and (max-width: 989px) {
   .slider--tablet.grid--peek .grid__item {
-    width: calc(25% - var(--grid-desktop-horizontal-spacing) - 3rem);
+    width: calc(25% - var(--grid-desktop-horizontal-spacing) - 0.875rem);
   }
 
   .slider--tablet.grid--peek.grid--3-col-tablet .grid__item {
-    width: calc(33.33% - var(--grid-desktop-horizontal-spacing) - 3rem);
+    width: calc(33.33% - var(--grid-desktop-horizontal-spacing) - 0.875rem);
   }
 
   .slider--tablet.grid--peek.grid--2-col-tablet .grid__item,
   .slider--tablet.grid--peek.grid--2-col-tablet-down .grid__item {
-    width: calc(50% - var(--grid-desktop-horizontal-spacing) - 3rem);
+    width: calc(50% - var(--grid-desktop-horizontal-spacing) - 0.875rem);
   }
 
   .slider--tablet.grid--peek .grid__item:first-of-type {
@@ -1099,7 +1099,7 @@ summary::-webkit-details-marker {
   }
 
   .grid--1-col-tablet-down.grid--peek .grid__item {
-    width: calc(100% - var(--grid-desktop-horizontal-spacing) - 3rem);
+    width: calc(100% - var(--grid-desktop-horizontal-spacing) - 0.875rem);
   }
 }
 
@@ -1215,7 +1215,7 @@ button.shopify-payment-button__button--unbranded {
   justify-content: center;
   align-items: center;
   border: 0;
-  padding: 0 3rem;
+  padding: 0 0.875rem;
   cursor: pointer;
   font: inherit;
   font-size: 1.5rem;
@@ -1424,7 +1424,7 @@ details[open] > .share-button__fallback {
   display: flex;
   align-items: center;
   position: absolute;
-  top: 3rem;
+  top: 0.875rem;
   left: 0.1rem;
   z-index: 3;
   width: 100%;
@@ -1691,7 +1691,7 @@ details[open] > .share-button__fallback {
 .customer select {
   cursor: pointer;
   line-height: calc(1 + 0.6 / var(--font-body-scale));
-  padding: 0 calc(var(--inputs-border-width) + 3rem) 0 2rem;
+  padding: 0 calc(var(--inputs-border-width) + 0.875rem) 0 2rem;
   margin: var(--inputs-border-width);
   min-height: calc(var(--inputs-border-width) * 2);
 }
@@ -2113,7 +2113,7 @@ input[type='checkbox'] {
 .utility-bar__grid .list-social {
   justify-content: flex-start;
   align-content: center;
-  margin-left: -0.75rem;
+  
   grid-area: social-icons;
 }
 
@@ -2482,7 +2482,7 @@ input[type='checkbox'] {
 @media screen and (min-width: 990px) {
   .header--middle-left .header__heading-link,
   .header--top-left .header__heading-link {
-    margin-left: -0.75rem;
+    
   }
 
   .header__heading,
@@ -2760,7 +2760,7 @@ details[open] > .header__submenu {
 
 /* Header menu */
 .header__inline-menu {
-  margin-left: -0.75rem;
+  
   grid-area: navigation;
   display: none;
 }
