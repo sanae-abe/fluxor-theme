@@ -26,7 +26,7 @@
 }
 
 .header .header__menu-item span::after {
-  display: none !important;
+  display: none;
   content: '' !important;
   position: absolute !important;
   bottom: -0.5rem !important;
