@@ -393,7 +393,7 @@ blockquote {
 }
 
 .caption-with-letter-spacing--large {
-  font-size: 1rem;
+  font-size: 0.75rem;
   letter-spacing: 0.18rem;
 }
 
@@ -415,7 +415,7 @@ blockquote {
 table:not([class]) {
   table-layout: fixed;
   border-collapse: collapse;
-  font-size: 1rem;
+  font-size: 0.75rem;
   border-style: hidden;
   box-shadow: 0 0 0 0.1rem rgba(var(--color-foreground), 0.2);
   /* draws the table border  */
@@ -491,7 +491,7 @@ h6:empty {
   text-underline-offset: 0.3rem;
   color: rgb(var(--color-link));
   background-color: transparent;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-family: inherit;
 }
 
@@ -505,7 +505,7 @@ h6:empty {
 
 .link-with-icon {
   display: inline-flex;
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.1rem;
   text-decoration: none;
@@ -866,12 +866,12 @@ summary::-webkit-details-marker {
 }
 
 .subtitle--small {
-  font-size: 1rem;
+  font-size: 0.75rem;
   letter-spacing: 0.1rem;
 }
 
 .subtitle--medium {
-  font-size: 1rem;
+  font-size: 0.75rem;
   letter-spacing: 0.08rem;
 }
 
@@ -1389,7 +1389,7 @@ shopify-accelerated-checkout-cart {
 }
 
 .share-button__button {
-  font-size: 1rem;
+  font-size: 0.75rem;
   display: flex;
   align-items: center;
   color: rgb(var(--color-link));
@@ -1574,7 +1574,7 @@ details[open] > .share-button__fallback {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: 1rem;
+  font-size: 0.75rem;
   width: 100%;
   box-sizing: border-box;
   transition: box-shadow var(--duration-short) ease;
@@ -1724,7 +1724,7 @@ details[open] > .share-button__fallback {
 
 .field__label,
 .customer .field label {
-  font-size: 1rem;
+  font-size: 0.75rem;
   left: calc(var(--inputs-border-width) + 1.25rem);
   top: calc(1rem + var(--inputs-border-width));
   margin-bottom: 0;
@@ -1822,17 +1822,17 @@ input[type='checkbox'] {
 .form__message {
   align-items: center;
   display: flex;
-  font-size: 1rem;
+  font-size: 0.75rem;
   line-height: 1;
   margin-top: 1rem;
 }
 
 .form__message--large {
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 
 .customer .field .form__message {
-  font-size: 1rem;
+  font-size: 0.75rem;
   text-align: left;
 }
 
@@ -1857,7 +1857,7 @@ input[type='checkbox'] {
 
 .form-status {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.75rem;
 }
 
 .form-status-list {
@@ -1918,7 +1918,7 @@ input[type='checkbox'] {
   font-family: var(--font-body-family);
   font-style: var(--font-body-style);
   font-weight: var(--font-body-weight);
-  font-size: 1rem;
+  font-size: 0.75rem;
   font-weight: 500;
   opacity: 0.85;
   text-align: center;
