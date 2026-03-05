@@ -67,7 +67,7 @@
   margin-bottom: 1.5rem;
   padding-left: 1rem;
   text-align: left;
-  min-height: calc(4rem + var(--inputs-border-width) * 2);
+  min-height: calc(2.5rem + var(--inputs-border-width) * 2);
   min-width: calc(7rem + var(--inputs-border-width) * 2);
 }
 
