@@ -78,9 +78,22 @@
 }
 
 .about-method-fluxor__icon {
-  font-size: clamp(2.5rem, 4vw, 3rem);
-  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 0.5rem;
+}
+
+.about-method-fluxor__icon img {
+  width: clamp(3rem, 5vw, 3.5rem);
+  height: clamp(3rem, 5vw, 3.5rem);
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.about-method-fluxor__icon img:hover {
+  opacity: 1;
 }
 
 .about-method-fluxor__title {
@@ -95,7 +108,7 @@
 
 .about-method-fluxor__text {
   font-family: var(--font-body-family);
-  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
   letter-spacing: 0.04em;
   line-height: 1.5;
   opacity: 0.75;

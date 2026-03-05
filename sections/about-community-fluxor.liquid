@@ -1,6 +1,24 @@
+{%- style -%}
+  #CommunityFluxor-{{ section.id }} {
+    --overlay-opacity: {{ section.settings.image_overlay_opacity | divided_by: 100.0 }};
+  }
+  {%- if section.settings.bg_image != blank -%}
+    #CommunityFluxor-{{ section.id }} .about-community-fluxor__bg {
+      background-image: url({{ section.settings.bg_image | image_url: width: 2400 }});
+    }
+  {%- endif -%}
+{%- endstyle -%}
+
 {{ 'about-community-fluxor.css' | asset_url | stylesheet_tag }}
 
-<div class="about-community-fluxor color-{{ section.settings.color_scheme }} gradient">
+<div
+  id="CommunityFluxor-{{ section.id }}"
+  class="about-community-fluxor color-{{ section.settings.color_scheme }} gradient{% if section.settings.bg_image != blank %} about-community-fluxor--has-bg{% endif %}"
+>
+  {%- if section.settings.bg_image != blank -%}
+    <div class="about-community-fluxor__bg" aria-hidden="true"></div>
+  {%- endif -%}
+
   <div class="about-community-fluxor__inner">
     {%- if section.settings.heading != blank -%}
       <h2 class="about-community-fluxor__heading">
@@ -36,6 +54,29 @@
       "id": "color_scheme",
       "label": "t:sections.all.colors.label",
       "default": "scheme-5"
+    },
+    {
+      "type": "header",
+      "content": "背景画像（任意）"
+    },
+    {
+      "type": "image_picker",
+      "id": "bg_image",
+      "label": "背景画像"
+    },
+    {
+      "type": "range",
+      "id": "image_overlay_opacity",
+      "label": "オーバーレイの暗さ",
+      "min": 20,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 60
+    },
+    {
+      "type": "header",
+      "content": "コンテンツ"
     },
     {
       "type": "text",

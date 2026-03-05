@@ -74,9 +74,22 @@
 }
 
 .about-transparency-fluxor__icon {
-  font-size: clamp(2rem, 3vw, 2.5rem);
-  line-height: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin-bottom: 0.5rem;
+}
+
+.about-transparency-fluxor__icon img {
+  width: clamp(3rem, 5vw, 3.5rem);
+  height: clamp(3rem, 5vw, 3.5rem);
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+.about-transparency-fluxor__icon img:hover {
+  opacity: 1;
 }
 
 .about-transparency-fluxor__title {
@@ -91,7 +104,7 @@
 
 .about-transparency-fluxor__text {
   font-family: var(--font-body-family);
-  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
   letter-spacing: 0.04em;
   line-height: 1.5;
   opacity: 0.75;
