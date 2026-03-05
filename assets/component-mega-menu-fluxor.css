@@ -37,16 +37,6 @@
   text-decoration: none !important;
 }
 
-.header .header__active-menu-item::after {
-  content: '' !important;
-  position: absolute !important;
-  bottom: -0.5rem !important;
-  left: 0 !important;
-  right: 0 !important;
-  height: 1px !important;
-  background-color: currentColor !important;
-}
-
 .header details[open]:hover > .header__menu-item {
   text-decoration-thickness: initial !important;
 }
