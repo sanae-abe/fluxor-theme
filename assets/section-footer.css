@@ -27,7 +27,7 @@
   }
 
   .footer__content-top {
-    padding-bottom: 0.875rem;
+    padding-bottom: 2.5rem;
     padding-left: calc(2.5rem / var(--font-body-scale));
     padding-right: calc(2.5rem / var(--font-body-scale));
   }
