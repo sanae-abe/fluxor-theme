@@ -88,7 +88,7 @@
         "category_xhrNEg": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/category-eyecare.webp",
+            "image": "shopify://shop_images/Gemini_Generated_Image_uhps0fuhps0fuhps.png",
             "label": "アイケア＆リップケア",
             "link": ""
           }
@@ -135,6 +135,7 @@
       "settings": {
         "color_scheme": "",
         "heading": "Featued Collection",
+        "auto_mode": "none",
         "collection": "",
         "products_to_show": 4,
         "show_view_all": true
