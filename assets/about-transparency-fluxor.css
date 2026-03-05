@@ -4,7 +4,7 @@
    ============================================================ */
 
 .about-transparency-fluxor {
-  padding: 3.75rem 0.875rem;
+  padding: 4rem 1rem;
 }
 
 /* ----------------------------------------------------------
@@ -28,7 +28,7 @@
   font-size: clamp(1.75rem, 4.5vw, 2.5rem);
   letter-spacing: 0.06em;
   line-height: 1.1;
-  margin: 0 0 1rem 0;
+  margin: 0 0 2rem 0;
 }
 
 .about-transparency-fluxor__description {
@@ -37,7 +37,7 @@
   letter-spacing: 0.04em;
   line-height: 1.6;
   opacity: 0.7;
-  margin: 0 auto 1.625rem auto;
+  margin: 0 auto 2.5rem auto;
 }
 
 /* ----------------------------------------------------------
@@ -125,14 +125,14 @@
    レスポンシブ
    ---------------------------------------------------------- */
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .about-transparency-fluxor {
-    padding: 8rem 2.5rem;
+    padding: 6rem 2rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .about-transparency-fluxor {
-    padding: 3.75em 4.375rem;
+    padding: 8rem 4rem;
   }
 }

@@ -5,7 +5,7 @@
 
 .about-community-fluxor {
   position: relative;
-  padding: 3.75rem 0.875rem;
+  padding: 4rem 1rem;
   text-align: center;
   overflow: hidden;
 }
@@ -129,15 +129,15 @@
   display: inline-block;
   align-self: center;
   margin-top: 1rem;
-  padding: 0.6rem 1.725rem;
+  padding: 0.875rem 2.5rem;
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.3vw, 0.9375rem);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
   font-weight: 500;
-  letter-spacing: 0.02em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   text-decoration: none;
   color: currentColor;
-  border: 1px solid currentColor;
+  border: 2px solid currentColor;
   background: transparent;
   transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
 }
@@ -173,9 +173,9 @@
    レスポンシブ
    ---------------------------------------------------------- */
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .about-community-fluxor {
-    padding: 8rem 2.5rem;
+    padding: 6rem 2rem;
   }
 
   .about-community-fluxor__inner {
@@ -184,13 +184,12 @@
 
   .about-community-fluxor__cta {
     margin-top: 1.5rem;
-    padding: 0.6rem 1.725rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .about-community-fluxor {
-    padding: 3.75em 4.375rem;
+    padding: 8rem 4rem;
   }
 
   .about-community-fluxor__inner {

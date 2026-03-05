@@ -4,12 +4,12 @@
    ============================================================ */
 
 .about-method-fluxor {
-  padding: 3.75rem 2rem;
+  padding: 4rem 1rem;
 }
 
-@media screen and (min-width: 750px) {
+@media screen and (min-width: 768px) {
   .about-method-fluxor {
-    padding: 3.75rem 0.875rem;
+    padding: 6rem 2rem;
   }
 }
 
@@ -34,7 +34,7 @@
   font-size: clamp(1.75rem, 4.5vw, 2.5rem);
   letter-spacing: 0.06em;
   line-height: 1.1;
-  margin: 0 0 1rem 0;
+  margin: 0 0 2rem 0;
 }
 
 .about-method-fluxor__description {
@@ -130,14 +130,8 @@
    レスポンシブ
    ---------------------------------------------------------- */
 
-@media screen and (min-width: 750px) {
-  .about-method-fluxor {
-    padding: 8rem 2.5rem;
-  }
-}
-
 @media screen and (min-width: 990px) {
   .about-method-fluxor {
-    padding: 3.75em 4.375rem;
+    padding: 8rem 4rem;
   }
 }
