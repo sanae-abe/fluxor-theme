@@ -23,7 +23,7 @@
     opacity: 0.7 !important;
   }
 
-  .header .header__menu-item:hover::after {
+  .header .header__menu-item:hover span::after {
     content: '' !important;
     position: absolute !important;
     bottom: -0.5rem !important;
