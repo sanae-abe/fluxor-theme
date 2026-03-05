@@ -1736,7 +1736,7 @@ line-height: 1;,
   line-height: 0.9375rem;
 }
 
-line-height: 1; ~ .field__label,
+.field__input:focus ~ .field__label,
 .field__input:not(:placeholder-shown) ~ .field__label,
 .field__input:-webkit-autofill ~ .field__label,
 .customer .field input:focus ~ label,
