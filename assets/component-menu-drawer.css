@@ -106,12 +106,12 @@ details[open].menu-opening > .menu-drawer__submenu {
 
 @media screen and (min-width: 750px) {
   .menu-drawer__menu-item {
-    font-size: 1.8rem;
+    font-size: 1.125rem;
   }
 }
 
 .menu-drawer summary.menu-drawer__menu-item {
-  padding-right:3.25rem;
+  padding-right: 3.25rem;
 }
 
 .menu-drawer__menu-item--active,
