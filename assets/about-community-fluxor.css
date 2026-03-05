@@ -93,7 +93,7 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(2rem, 4.5vw, 3.5rem);
+  font-size: clamp(1.25rem, 4.5vw, 2rem);
   letter-spacing: 0.06em;
   line-height: 1.1;
   margin: 0;
