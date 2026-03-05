@@ -41,7 +41,7 @@
 
 @media screen and (min-width: 990px) {
   .facet-filters {
-    padding-left: 3rem;
+    padding-left: 0.875rem;
   }
 }
 
@@ -556,7 +556,7 @@
 
 .facets__price .field-currency {
   align-self: center;
-  margin-right: 0.6rem;
+  margin-right: 0.375rem;
 }
 
 .facets__price .field__label {
@@ -693,7 +693,7 @@ a.active-facets__button.focused .active-facets__button-inner {
 .active-facets__button .svg-wrapper {
   align-self: center;
   flex-shrink: 0;
-  margin-left: 0.6rem;
+  margin-left: 0.375rem;
   margin-right: -0.2rem;
   pointer-events: none;
   width: 0.75rem;
@@ -1116,7 +1116,7 @@ input.mobile-facets__checkbox {
 .product-count .loading__spinner,
 .product-count-vertical .loading__spinner {
   position: absolute;
-  padding-top: 0.6rem;
+  padding-top: 0.375rem;
   right: 0;
   top: 50%;
   transform: translateY(-50%);
@@ -1165,7 +1165,7 @@ input.mobile-facets__checkbox {
   }
 
   .facets-vertical .facets-wrapper {
-    padding-right: 3rem;
+    padding-right: 0.875rem;
   }
 
   .facets-vertical .facets-wrapper--no-filters {

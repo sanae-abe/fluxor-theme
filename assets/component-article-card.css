@@ -47,7 +47,7 @@
 }
 
 .article-card .card__heading {
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.375rem;
 }
 
 .blog-articles .article-card .card__information,
@@ -79,7 +79,7 @@
 }
 
 .article-card__link:not(:only-child) {
-  margin-right: 3rem;
+  margin-right: 0.875rem;
 }
 
 @media screen and (min-width: 990px) {
