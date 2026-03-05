@@ -424,7 +424,7 @@
 @media screen and (min-width: 990px) {
   :is(.account, .order) > div:nth-of-type(2) > div:first-of-type {
     flex-grow: 1;
-    padding-right: 3.2rem;
+    padding-right: 2rem;
   }
 }
 
@@ -434,7 +434,7 @@
   }
 
   .order > div:nth-of-type(2) > div:last-of-type div {
-    padding-right: 3.2rem;
+    padding-right: 2rem;
   }
 }
 
