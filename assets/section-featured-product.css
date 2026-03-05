@@ -56,11 +56,11 @@
 
 @media screen and (min-width: 990px) {
   .background-secondary .featured-product:not(.product--no-media) > .product__info-wrapper {
-    padding: 0 0 0 5rem;
+    padding: 0 0 0 3.125rem;
   }
 
   .background-secondary .featured-product:not(.product--no-media).product--right > .product__info-wrapper {
-    padding: 0 5rem 0 0;
+    padding: 0 3.125rem 0 0;
   }
 
   .featured-product:not(.product--no-media) > .product__info-wrapper {
