@@ -25,7 +25,7 @@
   display: none !important;
 }
 
-.header .header__active-menu-item span::after {
+.header .header__menu-item span::after {
   display: none !important;
   content: '' !important;
   position: absolute !important;
