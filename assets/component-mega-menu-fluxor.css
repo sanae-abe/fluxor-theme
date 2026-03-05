@@ -298,7 +298,7 @@
 .header .mega-menu__description {
   padding: 1rem !important;
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.8rem, 1vw, 0.9rem) !important;
+  font-size: clamp(0.875rem, 1vw, 1rem) !important;
   line-height: 1.4 !important;
   color: var(--color-base-text) !important;
   margin: 0 !important;
@@ -333,7 +333,7 @@
 
 .header .mega-menu__placeholder-text {
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.9rem, 1.1vw, 1rem) !important;
+  font-size: clamp(0.875rem, 1.1vw, 1rem) !important;
   font-weight: 500 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
