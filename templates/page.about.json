@@ -1,9 +1,19 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "about_hero_fluxor": {
       "type": "about-hero-fluxor",
       "settings": {
         "color_scheme": "scheme-3",
+        "image_overlay_opacity": 60,
         "heading": "私たちは専門家ではありません。",
         "subheading": "だからこそ、徹底的に調べます。",
         "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
@@ -11,6 +21,46 @@
     },
     "about_method_fluxor": {
       "type": "about-method-fluxor",
+      "blocks": {
+        "method_THgMTc": {
+          "type": "method",
+          "settings": {
+            "icon": "📊",
+            "title": "論文検索",
+            "description": "PubMed、皮膚科学会誌を調査"
+          }
+        },
+        "method_CydTyJ": {
+          "type": "method",
+          "settings": {
+            "icon": "🧪",
+            "title": "成分分析",
+            "description": "PubMed、皮膚科学会誌を調査"
+          }
+        },
+        "method_a6haAe": {
+          "type": "method",
+          "settings": {
+            "icon": "🏭",
+            "title": "製造元調査",
+            "description": "OEM先、品質管理体制を調査"
+          }
+        },
+        "method_hkpKgq": {
+          "type": "method",
+          "settings": {
+            "icon": "💬",
+            "title": "口コミ分析",
+            "description": "実際のユーザー評価を収集"
+          }
+        }
+      },
+      "block_order": [
+        "method_THgMTc",
+        "method_CydTyJ",
+        "method_a6haAe",
+        "method_hkpKgq"
+      ],
       "settings": {
         "color_scheme": "scheme-1",
         "heading": "私たちの調査方法",
