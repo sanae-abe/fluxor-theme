@@ -10,10 +10,11 @@
   min-height: 60vh;
   display: flex;
   align-items: center;
+  overflow: hidden;
 }
 
 /* ----------------------------------------------------------
-   背景画像
+   背景画像表示のみ（パターンは画像自体に含まれる）
    ---------------------------------------------------------- */
 
 /* Dawn の div:empty { display: none } を上書き（詳細度 0-2-0） */
@@ -54,6 +55,7 @@
   flex-direction: column;
   gap: 1.5rem;
 }
+
 
 /* ----------------------------------------------------------
    見出し階層
@@ -126,5 +128,17 @@
 
   .about-hero-fluxor__inner {
     gap: 2.5rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   アニメーション軽減（アクセシビリティ）
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-fluxor::before,
+  .about-hero-fluxor::after {
+    mix-blend-mode: normal;
+    opacity: 0.5;
   }
 }

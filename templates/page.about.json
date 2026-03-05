@@ -13,8 +13,6 @@
       "type": "about-hero-fluxor",
       "settings": {
         "color_scheme": "scheme-3",
-        "bg_image": "shopify://shop_images/hero-rock-bg.webp",
-        "image_overlay_opacity": 30,
         "heading": "私たちは専門家ではありません。",
         "subheading": "だからこそ、徹底的に調べます。",
         "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
@@ -122,7 +120,7 @@
       "type": "about-community-fluxor",
       "name": "About Community - Fluxor",
       "settings": {
-        "color_scheme": "scheme-5",
+        "color_scheme": "",
         "heading": "一緒に学びましょう",
         "description": "私たちも日々学んでいます。新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。一緒により良いスキンケア選択を見つけていきませんか？",
         "button_label": "商品を見る",
