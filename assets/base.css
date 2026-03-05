@@ -3113,7 +3113,7 @@ details-disclosure > details {
     outline: solid transparent 1px;
   }
 
-  line-height: 1;,
+  .field__input:focus ~ .field__label,
   .select__select:focus,
   .customer .field input:focus,
   .customer select:focus,
