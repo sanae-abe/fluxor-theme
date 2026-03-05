@@ -116,12 +116,24 @@
         "heading": "透明性へのこだわり",
         "description": "調査過程も、分からないことも、正直にお伝えします。"
       }
+    },
+    "about_community_fluxor_JxFi8T": {
+      "type": "about-community-fluxor",
+      "name": "About Community - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "一緒に学びましょう",
+        "description": "私たちも日々学んでいます。新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。一緒により良いスキンケア選択を見つけていきませんか？",
+        "button_label": "商品を見る",
+        "button_link": "shopify://collections/all"
+      }
     }
   },
   "order": [
     "about_hero_fluxor",
     "about_method_fluxor",
     "about_philosophy_fluxor_n7REA7",
-    "about_transparency_fluxor_GWHRLn"
+    "about_transparency_fluxor_GWHRLn",
+    "about_community_fluxor_JxFi8T"
   ]
 }
