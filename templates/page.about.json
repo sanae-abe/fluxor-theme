@@ -12,8 +12,8 @@
     "about_hero_fluxor": {
       "type": "about-hero-fluxor",
       "settings": {
-        "color_scheme": "scheme-3",
-        "image_overlay_opacity": 60,
+        "color_scheme": "scheme-1",
+        "image_overlay_opacity": 55,
         "heading": "私たちは専門家ではありません。",
         "subheading": "だからこそ、徹底的に調べます。",
         "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
