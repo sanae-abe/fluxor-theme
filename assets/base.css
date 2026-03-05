@@ -1643,7 +1643,7 @@ details[open] > .share-button__fallback {
   border-radius: var(--inputs-radius);
 }
 
-line-height: 1;-visible,
+.field__input:focus-visible,
 .select__select:focus-visible,
 .customer .field input:focus-visible,
 .customer select:focus-visible,
@@ -1653,7 +1653,7 @@ line-height: 1;-visible,
   border-radius: var(--inputs-radius);
 }
 
-.field__input:focus ~ .field__label,
+.field__input:focus,
 .select__select:focus,
 .customer .field input:focus,
 .customer select:focus,
