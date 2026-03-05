@@ -101,6 +101,18 @@
   /* summary内のリンクは有効にする */
   .header .mega-menu > summary .header__menu-item {
     pointer-events: all !important;
+    position: relative !important;
+  }
+
+  /* メガメニューを持つアイテムのホバー時アンダーライン */
+  .header .mega-menu > summary .header__menu-item:hover::after {
+    content: '' !important;
+    position: absolute !important;
+    bottom: -0.5rem !important;
+    left: 0 !important;
+    right: 0 !important;
+    height: 1px !important;
+    background-color: currentColor !important;
   }
 }
 
