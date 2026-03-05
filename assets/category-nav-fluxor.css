@@ -8,14 +8,14 @@
 
 .category-nav-fluxor__header {
   text-align: center;
-  margin-bottom: 3rem;
+  margin-bottom: 0.875rem;
 }
 
 .category-nav-fluxor__heading {
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(1.5rem, 3vw, 2.5rem);
+  font-size: clamp(1.5rem, 4vw, 2.25rem);
   letter-spacing: 0.04em;
   margin: 0;
 }
