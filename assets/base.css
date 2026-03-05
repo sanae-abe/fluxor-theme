@@ -1522,7 +1522,7 @@ details[open] > .share-button__fallback {
   transition: none;
 }
 
-.share-button__fallback .field__input:focus,
+.share-button__fallback line-height: 1;,
 .share-button__fallback .field__input:-webkit-autofill {
   outline: 0.2rem solid rgba(var(--color-foreground), 0.5);
   outline-offset: 0.1rem;
@@ -1643,7 +1643,7 @@ details[open] > .share-button__fallback {
   border-radius: var(--inputs-radius);
 }
 
-.field__input:focus-visible,
+line-height: 1;-visible,
 .select__select:focus-visible,
 .customer .field input:focus-visible,
 .customer select:focus-visible,
@@ -1653,7 +1653,7 @@ details[open] > .share-button__fallback {
   border-radius: var(--inputs-radius);
 }
 
-.field__input:focus,
+line-height: 1;,
 .select__select:focus,
 .customer .field input:focus,
 .customer select:focus,
@@ -1736,19 +1736,19 @@ details[open] > .share-button__fallback {
   line-height: 0.9375rem;
 }
 
-.field__input:focus ~ .field__label,
+line-height: 1; ~ .field__label,
 .field__input:not(:placeholder-shown) ~ .field__label,
 .field__input:-webkit-autofill ~ .field__label,
 .customer .field input:focus ~ label,
 .customer .field input:not(:placeholder-shown) ~ label,
 .customer .field input:-webkit-autofill ~ label {
-  font-size: 1rem;
+  font-size: 0.625rem;
   top: calc(var(--inputs-border-width) + 0.5rem);
   left: calc(var(--inputs-border-width) + 2rem);
   letter-spacing: 0.04rem;
 }
 
-.field__input:focus,
+line-height: 1;,
 .field__input:not(:placeholder-shown),
 .field__input:-webkit-autofill,
 .customer .field input:focus,
@@ -3113,7 +3113,7 @@ details-disclosure > details {
     outline: solid transparent 1px;
   }
 
-  .field__input:focus,
+  line-height: 1;,
   .select__select:focus,
   .customer .field input:focus,
   .customer select:focus,
