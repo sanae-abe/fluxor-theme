@@ -45,9 +45,15 @@
   font-size: clamp(1.25rem, 3vw, 1.5rem);
   letter-spacing: 0.08em;
   line-height: 1.2;
-  margin: 1rem 0 0;
+  margin: 0;
   opacity: 0.9;
   position: relative;
+}
+
+@media screen and (min-width: 750px) {
+  .about-philosophy-fluxor__tagline {
+    margin: 1rem 0 0;
+  }
 }
 
 .about-philosophy-fluxor__tagline::before {
