@@ -8,48 +8,9 @@
         "subheading": "だからこそ、徹底的に調べます。",
         "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
       }
-    },
-    "about_method_fluxor": {
-      "type": "about-method-fluxor",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "heading": "私たちの調査方法",
-        "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
-      }
-    },
-    "about_philosophy_fluxor": {
-      "type": "about-philosophy-fluxor",
-      "settings": {
-        "color_scheme": "scheme-2",
-        "heading": "なぜFluxorなのか",
-        "tagline": "流行より、エビデンス。",
-        "description": "私たちは販売数やマーケティングではなく、科学的根拠と実際の使用感に基づいて商品を選んでいます。時間をかけて調査し、納得したもののみを紹介します。"
-      }
-    },
-    "about_transparency_fluxor": {
-      "type": "about-transparency-fluxor",
-      "settings": {
-        "color_scheme": "scheme-1",
-        "heading": "透明性へのこだわり",
-        "description": "調査過程も、分からないことも、正直にお伝えします。"
-      }
-    },
-    "about_community_fluxor": {
-      "type": "about-community-fluxor",
-      "settings": {
-        "color_scheme": "scheme-5",
-        "heading": "一緒に学びましょう",
-        "description": "私たちも日々学んでいます。新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。一緒により良いスキンケア選択を見つけていきませんか？",
-        "button_label": "商品を見る",
-        "button_link": "/collections/all"
-      }
     }
   },
   "order": [
-    "about_hero_fluxor",
-    "about_method_fluxor",
-    "about_philosophy_fluxor",
-    "about_transparency_fluxor",
-    "about_community_fluxor"
+    "about_hero_fluxor"
   ]
 }
