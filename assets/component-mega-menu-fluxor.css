@@ -77,9 +77,9 @@
   width: 100vw !important;
   z-index: 3 !important;
   margin: 0 !important;
-  padding: 3rem 0 0 0 !important;
+  padding: 2rem 0 0 0 !important;
   border: none !important;
-  min-height: 300px !important;
+  min-height: 240px !important;
   opacity: 0 !important;
   visibility: hidden !important;
   transform: translateY(-10px) !important;
@@ -120,15 +120,15 @@
 .header .mega-menu__list {
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
-  gap: 3rem 2rem !important;
+  gap: 2rem 1.5rem !important;
   max-width: none !important;
-  padding: 0 2rem !important;
+  padding: 0 1.5rem !important;
 }
 
 @media screen and (min-width: 990px) {
   .header .mega-menu__list {
     grid-template-columns: repeat(4, 1fr) !important;
-    padding: 0 6rem !important;
+    padding: 0 4rem !important;
   }
 }
 
@@ -142,7 +142,7 @@
   color: currentColor !important;
   text-decoration: none !important;
   display: block !important;
-  margin-bottom: 1.5rem !important;
+  margin-bottom: 1.2rem !important;
   padding-bottom: 0.5rem !important;
   border-bottom: 1px solid rgba(26, 23, 20, 0.15) !important;
   transition: opacity 0.2s ease !important;
@@ -276,7 +276,7 @@
    ---------------------------------------------------------- */
 
 .header .mega-menu__image {
-  margin-top: 1rem !important;
+  margin-top: 0.75rem !important;
   border-radius: 8px !important;
   overflow: hidden !important;
   background-color: var(--color-base-background-2, #EAE7E1) !important;
@@ -296,7 +296,7 @@
 }
 
 .header .mega-menu__description {
-  padding: 1rem !important;
+  padding: 0.75rem !important;
   font-family: var(--font-body-family) !important;
   font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
   line-height: 1.4 !important;
@@ -320,8 +320,8 @@
   flex-direction: column !important;
   align-items: center !important;
   justify-content: center !important;
-  height: 200px !important;
-  padding: 2rem !important;
+  height: 150px !important;
+  padding: 1.5rem !important;
   text-align: center !important;
 }
 
