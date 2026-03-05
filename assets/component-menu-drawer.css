@@ -182,12 +182,12 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .header--has-social .menu-drawer__utility-links {
-  padding: 2rem 0.875rem;
+  padding: 1.25rem 1.875rem;
 }
 
 @media screen and (max-width: 749px) {
   .header--has-account:where(:not(.header--has-social):not(.header--has-localizations)) .menu-drawer__utility-links {
-    padding: 2rem 0.875rem;
+  padding: 1.25rem 1.875rem;
   }
 }
 
