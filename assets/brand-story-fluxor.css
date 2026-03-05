@@ -80,7 +80,7 @@
 
 .brand-story-fluxor__body {
   font-family: var(--font-body-family);
-  font-size: clamp(1rem, 1.3vw, 1.2rem);
+  font-size: clamp(0.875rem, 1.3vw, 1rem);
   letter-spacing: 0.06em;
   line-height: 1.8;
   opacity: 0.75;
