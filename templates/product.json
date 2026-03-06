@@ -58,9 +58,9 @@
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Active Ingredients",
-            "icon": "leaf",
-            "content": "<p><strong>Scientifically formulated with clinically proven actives:</strong></p><ul><li><strong>Niacinamide (5%)</strong> - Regulates sebum production and minimizes pore appearance</li><li><strong>Hyaluronic Acid Complex</strong> - Multi-molecular weight for optimal hydration delivery</li><li><strong>Vitamin C (L-Ascorbic Acid)</strong> - Potent antioxidant protection and brightening</li><li><strong>Retinol Encapsulated</strong> - Time-release formula for gentle renewal</li></ul><p>Free from parabens, sulfates, synthetic fragrances, and essential oils. Dermatologist tested. Non-comedogenic.</p>",
+            "heading": "Materials",
+            "icon": "leather",
+            "content": "",
             "page": ""
           }
         },
@@ -69,25 +69,25 @@
           "settings": {
             "heading": "Shipping & Returns",
             "icon": "truck",
-            "content": "<p><strong>Complimentary shipping</strong> on orders over ¥8,000. Standard delivery within 2-3 business days.</p><p><strong>30-Day Return Policy:</strong> Unopened products may be returned within 30 days of purchase for a full refund. For hygiene reasons, opened skincare products can only be returned if defective.</p><p><strong>International Shipping:</strong> Available to select countries. Duties and taxes may apply.</p><p>All products are carefully packaged in eco-friendly, temperature-controlled packaging to preserve product efficacy.</p>",
+            "content": "",
             "page": ""
           }
         },
         "collapsible-row-2": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Product Details",
+            "heading": "Dimensions",
             "icon": "ruler",
-            "content": "<p><strong>Net Contents:</strong> {{ product.variants.first.weight | weight_with_unit }}</p><p><strong>Packaging:</strong> Airless pump bottle (serums), squeeze tube (cleansers), glass jar (creams)</p><p><strong>Shelf Life:</strong> 24 months unopened, 12 months after opening</p><p><strong>pH Level:</strong> Formulated to match skin's natural pH (5.0-6.5)</p><p><strong>Texture:</strong> Lightweight, fast-absorbing formula suitable for layering</p>",
+            "content": "",
             "page": ""
           }
         },
         "collapsible-row-3": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Usage Guidelines",
+            "heading": "Care Instructions",
             "icon": "heart",
-            "content": "<p><strong>Application:</strong> Apply to clean, dry skin. Use gentle upward motions, avoiding the eye area unless specifically formulated for that region.</p><p><strong>Frequency:</strong> Use as directed - typically morning and/or evening as part of your skincare routine.</p><p><strong>Storage:</strong> Store in a cool, dry place away from direct sunlight. Refrigeration recommended for Vitamin C serums.</p><p><strong>Patch Test:</strong> Always perform a patch test before first use. Discontinue if irritation occurs.</p><p><strong>Layering:</strong> Apply thinnest to thickest consistency. Allow 60 seconds between product applications.</p>",
+            "content": "",
             "page": ""
           }
         },
