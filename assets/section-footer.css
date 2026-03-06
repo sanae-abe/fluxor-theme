@@ -7,7 +7,7 @@
 }
 
 .footer__content-top {
-  width: var(--page-width) !important;
+  width: var(--page-width);
   padding-bottom: 5rem;
   display: block;
 }
