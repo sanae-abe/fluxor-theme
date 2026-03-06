@@ -201,7 +201,7 @@
 
   /* Page Width Variable */
   :root {
-    --page-width: 75rem; /* 1920px */
+    --page-width: 120rem; /* 1920px */
   }
 
   /* Section Padding */
