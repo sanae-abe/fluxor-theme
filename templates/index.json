@@ -64,7 +64,7 @@
         "category_EwWpBN": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/category-cleansing.webp",
+            "image": "shopify://shop_images/bottle-cleanser.webp",
             "label": "クレンジング",
             "link": ""
           }
@@ -72,7 +72,7 @@
         "category_Lefkpd": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/category-serum.webp",
+            "image": "shopify://shop_images/dropper-bottle.webp",
             "label": "化粧水＆美容液",
             "link": ""
           }
@@ -88,7 +88,7 @@
         "category_xhrNEg": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_uhps0fuhps0fuhps.png",
+            "image": "shopify://shop_images/tube-cream.webp",
             "label": "アイケア＆リップケア",
             "link": ""
           }
