@@ -1,0 +1,293 @@
+@layer layout, components, utilities;
+
+/**
+ * Fluxor Product Grid Styles
+ *
+ * レスポンシブグリッド: モバイル2列→タブレット3列→デスクトップ4列
+ * カラースキーム: Warm-Shifted Neutral System (scheme-1〜5)
+ * Dawn div:empty 問題の回避
+ */
+
+/* ==========================================================================
+   Layout Layer - Grid Structure
+   ========================================================================== */
+
+@layer layout {
+  .collection-product-grid-fluxor {
+    width: 100%;
+  }
+
+  .product-grid-fluxor {
+    display: grid;
+    gap: 2rem;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+
+    /* モバイル: 2列 */
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  /* タブレット: 3列 */
+  @media (min-width: 768px) {
+    .product-grid-fluxor {
+      grid-template-columns: repeat(3, 1fr);
+      gap: 2.5rem;
+    }
+  }
+
+  /* デスクトップ: 4列 */
+  @media (min-width: 1024px) {
+    .product-grid-fluxor {
+      grid-template-columns: repeat(4, 1fr);
+      gap: 3rem;
+    }
+  }
+
+  /* 大画面: 間隔調整 */
+  @media (min-width: 1440px) {
+    .product-grid-fluxor {
+      gap: 3.5rem;
+    }
+  }
+
+  .product-grid-fluxor__item {
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+/* ==========================================================================
+   Components Layer - Filters & Cards
+   ========================================================================== */
+
+@layer components {
+  /* Filters Section */
+  .collection-filters-fluxor {
+    margin-bottom: 2rem;
+  }
+
+  .collection-filters-fluxor .facets {
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  .collection-filters-fluxor .facet-filters {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .collection-filters-fluxor .facet-filters__label {
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    font-weight: 500;
+    color: var(--color-foreground);
+    margin: 0 0.5rem 0 0;
+  }
+
+  .collection-filters-fluxor .select {
+    position: relative;
+  }
+
+  .collection-filters-fluxor .select__select {
+    appearance: none;
+    background: var(--color-background);
+    border: 1px solid var(--color-border);
+    border-radius: 0.25rem;
+    color: var(--color-foreground);
+    font-family: var(--font-body-family);
+    font-size: 0.875rem;
+    padding: 0.75rem 2rem 0.75rem 1rem;
+    min-width: 200px;
+    cursor: pointer;
+  }
+
+  .collection-filters-fluxor .select__select:focus-visible {
+    outline: 2px solid var(--color-foreground);
+    outline-offset: 2px;
+  }
+
+  /* Product Grid Container */
+  .product-grid-container {
+    position: relative;
+    max-width: var(--page-width);
+    margin: 0 auto;
+    padding: 0 2rem;
+  }
+
+  /* Loading States */
+  .loading-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--color-background), 0.8);
+    backdrop-filter: blur(2px);
+    z-index: 2;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease;
+  }
+
+  .loading-overlay.visible {
+    opacity: 1;
+    visibility: visible;
+  }
+
+  /* Empty State */
+  .collection--empty {
+    text-align: center;
+    padding: 4rem 2rem;
+  }
+
+  .collection--empty .title {
+    font-family: var(--font-heading-family);
+    font-size: clamp(1.5rem, 4vw, 2.5rem);
+    line-height: 1.2;
+    color: var(--color-foreground);
+    margin: 0;
+  }
+}
+
+/* ==========================================================================
+   Utilities Layer - Color Schemes & Spacing
+   ========================================================================== */
+
+@layer utilities {
+  /* Warm-Shifted Neutral Color Schemes */
+  .collection-product-grid-fluxor.color-scheme-1 {
+    background-color: #F6F4F0; /* Warm white */
+    color: #1A1714;
+    --color-background: #F6F4F0;
+    --color-foreground: #1A1714;
+    --color-border: rgba(26, 23, 20, 0.1);
+  }
+
+  .collection-product-grid-fluxor.color-scheme-2 {
+    background-color: #EAE7E1; /* Secondary light */
+    color: #1A1714;
+    --color-background: #EAE7E1;
+    --color-foreground: #1A1714;
+    --color-border: rgba(26, 23, 20, 0.1);
+  }
+
+  .collection-product-grid-fluxor.color-scheme-3 {
+    background-color: #1A1714; /* Dark emphasis */
+    color: #F6F4F0;
+    --color-background: #1A1714;
+    --color-foreground: #F6F4F0;
+    --color-border: rgba(246, 244, 240, 0.2);
+  }
+
+  .collection-product-grid-fluxor.color-scheme-4 {
+    background-color: #0F0D0B; /* Header/Footer */
+    color: #F6F4F0;
+    --color-background: #0F0D0B;
+    --color-foreground: #F6F4F0;
+    --color-border: rgba(246, 244, 240, 0.2);
+  }
+
+  .collection-product-grid-fluxor.color-scheme-5 {
+    background-color: #2A3B35; /* Botanical accent */
+    color: #F6F4F0;
+    --color-background: #2A3B35;
+    --color-foreground: #F6F4F0;
+    --color-border: rgba(246, 244, 240, 0.2);
+  }
+
+  /* Page Width Variable */
+  :root {
+    --page-width: 120rem; /* 1920px */
+  }
+
+  /* Section Padding */
+  .section-padding {
+    padding-top: 2.25rem;
+    padding-bottom: 2.25rem;
+  }
+
+  @media (min-width: 750px) {
+    .section-padding {
+      padding-top: 3rem;
+      padding-bottom: 3rem;
+    }
+  }
+}
+
+/* ==========================================================================
+   Dawn div:empty Override
+   ========================================================================== */
+
+/**
+ * Dawn の base.css に div:empty { display: none } ルールが存在するため、
+ * 詳細度 0-2-0 で上書きして必要な空divを表示する
+ */
+.collection-product-grid-fluxor .loading-overlay {
+  display: block; /* 詳細度 0-2-0 > 0-1-1 */
+}
+
+/* ==========================================================================
+   Accessibility & Performance
+   ========================================================================== */
+
+/* タッチデバイス対応 */
+@media (any-hover: hover) {
+  .product-grid-fluxor__item:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+  }
+}
+
+/* キーボードフォーカス */
+.product-grid-fluxor__item:focus-within {
+  outline: 2px solid currentColor;
+  outline-offset: 4px;
+  border-radius: 0.25rem;
+}
+
+/* 前庭障害・てんかん対応 */
+@media (prefers-reduced-motion: reduce) {
+  .product-grid-fluxor__item,
+  .loading-overlay {
+    transition: none;
+  }
+
+  .product-grid-fluxor__item:hover {
+    transform: none;
+  }
+}
+
+/* コントラスト改善 */
+@media (prefers-contrast: high) {
+  .collection-product-grid-fluxor {
+    --color-border: currentColor;
+  }
+
+  .collection-filters-fluxor .select__select {
+    border-width: 2px;
+  }
+}
+
+/* ==========================================================================
+   Print Styles
+   ========================================================================== */
+
+@media print {
+  .collection-filters-fluxor {
+    display: none;
+  }
+
+  .product-grid-fluxor {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+    break-inside: avoid;
+  }
+
+  .loading-overlay {
+    display: none !important;
+  }
+}
