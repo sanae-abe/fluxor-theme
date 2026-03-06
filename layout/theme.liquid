@@ -110,7 +110,7 @@
         --font-heading-weight: {{ settings.type_header_font.weight }};
 
         --font-logo-family: 'Saira', sans-serif;
-        --font-logo-weight: 600;
+        --font-logo-weight: 500;
 
         --font-body-scale: {{ settings.body_scale | divided_by: 100.0 }};
         --font-heading-scale: {{ settings.heading_scale | times: 1.0 | divided_by: settings.body_scale }};
@@ -261,7 +261,7 @@
       .header__heading .h2 {
         font-family: var(--font-logo-family);
         font-weight: var(--font-logo-weight);
-        letter-spacing: -0.015em;
+        letter-spacing: 0.04em;
       }
     {% endstyle %}
 
