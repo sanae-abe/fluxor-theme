@@ -278,7 +278,7 @@
   width: 0.35rem;
   height: 0.35rem;
   border-radius: 50%;
-  background-color: currentColor;
+  background-color: var(--color-back-foreground);
   opacity: 0.3;
   border: none;
   padding: 0;
