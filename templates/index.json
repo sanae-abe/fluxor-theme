@@ -148,7 +148,7 @@
         "molecule_image": "shopify://shop_images/home-ingredient-image_compressed.webp",
         "image_position": "left",
         "heading": "レチノール",
-        "body": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。\n\n・シワや小じわの改善\n・毛穴の引き締め\n・肌のハリ・弾力のサポート",
+        "body": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、\nコラーゲンの産生をサポートします。\n\n・シワや小じわの改善\n・毛穴の引き締め\n・肌のハリ・弾力のサポート",
         "button_label": "詳しく見る",
         "button_link": "/ingredients/retinol"
       }
