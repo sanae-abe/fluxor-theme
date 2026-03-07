@@ -129,6 +129,7 @@
 
 .image-with-text-fluxor__image {
   width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
