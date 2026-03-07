@@ -135,7 +135,7 @@
         "color_scheme": "",
         "heading": "Featued Collection",
         "auto_mode": "none",
-        "collection": "featured-collection-注目のアイテム",
+        "collection": "featured-collection",
         "products_to_show": 4,
         "show_view_all": true
       }
