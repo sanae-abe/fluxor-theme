@@ -1,0 +1,159 @@
+/* ============================================================
+   Icon Grid — Fluxor
+   汎用アイコングリッドセクション
+   ============================================================ */
+
+.icon-grid-fluxor {
+  padding: 4rem 1rem;
+}
+
+/* ----------------------------------------------------------
+   コンテナ
+   ---------------------------------------------------------- */
+
+.icon-grid-fluxor__inner {
+  max-width: var(--icon-grid-container-max-width, 50rem);
+  margin: 0 auto;
+  text-align: center;
+}
+
+/* ----------------------------------------------------------
+   ヘッダー
+   ---------------------------------------------------------- */
+
+.icon-grid-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  letter-spacing: 0.06em;
+  line-height: 1.1;
+  margin: 0 0 2rem 0;
+}
+
+.icon-grid-fluxor__description {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.6;
+  opacity: 0.7;
+  margin: 0 auto 2.5rem auto;
+}
+
+/* ----------------------------------------------------------
+   グリッド
+   ---------------------------------------------------------- */
+
+.icon-grid-fluxor__grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.875rem;
+  margin-top: 1.625rem;
+}
+
+@media screen and (min-width: 750px) {
+  .icon-grid-fluxor__grid {
+    grid-template-columns: repeat(var(--icon-grid-columns, 3), 1fr);
+    gap: 2.5rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   アイテム
+   ---------------------------------------------------------- */
+
+.icon-grid-fluxor__item {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  text-align: center;
+  padding: 1.5rem 1rem;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 1rem;
+}
+
+/* ----------------------------------------------------------
+   アイコン
+   ---------------------------------------------------------- */
+
+.icon-grid-fluxor__icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.icon-grid-fluxor__icon img {
+  width: clamp(3rem, 3vw, 4rem);
+  height: clamp(3rem, 3vw, 4rem);
+  object-fit: contain;
+  opacity: 0.8;
+  transition: opacity 0.3s ease;
+}
+
+@media (any-hover: hover) {
+  .icon-grid-fluxor__icon img:hover {
+    opacity: 1;
+  }
+}
+
+/* ----------------------------------------------------------
+   テキスト
+   ---------------------------------------------------------- */
+
+.icon-grid-fluxor__title {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.75rem, 1.3vw, 1.1rem);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  line-height: 1.3;
+  margin: 0;
+  color: currentColor;
+}
+
+.icon-grid-fluxor__text {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.9rem, 1.1vw, 1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  opacity: 0.75;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   ダークスキーム対応
+   ---------------------------------------------------------- */
+
+.color-scheme-3 .icon-grid-fluxor__item,
+.color-scheme-4 .icon-grid-fluxor__item,
+.color-scheme-5 .icon-grid-fluxor__item {
+  border-color: rgba(255, 255, 255, 0.15);
+  background: rgba(0, 0, 0, 0.1);
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 768px) {
+  .icon-grid-fluxor {
+    padding: 6rem 2rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .icon-grid-fluxor {
+    padding: 3.75rem 2.5rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   アニメーション軽減
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-grid-fluxor__icon img {
+    transition: none;
+  }
+}
