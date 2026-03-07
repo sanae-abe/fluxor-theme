@@ -1,28 +1,5 @@
-{{ 'component-card.css' | asset_url | stylesheet_tag }}
-{{ 'component-price.css' | asset_url | stylesheet_tag }}
-
+{{ 'product-grid-fluxor.css' | asset_url | stylesheet_tag }}
 {{ 'component-slider.css' | asset_url | stylesheet_tag }}
-{{ 'template-collection.css' | asset_url | stylesheet_tag }}
-
-{% if section.settings.image_shape == 'blob' %}
-  {{ 'mask-blobs.css' | asset_url | stylesheet_tag }}
-{%- endif -%}
-
-{%- unless section.settings.quick_add == 'none' -%}
-  {{ 'quick-add.css' | asset_url | stylesheet_tag }}
-  <script src="{{ 'product-form.js' | asset_url }}" defer="defer"></script>
-{%- endunless -%}
-
-{%- if section.settings.quick_add == 'standard' -%}
-  <script src="{{ 'quick-add.js' | asset_url }}" defer="defer"></script>
-{%- endif -%}
-
-{%- if section.settings.quick_add == 'bulk' -%}
-  <script src="{{ 'quick-add-bulk.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'quantity-popover.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'price-per-item.js' | asset_url }}" defer="defer"></script>
-  <script src="{{ 'quick-order-list.js' | asset_url }}" defer="defer"></script>
-{%- endif -%}
 
 {%- style -%}
   .section-{{ section.id }}-padding {
@@ -35,6 +12,11 @@
       padding-top: {{ section.settings.padding_top }}px;
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
+  }
+
+  /* Grid item overflow防止 */
+  #collection-{{ section.id }} .product-grid-fluxor__grid > li {
+    min-width: 0;
   }
 {%- endstyle -%}
 
@@ -96,12 +78,10 @@
       <ul
         id="Slider-{{ section.id }}"
         data-id="{{ section.id }}"
-        class="grid product-grid contains-card contains-card--product{% if settings.card_style == 'standard' %} contains-card--standard{% endif %} grid--{{ section.settings.columns_desktop }}-col-desktop{% if section.settings.collection == blank %} grid--2-col-tablet-down{% else %} grid--{{ section.settings.columns_mobile }}-col-tablet-down{% endif %}{% if show_mobile_slider or show_desktop_slider %} slider{% if show_desktop_slider %} slider--desktop{% endif %}{% if show_mobile_slider %} slider--tablet grid--peek{% endif %}{% endif %}"
+        class="product-grid-fluxor__grid{% if show_mobile_slider or show_desktop_slider %} slider{% if show_desktop_slider %} slider--desktop{% endif %}{% if show_mobile_slider %} slider--tablet grid--peek{% endif %}{% endif %}"
         role="list"
         aria-label="{{ 'general.slider.name' | t }}"
       >
-        {% assign skip_card_product_styles = false %}
-
         {%- if section.settings.collection.products.size > 0 -%}
           {% assign lazy_load = false %}
           {% paginate section.settings.collection.products by section.settings.products_to_show %}
@@ -111,54 +91,30 @@
               {% endif %}
               <li
                 id="Slide-{{ section.id }}-{{ forloop.index }}"
-                class="grid__item{% if show_mobile_slider or show_desktop_slider %} slider__slide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+                class="{% if show_mobile_slider or show_desktop_slider %}slider__slide{% endif %}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
                 {% if settings.animations_reveal_on_scroll %}
                   data-cascade
                   style="--animation-order: {{ forloop.index }};"
                 {% endif %}
               >
-                {% render 'card-product',
+                {% render 'card-product-fluxor',
                   card_product: product,
-                  media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
                   lazy_load: lazy_load,
-                  show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
-                  skip_styles: skip_card_product_styles,
-                  section_id: section.id,
-                  quick_add: section.settings.quick_add
+                  show_vendor: section.settings.show_vendor
                 %}
               </li>
-              {%- assign skip_card_product_styles = true -%}
             {%- endfor -%}
           {% endpaginate %}
         {%- else -%}
           {%- for i in (1..section.settings.columns_desktop) -%}
             <li
-              class="grid__item{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
+              class="{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
               {% if settings.animations_reveal_on_scroll %}
                 data-cascade
                 style="--animation-order: {{ forloop.index }};"
               {% endif %}
             >
-              {% liquid
-                assign ridx = forloop.rindex
-                case ridx
-                  when 5
-                    assign ridx = 1
-                  when 6
-                    assign ridx = 2
-                endcase
-              %}
-              {%- assign placeholder_image = 'product-apparel-' | append: ridx -%}
-              {% render 'card-product',
-                show_vendor: section.settings.show_vendor,
-                media_aspect_ratio: section.settings.image_ratio,
-                image_shape: section.settings.image_shape,
-                lazy_load: false,
-                placeholder_image: placeholder_image
-              %}
+              {% render 'card-product-fluxor', lazy_load: false %}
             </li>
           {%- endfor -%}
         {%- endif -%}
@@ -207,9 +163,6 @@
           {{ 'sections.featured_collection.view_all' | t }}
         </a>
       </div>
-    {%- endif -%}
-    {% if section.settings.image_shape == 'arch' %}
-      {{ 'mask-arch.svg' | inline_asset_content }}
     {%- endif -%}
   </div>
 </div>
