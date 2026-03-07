@@ -20,35 +20,35 @@
         "description": "スキンケアに迷ったのは私たちも同じでした。\n成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。\nだから、徹底的に調べることにしました。"
       }
     },
-    "about_method_fluxor": {
-      "type": "about-method-fluxor",
+    "icon_grid_fluxor_9pC7rH": {
+      "type": "icon-grid-fluxor",
       "blocks": {
-        "method_THgMTc": {
-          "type": "method",
+        "item_p8cUaL": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-research.svg",
             "title": "論文検索",
             "description": "PubMed、皮膚科学会誌を調査"
           }
         },
-        "method_CydTyJ": {
-          "type": "method",
+        "item_NEc6wY": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-analysis.svg",
             "title": "成分分析",
             "description": "PubMed、皮膚科学会誌を調査"
           }
         },
-        "method_a6haAe": {
-          "type": "method",
+        "item_jYb7BH": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-manufacturing.svg",
             "title": "製造元調査",
             "description": "OEM先、品質管理体制を調査"
           }
         },
-        "method_hkpKgq": {
-          "type": "method",
+        "item_PGb9gd": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-feedback.svg",
             "title": "口コミ分析",
@@ -57,15 +57,19 @@
         }
       },
       "block_order": [
-        "method_THgMTc",
-        "method_CydTyJ",
-        "method_a6haAe",
-        "method_hkpKgq"
+        "item_p8cUaL",
+        "item_NEc6wY",
+        "item_jYb7BH",
+        "item_PGb9gd"
       ],
+      "name": "About Method",
       "settings": {
-        "color_scheme": "scheme-1",
+        "color_scheme": "",
         "heading": "私たちの調査方法",
-        "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
+        "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。",
+        "columns": "4",
+        "card_style": "bordered",
+        "container_width": "wide"
       }
     },
     "about_philosophy_fluxor_n7REA7": {
@@ -138,7 +142,7 @@
   },
   "order": [
     "about_hero_fluxor",
-    "about_method_fluxor",
+    "icon_grid_fluxor_9pC7rH",
     "about_philosophy_fluxor_n7REA7",
     "about_transparency_fluxor_GWHRLn",
     "about_community_fluxor_JxFi8T"
