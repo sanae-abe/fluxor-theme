@@ -108,10 +108,13 @@
 .hero-fluxor__content {
   grid-area: 1 / 1;
   z-index: 1;
+  padding: 0.875rem 2rem 5rem;
+}
+
+.hero-fluxor__content__inner {
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
-  padding: 0.875rem 2rem 5rem;
   gap: 1rem;
 }
 
