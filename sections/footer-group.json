@@ -32,7 +32,7 @@
           "type": "text",
           "settings": {
             "heading": "Our mission",
-            "subtext": "<p>Share contact information, store details, and brand content with your customers.</p>"
+            "subtext": "<p>皮膚科学に基づいた製品だけを、世界中からセレクト。流行より、エビデンス。</p>"
           }
         }
       },
@@ -44,7 +44,7 @@
       "settings": {
         "color_scheme": "scheme-1",
         "newsletter_enable": true,
-        "newsletter_heading": "Subscribe to our emails",
+        "newsletter_heading": "メルマガ登録",
         "enable_follow_on_shop": true,
         "show_social": true,
         "enable_country_selector": false,
