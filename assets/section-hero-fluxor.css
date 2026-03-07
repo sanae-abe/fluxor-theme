@@ -275,8 +275,8 @@
 }
 
 .hero-fluxor__dot {
-  width: 0.35rem;
-  height: 0.35rem;
+  width: 7rem;
+  height: 7rem;
   border-radius: 50%;
   background-color: rgb(var(--color-foreground));
   opacity: 0.3;
