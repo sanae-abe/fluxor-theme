@@ -1,0 +1,148 @@
+/* ============================================================
+   Image with Text — Fluxor
+   ============================================================ */
+
+.image-with-text-fluxor {
+  position: relative;
+  padding: 3.75rem 1.5rem;
+  overflow: hidden;
+}
+
+/* ----------------------------------------------------------
+   コンテナ（左右分割レイアウト）
+   ---------------------------------------------------------- */
+
+.image-with-text-fluxor__container {
+  max-width: var(--page-width, 1320px);
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2.5rem;
+  align-items: flex-start;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text-fluxor {
+    padding: 3.75rem 2.5rem;
+  }
+
+  .image-with-text-fluxor__container {
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0;
+  }
+}
+
+/* ----------------------------------------------------------
+   画像左配置（反転レイアウト）
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .image-with-text-fluxor--image-left .image-with-text-fluxor__container {
+    flex-direction: row-reverse;
+  }
+
+  .image-with-text-fluxor--image-left .image-with-text-fluxor__content {
+    padding: 3.75rem 2.5rem 3.75rem 3.75rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   左側: テキストコンテンツ
+   ---------------------------------------------------------- */
+
+.image-with-text-fluxor__content {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  padding: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text-fluxor__content {
+    width: 50%;
+    padding: 3.75rem 3.75rem 3.75rem 2.5rem;
+    flex-shrink: 0;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .image-with-text-fluxor__content {
+    padding: 3.75rem 3.75rem 3.75rem 2.5rem;
+  }
+}
+
+.image-with-text-fluxor__heading {
+  font-family: var(--font-brand-message-family);
+  font-weight: 600;
+  font-style: normal;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: 0.04em;
+  line-height: 1.5;
+  color: currentColor;
+  margin: 0;
+}
+
+.image-with-text-fluxor__body {
+  font-family: var(--font-body-family);
+  font-size: 1rem;
+  letter-spacing: 0em;
+  line-height: 2.025;
+  color: currentColor;
+  margin: 0;
+  white-space: pre-line;
+}
+
+.image-with-text-fluxor__cta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 11.25rem;
+  height: 3rem;
+  padding: 0.5rem 1rem;
+  font-family: var(--font-body-family);
+  font-size: 1rem;
+  letter-spacing: 0em;
+  text-decoration: none;
+  color: currentColor;
+  border: 1px solid currentColor;
+  background: transparent;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+@media (any-hover: hover) {
+  .image-with-text-fluxor__cta:hover {
+    background-color: currentColor;
+    color: var(--color-background);
+  }
+}
+
+.image-with-text-fluxor__cta:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* ----------------------------------------------------------
+   右側: 画像
+   ---------------------------------------------------------- */
+
+.image-with-text-fluxor__image {
+  width: 100%;
+  overflow: hidden;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text-fluxor__image {
+    width: 50%;
+    flex-shrink: 0;
+  }
+}
+
+.image-with-text-fluxor__img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
