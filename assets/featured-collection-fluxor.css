@@ -161,13 +161,13 @@
 
 @media screen and (min-width: 750px) {
   .featured-collection-fluxor {
-    padding: 6rem 2.5rem;
+    padding: 3.75rem 2.5rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .featured-collection-fluxor {
-    padding: 3.5rem 2.5rem;
+    padding: 3.75rem 2.5rem;
   }
 }
 
