@@ -71,6 +71,13 @@
   }
 }
 
+.image-with-text-fluxor__inner {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+
 .image-with-text-fluxor__heading {
   font-family: var(--font-brand-message-family);
   font-weight: 600;
