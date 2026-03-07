@@ -53,6 +53,7 @@
 .image-with-text-fluxor__content {
   display: flex;
   flex-direction: column;
+  justify-content: center;
   gap: 1.5rem;
   padding: 0;
 }
