@@ -34,13 +34,15 @@
         {%- endif -%}
 
         <div class="hero-fluxor__content">
-          {%- if block.settings.brand != blank -%}
-            <p class="hero-fluxor__brand">{{ block.settings.brand | escape }}</p>
-          {%- endif -%}
+          <div class="hero-fluxor__product-info">
+            {%- if block.settings.brand != blank -%}
+              <p class="hero-fluxor__brand">{{ block.settings.brand | escape }}</p>
+            {%- endif -%}
 
-          {%- if block.settings.product_name != blank -%}
-            <h2 class="hero-fluxor__product-name">{{ block.settings.product_name | escape }}</h2>
-          {%- endif -%}
+            {%- if block.settings.product_name != blank -%}
+              <h2 class="hero-fluxor__product-name">{{ block.settings.product_name | escape }}</h2>
+            {%- endif -%}
+          </div>
 
           {%- if block.settings.tagline != blank -%}
             <p class="hero-fluxor__tagline">{{ block.settings.tagline | escape }}</p>
