@@ -29,7 +29,7 @@
 
 @media screen and (min-width: 750px) {
   .image-with-text-fluxor {
-    padding: 3.75rem 2.5rem;
+    padding: 3.75rem 0;
   }
 
   .image-with-text-fluxor__container {
@@ -37,7 +37,7 @@
     justify-content: space-between;
     align-items: center;
     gap: 2.5rem;
-    padding: 0;
+    padding: 0 2.5rem;
   }
 }
 
@@ -46,12 +46,12 @@
    ---------------------------------------------------------- */
 
 @media screen and (min-width: 750px) {
-  .image-with-text-fluxor--image-left .image-with-text-fluxor__container {
+  .image-with-text-fluxor--image-right .image-with-text-fluxor__container {
     flex-direction: row-reverse;
   }
 
-  .image-with-text-fluxor--image-left .image-with-text-fluxor__content {
-    padding: 3.75rem 2.5rem 3.75rem 3.75rem;
+  .image-with-text-fluxor--image-right .image-with-text-fluxor__content {
+    padding: 2.5rem 0;
   }
 }
 
@@ -63,23 +63,23 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 1.5rem;
-  padding: 0 1.5rem 1.875rem;
+  gap: 1rem;
+  padding: 0 1.5rem;
   align-items: flex-start;
 }
 
 @media screen and (min-width: 750px) {
   .image-with-text-fluxor__content {
     width: calc(50% - 2.5rem);
-    padding: 3.75rem 3.75rem 3.75rem 2.5rem;
     flex-shrink: 0;
     padding: 0;
+    gap: 1.5rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .image-with-text-fluxor__content {
-    padding: 3.75rem 3.75rem 3.75rem 2.5rem;
+    padding: 2rem 0;
   }
 }
 
@@ -89,6 +89,16 @@
   gap: 1rem;
 }
 
+.image-with-text-fluxor__subtitle {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: currentColor;
+  opacity: 0.7;
+  margin: 0;
+}
 
 .image-with-text-fluxor__heading {
   font-weight: 600;

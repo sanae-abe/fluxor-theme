@@ -1,0 +1,147 @@
+/* ============================================================
+   Fluxor Button System
+   全セクションのボタン（__cta）と Dawnの .button を統一定義
+   ============================================================ */
+
+/* ----------------------------------------------------------
+   ベーススタイル
+   ---------------------------------------------------------- */
+
+.button,
+.shopify-challenge__button,
+.customer button,
+button.shopify-payment-button__button--unbranded,
+[class*="-fluxor__cta"] {
+  --btn-fg: currentColor;
+  --btn-bg-hover: #1a1714;
+  --btn-text-hover: #f6f4f0;
+
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 11.25rem;
+  height: 3rem;
+  padding: 0.5rem 1.5rem;
+  font-family: var(--font-body-family);
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0;
+  line-height: 1;
+  text-decoration: none;
+  text-transform: none;
+  color: var(--btn-fg);
+  border: 1px solid var(--btn-fg);
+  background: transparent;
+  border-radius: 0;
+  cursor: pointer;
+  appearance: none;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease;
+  /* Dawnのシャドウをリセット */
+  --shadow-opacity: 0;
+  --border-offset: 0;
+}
+
+/* Dawn ::before / ::after シャドウリセット */
+.button::before,
+.button::after,
+.shopify-challenge__button::before,
+.shopify-challenge__button::after,
+.customer button::before,
+.customer button::after,
+.shopify-payment-button__button--unbranded::before,
+.shopify-payment-button__button--unbranded::after {
+  display: none;
+}
+
+/* ----------------------------------------------------------
+   hover
+   ---------------------------------------------------------- */
+
+@media (any-hover: hover) {
+  .button:not([disabled]):hover,
+  .shopify-challenge__button:not([disabled]):hover,
+  .customer button:not([disabled]):hover,
+  [class*="-fluxor__cta"]:hover {
+    background-color: var(--btn-bg-hover);
+    border-color: var(--btn-bg-hover);
+    color: var(--btn-text-hover);
+  }
+}
+
+/* ----------------------------------------------------------
+   focus
+   ---------------------------------------------------------- */
+
+.button:focus-visible,
+.shopify-challenge__button:focus-visible,
+.customer button:focus-visible,
+[class*="-fluxor__cta"]:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+.button:focus:not(:focus-visible),
+.shopify-payment-button__button--unbranded:focus:not(:focus-visible) {
+  outline: none;
+  box-shadow: none;
+}
+
+/* ----------------------------------------------------------
+   カラーバリアント
+   ---------------------------------------------------------- */
+
+/* 黒固定（どのカラースキームでも黒） */
+.btn-fluxor--dark {
+  --btn-fg: #1a1714;
+}
+
+/* 白固定（どのカラースキームでも白） */
+.btn-fluxor--light {
+  --btn-fg: #f6f4f0;
+  --btn-bg-hover: #f6f4f0;
+  --btn-text-hover: #1a1714;
+}
+
+/* ----------------------------------------------------------
+   状態・バリエーション
+   ---------------------------------------------------------- */
+
+.button:disabled,
+.button[aria-disabled='true'],
+.button.disabled,
+.customer button:disabled,
+.customer button[aria-disabled='true'],
+.customer button.disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.button--full-width {
+  display: flex;
+  width: 100%;
+  min-width: unset;
+}
+
+.button.loading {
+  color: transparent;
+  position: relative;
+}
+
+@media screen and (forced-colors: active) {
+  .button.loading {
+    color: rgb(var(--color-foreground));
+  }
+}
+
+/* ----------------------------------------------------------
+   モーション軽減
+   ---------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .button,
+  .shopify-challenge__button,
+  .customer button,
+  [class*="-fluxor__cta"] {
+    transition: none;
+  }
+}

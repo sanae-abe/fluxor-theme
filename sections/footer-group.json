@@ -29,10 +29,9 @@
           }
         },
         "footer-2": {
-          "type": "text",
+          "type": "newsletter",
           "settings": {
-            "heading": "Our mission",
-            "subtext": "<p>皮膚科学に基づいた製品だけを、世界中からセレクト。流行より、エビデンス。</p>"
+            "heading": "メルマガ登録"
           }
         }
       },

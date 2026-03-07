@@ -69,7 +69,6 @@
   text-align: center;
   padding: 1.25rem;
   border: 1px solid rgba(0, 0, 0, 0.1);
-  background: rgba(255, 255, 255, 0.05);
 }
 
 .about-transparency-fluxor__icon {
@@ -80,8 +79,8 @@
 }
 
 .about-transparency-fluxor__icon img {
-  width: clamp(1.8rem, 3vw, 2.2rem);
-  height: clamp(1.8rem, 3vw, 2.2rem);
+  width: clamp(2rem, 3vw, 2.5rem);
+  height: clamp(2rem, 3vw, 2.5rem);
   object-fit: contain;
   opacity: 0.8;
   transition: opacity 0.3s ease;
@@ -133,6 +132,6 @@
 
 @media screen and (min-width: 990px) {
   .about-transparency-fluxor {
-    padding: 8rem 4rem;
+    padding: 5.625rem 2.5rem 3.5rem;
   }
 }

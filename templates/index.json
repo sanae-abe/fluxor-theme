@@ -123,13 +123,13 @@
         "molecule_image": "shopify://shop_images/top_brand_story_image_compressed.webp",
         "image_position": "right",
         "heading": "私たちは成分を読む。",
-        "body": "<p>皮膚科学に基づいた製品だけを、世界中からセレクトしています。</p><p>流行より、エビデンス。</p>",
+        "body": "<p>皮膚科学に基づいた製品だけを、世界中からセレクトしています。<br>流行より、エビデンス。</p>",
         "button_label": "ブランドストーリー",
         "button_link": ""
       }
     },
-    "featured_collection_fluxor_MdghFy": {
-      "type": "featured-collection-fluxor",
+    "product_grid_fluxor_MdghFy": {
+      "type": "product-grid-fluxor",
       "name": "Collection - Fluxor",
       "settings": {
         "color_scheme": "",
@@ -148,13 +148,13 @@
         "molecule_image": "shopify://shop_images/home-ingredient-image_compressed.webp",
         "image_position": "left",
         "heading": "レチノール",
-        "body": "<p>科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。</p><ul><li>シワや小じわの改善</li><li>毛穴の引き締め</li><li>肌のハリ・弾力のサポート</li></ul>",
+        "body": "<p>科学的に最も研究された美容成分の一つ。<br>細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。</p><ul><li>シワや小じわの改善</li><li>毛穴の引き締め</li><li>肌のハリ・弾力のサポート</li></ul>",
         "button_label": "詳しく見る",
         "button_link": "/ingredients/retinol"
       }
     },
-    "featured_collection_fluxor_RWyeiT": {
-      "type": "featured-collection-fluxor",
+    "product_grid_fluxor_RWyeiT": {
+      "type": "product-grid-fluxor",
       "name": "Collection - Fluxor",
       "settings": {
         "color_scheme": "",
@@ -165,8 +165,8 @@
         "show_view_all": true
       }
     },
-    "featured_collection_fluxor_DzgHFR": {
-      "type": "featured-collection-fluxor",
+    "product_grid_fluxor_DzgHFR": {
+      "type": "product-grid-fluxor",
       "name": "Collection - Fluxor",
       "settings": {
         "color_scheme": "",
@@ -182,9 +182,9 @@
     "hero_fluxor_HmAj7w",
     "category_nav_fluxor_9Xhd3h",
     "image_with_text_fluxor_BUcLmx",
-    "featured_collection_fluxor_MdghFy",
+    "product_grid_fluxor_MdghFy",
     "image_with_text_fluxor_hdNjqn",
-    "featured_collection_fluxor_RWyeiT",
-    "featured_collection_fluxor_DzgHFR"
+    "product_grid_fluxor_RWyeiT",
+    "product_grid_fluxor_DzgHFR"
   ]
 }

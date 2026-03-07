@@ -1,4 +1,4 @@
-{{ 'featured-collection-fluxor.css' | asset_url | stylesheet_tag }}
+{{ 'product-grid-fluxor.css' | asset_url | stylesheet_tag }}
 
 {%- liquid
   assign products_count = section.settings.products_to_show
@@ -22,26 +22,26 @@
   endif
 -%}
 
-<div class="featured-collection-fluxor color-{{ section.settings.color_scheme }} gradient">
-  <div class="featured-collection-fluxor__header">
+<div class="product-grid-fluxor color-{{ section.settings.color_scheme }} gradient">
+  <div class="product-grid-fluxor__header">
     {%- if section.settings.heading != blank -%}
-      <h2 class="featured-collection-fluxor__heading">
+      <h2 class="product-grid-fluxor__heading">
         {{- section.settings.heading | escape -}}
       </h2>
     {%- endif -%}
 
     {%- if section.settings.show_view_all and view_all_url != blank -%}
-      <a href="{{ view_all_url }}" class="featured-collection-fluxor__view-all">
+      <a href="{{ view_all_url }}" class="product-grid-fluxor__view-all">
         すべて見る
-        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" width="16" height="16" aria-hidden="true">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5 21 12m0 0-7.5 7.5M21 12H3" />
-        </svg>
+        <span class="svg-wrapper" aria-hidden="true">
+          {{- 'icon-arrow-fluxor.svg' | inline_asset_content -}}
+        </span>
       </a>
     {%- endif -%}
   </div>
 
   {%- if products != blank and products.size > 0 -%}
-    <div class="featured-collection-fluxor__grid">
+    <div class="product-grid-fluxor__grid">
       {%- for product in products limit: products_count -%}
         <a href="{{ product.url }}" class="fluxor-product-card">
           <div class="fluxor-product-card__image-wrapper">
@@ -64,7 +64,7 @@
       {%- endfor -%}
     </div>
   {%- else -%}
-    <p class="featured-collection-fluxor__empty">
+    <p class="product-grid-fluxor__empty">
       {%- if section.settings.auto_mode != 'none' -%}
         商品が見つかりませんでした。
       {%- else -%}
@@ -76,7 +76,7 @@
 
 {% schema %}
 {
-  "name": "Collection - Fluxor",
+  "name": "Product Grid - Fluxor",
   "tag": "section",
   "class": "section",
   "settings": [
@@ -137,7 +137,7 @@
   ],
   "presets": [
     {
-      "name": "Collection - Fluxor"
+      "name": "Product Grid - Fluxor"
     }
   ]
 }

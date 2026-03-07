@@ -26,7 +26,7 @@
     <div class="ingredient-spotlight-fluxor__bg" aria-hidden="true"></div>
   {%- endif -%}
 
-  <div class="ingredient-spotlight-fluxor__inner{% if has_image %} ingredient-spotlight-fluxor__inner--has-image{% if section.settings.image_position == 'left' %} ingredient-spotlight-fluxor__inner--image-left{% endif %}{% endif %}">
+  <div class="ingredient-spotlight-fluxor__inner{% if has_image %} ingredient-spotlight-fluxor__inner--has-image{% if section.settings.image_position == 'left' %} ingredient-spotlight-fluxor__inner--image-right{% endif %}{% endif %}">
 
     <div class="ingredient-spotlight-fluxor__content">
      {%- if section.settings.label != blank or section.settings.ingredient_name != blank  -%}

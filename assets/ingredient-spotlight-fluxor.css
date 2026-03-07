@@ -56,11 +56,11 @@
     gap: 6rem;
   }
 
-  .ingredient-spotlight-fluxor__inner--image-left {
+  .ingredient-spotlight-fluxor__inner--image-right {
     direction: rtl;
   }
 
-  .ingredient-spotlight-fluxor__inner--image-left > * {
+  .ingredient-spotlight-fluxor__inner--image-right > * {
     direction: ltr;
   }
 }
