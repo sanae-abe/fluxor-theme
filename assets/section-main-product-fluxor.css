@@ -54,6 +54,7 @@
   .product-grid-fluxor__item {
     display: flex;
     flex-direction: column;
+    min-width: 0; /* Grid min-content overflow 防止 */
   }
 }
 
@@ -67,7 +68,7 @@
   .collection-filters-fluxor {
     max-width: var(--page-width);
     margin: 0 auto 2rem;
-    padding: 0 2rem;
+    padding: 0 2.5rem;
   }
 
   /* Product Grid Container */
