@@ -120,7 +120,7 @@
       "name": "Image with Text",
       "settings": {
         "color_scheme": "",
-        "molecule_image": "shopify://shop_images/brand-story-molecules-bg.webp",
+        "molecule_image": "shopify://shop_images/top_brand_story_image.webp",
         "image_position": "right",
         "heading": "私たちは成分を読む。",
         "body": "皮膚科学に基づいた製品だけを、\n世界中からセレクトしています。\n流行より、エビデンス。",
