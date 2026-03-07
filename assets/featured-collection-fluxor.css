@@ -28,25 +28,29 @@
   font-size: clamp(1.5rem, 3vw, 2rem);
   letter-spacing: 0.04em;
   margin: 0;
+  color: currentColor;
 }
 
 .featured-collection-fluxor__view-all {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
   font-family: var(--font-body-family);
   font-size: clamp(0.9rem, 1.1vw, 1rem);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-decoration: none;
   color: currentColor;
-  opacity: 0.6;
   white-space: nowrap;
-  border-bottom: 1px solid currentColor;
-  padding-bottom: 0.15em;
-  transition: opacity 0.2s ease;
+}
+
+.featured-collection-fluxor__view-all svg {
+  transition: transform 0.2s ease;
 }
 
 @media (any-hover: hover) {
-  .featured-collection-fluxor__view-all:hover {
-    opacity: 1;
+  .featured-collection-fluxor__view-all:hover svg {
+    transform: translateX(4px);
   }
 }
 

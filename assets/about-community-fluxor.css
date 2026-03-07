@@ -125,47 +125,8 @@
    ---------------------------------------------------------- */
 
 .about-community-fluxor__cta {
-  display: inline-block;
   align-self: center;
   margin-top: 1rem;
-  padding: 0.875rem 2.5rem;
-  font-family: var(--font-body-family);
-  font-size: clamp(0.875rem, 1.1vw, 1rem);
-  font-weight: 500;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  text-decoration: none;
-  color: currentColor;
-  border: 2px solid currentColor;
-  background: transparent;
-  transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
-}
-
-@media (any-hover: hover) {
-  .about-community-fluxor__cta:hover {
-    background-color: currentColor;
-    color: var(--color-background);
-    transform: translateY(-1px);
-  }
-}
-
-.about-community-fluxor__cta:focus-visible {
-  outline: 1px solid currentColor;
-  outline-offset: 4px;
-}
-
-/* ----------------------------------------------------------
-   アニメーション軽減
-   ---------------------------------------------------------- */
-
-@media (prefers-reduced-motion: reduce) {
-  .about-community-fluxor__cta {
-    transition: none;
-  }
-
-  .about-community-fluxor__cta:hover {
-    transform: none;
-  }
 }
 
 /* ----------------------------------------------------------

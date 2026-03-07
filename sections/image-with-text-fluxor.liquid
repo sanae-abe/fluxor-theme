@@ -23,15 +23,15 @@
     <div class="image-with-text-fluxor__content">
       <div class="image-with-text-fluxor__inner">
         {%- if section.settings.heading != blank -%}
-          <h2 class="image-with-text-fluxor__heading">
+          <h2 class="image-with-text-fluxor__heading image-with-text-fluxor__heading--{{ section.settings.heading_font }}">
             {{- section.settings.heading | escape -}}
           </h2>
         {%- endif -%}
 
         {%- if section.settings.body != blank -%}
-          <p class="image-with-text-fluxor__body">
-          {{- section.settings.body | escape -}}
-          </p>
+          <div class="image-with-text-fluxor__body">
+            {{ section.settings.body }}
+          </div>
         {%- endif -%}
       </div>
 
@@ -89,10 +89,19 @@
       "default": "私たちは成分を読む。"
     },
     {
-      "type": "textarea",
+      "type": "select",
+      "id": "heading_font",
+      "label": "見出しフォント",
+      "options": [
+        { "value": "brand", "label": "ブランド体（Shippori Mincho / serif）" },
+        { "value": "heading", "label": "見出し体（Outfit / sans-serif）" }
+      ],
+      "default": "brand"
+    },
+    {
+      "type": "richtext",
       "id": "body",
-      "label": "本文",
-      "default": "皮膚科学に基づいた製品だけを、\n世界中からセレクトしています。\n流行より、エビデンス。"
+      "label": "本文"
     },
     {
       "type": "header",

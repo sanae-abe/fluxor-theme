@@ -65,6 +65,7 @@
   justify-content: center;
   gap: 1.5rem;
   padding: 0 1.5rem 1.875rem;
+  align-items: flex-start;
 }
 
 @media screen and (min-width: 750px) {
@@ -90,7 +91,6 @@
 
 
 .image-with-text-fluxor__heading {
-  font-family: var(--font-brand-message-family);
   font-weight: 600;
   font-style: normal;
   font-size: clamp(1.75rem, 4vw, 2.5rem);
@@ -100,6 +100,14 @@
   margin: 0;
 }
 
+.image-with-text-fluxor__heading--brand {
+  font-family: var(--font-brand-message-family);
+}
+
+.image-with-text-fluxor__heading--heading {
+  font-family: var(--font-heading-family);
+}
+
 .image-with-text-fluxor__body {
   font-family: var(--font-body-family);
   font-size: 1rem;
@@ -107,37 +115,41 @@
   line-height: 1.8;
   color: currentColor;
   margin: 0;
-  white-space: pre-line;
 }
 
-.image-with-text-fluxor__cta {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 11.25rem;
-  height: 3rem;
-  padding: 0.5rem 1rem;
-  font-family: var(--font-body-family);
-  font-size: 1rem;
-  letter-spacing: 0em;
-  text-decoration: none;
-  color: currentColor;
-  border: 1px solid currentColor;
-  background: transparent;
-  transition: background-color 0.25s ease, color 0.25s ease;
+.image-with-text-fluxor__body p {
+  margin: 0 0 0.75em;
 }
 
-@media (any-hover: hover) {
-  .image-with-text-fluxor__cta:hover {
-    background-color: currentColor;
-    color: var(--color-background);
-  }
+.image-with-text-fluxor__body p:last-child {
+  margin-bottom: 0;
 }
 
-.image-with-text-fluxor__cta:focus-visible {
-  outline: 2px solid currentColor;
-  outline-offset: 2px;
+.image-with-text-fluxor__body ul,
+.image-with-text-fluxor__body ol {
+  margin: 0 0 0.75em;
+  padding-left: 1.5rem;
 }
+
+.image-with-text-fluxor__body ul {
+  list-style: disc;
+}
+
+.image-with-text-fluxor__body ol {
+  list-style: decimal;
+}
+
+.image-with-text-fluxor__body li + li {
+  margin-top: 0.375rem;
+}
+
+.image-with-text-fluxor__body hr {
+  border: none;
+  border-top: 1px solid currentColor;
+  opacity: 0.2;
+  margin: 1rem 0;
+}
+
 
 /* ----------------------------------------------------------
    右側: 画像
