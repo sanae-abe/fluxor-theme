@@ -233,7 +233,7 @@
 .hero-fluxor__product-info {
   display: flex;
   flex-direction: column;
-  gap: 1rem; 
+  gap: 0.75rem; 
 }
 
 @media screen and (min-width: 990px) {
