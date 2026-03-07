@@ -5,6 +5,20 @@
   class="image-with-text-fluxor color-{{ section.settings.color_scheme }} gradient{% if section.settings.image_position == 'left' %} image-with-text-fluxor--image-left{% endif %}"
 >
   <div class="image-with-text-fluxor__container">
+
+    <!-- 右側: 分子構造画像 -->
+    <div class="image-with-text-fluxor__image">
+      {%- if section.settings.molecule_image != blank -%}
+        {{
+          section.settings.molecule_image
+          | image_url: width: 1280
+          | image_tag:
+            class: 'image-with-text-fluxor__img',
+            loading: 'lazy',
+            alt: section.settings.heading
+        }}
+      {%- endif -%}
+    </div>
     <!-- 左側: テキストコンテンツ -->
     <div class="image-with-text-fluxor__content">
       <div class="image-with-text-fluxor__inner">
@@ -28,20 +42,6 @@
         >
           {{- section.settings.button_label | escape -}}
         </a>
-      {%- endif -%}
-    </div>
-
-    <!-- 右側: 分子構造画像 -->
-    <div class="image-with-text-fluxor__image">
-      {%- if section.settings.molecule_image != blank -%}
-        {{
-          section.settings.molecule_image
-          | image_url: width: 1280
-          | image_tag:
-            class: 'image-with-text-fluxor__img',
-            loading: 'lazy',
-            alt: section.settings.heading
-        }}
       {%- endif -%}
     </div>
   </div>
