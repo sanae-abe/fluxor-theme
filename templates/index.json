@@ -120,7 +120,7 @@
       "name": "Brand Stroy",
       "settings": {
         "color_scheme": "",
-        "molecule_image": "shopify://shop_images/home-brand-story-image.png",
+        "molecule_image": "shopify://shop_images/top_brand_story_image_compressed.webp",
         "image_position": "right",
         "heading": "私たちは成分を読む。",
         "body": "皮膚科学に基づいた製品だけを、世界中からセレクトしています。\n流行より、エビデンス。",
@@ -145,7 +145,7 @@
       "name": "Key Ingredients",
       "settings": {
         "color_scheme": "",
-        "molecule_image": "shopify://shop_images/home-ingredient-image.webp",
+        "molecule_image": "shopify://shop_images/home-ingredient-image_c492f87f-6c2d-416d-b97e-c4adf07969a5.webp",
         "image_position": "left",
         "heading": "レチノール",
         "body": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。\n\n・シワや小じわの改善\n・毛穴の引き締め\n・肌のハリ・弾力のサポート",
