@@ -103,6 +103,35 @@ button.shopify-payment-button__button--unbranded,
 }
 
 /* ----------------------------------------------------------
+   Solid / Primary CTA variant
+   今すぐ購入・購入手続きに進む
+   ---------------------------------------------------------- */
+
+/* normal: solid fill（foreground色で塗りつぶし）
+   hover:  rgb(var(--color-foreground)) へ変化（ユーザー指定）
+   ※ background-color: currentColor は color プロパティと同値に解決されるため
+     テキストと背景が同色になる。代わりに rgb(var(--color-foreground)) を使用 */
+
+.btn-fluxor--solid,
+button.shopify-payment-button__button--unbranded {
+  --btn-fg: rgb(var(--color-background));
+  --btn-bg-hover: rgb(var(--color-foreground));
+  --btn-text-hover: rgb(var(--color-background));
+  background-color: rgb(var(--color-foreground));
+  border-color: rgb(var(--color-foreground));
+}
+
+@media (any-hover: hover) {
+  .btn-fluxor--solid:not([disabled]):hover,
+  button.shopify-payment-button__button--unbranded:not([disabled]):hover {
+    background-color: rgb(var(--color-foreground));
+    border-color: rgb(var(--color-foreground));
+    color: rgb(var(--color-background));
+    opacity: 0.85;
+  }
+}
+
+/* ----------------------------------------------------------
    状態・バリエーション
    ---------------------------------------------------------- */
 
