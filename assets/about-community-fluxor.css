@@ -90,7 +90,7 @@
 
 .about-community-fluxor__heading {
   font-family: var(--font-heading-family);
-  font-weight: var(--font-heading-weight);
+  font-weight: 500;
   font-style: var(--font-heading-style);
   font-size: clamp(1.75rem, 4.5vw, 2.5rem);
   letter-spacing: 0.06em;

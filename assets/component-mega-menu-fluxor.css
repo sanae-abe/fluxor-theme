@@ -145,7 +145,7 @@
   width: 100vw !important;
   z-index: 3 !important;
   margin: 0 !important;
-  padding: 1rem 0 !important;
+  padding: 1.5rem 0 !important;
   border: none !important;
   min-height: 240px !important;
   opacity: 0 !important;
@@ -209,7 +209,9 @@
   color: currentColor !important;
   text-decoration: none !important;
   display: block !important;
+  margin-top: 0;
   margin-bottom: 0.5rem !important;
+  padding-top: 0;
   padding-bottom: 0.25rem !important;
   border-bottom: 1px solid rgba(26, 23, 20, 0.15) !important;
   transition: opacity 0.2s ease !important;
@@ -240,9 +242,8 @@
 @media (any-hover: hover) {
   .header .mega-menu__link:not(.mega-menu__link--level-2):hover {
     opacity: 0.6 !important;
-    transform: translateX(4px) !important;
-    text-decoration: none !important;
     text-decoration-thickness: initial !important;
+    text-decoration: none !important;
   }
 }
 

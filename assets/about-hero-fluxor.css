@@ -62,7 +62,7 @@
 
 .about-hero-fluxor__heading {
   font-family: var(--font-heading-family);
-  font-weight: var(--font-heading-weight);
+  font-weight: 500;
   font-style: var(--font-heading-style);
   font-size: clamp(1.375rem, 6vw, 2.5rem);
   letter-spacing: 0.04em;
@@ -72,7 +72,7 @@
 
 .about-hero-fluxor__subheading {
   font-family: var(--font-heading-family);
-  font-weight: var(--font-heading-weight);
+  font-weight: 500;
   font-style: var(--font-heading-style);
   font-size: clamp(1.8rem, 4vw, 2.8rem);
   letter-spacing: 0.06em;

@@ -13,7 +13,7 @@
 button.shopify-payment-button__button--unbranded,
 [class*="-fluxor__cta"] {
   --btn-fg: currentColor;
-  --btn-bg-hover: #1a1714;
+  --btn-bg-hover: rgba(var(--color-foreground), 0.75);
   --btn-text-hover: #f6f4f0;
 
   display: inline-flex;
@@ -92,14 +92,14 @@ button.shopify-payment-button__button--unbranded,
 
 /* 黒固定（どのカラースキームでも黒） */
 .btn-fluxor--dark {
-  --btn-fg: #1a1714;
+  --btn-fg: rgba(var(--color-foreground), 0.75);
 }
 
 /* 白固定（どのカラースキームでも白） */
 .btn-fluxor--light {
-  --btn-fg: #f6f4f0;
-  --btn-bg-hover: #f6f4f0;
-  --btn-text-hover: #1a1714;
+  --btn-fg: rgba(var(--color-foreground));
+  --btn-bg-hover: rgba(var(--color-foreground));
+  --btn-text-hover: rgba(var(--color-background), 0.75);
 }
 
 /* ----------------------------------------------------------
