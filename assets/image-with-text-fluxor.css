@@ -69,7 +69,7 @@
 
 @media screen and (min-width: 750px) {
   .image-with-text-fluxor__content {
-    width: 50%;
+    width: calc(50% - 2.5rem);
     padding: 3.75rem 3.75rem 3.75rem 2.5rem;
     flex-shrink: 0;
     padding: 0;
