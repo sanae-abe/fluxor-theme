@@ -62,7 +62,7 @@
   flex-direction: column;
   justify-content: center;
   gap: 1.5rem;
-  padding: 0 1.875rem 1.5rem;
+  padding: 0 1.5rem 1.875rem;
 }
 
 @media screen and (min-width: 750px) {
