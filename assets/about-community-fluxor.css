@@ -109,11 +109,12 @@
   line-height: 1.7;
   opacity: 0.8;
   margin: 0;
+  color: rgb(var(--color-foreground));
 }
 
 /* 背景画像あり時は opacity を上げて視認性確保 */
 .about-community-fluxor--has-bg .about-community-fluxor__heading {
-  opacity: 0.95;
+  opacity: 1;
 }
 
 .about-community-fluxor--has-bg .about-community-fluxor__description {
@@ -126,7 +127,6 @@
 
 .about-community-fluxor__cta {
   align-self: center;
-  margin-top: 1rem;
 }
 
 /* ----------------------------------------------------------
@@ -139,24 +139,16 @@
   }
 
   .about-community-fluxor__inner {
-    gap: 2.5rem;
-  }
-
-  .about-community-fluxor__cta {
-    margin-top: 1.5rem;
+    gap: 2rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .about-community-fluxor {
-    padding: 5.625rem 2.5rem 3.5rem;
+    padding: 3.75rem 2.5rem;
   }
 
   .about-community-fluxor__inner {
-    gap: 0.875rem;
-  }
-
-  .about-community-fluxor__cta {
-    margin-top: 2rem;
+    gap: 2rem;
   }
 }

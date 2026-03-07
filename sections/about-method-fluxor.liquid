@@ -37,7 +37,7 @@
 
           {%- if block.settings.description != blank -%}
             <p class="about-method-fluxor__text">
-              {{- block.settings.description | escape -}}
+              {{- block.settings.description | escape | newline_to_br -}}
             </p>
           {%- endif -%}
         </div>

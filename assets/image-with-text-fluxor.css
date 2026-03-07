@@ -29,7 +29,7 @@
 
 @media screen and (min-width: 750px) {
   .image-with-text-fluxor {
-    padding: 3.75rem 0;
+    padding: 3.5rem 0;
   }
 
   .image-with-text-fluxor__container {
@@ -91,7 +91,7 @@
 
 .image-with-text-fluxor__subtitle {
   font-family: var(--font-body-family);
-  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;

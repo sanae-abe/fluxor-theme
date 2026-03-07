@@ -17,7 +17,7 @@
         "image_overlay_opacity": 40,
         "heading": "私たちは専門家ではありません。",
         "subheading": "だからこそ、徹底的に調べます。",
-        "description": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
+        "description": "スキンケアに迷ったのは私たちも同じでした。\n成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。\nだから、徹底的に調べることにしました。"
       }
     },
     "about_method_fluxor": {
@@ -90,7 +90,7 @@
           "settings": {
             "icon": "shopify://shop_images/icon-restraint.svg",
             "title": "誇張しません",
-            "description": "「奇跡の効果」は謳いません"
+            "description": "「奇跡の効果」は\n謳いません"
           }
         },
         "transparency_point_x8pG8V": {
@@ -98,7 +98,7 @@
           "settings": {
             "icon": "shopify://shop_images/icon-transparency.svg",
             "title": "隠しません",
-            "description": "製造元、成分濃度を可能な限り公開"
+            "description": "製造元、成分濃度を\n可能な限り公開"
           }
         },
         "transparency_point_q4myt3": {
@@ -106,7 +106,7 @@
           "settings": {
             "icon": "shopify://shop_images/icon-verification.svg",
             "title": "推測しません",
-            "description": "確認できないことは「分からない」と言います"
+            "description": "確認できないことは\n「分からない」と言います"
           }
         }
       },
@@ -130,7 +130,7 @@
         "bg_image": "shopify://shop_images/community-bg.webp",
         "image_overlay_opacity": 40,
         "heading": "一緒に学びましょう",
-        "description": "私たちも日々学んでいます。新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。一緒により良いスキンケア選択を見つけていきませんか？",
+        "description": "私たちも日々学んでいます。\n新しい研究、お客様からのフィードバック、失敗も含めて、すべて共有していきます。\n一緒により良いスキンケア選択を見つけていきませんか？",
         "button_label": "商品を見る",
         "button_link": "shopify://collections/all"
       }

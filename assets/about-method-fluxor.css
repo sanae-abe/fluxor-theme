@@ -39,12 +39,11 @@
 
 .about-method-fluxor__description {
   font-family: var(--font-body-family);
-  font-size: clamp(0.875rem, 1.1vw, 1rem);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
   letter-spacing: 0.02em;
   line-height: 1.7;
   opacity: 0.65;
   margin: 0 auto 4rem auto;
-  max-width: 42ch;
 }
 
 /* ----------------------------------------------------------
@@ -186,7 +185,7 @@
 
 @media screen and (min-width: 990px) {
   .about-method-fluxor {
-    padding: 5.625rem 2.5rem 3.5rem;
+    padding: 3.75rem 2.5rem;
   }
 }
 
