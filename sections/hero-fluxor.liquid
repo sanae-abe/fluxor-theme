@@ -34,28 +34,30 @@
         {%- endif -%}
 
         <div class="hero-fluxor__content">
-          <div class="hero-fluxor__product-info">
-            {%- if block.settings.brand != blank -%}
-              <p class="hero-fluxor__brand">{{ block.settings.brand | escape }}</p>
+          <div class="hero-fluxor__content__inner">
+            <div class="hero-fluxor__product-info">
+              {%- if block.settings.brand != blank -%}
+                <p class="hero-fluxor__brand">{{ block.settings.brand | escape }}</p>
+              {%- endif -%}
+
+              {%- if block.settings.product_name != blank -%}
+              <h2 class="hero-fluxor__product-name">{{ block.settings.product_name | escape }}</h2>
+             {%- endif -%}
+            </div>
+
+            {%- if block.settings.tagline != blank -%}
+              <p class="hero-fluxor__tagline">{{ block.settings.tagline | escape }}</p>
             {%- endif -%}
 
-            {%- if block.settings.product_name != blank -%}
-              <h2 class="hero-fluxor__product-name">{{ block.settings.product_name | escape }}</h2>
+            {%- if block.settings.button_label != blank -%}
+              <a
+                href="{{ block.settings.button_link | default: '#' }}"
+                class="hero-fluxor__cta"
+              >
+                {{- block.settings.button_label | escape -}}
+              </a>
             {%- endif -%}
           </div>
-
-          {%- if block.settings.tagline != blank -%}
-            <p class="hero-fluxor__tagline">{{ block.settings.tagline | escape }}</p>
-          {%- endif -%}
-
-          {%- if block.settings.button_label != blank -%}
-            <a
-              href="{{ block.settings.button_link | default: '#' }}"
-              class="hero-fluxor__cta"
-            >
-              {{- block.settings.button_label | escape -}}
-            </a>
-          {%- endif -%}
         </div>
       </div>
     {%- else -%}
