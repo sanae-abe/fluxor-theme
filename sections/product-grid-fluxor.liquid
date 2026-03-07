@@ -43,24 +43,11 @@
   {%- if products != blank and products.size > 0 -%}
     <div class="product-grid-fluxor__grid">
       {%- for product in products limit: products_count -%}
-        <a href="{{ product.url }}" class="fluxor-product-card">
-          <div class="fluxor-product-card__image-wrapper">
-            {%- if product.featured_image != blank -%}
-              {{
-                product.featured_image
-                | image_url: width: 600
-                | image_tag: loading: 'lazy', alt: product.title
-              }}
-            {%- endif -%}
-          </div>
-          <div class="fluxor-product-card__info">
-            {%- if product.vendor != blank -%}
-              <p class="fluxor-product-card__vendor">{{ product.vendor | escape }}</p>
-            {%- endif -%}
-            <p class="fluxor-product-card__title">{{ product.title | escape }}</p>
-            <p class="fluxor-product-card__price">{{ product.price | money }}</p>
-          </div>
-        </a>
+        {%- render 'card-product-fluxor',
+          card_product: product,
+          lazy_load: true,
+          show_vendor: true
+        -%}
       {%- endfor -%}
     </div>
   {%- else -%}

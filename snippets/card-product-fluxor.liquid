@@ -1,0 +1,52 @@
+{% comment %}
+  Fluxor 共通プロダクトカード
+
+  Accepts:
+  - card_product: {Object} 商品オブジェクト（必須）
+  - lazy_load:    {Boolean} 遅延読み込み（任意、デフォルト: false）
+  - show_vendor:  {Boolean} ブランド名表示（任意、デフォルト: false）
+
+  Usage:
+  {% render 'card-product-fluxor', card_product: product, lazy_load: true, show_vendor: true %}
+{% endcomment %}
+
+{%- liquid
+  assign loading = 'eager'
+  if lazy_load
+    assign loading = 'lazy'
+  endif
+-%}
+
+<a href="{{ card_product.url }}" class="fluxor-product-card">
+  <div class="fluxor-product-card__image-wrapper">
+    {%- if card_product.featured_media != blank -%}
+      {%- assign img_alt = card_product.featured_media.alt | escape | default: card_product.title -%}
+      {{
+        card_product.featured_media
+        | image_url: width: 600
+        | image_tag:
+          loading: loading,
+          alt: img_alt,
+          width: card_product.featured_media.width,
+          height: card_product.featured_media.height
+      }}
+    {%- else -%}
+      {{ 'product-1' | placeholder_svg_tag: 'placeholder-svg fluxor-product-card__placeholder' }}
+    {%- endif -%}
+  </div>
+
+  <div class="fluxor-product-card__info">
+    {%- if show_vendor and card_product.vendor != blank -%}
+      <p class="fluxor-product-card__vendor">{{ card_product.vendor | escape }}</p>
+    {%- endif -%}
+    <p class="fluxor-product-card__title">{{ card_product.title | escape }}</p>
+    <p class="fluxor-product-card__price">
+      {%- if card_product.compare_at_price > card_product.price -%}
+        <s class="fluxor-product-card__price--compare">{{ card_product.compare_at_price | money }}</s>
+        <span class="fluxor-product-card__price--sale">{{ card_product.price | money }}</span>
+      {%- else -%}
+        {{ card_product.price | money }}
+      {%- endif -%}
+    </p>
+  </div>
+</a>

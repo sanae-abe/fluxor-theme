@@ -41,38 +41,15 @@
   <div class="section-{{ section.id }}-padding">
     {%- paginate collection.products by section.settings.products_per_page -%}
 
-      {%- if section.settings.enable_sorting -%}
+      {%- if section.settings.enable_filtering or section.settings.enable_sorting -%}
         <div class="collection-filters-fluxor">
-          <facet-filters-form class="facets page-width">
-            <form class="facets-form" id="FacetFiltersForm">
-              <div class="facet-filters">
-                <div class="facet-filters__field">
-                  <h2 class="facet-filters__label">
-                    <label for="SortBy">{{ 'products.facets.sort_by_label' | t }}</label>
-                  </h2>
-                  <div class="select">
-                    {%- assign sort_by = collection.sort_by | default: collection.default_sort_by -%}
-                    <select
-                      name="sort_by"
-                      class="facet-filters__sort select__select"
-                      id="SortBy"
-                      aria-describedby="a11y-refresh-page-message"
-                    >
-                      {%- for option in collection.sort_options -%}
-                        <option
-                          value="{{ option.value | escape }}"
-                          {% if option.value == sort_by %}selected="selected"{% endif %}
-                        >
-                          {{ option.name | escape }}
-                        </option>
-                      {%- endfor -%}
-                    </select>
-                    <span class="svg-wrapper">{{ 'icon-caret.svg' | inline_asset_content }}</span>
-                  </div>
-                </div>
-              </div>
-            </form>
-          </facet-filters-form>
+          {%- render 'facets',
+            results: collection,
+            enable_filtering: section.settings.enable_filtering,
+            enable_sorting: section.settings.enable_sorting,
+            filter_type: section.settings.filter_type,
+            paginate: paginate
+          -%}
         </div>
       {%- endif -%}
 
@@ -95,27 +72,18 @@
             data-id="{{ section.id }}"
             class="product-grid-fluxor"
           >
-            {% assign skip_card_product_styles = false %}
             {%- for product in collection.products -%}
-              {% assign lazy_load = false %}
+              {%- assign lazy_load = false -%}
               {%- if forloop.index > 2 -%}
                 {%- assign lazy_load = true -%}
               {%- endif -%}
               <li class="product-grid-fluxor__item">
-                {% render 'card-product',
+                {%- render 'card-product-fluxor',
                   card_product: product,
-                  media_aspect_ratio: section.settings.image_ratio,
-                  image_shape: section.settings.image_shape,
-                  show_secondary_image: section.settings.show_secondary_image,
-                  show_vendor: section.settings.show_vendor,
-                  show_rating: section.settings.show_rating,
                   lazy_load: lazy_load,
-                  skip_styles: skip_card_product_styles,
-                  quick_add: section.settings.quick_add,
-                  section_id: section.id
-                %}
+                  show_vendor: section.settings.show_vendor
+                -%}
               </li>
-              {%- assign skip_card_product_styles = true -%}
             {%- endfor -%}
           </ul>
         {%- endif -%}
@@ -250,9 +218,31 @@
     },
     {
       "type": "checkbox",
+      "id": "enable_filtering",
+      "default": true,
+      "label": "Enable filtering"
+    },
+    {
+      "type": "checkbox",
       "id": "enable_sorting",
       "default": true,
       "label": "Enable sorting"
+    },
+    {
+      "type": "select",
+      "id": "filter_type",
+      "default": "horizontal",
+      "label": "Filter type",
+      "options": [
+        {
+          "value": "horizontal",
+          "label": "Horizontal"
+        },
+        {
+          "value": "drawer",
+          "label": "Drawer"
+        }
+      ]
     },
     {
       "type": "select",

@@ -29,7 +29,7 @@
 
 .product-grid-fluxor__heading {
   font-family: var(--font-heading-family);
-  font-weight: var(--font-heading-weight);
+  font-weight: 500;
   font-style: var(--font-heading-style);
   font-size: clamp(1.5rem, 3vw, 2rem);
   letter-spacing: 0.04em;
@@ -152,7 +152,21 @@
   font-size: clamp(0.9rem, 1.1vw, 1rem);
   letter-spacing: 0.04em;
   opacity: 0.7;
-  margin: 0.25rem 0 0;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  gap: 0.5rem;
+}
+
+.fluxor-product-card__price--compare {
+  opacity: 0.5;
+  font-size: 0.875em;
+  text-decoration: line-through;
+}
+
+.fluxor-product-card__price--sale {
+  opacity: 1;
+  font-weight: 600;
 }
 
 /* ----------------------------------------------------------

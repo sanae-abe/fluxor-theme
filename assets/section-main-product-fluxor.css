@@ -62,52 +62,12 @@
    ========================================================================== */
 
 @layer components {
-  /* Filters Section */
+  /* Filters Section
+   * page-width はコンテナ自体で制御し、内部の Dawn 標準スタイルに干渉しない */
   .collection-filters-fluxor {
-    margin-bottom: 2rem;
-  }
-
-  .collection-filters-fluxor .facets {
     max-width: var(--page-width);
-    margin: 0 auto;
+    margin: 0 auto 2rem;
     padding: 0 2rem;
-  }
-
-  .collection-filters-fluxor .facet-filters {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .collection-filters-fluxor .facet-filters__label {
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: var(--color-foreground);
-    margin: 0 0.5rem 0 0;
-  }
-
-  .collection-filters-fluxor .select {
-    position: relative;
-  }
-
-  .collection-filters-fluxor .select__select {
-    appearance: none;
-    background: var(--color-background);
-    border: 1px solid var(--color-border);
-    border-radius: 0.25rem;
-    color: var(--color-foreground);
-    font-family: var(--font-body-family);
-    font-size: 0.875rem;
-    padding: 0.75rem 2rem 0.75rem 1rem;
-    min-width: 200px;
-    cursor: pointer;
-  }
-
-  .collection-filters-fluxor .select__select:focus-visible {
-    outline: 2px solid var(--color-foreground);
-    outline-offset: 2px;
   }
 
   /* Product Grid Container */
