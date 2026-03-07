@@ -118,7 +118,7 @@
   }
 
   .quick-add-modal__content-info--bulk .quick-order-list__table th {
-    padding-top: 2.5rem;
+    padding-top: 1.5625rem;
   }
 
   .quick-add-modal__content-info--bulk thead {
@@ -199,7 +199,7 @@
     position: sticky;
     top: 0;
     margin-top: -2.5rem;
-    padding-top: 2.5rem;
+    padding-top: 1.5625rem;
   }
 }
 
@@ -211,7 +211,7 @@
 
 .quick-add-modal__content-info {
   --modal-padding: 2.5rem;
-  padding-right: 4.4rem;
+  padding-right: 2.75rem;
   display: flex;
   overflow-y: auto;
   overflow-x: hidden;
@@ -316,7 +316,7 @@ quick-add-modal .product__column-sticky {
 
   quick-add-modal .product:not(.product--no-media) .product__info-wrapper {
     padding-top: 2rem;
-    padding-left: 2.5rem;
+    padding-left: 1.5625rem;
     max-width: 54%;
     width: calc(54% - var(--grid-desktop-horizontal-spacing) / 2);
   }

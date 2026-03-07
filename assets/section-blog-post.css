@@ -54,7 +54,7 @@
 }
 
 .article-template header {
-  margin-top: 4.4rem;
+  margin-top: 2.75rem;
   margin-bottom: 2rem;
   line-height: calc(0.8 / var(--font-body-scale));
 }
@@ -74,7 +74,7 @@
 }
 
 .article-template__link {
-  font-size: 1.8rem;
+  font-size: 1.125rem;
   display: flex;
   justify-content: center;
   align-items: center;

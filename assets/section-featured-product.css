@@ -31,7 +31,7 @@
   display: inline-flex;
   float: right;
   align-items: center;
-  min-height: 4.4rem;
+  min-height: 2.75rem;
 }
 
 .share-button + .product__view-details::after {

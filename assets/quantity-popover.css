@@ -8,7 +8,7 @@ quantity-popover volume-pricing li:nth-child(odd) {
 }
 
 quantity-popover volume-pricing li {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   letter-spacing: 0.06rem;
   padding: 0.375rem 0.8rem;
   display: flex;
@@ -89,7 +89,7 @@ quantity-popover .quick-order-list-remove-button .button {
   display: block;
   margin-left: 0.75rem;
   margin-top: 0.75rem;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .quantity-popover__info .button {
@@ -123,7 +123,7 @@ quantity-popover .quantity__rules span:first-of-type {
 
 .quantity-popover-container {
   display: flex;
-  padding: 0.5rem 0.5rem 0.5rem 0;
+  padding: 0;
 }
 
 .quantity-popover-container:not(.quantity-popover-container--hover) {

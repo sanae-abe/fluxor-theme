@@ -36,7 +36,7 @@
   display: flex;
   grid-column: 2;
   grid-row: 1;
-  padding-left: 2.5rem;
+  padding-left: 1.5625rem;
 }
 
 @media screen and (min-width: 990px) {
@@ -339,7 +339,7 @@
   flex-direction: column;
   padding: 0;
   height: 100%;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
 }
 
 /* Image filter specific styles */
@@ -821,7 +821,7 @@ a.active-facets__button.focused .active-facets__button-inner {
 
 .mobile-facets__count {
   color: rgba(var(--color-foreground), 0.7);
-  font-size: 1.3rem;
+  font-size: 0.875rem;
   margin: 0;
   flex-grow: 1;
 }
@@ -878,8 +878,8 @@ a.active-facets__button.focused .active-facets__button-inner {
   position: fixed;
   top: 0.7rem;
   right: 1rem;
-  width: 4.4rem;
-  height: 4.4rem;
+  width: 2.75rem;
+  height: 2.75rem;
   z-index: 101;
   opacity: 0;
   transition: opacity var(--duration-short) ease;

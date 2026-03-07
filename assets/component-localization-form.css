@@ -118,7 +118,7 @@
   display: flex;
   height: 2.5rem;
   padding: 0 1.5rem 0 1.5rem;
-  font-size: 1.3rem;
+  font-size: 0.875rem;
   background-color: transparent;
 }
 
@@ -141,7 +141,7 @@
 .disclosure__list {
   position: relative;
   overflow-y: auto;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   padding-bottom: 0.5rem;
   padding-top: 0.5rem;
   scroll-padding: 0.5rem 0;
@@ -272,8 +272,8 @@
     align-items: center;
     padding: 0rem;
     background-color: transparent;
-    height: 4.4rem;
-    width: 4.4rem;
+    height: 2.75rem;
+    width: 2.75rem;
   }
 
   .country-selector__close-button .icon {
@@ -344,7 +344,7 @@
 }
 
 .header-localization .disclosure .localization-form__select {
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   letter-spacing: 0.06rem;
   height: auto;
   min-height: initial;

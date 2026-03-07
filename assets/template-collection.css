@@ -43,7 +43,7 @@
 
 @media screen and (min-width: 750px) {
   .collection .loading-overlay {
-    padding-left: 5rem;
+    padding-left: 3.125rem;
     padding-right: 3.125rem;
   }
 }

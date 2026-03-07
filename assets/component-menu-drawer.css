@@ -161,7 +161,7 @@ details[open].menu-opening > .menu-drawer__submenu {
   text-decoration: none;
   display: flex;
   align-items: center;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   width: 100%;
   background-color: transparent;
   font-family: var(--font-body-family);
@@ -203,7 +203,7 @@ details[open].menu-opening > .menu-drawer__submenu {
   align-items: center;
   text-decoration: none;
   padding: 0.625rem 0;
-  font-size: 0.75rem;
+  font-size: 0.875rem;
   color: rgb(var(--color-foreground));
   margin-bottom: 0;
 }

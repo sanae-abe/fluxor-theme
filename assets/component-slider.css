@@ -152,7 +152,7 @@ slider-component.slider-component-full-width {
   .slider--desktop:after {
     content: '';
     width: 0;
-    padding-left: 5rem;
+    padding-left: 3.125rem;
     margin-left: calc(-1 * var(--grid-desktop-horizontal-spacing));
   }
 
@@ -244,7 +244,7 @@ slider-component.slider-component-full-width {
 .slider-counter {
   display: flex;
   justify-content: center;
-  min-width: 4.4rem;
+  min-width: 2.75rem;
 }
 
 @media screen and (min-width: 750px) {

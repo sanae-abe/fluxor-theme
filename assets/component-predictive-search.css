@@ -187,7 +187,7 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
 
 .predictive-search__item .price {
   color: rgba(var(--color-foreground), 0.7);
-  font-size: 0.75rem;
+  font-size: 0.875rem;
 }
 
 .predictive-search__item-vendor + .predictive-search__item-heading,
@@ -214,7 +214,7 @@ predictive-search[loading] .predictive-search__results-groups-wrapper ~ .predict
   width: calc(var(--font-heading-scale) * 1.4rem);
   height: calc(var(--font-heading-scale) * 1.4rem);
   flex-shrink: 0;
-  margin-left: calc(var(--font-heading-scale) * 2rem);
+  margin-left: 1.25rem);
   color: rgb(var(--color-link));
 }
 
