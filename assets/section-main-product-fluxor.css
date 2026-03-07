@@ -67,7 +67,7 @@
    * page-width はコンテナ自体で制御し、内部の Dawn 標準スタイルに干渉しない */
   .collection-filters-fluxor {
     max-width: var(--page-width);
-    margin: 0 auto 2rem;
+    margin: 0 auto 1rem;
     padding: 0 2.5rem;
   }
 
@@ -270,11 +270,6 @@
 
 /* タッチデバイス対応 */
 @media (any-hover: hover) {
-  .product-grid-fluxor__item:hover {
-    transform: translateY(-2px);
-    transition: transform 0.2s ease;
-  }
-
   .fluxor-product-card:hover .fluxor-product-card__image-wrapper img {
     transform: scale(1.04);
   }
@@ -294,11 +289,6 @@
   .fluxor-product-card__image-wrapper img {
     transition: none;
   }
-
-  .product-grid-fluxor__item:hover {
-    transform: none;
-  }
-
   .fluxor-product-card:hover .fluxor-product-card__image-wrapper img {
     transform: none;
   }
