@@ -86,27 +86,27 @@
         "cta_url": "/pages/ingredients"
       }
     },
-    "about_transparency_fluxor_GWHRLn": {
-      "type": "about-transparency-fluxor",
+    "icon_grid_fluxor_QNDa8Y": {
+      "type": "icon-grid-fluxor",
       "blocks": {
-        "transparency_point_DWr7Ne": {
-          "type": "transparency_point",
+        "item_yRcejH": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-restraint.svg",
             "title": "誇張しません",
             "description": "「奇跡の効果」は\n謳いません"
           }
         },
-        "transparency_point_x8pG8V": {
-          "type": "transparency_point",
+        "item_qURjdP": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-transparency.svg",
             "title": "隠しません",
             "description": "製造元、成分濃度を\n可能な限り公開"
           }
         },
-        "transparency_point_q4myt3": {
-          "type": "transparency_point",
+        "item_JYHDn8": {
+          "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-verification.svg",
             "title": "推測しません",
@@ -115,15 +115,18 @@
         }
       },
       "block_order": [
-        "transparency_point_DWr7Ne",
-        "transparency_point_x8pG8V",
-        "transparency_point_q4myt3"
+        "item_yRcejH",
+        "item_qURjdP",
+        "item_JYHDn8"
       ],
-      "name": "Transparency - Fluxor",
+      "name": "Transparency",
       "settings": {
         "color_scheme": "",
         "heading": "透明性へのこだわり",
-        "description": "調査過程も、分からないことも、正直にお伝えします。"
+        "description": "調査過程も、分からないことも、正直にお伝えします。",
+        "columns": "3",
+        "card_style": "plain",
+        "container_width": "wide"
       }
     },
     "about_community_fluxor_JxFi8T": {
@@ -144,7 +147,7 @@
     "about_hero_fluxor",
     "icon_grid_fluxor_9pC7rH",
     "about_philosophy_fluxor_n7REA7",
-    "about_transparency_fluxor_GWHRLn",
+    "icon_grid_fluxor_QNDa8Y",
     "about_community_fluxor_JxFi8T"
   ]
 }
