@@ -189,7 +189,6 @@
   display: grid !important;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)) !important;
   gap: 2rem 1.5rem !important;
-  max-width: none !important;
   padding: 0 1.5rem !important;
 }
 

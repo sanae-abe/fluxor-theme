@@ -102,13 +102,13 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 
 @media screen and (min-width: 750px) {
   .page-width {
-    padding: 0 3.125rem;
+    padding: 0 2.5rem;
   }
 
   .header.page-width,
   .utility-bar__grid.page-width {
-    padding-left: 2rem;
-    padding-right: 2rem;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
   }
 
   .page-width--narrow {
@@ -120,15 +120,16 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
   }
 
   .page-width-tablet {
-    padding: 0 3.125rem;
+    padding: 0 2.5rem;
   }
 }
 
 @media screen and (min-width: 990px) {
   .header:not(.drawer-menu).page-width {
-    padding-left: 5rem;
-    padding-right: 3.125rem;
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
   }
+}
 
   .page-width--narrow {
     max-width: 72.6rem;
@@ -137,7 +138,7 @@ body:has(.section-header .drawer-menu) .announcement-bar-section .page-width {
 
   .page-width-desktop {
     max-width: var(--page-width);
-    padding: 0 3.125rem;
+    padding: 0 2.5rem;
   }
 }
 
@@ -2208,8 +2209,8 @@ input[type='checkbox'] {
 
 @media screen and (min-width: 990px) {
   body:has(.section-header .header:not(.drawer-menu)) .utility-bar .page-width {
-    padding-left: 5rem;
-    padding-right: 3.125rem;
+    padding-left: 2.5rem;
+    padding-right: 2.5rem;
   }
 
   .announcement-bar-slider {
@@ -2344,6 +2345,20 @@ input[type='checkbox'] {
   background-color: rgb(var(--color-background));
 }
 
+.header-wrapper .header.page-width {
+  max-width: var(--page-width);
+  margin: 0 auto;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+@media screen and (min-width: 750px) {
+  .header-wrapper .header.page-width {
+    padding-left: 2.5rem !important;
+    padding-right: 2.5rem !important;
+  }
+}
+
 .header-wrapper--border-bottom {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
 }
@@ -2434,7 +2449,6 @@ input[type='checkbox'] {
 
 .header__heading-link {
   display: inline-block;
-  padding: 0 0.75rem;
   text-decoration: none;
   word-break: break-word;
 }

@@ -49,7 +49,6 @@
 .about-hero-fluxor__inner {
   position: relative;
   z-index: 1;
-  max-width: 48rem;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
