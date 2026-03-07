@@ -14,20 +14,6 @@
     "announcement-bar": {
       "type": "announcement-bar",
       "blocks": {
-        "announcement_W4ADAd": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store 3",
-            "link": ""
-          }
-        },
-        "announcement_raAG49": {
-          "type": "announcement",
-          "settings": {
-            "text": "Welcome to our store 2",
-            "link": ""
-          }
-        },
         "announcement-bar-0": {
           "type": "announcement",
           "settings": {
@@ -37,8 +23,6 @@
         }
       },
       "block_order": [
-        "announcement_W4ADAd",
-        "announcement_raAG49",
         "announcement-bar-0"
       ],
       "settings": {
