@@ -117,7 +117,7 @@
     },
     "image_with_text_fluxor_BUcLmx": {
       "type": "image-with-text-fluxor",
-      "name": "Image with Text",
+      "name": "Brand Stroy",
       "settings": {
         "color_scheme": "",
         "molecule_image": "shopify://shop_images/top_brand_story_image.webp",
@@ -203,6 +203,19 @@
         "products_to_show": 4,
         "show_view_all": true
       }
+    },
+    "image_with_text_fluxor_hdNjqn": {
+      "type": "image-with-text-fluxor",
+      "name": "Image with Text",
+      "settings": {
+        "color_scheme": "",
+        "molecule_image": "shopify://shop_images/retinol-petri-bg-small.webp",
+        "image_position": "left",
+        "heading": "Retinol - レチノール",
+        "body": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。\n\n・シワや小じわの改善\n・毛穴の引き締め\n・肌のハリ・弾力のサポート",
+        "button_label": "詳しく見る",
+        "button_link": ""
+      }
     }
   },
   "order": [
@@ -212,6 +225,7 @@
     "featured_collection_fluxor_MdghFy",
     "ingredient_spotlight_fluxor_9MrtCf",
     "featured_collection_fluxor_RWyeiT",
-    "featured_collection_fluxor_DzgHFR"
+    "featured_collection_fluxor_DzgHFR",
+    "image_with_text_fluxor_hdNjqn"
   ]
 }
