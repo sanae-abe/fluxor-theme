@@ -5,6 +5,8 @@
 
 .featured-collection-fluxor {
   padding: 3.75rem 1.5rem;
+  width: min(100%, var(--page-width));
+  margin: 0 auto;
 }
 
 /* ----------------------------------------------------------
