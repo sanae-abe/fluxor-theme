@@ -123,9 +123,9 @@
         "molecule_image": "shopify://shop_images/top_brand_story_image_compressed.webp",
         "image_position": "right",
         "heading": "私たちは成分を読む。",
-        "subtitle": "Key Ingredient",
+        "subtitle": "",
         "heading_font": "brand",
-        "body": "<p>皮膚科学に基づいた製品だけを、世界中からセレクトしています。<br>流行より、エビデンス。</p>",
+        "body": "<p>皮膚科学に基づいた製品だけを、世界中からセレクトしています。<br/>流行より、エビデンス。</p>",
         "button_label": "ブランドストーリー",
         "button_link": ""
       }
