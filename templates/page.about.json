@@ -72,18 +72,19 @@
         "container_width": "wide"
       }
     },
-    "about_philosophy_fluxor_n7REA7": {
-      "type": "about-philosophy-fluxor",
-      "name": "About Philosophy - Fluxor",
+    "image_with_text_fluxor_X9CTaa": {
+      "type": "image-with-text-fluxor",
+      "name": "About Philosophy",
       "settings": {
         "color_scheme": "scheme-2",
+        "molecule_image": "shopify://shop_images/centella-asiatica.webp",
+        "image_position": "right",
+        "heading": "なぜ Fluxsor なのか",
         "subtitle": "一歩進んだスキンケア",
-        "heading": "なぜFluxorなのか",
-        "tagline": "古代の知恵 × 現代の科学。",
-        "description": "ツボクサ（Centella Asiatica）のように、何千年もの伝統と現代の皮膚科学研究。私たちは流行に惑わされず、時の試練を経た成分と確かなエビデンスに基づいて商品を選んでいます。",
-        "image": "shopify://shop_images/centella-asiatica.webp",
-        "cta_label": "成分について詳しく",
-        "cta_url": "/pages/ingredients"
+        "heading_font": "heading",
+        "body": "<h3>古代の知恵 × 現代の科学。</h3><p>ツボクサ（Centella Asiatica）のように、何千年もの伝統と現代の皮膚科学研究。私たちは流行に惑わされず、時の試練を経た成分と確かなエビデンスに基づいて商品を選んでいます。</p>",
+        "button_label": "成分について詳しく見る",
+        "button_link": "#"
       }
     },
     "icon_grid_fluxor_QNDa8Y": {
@@ -141,28 +142,13 @@
         "button_label": "商品を見る",
         "button_link": "shopify://collections/all"
       }
-    },
-    "image_with_text_fluxor_X9CTaa": {
-      "type": "image-with-text-fluxor",
-      "name": "Image with Text",
-      "settings": {
-        "color_scheme": "",
-        "image_position": "right",
-        "heading": "私たちは成分を読む。",
-        "subtitle": "Key Ingredient",
-        "heading_font": "brand",
-        "body": "",
-        "button_label": "Fluxor について",
-        "button_link": ""
-      }
     }
   },
   "order": [
     "about_hero_fluxor",
     "icon_grid_fluxor_9pC7rH",
-    "about_philosophy_fluxor_n7REA7",
+    "image_with_text_fluxor_X9CTaa",
     "icon_grid_fluxor_QNDa8Y",
-    "about_community_fluxor_JxFi8T",
-    "image_with_text_fluxor_X9CTaa"
+    "about_community_fluxor_JxFi8T"
   ]
 }
