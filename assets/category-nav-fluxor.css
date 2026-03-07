@@ -4,7 +4,7 @@
 
 .category-nav-fluxor {
   margin: 0 auto;
-  padding: 5rem 2.5rem 3.75rem;
+  padding: 5.625rem 2.5rem 3.75rem;
   width: min(100%, var(--page-width));
 }
 
