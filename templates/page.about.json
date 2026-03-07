@@ -134,47 +134,6 @@
         "button_label": "商品を見る",
         "button_link": "shopify://collections/all"
       }
-    },
-    "icon_grid_fluxor_T4M7N6": {
-      "type": "icon-grid-fluxor",
-      "blocks": {
-        "item_dxfXf9": {
-          "type": "item",
-          "settings": {
-            "icon": "shopify://shop_images/icon-research.svg",
-            "title": "論文検索",
-            "description": "PubMed、皮膚科学会誌を調査"
-          }
-        },
-        "item_FTmh3F": {
-          "type": "item",
-          "settings": {
-            "title": "項目2",
-            "description": "説明文"
-          }
-        },
-        "item_BkQLtE": {
-          "type": "item",
-          "settings": {
-            "title": "項目3",
-            "description": "説明文"
-          }
-        }
-      },
-      "block_order": [
-        "item_dxfXf9",
-        "item_FTmh3F",
-        "item_BkQLtE"
-      ],
-      "name": "Icon Grid - Fluxor",
-      "settings": {
-        "color_scheme": "",
-        "heading": "私たちの調査方法",
-        "description": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。",
-        "columns": "4",
-        "card_style": "plain",
-        "container_width": "wide"
-      }
     }
   },
   "order": [
@@ -182,7 +141,6 @@
     "about_method_fluxor",
     "about_philosophy_fluxor_n7REA7",
     "about_transparency_fluxor_GWHRLn",
-    "about_community_fluxor_JxFi8T",
-    "icon_grid_fluxor_T4M7N6"
+    "about_community_fluxor_JxFi8T"
   ]
 }
