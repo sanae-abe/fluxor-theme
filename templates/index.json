@@ -140,44 +140,17 @@
         "show_view_all": true
       }
     },
-    "ingredient_spotlight_fluxor_9MrtCf": {
-      "type": "ingredient-spotlight-fluxor",
-      "blocks": {
-        "benefit_8g7Q8b": {
-          "type": "benefit",
-          "settings": {
-            "text": "シワや小じわの改善"
-          }
-        },
-        "benefit_943DaJ": {
-          "type": "benefit",
-          "settings": {
-            "text": "毛穴の引き締め"
-          }
-        },
-        "benefit_mn4UUK": {
-          "type": "benefit",
-          "settings": {
-            "text": "肌のハリ・弾力のサポート"
-          }
-        }
-      },
-      "block_order": [
-        "benefit_8g7Q8b",
-        "benefit_943DaJ",
-        "benefit_mn4UUK"
-      ],
-      "name": "Ingredient - Fluxor",
+    "image_with_text_fluxor_hdNjqn": {
+      "type": "image-with-text-fluxor",
+      "name": "Image with Text",
       "settings": {
         "color_scheme": "",
-        "bg_image": "shopify://shop_images/retinol-petri-bg-small.webp",
-        "bg_image_overlay_opacity": 0,
-        "label": "Key Ingredient",
-        "ingredient_name": "Retinol.",
-        "description": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。",
-        "image_position": "right",
-        "button_label": "成分について詳しく",
-        "button_link": "/pages/ingredients"
+        "molecule_image": "shopify://shop_images/retinol-petri-bg-small.webp",
+        "image_position": "left",
+        "heading": "レチノール",
+        "body": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。\n\n・シワや小じわの改善\n・毛穴の引き締め\n・肌のハリ・弾力のサポート",
+        "button_label": "詳しく見る",
+        "button_link": ""
       }
     },
     "featured_collection_fluxor_RWyeiT": {
@@ -203,19 +176,6 @@
         "products_to_show": 4,
         "show_view_all": true
       }
-    },
-    "image_with_text_fluxor_hdNjqn": {
-      "type": "image-with-text-fluxor",
-      "name": "Image with Text",
-      "settings": {
-        "color_scheme": "",
-        "molecule_image": "shopify://shop_images/retinol-petri-bg-small.webp",
-        "image_position": "left",
-        "heading": "レチノール",
-        "body": "科学的に最も研究された美容成分の一つ。細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。\n\n・シワや小じわの改善\n・毛穴の引き締め\n・肌のハリ・弾力のサポート",
-        "button_label": "詳しく見る",
-        "button_link": ""
-      }
     }
   },
   "order": [
@@ -224,7 +184,6 @@
     "image_with_text_fluxor_BUcLmx",
     "featured_collection_fluxor_MdghFy",
     "image_with_text_fluxor_hdNjqn",
-    "ingredient_spotlight_fluxor_9MrtCf",
     "featured_collection_fluxor_RWyeiT",
     "featured_collection_fluxor_DzgHFR"
   ]
