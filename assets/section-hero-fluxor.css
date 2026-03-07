@@ -230,6 +230,12 @@
   }
 }
 
+.hero-fluxor__product-info {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem; 
+}
+
 @media screen and (min-width: 990px) {
   .hero-fluxor__content {
     width: min(100%, var(--page-width));
