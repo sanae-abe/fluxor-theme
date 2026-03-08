@@ -515,7 +515,7 @@
       "copy_code": "ギフトカードコードをコピーする",
       "expired": "期限切れ",
       "copy_code_success": "コードは正常にコピーされました",
-      "how_to_use_gift_card": "オンラインではギフトカードコード、実店舗ではQRコードを使用する",
+      "how_to_use_gift_card": "オンラインではギフトカードコード、\n実店舗ではQRコードを使用する",
       "expiration_date": "{{ expires_on }}に期限が切れます"
     }
   },
