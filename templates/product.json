@@ -81,9 +81,7 @@
           "source": "{{ product.metafields.custom.warnings.value }}",
           "settings": {
             "heading": "ご注意",
-            "icon": "check_mark",
-            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}",
-            "page": ""
+            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}"
           }
         },
         "collapsible-row-1": {
@@ -91,9 +89,7 @@
           "source": "{{ product.metafields.custom[\"all-ingredients\"].value }}",
           "settings": {
             "heading": "成分",
-            "icon": "check_mark",
-            "content": "{{ product.metafields.custom[\"all-ingredients\"].value.ingredients | metafield_tag }}",
-            "page": ""
+            "content": "{{ product.metafields.custom[\"all-ingredients\"].value.ingredients | metafield_tag }}"
           }
         },
         "share": {
