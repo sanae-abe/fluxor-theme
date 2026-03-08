@@ -142,6 +142,7 @@
   letter-spacing: 0.2em;
   text-transform: uppercase;
   margin: 0;
+  opacity: 1;
 }
 
 .hero-fluxor__product-name {
@@ -161,6 +162,7 @@
   line-height: 1.6;
   margin: 0;
   max-width: 36ch;
+  opacity: 1;
 }
 
 .hero-fluxor__cta {
