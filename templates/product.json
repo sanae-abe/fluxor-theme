@@ -86,11 +86,10 @@
         },
         "collapsible-row-1": {
           "type": "collapsible_tab",
+          "source": "{{ product.metafields.custom[\"all-ingredients\"].value }}",
           "settings": {
             "heading": "成分",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "content": "{{ product.metafields.custom[\"all-ingredients\"].value.ingredients | metafield_tag }}"
           }
         },
         "share": {
