@@ -24,7 +24,7 @@
 }
 
 /* ----------------------------------------------------------
-   グリッド（モバイル・タブレット：横スクロールカルーセル）
+   横スクロールカルーセル（全デバイス共通）
    ---------------------------------------------------------- */
 
 .category-nav-fluxor__grid {
@@ -41,23 +41,6 @@
   display: none;
 }
 
-@media screen and (min-width: 750px) {
-  .category-nav-fluxor__grid {
-    gap: 1.5rem;
-  }
-}
-
-/* デスクトップ：グリッドに戻す */
-@media screen and (min-width: 990px) {
-  .category-nav-fluxor__grid {
-    display: grid;
-    grid-template-columns: repeat(5, 1fr);
-    overflow-x: visible;
-    scroll-snap-type: none;
-    gap: 1.5rem;
-  }
-}
-
 /* ----------------------------------------------------------
    カテゴリカード
    ---------------------------------------------------------- */
@@ -66,23 +49,26 @@
   display: block;
   text-decoration: none;
   color: currentColor;
-  /* カルーセル：モバイルで2枚 */
+  /* モバイル：2枚表示 */
   flex: 0 0 calc(50% - 0.5rem);
   scroll-snap-align: start;
 }
 
 @media screen and (min-width: 750px) {
   .category-nav-fluxor__item {
-    /* タブレットで3枚 */
+    /* タブレット：3枚表示 */
     flex: 0 0 calc(33.333% - 0.667rem);
   }
 }
 
 @media screen and (min-width: 990px) {
+  .category-nav-fluxor__grid {
+    gap: 1.5rem;
+  }
+
   .category-nav-fluxor__item {
-    /* デスクトップ：グリッドに任せる */
-    flex: unset;
-    scroll-snap-align: unset;
+    /* デスクトップ：4枚表示 */
+    flex: 0 0 calc(25% - 1.125rem);
   }
 }
 
