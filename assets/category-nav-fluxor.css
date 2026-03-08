@@ -24,25 +24,37 @@
 }
 
 /* ----------------------------------------------------------
-   グリッド
+   グリッド（モバイル・タブレット：横スクロールカルーセル）
    ---------------------------------------------------------- */
 
 .category-nav-fluxor__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  scrollbar-width: none;
   gap: 1rem;
+  padding-bottom: 0.25rem;
+}
+
+.category-nav-fluxor__grid::-webkit-scrollbar {
+  display: none;
 }
 
 @media screen and (min-width: 750px) {
   .category-nav-fluxor__grid {
-    grid-template-columns: repeat(3, 1fr);
     gap: 1.5rem;
   }
 }
 
+/* デスクトップ：グリッドに戻す */
 @media screen and (min-width: 990px) {
   .category-nav-fluxor__grid {
+    display: grid;
     grid-template-columns: repeat(5, 1fr);
+    overflow-x: visible;
+    scroll-snap-type: none;
+    gap: 1.5rem;
   }
 }
 
@@ -54,6 +66,24 @@
   display: block;
   text-decoration: none;
   color: currentColor;
+  /* カルーセル：モバイルで2枚 */
+  flex: 0 0 calc(50% - 0.5rem);
+  scroll-snap-align: start;
+}
+
+@media screen and (min-width: 750px) {
+  .category-nav-fluxor__item {
+    /* タブレットで3枚 */
+    flex: 0 0 calc(33.333% - 0.667rem);
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .category-nav-fluxor__item {
+    /* デスクトップ：グリッドに任せる */
+    flex: unset;
+    scroll-snap-align: unset;
+  }
 }
 
 .category-nav-fluxor__item:focus-visible {
