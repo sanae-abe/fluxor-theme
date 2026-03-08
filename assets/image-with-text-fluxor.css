@@ -109,7 +109,7 @@
 .image-with-text-fluxor__heading {
   font-weight: 500;
   font-style: normal;
-  font-size: clamp(1.75rem, 4.5vw, 2.5rem);
+  font-size: clamp(1.5rem, 3vw, 2rem);
   letter-spacing: 0.04em;
   line-height: 1.5;
   color: currentColor;
