@@ -205,6 +205,9 @@
                         {%- endif -%}
                       {%- endform -%}
                     </div>
+                    {%- if has_social_icons -%}
+                      {%- render 'social-icons', class: 'footer__list-social' -%}
+                    {%- endif -%}
                     {%- if section.settings.disclaimer != blank -%}
                       <p class="footer__disclaimer-text" style="margin-top: 1.5rem;">{{ section.settings.disclaimer }}</p>
                     {%- endif -%}
@@ -318,9 +321,6 @@
             </div>
           {%- endif -%}
 
-          {%- if section.settings.show_social and has_social_icons -%}
-            {%- render 'social-icons', class: 'footer__list-social' -%}
-          {%- endif -%}
         </div>
       </div>
     {%- endunless -%}
