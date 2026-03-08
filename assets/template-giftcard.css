@@ -198,7 +198,7 @@ h2,
 
 .gift-card__text {
   text-align: center;
-  font-size: 1.7rem;
+  font-size: 1rem;
   opacity: 0.6;
   margin: 0;
   line-height: calc(1 + 0.5 / var(--font-body-scale));
