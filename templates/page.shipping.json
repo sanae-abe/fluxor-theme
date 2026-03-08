@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "shipping": {
+      "type": "page-shipping-fluxor",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "shipping"
+  ]
+}

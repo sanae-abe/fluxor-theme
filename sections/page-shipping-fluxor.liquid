@@ -1,0 +1,149 @@
+{% comment %}
+  配送・返品ポリシー — Fluxor
+{% endcomment %}
+{{ 'page-shipping-fluxor.css' | asset_url | stylesheet_tag }}
+
+<div class="shipping-fluxor color-{{ section.settings.color_scheme }} gradient">
+  <div class="shipping-fluxor__inner page-width">
+
+    <header class="shipping-fluxor__header">
+      <p class="shipping-fluxor__label">Shipping & Returns</p>
+      <h1 class="shipping-fluxor__heading">配送・返品について</h1>
+    </header>
+
+    {%- comment -%} 配送 {%- endcomment -%}
+    <section class="shipping-fluxor__section">
+      <h2 class="shipping-fluxor__section-heading">配送について</h2>
+      <dl class="shipping-fluxor__table">
+
+        <div class="shipping-fluxor__row">
+          <dt>送料</dt>
+          <dd>
+            全国一律 <strong>¥550</strong>（税込）<br>
+            <strong>¥5,500（税込）以上のご購入で送料無料</strong>
+          </dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>配送業者</dt>
+          <dd>ヤマト運輸（クロネコヤマト）</dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>配送日数</dt>
+          <dd>
+            ご注文確認後、通常 <strong>3〜7 営業日</strong> 以内に発送いたします。<br>
+            <small>※ 在庫状況・長期休暇・天候等により遅れる場合があります。</small>
+          </dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>お届け日時の指定</dt>
+          <dd>現在、日時指定には対応しておりません。</dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>追跡番号</dt>
+          <dd>発送完了後に、ご登録のメールアドレス宛に追跡番号をお送りします。</dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>離島・一部地域</dt>
+          <dd>
+            沖縄・離島・一部山間部へのお届けは、追加送料または配送不可となる場合があります。ご不明の場合は<a href="/pages/contact">お問い合わせ</a>ください。
+          </dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>海外発送</dt>
+          <dd>現在、日本国内へのみ発送しております。</dd>
+        </div>
+
+      </dl>
+    </section>
+
+    {%- comment -%} 返品・交換 {%- endcomment -%}
+    <section class="shipping-fluxor__section">
+      <h2 class="shipping-fluxor__section-heading">返品・交換について</h2>
+      <dl class="shipping-fluxor__table">
+
+        <div class="shipping-fluxor__row">
+          <dt>返品受付期間</dt>
+          <dd>商品到着後 <strong>7日以内</strong></dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>返品・交換の対象</dt>
+          <dd>
+            以下の場合のみ対応いたします。
+            <ul>
+              <li>商品に破損・汚損・欠陥があった場合</li>
+              <li>ご注文と異なる商品が届いた場合</li>
+            </ul>
+            <small>※ 化粧品・スキンケア製品は衛生上の理由により、お客様都合による返品・交換はお受けできません。</small>
+          </dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>返品の手順</dt>
+          <dd>
+            <ol>
+              <li><a href="/pages/contact">お問い合わせフォーム</a>より「返品希望」としてご連絡ください</li>
+              <li>当店より返送先住所をご案内します</li>
+              <li>商品をご返送ください（未開封・未使用のこと）</li>
+              <li>商品到着確認後、5〜7営業日以内に返金処理を行います</li>
+            </ol>
+          </dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>返品送料</dt>
+          <dd>
+            当店の不備（破損・誤送等）による場合：<strong>当店負担</strong><br>
+            お客様都合の場合：対応不可
+          </dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>返金方法</dt>
+          <dd>ご注文時のお支払い方法へ返金いたします。クレジットカードの場合、反映まで各カード会社の締め日によって1〜2ヶ月かかる場合があります。</dd>
+        </div>
+
+        <div class="shipping-fluxor__row">
+          <dt>キャンセル</dt>
+          <dd>ご注文確定後のキャンセルは、<strong>発送前に限り</strong>お受けする場合があります。お早めに<a href="/pages/contact">お問い合わせフォーム</a>よりご連絡ください。</dd>
+        </div>
+
+      </dl>
+    </section>
+
+    <div class="shipping-fluxor__contact">
+      <p>ご不明な点は<a href="/pages/contact">お問い合わせフォーム</a>よりお気軽にご連絡ください。</p>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "配送・返品",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "カラースキーム",
+      "options": [
+        { "value": "scheme-1", "label": "Scheme 1（ライト）" },
+        { "value": "scheme-2", "label": "Scheme 2" },
+        { "value": "scheme-3", "label": "Scheme 3（ダーク）" }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "配送・返品"
+    }
+  ]
+}
+{% endschema %}
