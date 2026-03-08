@@ -26,11 +26,6 @@
     }
   }
 
-  .footer__disclaimer {
-    padding: 1.5rem 2rem;
-    border-top: 1px solid rgba(var(--color-foreground), 0.1);
-  }
-
   .footer__disclaimer-text {
     font-size: 0.7rem;
     line-height: 1.8;
@@ -210,6 +205,9 @@
                         {%- endif -%}
                       {%- endform -%}
                     </div>
+                    {%- if section.settings.disclaimer != blank -%}
+                      <p class="footer__disclaimer-text" style="margin-top: 1.5rem;">{{ section.settings.disclaimer }}</p>
+                    {%- endif -%}
                   {%- when 'image' -%}
                     <div class="footer-block__details-content footer-block-image {{ block.settings.alignment }}">
                       {%- if block.settings.image != blank -%}
@@ -326,12 +324,6 @@
         </div>
       </div>
     {%- endunless -%}
-  {%- endif -%}
-
-  {%- if section.settings.disclaimer != blank -%}
-    <div class="footer__disclaimer page-width">
-      <p class="footer__disclaimer-text">{{ section.settings.disclaimer }}</p>
-    </div>
   {%- endif -%}
 
   <div
