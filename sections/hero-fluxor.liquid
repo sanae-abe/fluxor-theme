@@ -41,12 +41,12 @@
               {%- endif -%}
 
               {%- if block.settings.product_name != blank -%}
-              <h2 class="hero-fluxor__product-name">{{ block.settings.product_name | escape }}</h2>
+              <h2 class="hero-fluxor__product-name">{{ block.settings.product_name | escape | newline_to_br }}</h2>
              {%- endif -%}
             </div>
 
             {%- if block.settings.tagline != blank -%}
-              <p class="hero-fluxor__tagline">{{ block.settings.tagline | escape }}</p>
+              <p class="hero-fluxor__tagline">{{ block.settings.tagline | escape | newline_to_br }}</p>
             {%- endif -%}
 
             {%- if block.settings.button_label != blank -%}
@@ -138,13 +138,13 @@
           "default": "BRAND NAME"
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "product_name",
           "label": "Product name",
           "default": "Product Name."
         },
         {
-          "type": "text",
+          "type": "textarea",
           "id": "tagline",
           "label": "Tagline",
           "default": "Short description of the product."
