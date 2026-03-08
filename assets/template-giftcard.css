@@ -399,9 +399,9 @@ h2,
 .gift-card__number {
   font-family: var(--font-body-family);
   font-size: clamp(0.85rem, 1.5vw, 1rem);
-  letter-spacing: 0.35em;
+  letter-spacing: 0.04em;
   border: 1px solid currentColor;
-  padding: 1rem 2rem;
+  padding: 0.625rem 1.25rem;
   display: inline-block;
   margin: 1.5rem auto;
   opacity: 0.85;
