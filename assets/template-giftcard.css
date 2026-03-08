@@ -186,7 +186,7 @@ h2,
   font-size: 1.125rem;
   line-height: calc(1 + 0.6 / var(--font-body-scale));
   text-align: center;
-  letter-spacing: 0.4rem;
+  letter-spacing: 0.25rem;
   opacity: 0.8;
   margin: 0.875rem 0;
 }
@@ -399,7 +399,7 @@ h2,
 .gift-card__number {
   font-family: var(--font-body-family);
   font-size: clamp(0.85rem, 1.5vw, 1rem);
-  letter-spacing: 0.04em;
+  letter-spacing: 0.25em;
   border: 1px solid currentColor;
   padding: 0.625rem 1.25rem;
   display: inline-block;
