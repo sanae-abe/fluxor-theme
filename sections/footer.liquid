@@ -26,6 +26,26 @@
     }
   }
 
+  .newsletter-form__privacy {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.5rem;
+    margin-top: 1rem;
+    font-size: 0.8rem;
+  }
+
+  .newsletter-form__privacy input[type="checkbox"] {
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+    width: 1rem;
+    height: 1rem;
+    cursor: pointer;
+  }
+
+  .newsletter-form__privacy a {
+    text-decoration: underline;
+  }
+
   .footer__list-payment {
     margin-top: 1rem;
   }
@@ -194,6 +214,23 @@
                               {{ form.errors.messages.email -}}
                             </small>
                           {%- endif -%}
+                        </div>
+                        <div class="newsletter-form__privacy">
+                          <input
+                            type="checkbox"
+                            id="NewsletterPrivacy--{{ block.id }}"
+                            name="contact[privacy_policy]"
+                            required
+                            aria-required="true"
+                          >
+                          <label for="NewsletterPrivacy--{{ block.id }}">
+                            {%- if shop.privacy_policy != blank -%}
+                              <a href="{{ shop.privacy_policy.url }}" target="_blank">プライバシーポリシー</a>
+                            {%- else -%}
+                              プライバシーポリシー
+                            {%- endif -%}
+                            に同意します
+                          </label>
                         </div>
                         {%- if form.posted_successfully? -%}
                           <h3

@@ -126,6 +126,23 @@
           {{- 'templates.contact.form.comment' | t -}}
         </label>
       </div>
+      <div class="contact__privacy">
+        <input
+          type="checkbox"
+          id="ContactForm-privacy"
+          name="contact[privacy_policy]"
+          required
+          aria-required="true"
+        >
+        <label for="ContactForm-privacy">
+          {%- if shop.privacy_policy != blank -%}
+            <a href="{{ shop.privacy_policy.url }}" target="_blank">プライバシーポリシー</a>
+          {%- else -%}
+            プライバシーポリシー
+          {%- endif -%}
+          に同意します
+        </label>
+      </div>
       <div class="contact__button">
         <button type="submit" class="button">
           {{ 'templates.contact.form.send' | t }}
