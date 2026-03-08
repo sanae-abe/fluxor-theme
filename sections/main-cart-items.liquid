@@ -1,4 +1,5 @@
 {{ 'component-cart.css' | asset_url | stylesheet_tag }}
+{{ 'product-grid-fluxor.css' | asset_url | stylesheet_tag }}
 {{ 'component-cart-items.css' | asset_url | stylesheet_tag }}
 {{ 'component-totals.css' | asset_url | stylesheet_tag }}
 {{ 'component-price.css' | asset_url | stylesheet_tag }}
@@ -29,15 +30,21 @@
   <div class="page-width">
     <div class="title-wrapper-with-link">
       <h1 class="title title--primary">{{ 'sections.cart.title' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="underlined-link">
+      <a href="{{ routes.all_products_collection_url }}" class="product-grid-fluxor__view-all">
         {{- 'general.continue_shopping' | t -}}
+        <span class="svg-wrapper" aria-hidden="true">
+          {{- 'icon-arrow-fluxor.svg' | inline_asset_content -}}
+        </span>
       </a>
     </div>
 
     <div class="cart__warnings">
       <h1 class="cart__empty-text">{{ 'sections.cart.empty' | t }}</h1>
-      <a href="{{ routes.all_products_collection_url }}" class="button btn-fluxor--solid">
+      <a href="{{ routes.all_products_collection_url }}" class="product-grid-fluxor__view-all">
         {{ 'general.continue_shopping' | t }}
+        <span class="svg-wrapper" aria-hidden="true">
+          {{- 'icon-arrow-fluxor.svg' | inline_asset_content -}}
+        </span>
       </a>
 
       {%- if shop.customer_accounts_enabled and customer == null -%}
