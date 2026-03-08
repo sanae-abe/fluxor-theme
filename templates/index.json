@@ -26,12 +26,12 @@
         "slide_VhwQLT": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/hero-slide-research-lab.webp",
-            "brand": "BRAND NAME",
-            "product_name": "Evidence-Based Development.",
-            "tagline": "エビデンスに基づく開発。",
-            "button_label": "商品を見る",
-            "button_link": ""
+            "image": "shopify://shop_images/hero-slide-precision-dropper.webp",
+            "brand": "NEW ARRIVAL",
+            "product_name": "「FLXUSOR」が新たに加わりました。",
+            "tagline": "純粋なレチノールを最適濃度で処方した、夜用トリートメント。",
+            "button_label": "今すぐ見る →",
+            "button_link": "shopify://products/fluxor-retinol-treatment"
           }
         },
         "slide_Qq8nyd": {
