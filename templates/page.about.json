@@ -92,25 +92,25 @@
         "item_yRcejH": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/icon-restraint.svg",
-            "title": "誇張しません",
-            "description": "「奇跡の効果」は\n謳いません"
+            "icon": "shopify://shop_images/icon-verification.svg",
+            "title": "正直な言葉で",
+            "description": "効果を誇張せず、実際の使用感や特徴を率直にお伝えします。"
           }
         },
         "item_qURjdP": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-transparency.svg",
-            "title": "隠しません",
-            "description": "製造元、成分濃度を\n可能な限り公開"
+            "title": "知りうる限りオープンに",
+            "description": "ブランド情報や成分について、把握できる範囲で透明性を持ってご紹介します"
           }
         },
         "item_JYHDn8": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/icon-verification.svg",
-            "title": "推測しません",
-            "description": "確認できないことは\n「分からない」と言います"
+            "icon": "shopify://shop_images/icon-question-mark-circle.svg",
+            "title": "分からないことは、分からないと",
+            "description": "確認できないことは、\n臆せずそのままお伝えします。"
           }
         }
       },
@@ -123,7 +123,7 @@
       "settings": {
         "color_scheme": "",
         "heading": "透明性へのこだわり",
-        "description": "調査過程も、分からないことも、正直にお伝えします。",
+        "description": "スキンケアの情報は、正直でなければ意味がない。\n調査したこと、確かめたこと、そして分からなかったことも、ありのままにお伝えします。",
         "columns": "3",
         "card_style": "plain",
         "container_width": "wide"
