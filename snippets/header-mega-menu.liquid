@@ -76,7 +76,7 @@
                             loading="lazy"
                           />
                           {%- if childlink.object.description != blank -%}
-                            <p class="mega-menu__description">{{ childlink.object.description | truncate: 80 }}</p>
+                            <div class="mega-menu__description">{{ childlink.object.description | strip_html | truncate: 80 }}</div>
                           {%- endif -%}
                         </div>
                       {%- else -%}
