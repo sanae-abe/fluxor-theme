@@ -20,7 +20,7 @@
 
     {%- if section.settings.description != blank -%}
       <p class="icon-grid-fluxor__description">
-        {{- section.settings.description | escape -}}
+        {{- section.settings.description | escape | newline_to_br -}}
       </p>
     {%- endif -%}
 
