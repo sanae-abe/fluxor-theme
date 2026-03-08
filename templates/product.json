@@ -136,8 +136,8 @@
         "column-0": {
           "type": "column",
           "settings": {
-            "title": "Free Shipping",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "使い方",
+            "text": "<p>洗顔後、化粧水・美容液の順にお使いください。適量を手に取り、顔全体に優しくなじませます。商品ごとの詳しい使用方法は、上の「ご使用方法」タブをご確認ください。</p>",
             "link_label": "",
             "link": ""
           }
@@ -145,16 +145,26 @@
         "column-1": {
           "type": "column",
           "settings": {
-            "title": "Hassle-Free Exchanges",
-            "text": "<p>Pair text with an image to focus on your chosen product, collection, or blog post. Add details on availability, style, or even provide a review.</p>",
+            "title": "成分の相性",
+            "text": "<p>スキンケアは成分の組み合わせが大切です。レチノールとAHA/BHAは同時使用を避けるのが一般的。詳しい成分情報は「成分」タブをご参照ください。ご不明な点はお気軽にお問い合わせください。</p>",
             "link_label": "",
             "link": ""
+          }
+        },
+        "column-2": {
+          "type": "column",
+          "settings": {
+            "title": "配送・返品",
+            "text": "<p>¥5,500（税込）以上で<strong>送料無料</strong>。ご注文確認後3〜7営業日で発送。不良品・誤送の場合は到着後7日以内に対応いたします。</p>",
+            "link_label": "配送・返品の詳細",
+            "link": "/pages/shipping"
           }
         }
       },
       "block_order": [
         "column-0",
-        "column-1"
+        "column-1",
+        "column-2"
       ],
       "settings": {
         "title": "",
@@ -163,10 +173,10 @@
         "image_ratio": "adapt",
         "button_label": "",
         "button_link": "",
-        "columns_desktop": 2,
+        "columns_desktop": 3,
         "column_alignment": "left",
         "background_style": "none",
-        "color_scheme": "scheme-1",
+        "color_scheme": "scheme-2",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
         "padding_top": 36,
