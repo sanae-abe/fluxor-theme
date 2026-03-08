@@ -36,6 +36,7 @@
   font-size: clamp(1.75rem, 4vw, 2rem);
   letter-spacing: 0.04em;
   margin: 0 0 1rem;
+  color: currentColor;
 }
 
 .privacy-policy-fluxor__date {
