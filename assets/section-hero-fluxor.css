@@ -232,7 +232,7 @@
   }
 
   .hero-fluxor__product-name {
-    font-size: clamp(1.875rem, 6vw, 3.4375rem);
+    font-size: clamp(1.875rem, 6vw, 3rem);
   }
 }
 
