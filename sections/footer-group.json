@@ -31,7 +31,7 @@
         "footer-2": {
           "type": "newsletter",
           "settings": {
-            "heading": "<strong>メルマガ登録</strong>"
+            "heading": "メルマガ登録"
           }
         }
       },
