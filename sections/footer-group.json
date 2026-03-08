@@ -17,21 +17,21 @@
         "footer-0": {
           "type": "link_list",
           "settings": {
-            "heading": "Quick links",
+            "heading": "QUICK LINKS",
             "menu": "footer"
           }
         },
         "footer-1": {
           "type": "link_list",
           "settings": {
-            "heading": "Information",
+            "heading": "INFORMATION",
             "menu": "info"
           }
         },
         "footer-2": {
           "type": "newsletter",
           "settings": {
-            "heading": "メルマガ登録"
+            "heading": "<strong>メルマガ登録</strong>"
           }
         }
       },
