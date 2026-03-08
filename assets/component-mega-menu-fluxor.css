@@ -194,7 +194,7 @@
 
 @media screen and (min-width: 990px) {
   .header .mega-menu__list {
-    grid-template-columns: repeat(4, 1fr) !important;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)) !important;
     padding: 0 2.5rem !important;
   }
 }
