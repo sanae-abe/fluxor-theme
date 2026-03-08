@@ -1,0 +1,167 @@
+/* ============================================================
+   特定商取引法に基づく表示 — Fluxor
+   ============================================================ */
+
+.tokushoho-fluxor {
+  padding: 4rem 1rem 6rem;
+}
+
+/* ----------------------------------------------------------
+   ヘッダー
+   ---------------------------------------------------------- */
+
+.tokushoho-fluxor__header {
+  max-width: 52rem;
+  margin: 0 auto 3.5rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(26, 23, 20, 0.12);
+  text-align: center;
+}
+
+.tokushoho-fluxor__label {
+  font-family: var(--font-body-family);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin: 0 0 1rem;
+}
+
+.tokushoho-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  letter-spacing: 0.04em;
+  margin: 0;
+}
+
+/* ----------------------------------------------------------
+   テーブル（定義リスト）
+   ---------------------------------------------------------- */
+
+.tokushoho-fluxor__body {
+  max-width: 52rem;
+  margin: 0 auto;
+}
+
+.tokushoho-fluxor__table {
+  width: 100%;
+  border-top: 1px solid rgba(26, 23, 20, 0.1);
+  margin: 0;
+  padding: 0;
+}
+
+.tokushoho-fluxor__row {
+  display: grid;
+  grid-template-columns: 1fr;
+  border-bottom: 1px solid rgba(26, 23, 20, 0.1);
+  padding: 1.5rem 0;
+}
+
+@media screen and (min-width: 750px) {
+  .tokushoho-fluxor__row {
+    grid-template-columns: 11rem 1fr;
+    gap: 2rem;
+  }
+}
+
+.tokushoho-fluxor__table dt {
+  font-family: var(--font-body-family);
+  font-size: 0.8125rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  opacity: 0.6;
+  margin: 0 0 0.5rem;
+  padding: 0;
+}
+
+@media screen and (min-width: 750px) {
+  .tokushoho-fluxor__table dt {
+    margin: 0;
+    padding-top: 0.125rem;
+  }
+}
+
+.tokushoho-fluxor__table dd {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem);
+  line-height: 1.75;
+  letter-spacing: 0.03em;
+  margin: 0;
+  padding: 0;
+}
+
+.tokushoho-fluxor__table dd p {
+  margin: 0 0 0.75rem;
+}
+
+.tokushoho-fluxor__table dd p:last-child {
+  margin-bottom: 0;
+}
+
+.tokushoho-fluxor__table dd ul {
+  margin: 0.5rem 0 0.75rem;
+  padding-left: 1.25rem;
+  list-style: disc;
+}
+
+.tokushoho-fluxor__table dd li {
+  margin-bottom: 0.25rem;
+}
+
+.tokushoho-fluxor__table dd small {
+  font-size: 0.8125rem;
+  opacity: 0.65;
+}
+
+.tokushoho-fluxor__table dd a {
+  color: currentColor;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (any-hover: hover) {
+  .tokushoho-fluxor__table dd a:hover {
+    opacity: 0.6;
+  }
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .tokushoho-fluxor {
+    padding: 6rem 2rem 8rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .tokushoho-fluxor {
+    padding: 7rem 2.5rem 10rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   ダークスキーム対応
+   ---------------------------------------------------------- */
+
+.color-scheme-3 .tokushoho-fluxor__header,
+.color-scheme-4 .tokushoho-fluxor__header,
+.color-scheme-5 .tokushoho-fluxor__header {
+  border-bottom-color: rgba(246, 244, 240, 0.15);
+}
+
+.color-scheme-3 .tokushoho-fluxor__table,
+.color-scheme-4 .tokushoho-fluxor__table,
+.color-scheme-5 .tokushoho-fluxor__table {
+  border-top-color: rgba(246, 244, 240, 0.12);
+}
+
+.color-scheme-3 .tokushoho-fluxor__row,
+.color-scheme-4 .tokushoho-fluxor__row,
+.color-scheme-5 .tokushoho-fluxor__row {
+  border-bottom-color: rgba(246, 244, 240, 0.12);
+}

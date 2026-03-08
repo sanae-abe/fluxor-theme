@@ -1,0 +1,132 @@
+{% comment %}
+  特定商取引法に基づく表示 — Fluxor
+{% endcomment %}
+{{ 'page-tokushoho-fluxor.css' | asset_url | stylesheet_tag }}
+
+<div class="tokushoho-fluxor color-{{ section.settings.color_scheme }} gradient">
+  <div class="tokushoho-fluxor__inner page-width">
+
+    <header class="tokushoho-fluxor__header">
+      <p class="tokushoho-fluxor__label">Legal</p>
+      <h1 class="tokushoho-fluxor__heading">特定商取引法に基づく表示</h1>
+    </header>
+
+    <div class="tokushoho-fluxor__body">
+      <dl class="tokushoho-fluxor__table">
+
+        <div class="tokushoho-fluxor__row">
+          <dt>販売業者</dt>
+          <dd>Fluxor</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>運営責任者</dt>
+          <dd>阿部 早苗</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>所在地</dt>
+          <dd>
+            請求があった際は遅滞なく開示いたします。<br>
+            <small>（個人事業主のため、住所の公開を控えております）</small>
+          </dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>電話番号</dt>
+          <dd>
+            請求があった際は遅滞なく開示いたします。<br>
+            <small>お問い合わせは<a href="/pages/contact">お問い合わせフォーム</a>よりお願いします。</small>
+          </dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>メールアドレス</dt>
+          <dd><a href="/pages/contact">お問い合わせフォーム</a>よりご連絡ください</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>販売価格</dt>
+          <dd>各商品ページに記載の価格（税込）</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>送料</dt>
+          <dd>
+            全国一律 ¥550（税込）<br>
+            ¥5,500（税込）以上のご購入で送料無料
+          </dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>支払方法</dt>
+          <dd>クレジットカード（Visa・Mastercard・American Express・JCB）、Shop Pay、Apple Pay、Google Pay</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>支払時期</dt>
+          <dd>ご注文確定時にお支払いが確定します。クレジットカードの引き落とし日は各カード会社の規定によります。</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>商品の引渡時期</dt>
+          <dd>ご注文確認後、通常 3〜7 営業日以内に発送いたします。在庫状況により変動する場合があります。</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>返品・交換について</dt>
+          <dd>
+            <p>商品到着後7日以内に限り、以下の場合のみご対応いたします。</p>
+            <ul>
+              <li>商品に破損・汚損・欠陥があった場合</li>
+              <li>注文と異なる商品が届いた場合</li>
+            </ul>
+            <p>お客様都合による返品・交換はお受けできません（衛生上の理由による）。<br>
+            返品をご希望の場合は、<a href="/pages/contact">お問い合わせフォーム</a>よりご連絡ください。</p>
+          </dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>返品送料</dt>
+          <dd>当店の不備による場合：当店負担<br>お客様都合の場合：対応不可</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>キャンセルについて</dt>
+          <dd>ご注文確定後のキャンセルは、発送前に限りお受けする場合があります。お早めに<a href="/pages/contact">お問い合わせフォーム</a>よりご連絡ください。</dd>
+        </div>
+
+        <div class="tokushoho-fluxor__row">
+          <dt>動作環境</dt>
+          <dd>最新バージョンのChrome・Safari・Firefox・Edgeを推奨します。</dd>
+        </div>
+
+      </dl>
+    </div>
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "特定商取引法",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "カラースキーム",
+      "options": [
+        { "value": "scheme-1", "label": "Scheme 1（ライト）" },
+        { "value": "scheme-2", "label": "Scheme 2" },
+        { "value": "scheme-3", "label": "Scheme 3（ダーク）" }
+      ],
+      "default": "scheme-1"
+    }
+  ],
+  "presets": [
+    {
+      "name": "特定商取引法"
+    }
+  ]
+}
+{% endschema %}

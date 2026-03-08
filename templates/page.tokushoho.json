@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "tokushoho": {
+      "type": "page-tokushoho-fluxor",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "tokushoho"
+  ]
+}
