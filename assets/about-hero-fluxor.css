@@ -64,11 +64,11 @@
   font-family: var(--font-heading-family);
   font-weight: 500;
   font-style: var(--font-heading-style);
-  font-size: clamp(1.375rem, 6vw, 2rem);
+  font-size: clamp(1.375rem, 6vw, 2.5rem);
   letter-spacing: 0.04em;
   line-height: 1.5;
   margin: 0;
-  color: currentColor;
+  color: rgb(var(--color-foreground));
 }
 
 /* ----------------------------------------------------------
@@ -81,6 +81,7 @@
   letter-spacing: 0.04em;
   line-height: 1.7;
   margin: 0;
+  margin-top: 0.5rem;
   color: rgb(var(--color-foreground));
 }
 
