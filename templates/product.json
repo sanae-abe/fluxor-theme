@@ -60,7 +60,10 @@
           "type": "collapsible_tab",
           "repeater": "{{ product.metafields.shopify[\"active-ingredient\"].value }}",
           "settings": {
-            "heading": "{{ block.repeater.label.value }}"
+            "heading": "有効成分",
+            "icon": "check_mark",
+            "content": "<p>{{ block.repeater.label.value }}</p>",
+            "page": ""
           }
         },
         "collapsible-row-0": {
