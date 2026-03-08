@@ -58,6 +58,10 @@
   max-width: 100%;
 }
 
+.accordion__content > .metafield-rich_text_field > p {
+  margin: 0;
+}
+
 /* ==============================================
    Fluxor: Product Accordion
    Dermaceutical × Minimalism / Aesop参照
