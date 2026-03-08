@@ -22,7 +22,7 @@
   <div class="about-hero-fluxor__inner">
     {%- if section.settings.heading != blank -%}
       <h1 class="about-hero-fluxor__heading">
-        {{- section.settings.heading | escape -}}
+        {{- section.settings.heading | escape | newline_to_br -}}
       </h1>
     {%- endif -%}
 
