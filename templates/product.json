@@ -71,16 +71,17 @@
           "source": "{{ product.metafields.custom[\"how-to-use\"].value }}",
           "settings": {
             "heading": "ご使用方法",
-            "content": "{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}"
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}",
+            "page": ""
           }
         },
         "collapsible-row-2": {
           "type": "collapsible_tab",
+          "source": "{{ product.metafields.custom.warnings.value }}",
           "settings": {
             "heading": "ご注意",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}"
           }
         },
         "collapsible-row-1": {
