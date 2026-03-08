@@ -177,6 +177,68 @@
 }
 
 /* ----------------------------------------------------------
+   コレクションカード
+   ---------------------------------------------------------- */
+
+.fluxor-collection-card {
+  display: block;
+  text-decoration: none;
+  color: currentColor;
+}
+
+.fluxor-collection-card:focus-visible {
+  outline: 1px solid currentColor;
+  outline-offset: 3px;
+}
+
+.fluxor-collection-card__image-wrapper {
+  aspect-ratio: 3 / 4;
+  overflow: hidden;
+  background-color: var(--color-base-background-2, #EAE7E1);
+  margin-bottom: 1rem;
+}
+
+.fluxor-collection-card__image-wrapper img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+@media (any-hover: hover) {
+  .fluxor-collection-card:hover .fluxor-collection-card__image-wrapper img {
+    transform: scale(1.04);
+  }
+}
+
+.fluxor-collection-card__info {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.fluxor-collection-card__title {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  margin: 0;
+}
+
+.fluxor-collection-card__count {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.8rem, 1vw, 0.9rem);
+  letter-spacing: 0.02em;
+  opacity: 0.5;
+  margin: 0;
+}
+
+.fluxor-collection-card__placeholder {
+  width: 100%;
+  height: 100%;
+}
+
+/* ----------------------------------------------------------
    空状態
    ---------------------------------------------------------- */
 
@@ -211,6 +273,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .fluxor-product-card__image-wrapper img,
+  .fluxor-collection-card__image-wrapper img,
   .product-grid-fluxor__view-all {
     transition: none;
   }

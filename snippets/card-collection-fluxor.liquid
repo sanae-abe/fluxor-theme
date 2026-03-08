@@ -1,0 +1,44 @@
+{% comment %}
+  Fluxor 共通コレクションカード
+
+  Accepts:
+  - card_collection: {Object} コレクションオブジェクト（必須）
+  - lazy_load:       {Boolean} 遅延読み込み（任意、デフォルト: false）
+  - show_count:      {Boolean} 商品数表示（任意、デフォルト: false）
+
+  Usage:
+  {% render 'card-collection-fluxor', card_collection: collection, lazy_load: true, show_count: true %}
+{% endcomment %}
+
+{%- liquid
+  assign loading = 'eager'
+  if lazy_load
+    assign loading = 'lazy'
+  endif
+-%}
+
+<a href="{{ card_collection.url }}" class="fluxor-collection-card">
+  <div class="fluxor-collection-card__image-wrapper">
+    {%- if card_collection.featured_image != blank -%}
+      {%- assign img_alt = card_collection.featured_image.alt | escape | default: card_collection.title -%}
+      {{
+        card_collection.featured_image
+        | image_url: width: 600
+        | image_tag:
+          loading: loading,
+          alt: img_alt,
+          width: card_collection.featured_image.width,
+          height: card_collection.featured_image.height
+      }}
+    {%- else -%}
+      {{ 'collection-1' | placeholder_svg_tag: 'placeholder-svg fluxor-collection-card__placeholder' }}
+    {%- endif -%}
+  </div>
+
+  <div class="fluxor-collection-card__info">
+    <p class="fluxor-collection-card__title">{{ card_collection.title | escape }}</p>
+    {%- if show_count -%}
+      <p class="fluxor-collection-card__count">{{ card_collection.all_products_count }} items</p>
+    {%- endif -%}
+  </div>
+</a>
