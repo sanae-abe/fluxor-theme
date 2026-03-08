@@ -3,7 +3,7 @@
    ============================================================ */
 
 .privacy-policy-fluxor {
-  padding: 4rem 1rem 6rem;
+  padding: 3.5rem 0 3.5rem;
 }
 
 /* ----------------------------------------------------------
@@ -12,12 +12,11 @@
 
 .privacy-policy-fluxor__header {
   max-width: 48rem;
-  margin: 0 auto 4rem;
-  padding-bottom: 2rem;
-  border-bottom: 1px solid rgba(26, 23, 20, 0.12);
+  margin: 0 auto 3.5rem;
   text-align: center;
   color: currentColor;
   font-weight: 500;
+  font-size: 2rem;
 }
 
 .privacy-policy-fluxor__label {
