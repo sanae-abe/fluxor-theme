@@ -189,7 +189,7 @@
                 {%- else -%}
                   {{
                     'sections.cart.duties_and_taxes_included_shipping_at_checkout_with_policy_html'
-                    | t: link: shop.shipping_policy.url
+                    | t: link: '/pages/shipping'
                   }}
                 {%- endif -%}
               {%- elsif cart.duties_included == false and cart.taxes_included -%}
@@ -198,7 +198,7 @@
                 {%- else -%}
                   {{
                     'sections.cart.taxes_included_shipping_at_checkout_with_policy_html'
-                    | t: link: shop.shipping_policy.url
+                    | t: link: '/pages/shipping'
                   }}
                 {%- endif -%}
               {%- elsif cart.duties_included and cart.taxes_included == false -%}
@@ -207,7 +207,7 @@
                 {%- else -%}
                   {{
                     'sections.cart.duties_included_taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                    | t: link: shop.shipping_policy.url
+                    | t: link: '/pages/shipping'
                   }}
                 {%- endif -%}
               {%- elsif cart.duties_included == false and cart.taxes_included == false -%}
@@ -216,7 +216,7 @@
                 {%- else -%}
                   {{
                     'sections.cart.taxes_at_checkout_shipping_at_checkout_with_policy_html'
-                    | t: link: shop.shipping_policy.url
+                    | t: link: '/pages/shipping'
                   }}
                 {%- endif -%}
               {%- endif -%}
