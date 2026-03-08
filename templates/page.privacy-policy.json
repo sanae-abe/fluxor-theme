@@ -1,0 +1,13 @@
+{
+  "sections": {
+    "privacy_policy": {
+      "type": "page-privacy-policy-fluxor",
+      "settings": {
+        "color_scheme": "scheme-1"
+      }
+    }
+  },
+  "order": [
+    "privacy_policy"
+  ]
+}

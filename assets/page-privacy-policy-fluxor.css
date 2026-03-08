@@ -1,0 +1,134 @@
+/* ============================================================
+   Privacy Policy — Fluxor
+   ============================================================ */
+
+.privacy-policy-fluxor {
+  padding: 4rem 1rem 6rem;
+}
+
+/* ----------------------------------------------------------
+   ヘッダー
+   ---------------------------------------------------------- */
+
+.privacy-policy-fluxor__header {
+  max-width: 48rem;
+  margin: 0 auto 4rem;
+  padding-bottom: 2rem;
+  border-bottom: 1px solid rgba(26, 23, 20, 0.12);
+  text-align: center;
+}
+
+.privacy-policy-fluxor__label {
+  font-family: var(--font-body-family);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.5;
+  margin: 0 0 1rem;
+}
+
+.privacy-policy-fluxor__heading {
+  font-family: var(--font-heading-family);
+  font-weight: var(--font-heading-weight);
+  font-style: var(--font-heading-style);
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  letter-spacing: 0.04em;
+  margin: 0 0 1rem;
+}
+
+.privacy-policy-fluxor__date {
+  font-family: var(--font-body-family);
+  font-size: 0.8125rem;
+  opacity: 0.45;
+  margin: 0;
+  letter-spacing: 0.04em;
+}
+
+/* ----------------------------------------------------------
+   本文
+   ---------------------------------------------------------- */
+
+.privacy-policy-fluxor__body {
+  max-width: 48rem;
+  margin: 0 auto;
+}
+
+.privacy-policy-fluxor__body h2 {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.2vw, 1rem);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  margin: 3rem 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgba(26, 23, 20, 0.1);
+}
+
+.privacy-policy-fluxor__body p {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  margin: 0 0 1.25rem;
+  opacity: 0.85;
+}
+
+.privacy-policy-fluxor__body ul {
+  margin: 0 0 1.25rem;
+  padding-left: 1.5rem;
+  list-style: disc;
+}
+
+.privacy-policy-fluxor__body li {
+  font-family: var(--font-body-family);
+  font-size: clamp(0.875rem, 1.1vw, 0.9375rem);
+  line-height: 1.8;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+  opacity: 0.85;
+}
+
+.privacy-policy-fluxor__body a {
+  color: currentColor;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+@media (any-hover: hover) {
+  .privacy-policy-fluxor__body a:hover {
+    opacity: 0.6;
+  }
+}
+
+/* ----------------------------------------------------------
+   レスポンシブ
+   ---------------------------------------------------------- */
+
+@media screen and (min-width: 750px) {
+  .privacy-policy-fluxor {
+    padding: 6rem 2rem 8rem;
+  }
+}
+
+@media screen and (min-width: 990px) {
+  .privacy-policy-fluxor {
+    padding: 7rem 2.5rem 10rem;
+  }
+}
+
+/* ----------------------------------------------------------
+   ダークスキーム対応
+   ---------------------------------------------------------- */
+
+.color-scheme-3 .privacy-policy-fluxor__header,
+.color-scheme-4 .privacy-policy-fluxor__header,
+.color-scheme-5 .privacy-policy-fluxor__header {
+  border-bottom-color: rgba(246, 244, 240, 0.15);
+}
+
+.color-scheme-3 .privacy-policy-fluxor__body h2,
+.color-scheme-4 .privacy-policy-fluxor__body h2,
+.color-scheme-5 .privacy-policy-fluxor__body h2 {
+  border-bottom-color: rgba(246, 244, 240, 0.12);
+}
