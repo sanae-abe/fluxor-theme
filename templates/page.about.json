@@ -13,11 +13,11 @@
       "type": "about-hero-fluxor",
       "settings": {
         "color_scheme": "scheme-3",
-        "bg_image": "shopify://shop_images/hero-rock-bg.webp",
+        "bg_image": "shopify://shop_images/Frame_624981_compressed.webp",
         "image_overlay_opacity": 40,
         "heading": "スキンケアに迷ったのは、私たちも同じでした。",
         "subheading": "",
-        "description": "成分表を読んでも、どのブランドが信頼できるのか、なかなか答えが見つからない。\n  その経験から、Fluxorは生まれました。"
+        "description": "成分表を読んでも、どのブランドが信頼できるのか、なかなか答えが見つからない。\nその問いから、Fluxorは生まれました。"
       }
     },
     "icon_grid_fluxor_9pC7rH": {
@@ -82,7 +82,7 @@
         "heading": "なぜ FLUXSOR なのか",
         "subtitle": "一歩進んだスキンケア",
         "heading_font": "heading",
-        "body": "<h3>古代の知恵 × 現代の科学。</h3><p>ツボクサ（Centella Asiatica）のように、何千年もの伝統と現代の皮膚科学研究。<br>私たちは流行に惑わされず、時の試練を経た成分と確かなエビデンスに基づいて商品を選んでいます。</p>",
+        "body": "<h3>古代の知恵 × 現代の科学。</h3><p>ツボクサ（Centella Asiatica）のように、何千年もの伝統と現代の皮膚科学研究。<br/>私たちは流行に惑わされず、時の試練を経た成分と確かなエビデンスに基づいて商品を選んでいます。</p>",
         "button_label": "成分について詳しく見る",
         "button_link": "#"
       }
