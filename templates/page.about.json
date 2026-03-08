@@ -77,14 +77,14 @@
       "name": "About Philosophy",
       "settings": {
         "color_scheme": "scheme-2",
-        "molecule_image": "shopify://shop_images/Frame_624981_compressed.webp",
+        "molecule_image": "shopify://shop_images/about-philosophy-bg.webp",
         "image_position": "right",
         "heading": "なぜ FLUXSOR なのか",
         "subtitle": "一歩進んだスキンケア",
         "heading_font": "heading",
-        "body": "<h3>古代の知恵 × 現代の科学。</h3><p>ツボクサ（Centella Asiatica）のように、何千年もの伝統と現代の皮膚科学研究。<br/>私たちは流行に惑わされず、時の試練を経た成分と確かなエビデンスに基づいて商品を選んでいます。</p>",
-        "button_label": "成分について詳しく見る",
-        "button_link": "#"
+        "body": "<p>Fluxorが選ぶ基準は、シンプルです。</p><p>流行よりも実績。話題よりも信頼。<br/>成分とブランドへのこだわりから生まれた、スキンケアのセレクション。</p>",
+        "button_label": "商品を見る",
+        "button_link": "shopify://collections"
       }
     },
     "icon_grid_fluxor_QNDa8Y": {
