@@ -24,7 +24,7 @@
         "footer-1": {
           "type": "link_list",
           "settings": {
-            "heading": "Info",
+            "heading": "Information",
             "menu": "info"
           }
         },
@@ -52,6 +52,7 @@
         "show_policy": false,
         "show_tokutei_link": false,
         "tokutei_url": "#",
+        "disclaimer": "※本サイトにおける各用語の定義は以下の通りです。\nエイジングケア：年齢に応じた潤いによるお手入れのこと。\nニキビケア：洗浄により肌を清浄にし、ニキビを防ぐこと。\n毛穴ケア：潤いを与え、キメを整えることで毛穴を目立たなくすること。\n美白：メラニンの生成を抑え、シミ・そばかすを防ぐこと（※医薬部外品の場合）。\n浸透：角質層まで。",
         "margin_top": 60,
         "padding_top": 40,
         "padding_bottom": 40
