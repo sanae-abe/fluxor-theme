@@ -57,3 +57,86 @@
 .accordion__content img {
   max-width: 100%;
 }
+
+/* ==============================================
+   Fluxor: Product Accordion
+   Dermaceutical × Minimalism / Aesop参照
+   ============================================== */
+
+/* ボーダー: 極細・温かみある半透明、連続して並ぶ際に重複しない */
+.product__accordion.accordion {
+  margin-top: 0;
+  border-top: 0.1rem solid rgba(var(--color-foreground), 0.1);
+  border-bottom: none;
+}
+
+.product__accordion.accordion:last-of-type {
+  border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.1);
+}
+
+/* サマリー行: 余白を整える */
+.product__accordion summary {
+  padding: 1.25rem 0;
+}
+
+/* ブロックアイコン（leather / truck / ruler / heart）は非表示 */
+.product__accordion .svg-wrapper {
+  display: none;
+}
+
+/* タイトル: エディトリアル大文字、DM Sans、極細レタースペーシング */
+.product__accordion .accordion__title {
+  font-family: var(--font-body-family);
+  font-size: 0.6875rem;
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground));
+  max-width: 100%;
+}
+
+/* Dawn デフォルトのキャレット SVG を非表示 */
+.product__accordion .icon-caret {
+  display: none;
+}
+
+/* +/− インジケーター（position: relative は .accordion summary に既存） */
+.product__accordion summary::after {
+  content: '+';
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  font-family: var(--font-body-family);
+  font-size: 1.25rem;
+  font-weight: 300;
+  line-height: 1;
+  color: rgb(var(--color-foreground));
+  transition: opacity 0.2s ease;
+}
+
+.product__accordion details[open] > summary::after {
+  content: '\2212'; /* − */
+}
+
+/* コンテンツ: 小さめ・軽い・余裕のある行間 */
+.product__accordion .accordion__content {
+  padding: 0 0 1.5rem;
+  margin-bottom: 0;
+  font-size: 0.875rem;
+  line-height: 1.8;
+  color: rgba(var(--color-foreground), 0.65);
+}
+
+/* ホバー: タッチデバイス除外、アンダーライン解除 */
+@media (any-hover: hover) {
+  .product__accordion summary:hover {
+    background: transparent;
+    opacity: 0.65;
+    transition: opacity 0.2s ease;
+  }
+
+  .product__accordion summary:hover .accordion__title {
+    text-decoration: none;
+  }
+}

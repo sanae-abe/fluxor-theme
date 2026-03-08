@@ -59,8 +59,8 @@
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Materials",
-            "icon": "leather",
+            "heading": "ご使用方法",
+            "icon": "none",
             "content": "",
             "page": ""
           }
@@ -68,8 +68,8 @@
         "collapsible-row-1": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Shipping & Returns",
-            "icon": "truck",
+            "heading": "成分",
+            "icon": "none",
             "content": "",
             "page": ""
           }
@@ -77,8 +77,8 @@
         "collapsible-row-2": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Dimensions",
-            "icon": "ruler",
+            "heading": "ご注意",
+            "icon": "none",
             "content": "",
             "page": ""
           }
@@ -86,8 +86,8 @@
         "collapsible-row-3": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "Care Instructions",
-            "icon": "heart",
+            "heading": "配送・返品",
+            "icon": "none",
             "content": "",
             "page": ""
           }
