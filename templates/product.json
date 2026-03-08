@@ -81,7 +81,9 @@
           "source": "{{ product.metafields.custom.warnings.value }}",
           "settings": {
             "heading": "ご注意",
-            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}"
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}",
+            "page": ""
           }
         },
         "collapsible-row-1": {
@@ -89,7 +91,9 @@
           "source": "{{ product.metafields.custom[\"all-ingredients\"].value }}",
           "settings": {
             "heading": "成分",
-            "content": "{{ product.metafields.custom[\"all-ingredients\"].value.ingredients | metafield_tag }}"
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom[\"all-ingredients\"].value.ingredients | metafield_tag }}",
+            "page": ""
           }
         },
         "share": {
@@ -180,8 +184,8 @@
         "color_scheme": "",
         "columns_mobile": "1",
         "swipe_on_mobile": false,
-        "padding_top": 56,
-        "padding_bottom": 40
+        "padding_top": 0,
+        "padding_bottom": 0
       }
     },
     "related-products": {
