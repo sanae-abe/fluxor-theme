@@ -333,6 +333,28 @@
 }
 
 /* ----------------------------------------------------------
+   インラインSVGロゴ
+   ---------------------------------------------------------- */
+
+.header__heading-logo-svg {
+  display: block;
+  line-height: 0;
+}
+
+.header__heading-logo-svg svg {
+  width: auto;
+  height: 1.25rem;
+  display: block;
+  color: currentColor;
+}
+
+@media screen and (min-width: 990px) {
+  .header__heading-logo-svg svg {
+    height: 1.5rem;
+  }
+}
+
+/* ----------------------------------------------------------
    ナビゲーション センタリング（middle-left レイアウト用）
    ---------------------------------------------------------- */
 
