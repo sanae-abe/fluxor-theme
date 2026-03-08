@@ -40,6 +40,7 @@ cart-items.is-empty .title-wrapper-with-link,
 
 .cart__login-paragraph {
   margin-top: 0.8rem;
+  margin-bottom: 2.5rem;
 }
 
 .cart__login-paragraph a {
