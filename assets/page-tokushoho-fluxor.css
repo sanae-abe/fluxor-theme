@@ -33,9 +33,10 @@
   font-family: var(--font-heading-family);
   font-weight: var(--font-heading-weight);
   font-style: var(--font-heading-style);
-  font-size: clamp(1.5rem, 3.5vw, 2.25rem);
+  font-size: clamp(1.5rem, 3.5vw, 2rem);
   letter-spacing: 0.04em;
   margin: 0;
+  color: currentColor;
 }
 
 /* ----------------------------------------------------------
