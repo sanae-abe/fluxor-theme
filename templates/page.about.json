@@ -26,33 +26,33 @@
         "item_p8cUaL": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/icon-research.svg",
-            "title": "論文検索",
-            "description": "PubMed、皮膚科学会誌を調査"
+            "icon": "shopify://shop_images/icon-bookmark.svg",
+            "title": "ブランドリサーチ",
+            "description": "世界観・哲学・受賞歴・メディア掲載実績を調査。ブランドが何を大切にしているかを多角的に確認します"
           }
         },
         "item_NEc6wY": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-analysis.svg",
-            "title": "成分分析",
-            "description": "PubMed、皮膚科学会誌を調査"
+            "title": "成分チェック",
+            "description": "成分表を読み込み、配合の目的や特徴を調査。気になる成分は信頼できる情報源で確認します。"
           }
         },
         "item_jYb7BH": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/icon-manufacturing.svg",
-            "title": "製造元調査",
-            "description": "OEM先、品質管理体制を調査"
+            "icon": "shopify://shop_images/icon-drop.svg",
+            "title": "実使用テスト",
+            "description": "実際に商品を使用。使用感・テクスチャー・肌への馴染み方を自分たちで体感します。"
           }
         },
         "item_PGb9gd": {
           "type": "item",
           "settings": {
             "icon": "shopify://shop_images/icon-feedback.svg",
-            "title": "口コミ分析",
-            "description": "実際のユーザー評価を収集"
+            "title": "評判リサーチ",
+            "description": "国内外のレビューやSNSを幅広く収集。実際のユーザーの声を丁寧に参考にします。"
           }
         }
       },
