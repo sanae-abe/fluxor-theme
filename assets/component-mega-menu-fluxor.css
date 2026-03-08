@@ -432,7 +432,7 @@
 
 .header .mega-menu__placeholder-text {
   font-family: var(--font-body-family) !important;
-  font-size: clamp(0.875rem, 1.1vw, 0.9375rem) !important;
+  font-size: clamp(1rem, 1.1vw, 1.25rem) !important;
   font-weight: 500 !important;
   letter-spacing: 0.08em !important;
   text-transform: uppercase !important;
