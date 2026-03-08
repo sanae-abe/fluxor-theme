@@ -275,8 +275,8 @@
   position: absolute;
   top: calc(100% + 0.5rem);
   left: -0.75rem;
-  width: 3.4375rem;
-  max-height: 55rem;
+  width: 21.875rem;
+  max-height: 34.375rem;
   overflow-y: auto;
 }
 
