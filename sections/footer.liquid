@@ -25,6 +25,19 @@
       padding-bottom: {{ section.settings.padding_bottom }}px;
     }
   }
+
+  .footer__disclaimer {
+    padding: 1.5rem 2rem;
+    border-top: 1px solid rgba(var(--color-foreground), 0.1);
+  }
+
+  .footer__disclaimer-text {
+    font-size: 0.7rem;
+    line-height: 1.8;
+    opacity: 0.45;
+    margin: 0;
+    white-space: pre-line;
+  }
 {%- endstyle -%}
 
 <footer class="footer color-{{ section.settings.color_scheme }} gradient section-{{ section.id }}-padding">
@@ -315,6 +328,12 @@
     {%- endunless -%}
   {%- endif -%}
 
+  {%- if section.settings.disclaimer != blank -%}
+    <div class="footer__disclaimer page-width">
+      <p class="footer__disclaimer-text">{{ section.settings.disclaimer }}</p>
+    </div>
+  {%- endif -%}
+
   <div
     class="footer__content-bottom{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}"
     {% if settings.animations_reveal_on_scroll %}
@@ -573,6 +592,16 @@
       "type": "url",
       "id": "tokutei_url",
       "label": "特定商取引法ページURL"
+    },
+    {
+      "type": "header",
+      "content": "薬機法注釈"
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "用語注釈テキスト",
+      "default": "※本サイトにおける各用語の定義は以下の通りです。\nエイジングケア：年齢に応じた潤いによるお手入れのこと。\nニキビケア：洗浄により肌を清浄にし、ニキビを防ぐこと。\n毛穴ケア：潤いを与え、キメを整えることで毛穴を目立たなくすること。\n美白：メラニンの生成を抑え、シミ・そばかすを防ぐこと（※医薬部外品の場合）。\n浸透：角質層まで。"
     },
     {
       "type": "header",
