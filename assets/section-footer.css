@@ -8,7 +8,7 @@
 
 .footer__content-top {
   width: min(100%, var(--page-width));
-  padding-bottom: 3.75rem;
+  padding-bottom: 2.5rem;
   display: block;
 }
 
