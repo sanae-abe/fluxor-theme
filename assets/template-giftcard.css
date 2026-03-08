@@ -380,7 +380,7 @@ h2,
 .gift-card main h2 {
   font-family: var(--font-body-family);
   font-size: 0.875rem;
-  letter-spacing: 0.2em;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
   text-align: center;
   opacity: 0.35;
