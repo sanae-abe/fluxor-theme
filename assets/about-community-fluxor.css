@@ -5,9 +5,15 @@
 
 .about-community-fluxor {
   position: relative;
-  padding: 4rem 1rem;
+  padding: 2.5rem 1rem;
   text-align: center;
   overflow: hidden;
+}
+
+@media screen and (min-width: 768px) {
+  .about-community-fluxor {
+    padding: 4rem 1rem;
+  }
 }
 
 /* ----------------------------------------------------------
