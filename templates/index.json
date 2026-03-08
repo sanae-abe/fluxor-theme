@@ -15,12 +15,12 @@
         "slide_T67Ypz": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/hero-slide-quality-analysis.webp",
-            "brand": "BRAND NAME",
-            "product_name": "Pharmaceutical Grade Quality.",
-            "tagline": "医薬品グレードの品質。",
-            "button_label": "商品を見る",
-            "button_link": ""
+            "image": "shopify://shop_images/hero-slide-precision-dropper.webp",
+            "brand": "Fluxor",
+            "product_name": "Trusted Skincare, Curated.",
+            "tagline": "信頼できるものだけを、あなたへ。",
+            "button_label": "コレクションを見る →",
+            "button_link": "shopify://products/fluxor-vitamin-c-serum"
           }
         },
         "slide_VhwQLT": {
