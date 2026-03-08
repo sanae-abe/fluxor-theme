@@ -282,7 +282,7 @@
 
 .facets__header {
   border-bottom: 1px solid rgba(var(--color-foreground), 0.2);
-  padding: 1.5rem 2rem;
+  padding: 1rem 1.25rem;
   display: flex;
   justify-content: space-between;
   font-size: 0.875rem;
