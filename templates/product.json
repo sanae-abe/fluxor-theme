@@ -56,15 +56,6 @@
           "type": "description",
           "settings": {}
         },
-        "collapsible-row-0": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "ご使用方法",
-            "icon": "none",
-            "content": "",
-            "page": ""
-          }
-        },
         "collapsible-row-3": {
           "type": "collapsible_tab",
           "settings": {
@@ -74,10 +65,10 @@
             "page": ""
           }
         },
-        "collapsible-row-1": {
+        "collapsible-row-0": {
           "type": "collapsible_tab",
           "settings": {
-            "heading": "成分",
+            "heading": "ご使用方法",
             "icon": "none",
             "content": "",
             "page": ""
@@ -87,6 +78,15 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "ご注意",
+            "icon": "none",
+            "content": "",
+            "page": ""
+          }
+        },
+        "collapsible-row-1": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "成分",
             "icon": "none",
             "content": "",
             "page": ""
@@ -108,10 +108,10 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "collapsible-row-0",
         "collapsible-row-3",
-        "collapsible-row-1",
+        "collapsible-row-0",
         "collapsible-row-2",
+        "collapsible-row-1",
         "share"
       ],
       "settings": {
