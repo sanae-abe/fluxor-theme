@@ -50,7 +50,7 @@
         "item_PGb9gd": {
           "type": "item",
           "settings": {
-            "icon": "shopify://shop_images/icon-feedback.svg",
+            "icon": "shopify://shop_images/icon-chat-bubble2.svg",
             "title": "評判リサーチ",
             "description": "国内外のレビューやSNSを幅広く収集。実際のユーザーの声を丁寧に参考にします。"
           }
