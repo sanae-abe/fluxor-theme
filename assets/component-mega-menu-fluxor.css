@@ -368,10 +368,10 @@
 }
 
 .header .mega-menu__description {
-  padding: 0.75rem !important;
+  padding: 1rem 1.25rem !important;
   font-family: var(--font-body-family) !important;
-  font-size: clamp(1.4rem, 1vw, 1.4rem) !important;
-  line-height: 1.4 !important;
+  font-size: 0.875rem !important;
+  line-height: 1.6 !important;
   color: var(--color-base-text) !important;
   margin: 0 !important;
 }
