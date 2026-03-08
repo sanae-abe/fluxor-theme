@@ -12,6 +12,16 @@
     "hero_fluxor_HmAj7w": {
       "type": "hero-fluxor",
       "blocks": {
+        "slide_yhhATY": {
+          "type": "slide",
+          "settings": {
+            "brand": "BRAND NAME",
+            "product_name": "Product Name.",
+            "tagline": "Short description of the product.",
+            "button_label": "Shop Now",
+            "button_link": ""
+          }
+        },
         "slide_T67Ypz": {
           "type": "slide",
           "settings": {
@@ -37,16 +47,17 @@
         "slide_Qq8nyd": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/hero-slide-precision-dropper.webp",
-            "brand": "BRAND NAME",
-            "product_name": "Precision Formulated.",
-            "tagline": "1滴に込められた科学。",
-            "button_label": "Shop Now",
-            "button_link": ""
+            "image": "shopify://shop_images/category-eyecare.webp",
+            "brand": "SKIN RENEWAL",
+            "product_name": "冬を越えた肌に、新しいケアを。",
+            "tagline": "季節の変わり目にこそ見直したい、本質的なスキンケアを揃えました。",
+            "button_label": "コレクションを見る →",
+            "button_link": "shopify://collections"
           }
         }
       },
       "block_order": [
+        "slide_yhhATY",
         "slide_T67Ypz",
         "slide_VhwQLT",
         "slide_Qq8nyd"
