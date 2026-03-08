@@ -78,7 +78,6 @@
   letter-spacing: 0.06em;
   line-height: 1.1;
   margin: 0;
-  opacity: 0.85;
 }
 
 /* ----------------------------------------------------------
@@ -93,15 +92,6 @@
   opacity: 0.75;
   margin: 0;
   margin-top: 0.5rem;
-}
-
-/* 背景画像あり時は opacity を上げて視認性確保 */
-.about-hero-fluxor--has-bg .about-hero-fluxor__subheading {
-  opacity: 0.9;
-}
-
-.about-hero-fluxor--has-bg .about-hero-fluxor__description {
-  opacity: 0.85;
 }
 
 /* ----------------------------------------------------------
