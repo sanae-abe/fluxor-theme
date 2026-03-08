@@ -31,6 +31,7 @@
     line-height: 1.8;
     opacity: 0.45;
     margin: 0;
+    margin-top: 2rem;
     white-space: pre-line;
   }
 {%- endstyle -%}
@@ -208,9 +209,6 @@
                     {%- if has_social_icons -%}
                       {%- render 'social-icons', class: 'footer__list-social' -%}
                     {%- endif -%}
-                    {%- if section.settings.disclaimer != blank -%}
-                      <p class="footer__disclaimer-text" style="margin-top: 1.5rem;">{{ section.settings.disclaimer }}</p>
-                    {%- endif -%}
                   {%- when 'image' -%}
                     <div class="footer-block__details-content footer-block-image {{ block.settings.alignment }}">
                       {%- if block.settings.image != blank -%}
@@ -322,6 +320,9 @@
           {%- endif -%}
 
         </div>
+      {%- if section.settings.disclaimer != blank -%}
+        <p class="footer__disclaimer-text">{{ section.settings.disclaimer }}</p>
+      {%- endif -%}
       </div>
     {%- endunless -%}
   {%- endif -%}
