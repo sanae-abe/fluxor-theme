@@ -225,7 +225,7 @@
                           >
                           <label for="NewsletterPrivacy--{{ block.id }}">
                             {%- if shop.privacy_policy != blank -%}
-                              <a href="{{ shop.privacy_policy.url }}" target="_blank">プライバシーポリシー</a>
+                              <a href="{{ shop.privacy_policy.url }}" target="_blank" class="link link--text">プライバシーポリシー</a>
                             {%- else -%}
                               プライバシーポリシー
                             {%- endif -%}
