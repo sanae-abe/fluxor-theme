@@ -379,7 +379,7 @@ h2,
 /* Shop name */
 .gift-card main h2 {
   font-family: var(--font-body-family);
-  font-size: 0.78rem;
+  font-size: 0.875rem;
   letter-spacing: 0.2em;
   text-transform: uppercase;
   text-align: center;
