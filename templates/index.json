@@ -65,51 +65,60 @@
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/bottle-cleanser.webp",
-            "label": "クレンジング",
-            "link": ""
+            "label": "クレンジング・洗顔",
+            "link": "shopify://collections/cleansers"
+          }
+        },
+        "category_WWJLVg": {
+          "type": "category",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_v1f8j0v1f8j0v1f8.png",
+            "label": "美容液・オイル",
+            "link": "shopify://collections/treatments-トリートメント"
           }
         },
         "category_Lefkpd": {
           "type": "category",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_e2ihude2ihude2ih.png",
-            "label": "化粧水＆美容液",
-            "link": ""
+            "image": "shopify://shop_images/2026-03-0617.25.40.png",
+            "label": "化粧水",
+            "link": "shopify://collections/toners"
           }
         },
         "category_Ftc63D": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-moisturizer.webp",
-            "label": "乳液＆クリーム",
-            "link": ""
+            "label": "乳液・クリーム",
+            "link": "shopify://collections/moisturizers"
           }
         },
         "category_xhrNEg": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/tube-cream.webp",
-            "label": "アイケア＆リップケア",
-            "link": ""
+            "label": "アイ・リップケア",
+            "link": "shopify://collections/eye-lip-care"
           }
         },
         "category_86iFcA": {
           "type": "category",
           "settings": {
             "image": "shopify://shop_images/category-suncare.webp",
-            "label": "サンケア",
-            "link": ""
+            "label": "UV・サンケア",
+            "link": "shopify://collections/suncare"
           }
         }
       },
       "block_order": [
         "category_EwWpBN",
+        "category_WWJLVg",
         "category_Lefkpd",
         "category_Ftc63D",
         "category_xhrNEg",
         "category_86iFcA"
       ],
-      "name": "Category Nav - Fluxor",
+      "name": "カテゴリ一覧",
       "settings": {
         "color_scheme": "",
         "heading": ""
@@ -162,7 +171,7 @@
       "name": "Collection - Fluxor",
       "settings": {
         "color_scheme": "",
-        "heading": "New Arrivals",
+        "heading": "新着商品",
         "auto_mode": "none",
         "collection": "new-arrivals",
         "products_to_show": 4,
@@ -174,7 +183,7 @@
       "name": "Collection - Fluxor",
       "settings": {
         "color_scheme": "",
-        "heading": "Best Sellers",
+        "heading": "ベストセラー",
         "auto_mode": "none",
         "collection": "best-sellers",
         "products_to_show": 4,
