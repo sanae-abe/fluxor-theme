@@ -148,7 +148,7 @@
       </div>
       <h2>{{ shop.name }}</h2>
       <div class="gift-card__text-wrapper">
-        <p class="gift-card__text">{{ 'gift_cards.issued.how_to_use_gift_card' | t }}</p>
+        <p class="gift-card__text">{{ 'gift_cards.issued.how_to_use_gift_card' | t | newline_to_br }}</p>
       </div>
       <p id="gift-card-code" class="gift-card__number">{{ gift_card.code | format_code }}</p>
       <div class="gift-card__qr-code" data-identifier="{{ gift_card.qr_identifier }}"></div>
