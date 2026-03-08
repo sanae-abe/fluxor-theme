@@ -16,11 +16,11 @@
           "type": "slide",
           "settings": {
             "image": "shopify://shop_images/hero-slide-precision-dropper.webp",
-            "brand": "Fluxor",
+            "brand": "",
             "product_name": "Trusted Skincare, Curated.",
             "tagline": "信頼できるものだけを、あなたへ。",
             "button_label": "コレクションを見る →",
-            "button_link": "shopify://products/fluxor-vitamin-c-serum"
+            "button_link": "shopify://collections"
           }
         },
         "slide_VhwQLT": {
