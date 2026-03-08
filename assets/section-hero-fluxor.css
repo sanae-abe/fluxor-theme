@@ -143,6 +143,7 @@
   text-transform: uppercase;
   margin: 0;
   opacity: 1;
+  color: rgb(var(--color-foreground));
 }
 
 .hero-fluxor__product-name {
@@ -163,6 +164,7 @@
   margin: 0;
   max-width: 36ch;
   opacity: 1;
+  color: rgb(var(--color-foreground));
 }
 
 .hero-fluxor__cta {
@@ -236,7 +238,7 @@
   .hero-fluxor__product-name {
     font-size: clamp(1.875rem, 6vw, 3rem);
     font-weight: 500;
-    color: var(--color-foreground);
+    color: rgba(var(--color-foreground));
     line-height: 1.3;
   }
 }
