@@ -39,6 +39,18 @@
         "padding_bottom": 40
       }
     },
+    "cart-complementary-products": {
+      "type": "cart-complementary-products",
+      "settings": {
+        "heading": "あわせてお試しください",
+        "heading_size": "h1",
+        "products_to_show": 4,
+        "color_scheme": "scheme-1",
+        "show_vendor": false,
+        "padding_top": 36,
+        "padding_bottom": 0
+      }
+    },
     "product_grid_fluxor_cdpYHm": {
       "type": "product-grid-fluxor",
       "name": "Product Grid - Fluxor",
@@ -55,6 +67,7 @@
   "order": [
     "cart-items",
     "cart-footer",
+    "cart-complementary-products",
     "product_grid_fluxor_cdpYHm"
   ]
 }
