@@ -12,6 +12,7 @@
     "cart-items": {
       "type": "main-cart-items",
       "settings": {
+        "color_scheme": "",
         "padding_top": 36,
         "padding_bottom": 36
       }
@@ -32,32 +33,28 @@
         "subtotal",
         "buttons"
       ],
-      "settings": {}
-    },
-    "featured-collection": {
-      "type": "featured-collection",
       "settings": {
-        "collection": "all",
+        "color_scheme": "",
+        "padding_top": 40,
+        "padding_bottom": 40
+      }
+    },
+    "product_grid_fluxor_cdpYHm": {
+      "type": "product-grid-fluxor",
+      "name": "Product Grid - Fluxor",
+      "settings": {
+        "color_scheme": "",
+        "heading": "注目のアイテム",
+        "auto_mode": "best_sellers",
+        "collection": "",
         "products_to_show": 4,
-        "title": "Featured collection",
-        "heading_size": "h2",
-        "columns_desktop": 4,
-        "show_view_all": true,
-        "color_scheme": "scheme-1",
-        "image_ratio": "square",
-        "show_secondary_image": false,
-        "show_vendor": false,
-        "show_rating": false,
-        "columns_mobile": "2",
-        "swipe_on_mobile": false,
-        "padding_top": 36,
-        "padding_bottom": 36
+        "show_view_all": true
       }
     }
   },
   "order": [
     "cart-items",
     "cart-footer",
-    "featured-collection"
+    "product_grid_fluxor_cdpYHm"
   ]
 }
