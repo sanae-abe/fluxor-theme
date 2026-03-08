@@ -12,16 +12,6 @@
     "hero_fluxor_HmAj7w": {
       "type": "hero-fluxor",
       "blocks": {
-        "slide_yhhATY": {
-          "type": "slide",
-          "settings": {
-            "brand": "BRAND NAME",
-            "product_name": "Product Name.",
-            "tagline": "Short description of the product.",
-            "button_label": "Shop Now",
-            "button_link": ""
-          }
-        },
         "slide_T67Ypz": {
           "type": "slide",
           "settings": {
@@ -29,6 +19,17 @@
             "brand": "",
             "product_name": "Trusted Skincare, Curated.",
             "tagline": "信頼できるものだけを、あなたへ。",
+            "button_label": "コレクションを見る",
+            "button_link": "shopify://collections"
+          }
+        },
+        "slide_yhhATY": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_f6e4agf6e4agf6e4_012b4257-79a9-4e00-84cd-efd0ef940033.png",
+            "brand": "SKIN RENEWAL",
+            "product_name": "冬を越えた肌に、新しいケアを。",
+            "tagline": "季節の変わり目にこそ見直したい、本質的なスキンケアを揃えました。",
             "button_label": "コレクションを見る",
             "button_link": "shopify://collections"
           }
@@ -46,8 +47,8 @@
         }
       },
       "block_order": [
-        "slide_yhhATY",
         "slide_T67Ypz",
+        "slide_yhhATY",
         "slide_VhwQLT"
       ],
       "name": "Hero - Fluxor",
