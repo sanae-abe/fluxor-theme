@@ -242,7 +242,7 @@ h2,
 .gift-card__buttons {
   display: flex;
   flex-direction: column;
-  max-width: 25rem;
+  max-width: 15.625rem;
   flex-wrap: wrap;
   margin: 0 auto;
 }
