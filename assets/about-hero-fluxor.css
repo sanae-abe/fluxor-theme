@@ -70,16 +70,6 @@
   margin: 0;
 }
 
-.about-hero-fluxor__subheading {
-  font-family: var(--font-heading-family);
-  font-weight: 500;
-  font-style: var(--font-heading-style);
-  font-size: clamp(1.8rem, 4vw, 2.8rem);
-  letter-spacing: 0.06em;
-  line-height: 1.1;
-  margin: 0;
-}
-
 /* ----------------------------------------------------------
    説明文
    ---------------------------------------------------------- */

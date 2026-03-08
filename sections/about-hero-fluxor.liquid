@@ -26,12 +26,6 @@
       </h1>
     {%- endif -%}
 
-    {%- if section.settings.subheading != blank -%}
-      <h2 class="about-hero-fluxor__subheading">
-        {{- section.settings.subheading | escape -}}
-      </h2>
-    {%- endif -%}
-
     {%- if section.settings.description != blank -%}
       <p class="about-hero-fluxor__description">
         {{- section.settings.description | escape | newline_to_br -}}
@@ -76,22 +70,16 @@
       "content": "コンテンツ"
     },
     {
-      "type": "text",
+      "type": "textarea",
       "id": "heading",
       "label": "メイン見出し",
-      "default": "私たちは専門家ではありません。"
-    },
-    {
-      "type": "text",
-      "id": "subheading",
-      "label": "サブ見出し",
-      "default": "だからこそ、徹底的に調べます。"
+      "default": "スキンケアに迷ったのは、私たちも同じでした。"
     },
     {
       "type": "textarea",
       "id": "description",
       "label": "説明文",
-      "default": "スキンケアに迷ったのは私たちも同じでした。成分表を読んでも分からない。どのブランドを信頼すればいいのか分からない。だから、徹底的に調べることにしました。"
+      "default": "成分表を読んでも、どのブランドが信頼できるのか、なかなか答えが見つからない。\nその問いから、Fluxorは生まれました。"
     }
   ],
   "presets": [
