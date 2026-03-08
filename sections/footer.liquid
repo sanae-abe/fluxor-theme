@@ -27,7 +27,7 @@
   }
 
   .footer__list-payment {
-    margin-top: 2rem;
+    margin-top: 1rem;
   }
 
   .footer__disclaimer-text {
@@ -213,6 +213,15 @@
                     {%- if has_social_icons -%}
                       {%- render 'social-icons', class: 'footer__list-social' -%}
                     {%- endif -%}
+                    {%- if section.settings.payment_enable -%}
+                      <ul class="list-payment footer__list-payment" role="list">
+                        {%- for type in shop.enabled_payment_types -%}
+                          <li class="list-payment__item">
+                            {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
+                          </li>
+                        {%- endfor -%}
+                      </ul>
+                    {%- endif -%}
                   {%- when 'image' -%}
                     <div class="footer-block__details-content footer-block-image {{ block.settings.alignment }}">
                       {%- if block.settings.image != blank -%}
@@ -324,15 +333,6 @@
           {%- endif -%}
 
         </div>
-      {%- if section.settings.payment_enable -%}
-        <ul class="list-payment footer__list-payment" role="list">
-          {%- for type in shop.enabled_payment_types -%}
-            <li class="list-payment__item">
-              {{ type | payment_type_svg_tag: class: 'icon icon--full-color' }}
-            </li>
-          {%- endfor -%}
-        </ul>
-      {%- endif -%}
       {%- if section.settings.disclaimer != blank -%}
         <p class="footer__disclaimer-text">{{ section.settings.disclaimer }}</p>
       {%- endif -%}
