@@ -433,12 +433,6 @@
   text-align: center !important;
 }
 
-.header .mega-menu__placeholder-icon {
-  margin-bottom: 1rem !important;
-  opacity: 0.3 !important;
-  color: var(--color-base-text) !important;
-}
-
 .header .mega-menu__placeholder-text {
   font-family: var(--font-body-family) !important;
   font-size: clamp(0.875rem, 1.1vw, 0.9375rem) !important;
