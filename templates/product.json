@@ -58,11 +58,9 @@
         },
         "collapsible-row-3": {
           "type": "collapsible_tab",
+          "repeater": "{{ product.metafields.shopify[\"active-ingredient\"].value }}",
           "settings": {
-            "heading": "有効成分",
-            "icon": "none",
-            "content": "",
-            "page": ""
+            "heading": "{{ block.repeater.label.value }}"
           }
         },
         "collapsible-row-0": {
