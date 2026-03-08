@@ -67,8 +67,8 @@
   }
 
   .category-nav-fluxor__item {
-    /* デスクトップ：4枚表示 */
-    flex: 0 0 calc(25% - 1.125rem);
+    /* デスクトップ：4枚 + 次のアイテムがのぞく */
+    flex: 0 0 calc(22% - 0.9rem);
   }
 }
 
