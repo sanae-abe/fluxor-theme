@@ -543,11 +543,11 @@
 
 .facets__price {
   display: flex;
-  padding: 2rem;
+  padding: 1.25rem;
 }
 
 .facets__price .field + .field-currency {
-  margin-left: 2rem;
+  margin-left: 1.25rem;
 }
 
 .facets__price .field {
