@@ -131,10 +131,10 @@
         "color_scheme": "",
         "molecule_image": "shopify://shop_images/top_brand_story_image_compressed.webp",
         "image_position": "right",
-        "heading": "私たちは成分を読む。",
+        "heading": "信頼できるものだけを。",
         "subtitle": "",
-        "heading_font": "brand",
-        "body": "<p>皮膚科学に基づいた製品だけを、世界中からセレクトしています。<br/>流行より、エビデンス。</p>",
+        "heading_font": "heading",
+        "body": "<p>成分表を読み込み、ブランドの背景を調べ、実際に自分たちで使って確かめる。その積み重ねから生まれた、Fluxorのスキン<br/>  ケアセレクション。</p>",
         "button_label": "Fluxor について",
         "button_link": ""
       }
@@ -160,8 +160,8 @@
         "image_position": "left",
         "heading": "レチノール",
         "subtitle": "Key Ingredient",
-        "heading_font": "brand",
-        "body": "<p>科学的に最も研究された美容成分の一つ。<br>細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。</p><ul><li>シワや小じわの改善</li><li>毛穴の引き締め</li><li>肌のハリ・弾力のサポート</li></ul>",
+        "heading_font": "heading",
+        "body": "<p>科学的に最も研究された美容成分の一つ。<br/>細胞のターンオーバーを促進し、コラーゲンの産生をサポートします。</p><ul><li>シワや小じわの改善</li><li>毛穴の引き締め</li><li>肌のハリ・弾力のサポート</li></ul>",
         "button_label": "詳しく見る",
         "button_link": "/ingredients/retinol"
       }
