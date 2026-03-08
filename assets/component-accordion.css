@@ -76,7 +76,7 @@
 
 /* サマリー行: 余白を整える */
 .product__accordion summary {
-  padding: 1.25rem 0;
+  padding: 0.875rem 0;
 }
 
 /* ブロックアイコン（leather / truck / ruler / heart）は非表示 */
@@ -84,13 +84,12 @@
   display: none;
 }
 
-/* タイトル: エディトリアル大文字、DM Sans、極細レタースペーシング */
+/* タイトル: DM Sans、日本語向けレタースペーシング */
 .product__accordion .accordion__title {
   font-family: var(--font-body-family);
-  font-size: 0.6875rem;
-  font-weight: 500;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
+  font-size: 0.875rem;
+  font-weight: 400;
+  letter-spacing: 0.04em;
   color: rgb(var(--color-foreground));
   max-width: 100%;
 }
@@ -108,8 +107,8 @@
   top: 50%;
   transform: translateY(-50%);
   font-family: var(--font-body-family);
-  font-size: 1.25rem;
-  font-weight: 300;
+  font-size: 1rem;
+  font-weight: 400;
   line-height: 1;
   color: rgb(var(--color-foreground));
   transition: opacity 0.2s ease;
