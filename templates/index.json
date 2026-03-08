@@ -129,7 +129,7 @@
       "name": "Brand Stroy",
       "settings": {
         "color_scheme": "",
-        "molecule_image": "shopify://shop_images/top_brand_story_image_compressed.webp",
+        "molecule_image": "shopify://shop_images/image_compressed.webp",
         "image_position": "right",
         "heading": "信頼できるものだけを。",
         "subtitle": "",
