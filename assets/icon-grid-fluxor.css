@@ -4,7 +4,13 @@
    ============================================================ */
 
 .icon-grid-fluxor {
-  padding: 4rem 1rem;
+  padding: 2.5rem 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .icon-grid-fluxor {
+    padding: 4rem 1rem;
+  }
 }
 
 /* ----------------------------------------------------------
