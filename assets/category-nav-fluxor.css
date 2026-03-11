@@ -147,9 +147,7 @@ category-nav-carousel {
   z-index: 2;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid currentColor;
-  border-radius: 50%;
-  background: var(--color-base-background-1, #F6F4F0);
+  background: transparent;
   color: currentColor;
   cursor: pointer;
   align-items: center;
@@ -166,7 +164,6 @@ category-nav-carousel {
 
 @media (any-hover: hover) {
   .category-nav-fluxor__btn:hover {
-    background: var(--color-base-background-2, #EAE7E1);
     opacity: 1;
   }
 }
@@ -178,8 +175,8 @@ category-nav-carousel {
 
 /* caretアイコンを左右向きに回転 */
 .category-nav-fluxor__btn .icon-caret {
-  width: 1rem;
-  height: 1rem;
+  width: 2rem;
+  height: 2rem;
   display: block;
 }
 
