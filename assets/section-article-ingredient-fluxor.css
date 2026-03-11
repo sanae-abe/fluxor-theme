@@ -121,7 +121,7 @@
 }
 
 .ingredient-roles__item {
-  padding: 1rem 1.25rem;
+  padding: 0;
   background-color: rgb(var(--color-foreground) / 0.03);
   border-left: 2px solid rgb(var(--color-foreground) / 0.15);
 }
@@ -212,8 +212,8 @@
 }
 
 .ingredient-cautions__item {
-  padding: 0.875rem 1rem;
-  border-left: 2px solid rgb(var(--color-foreground) / 0.25);
+  padding: 0;
+  border-left: 2px solid rgb(var(--coflor-foreground) / 0.25);
   font-size: 0.875rem;
 }
 
