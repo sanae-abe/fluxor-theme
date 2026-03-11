@@ -22,8 +22,6 @@
 
 /* メタ情報バー（INCI名・分類・由来） */
 .ingredient-article__meta-bar {
-  background-color: rgb(var(--color-foreground), 0.04);
-  border-bottom: 1px solid rgb(var(--color-foreground), 0.1);
   padding: 1rem 0 0;
 }
 
@@ -38,7 +36,7 @@
   display: flex;
   gap: 0.5rem;
   align-items: baseline;
-  font-size: 0.8125rem;
+  font-size: 1rem;
   letter-spacing: 0.04em;
 }
 
@@ -47,7 +45,7 @@
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: rgb(var(--color-foreground), 0.5);
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
 }
 
 .ingredient-article__meta-value {
