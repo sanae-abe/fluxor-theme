@@ -14,6 +14,12 @@
 -%}
 
 <article class="ingredient-article color-{{ section.settings.color_scheme }} gradient">
+  <header class="ingredient-article__header">
+    {%- if article.tags.size > 0 -%}
+      <p class="ingredient-article__eyebrow">{{ article.tags | first | escape }}</p>
+    {%- endif -%}
+    <h1 class="ingredient-article__title">{{ article.title | escape }}</h1>
+  </header>
 
   {%- if article.image -%}
     <div class="ingredient-article__hero">
@@ -62,18 +68,6 @@
   {%- endif -%}
 
   <div class="page-width page-width--narrow">
-
-    <a class="ingredient-article__back" href="{{ blog.url }}">
-      ← 成分事典に戻る
-    </a>
-
-    <header class="ingredient-article__header">
-      {%- if article.tags.size > 0 -%}
-        <p class="ingredient-article__eyebrow">{{ article.tags | first | escape }}</p>
-      {%- endif -%}
-      <h1 class="ingredient-article__title">{{ article.title | escape }}</h1>
-    </header>
-
     <div class="ingredient-article__body">
       <div class="ingredient-article__main">
 
@@ -204,6 +198,11 @@
     <div class="ingredient-disclaimer">
       本ページは成分の一般的な情報提供を目的としており、特定の効能・効果を保証するものではありません。肌悩みについては皮膚科専門医へご相談ください。
     </div>
+
+    <a class="ingredient-article__back" href="{{ blog.url }}">
+      ← 成分事典に戻る
+    </a>
+
 
   </div>
 </article>

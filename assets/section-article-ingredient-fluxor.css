@@ -231,7 +231,7 @@
 
 /* サイドバー：妊娠注意 */
 .ingredient-sidebar-card {
-  padding: 1.25rem;
+  padding: 0;
   border: 1px solid rgb(var(--color-foreground) / 0.15);
   font-size: 0.875rem;
   line-height: 1.7;
@@ -249,8 +249,7 @@
 
 /* 参考文献 */
 .ingredient-references {
-  margin-top: 4rem;
-  padding-top: 2rem;
+  margin-top: 2.5rem;
   border-top: 1px solid rgb(var(--color-foreground) / 0.1);
 }
 
@@ -268,7 +267,7 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 1.25rem;
+  gap: 0.5rem;
 }
 
 .ingredient-references__item {
@@ -301,13 +300,13 @@
 
 /* 免責事項 */
 .ingredient-disclaimer {
-  margin-top: 3rem;
-  padding: 1rem 1.25rem;
-  background-color: rgb(var(--color-foreground) / 0.03);
-  border-left: 2px solid rgb(var(--color-foreground) / 0.1);
+  margin-top: 2.5rem;
+  padding: 1rem;
+  background-color: rgb(var(--color-foreground) / 5%);
+  border-left: 2px solid rgb(var(--color-foreground) / 5%);
   font-size: 0.8125rem;
   line-height: 1.7;
-  color: rgb(var(--color-foreground) / 0.55);
+  color: rgb(var(--color-foreground) / 5%);
 }
 
 /* Back link */
