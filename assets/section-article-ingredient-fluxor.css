@@ -1,0 +1,349 @@
+.ingredient-article {
+  padding-bottom: 6rem;
+}
+
+/* ヒーロー */
+.ingredient-article__hero {
+  position: relative;
+  aspect-ratio: 16 / 6;
+  overflow: hidden;
+  background-color: var(--color-background);
+}
+
+.ingredient-article__hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  display: block;
+}
+
+/* メタ情報バー（INCI名・分類・由来） */
+.ingredient-article__meta-bar {
+  background-color: rgb(var(--color-foreground) / 0.04);
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+  padding: 1rem 0;
+}
+
+.ingredient-article__meta-inner {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2.5rem;
+  align-items: baseline;
+}
+
+.ingredient-article__meta-item {
+  display: flex;
+  gap: 0.5rem;
+  align-items: baseline;
+  font-size: 0.8125rem;
+  letter-spacing: 0.04em;
+}
+
+.ingredient-article__meta-label {
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: rgb(var(--color-foreground) / 0.5);
+  font-size: 0.6875rem;
+}
+
+.ingredient-article__meta-value {
+  color: rgb(var(--color-foreground));
+}
+
+/* タイトルブロック */
+.ingredient-article__header {
+  padding-top: 4rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+  margin-bottom: 3rem;
+}
+
+.ingredient-article__eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground) / 0.5);
+  margin: 0 0 0.75rem;
+}
+
+.ingredient-article__title {
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  line-height: 1.1;
+  margin: 0;
+}
+
+/* コンテンツ本体のレイアウト */
+.ingredient-article__body {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 3rem;
+}
+
+@media screen and (min-width: 990px) {
+  .ingredient-article__body {
+    grid-template-columns: 1fr 300px;
+    gap: 4rem;
+  }
+}
+
+.ingredient-article__main {
+  min-width: 0;
+}
+
+.ingredient-article__sidebar {
+  min-width: 0;
+}
+
+/* セクションブロック共通 */
+.ingredient-section {
+  margin-bottom: 2.5rem;
+}
+
+.ingredient-section__heading {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground) / 0.5);
+  margin: 0 0 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+}
+
+/* 本文 */
+.ingredient-article__content {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: rgb(var(--color-foreground) / 0.85);
+}
+
+.ingredient-article__content p {
+  margin: 0 0 1.25em;
+}
+
+/* 役割リスト */
+.ingredient-roles {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.ingredient-roles__item {
+  padding: 1rem 1.25rem;
+  background-color: rgb(var(--color-foreground) / 0.03);
+  border-left: 2px solid rgb(var(--color-foreground) / 0.15);
+}
+
+.ingredient-roles__title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  margin: 0 0 0.25rem;
+  letter-spacing: 0.02em;
+}
+
+.ingredient-roles__description {
+  font-size: 0.875rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground) / 0.7);
+  margin: 0;
+}
+
+/* 使用上のポイント */
+.ingredient-tips {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ingredient-tips__item {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.25rem;
+  padding: 0.875rem 1rem;
+  border: 1px solid rgb(var(--color-foreground) / 0.1);
+  font-size: 0.875rem;
+}
+
+.ingredient-tips__title {
+  font-weight: 600;
+  font-size: 0.8125rem;
+  letter-spacing: 0.02em;
+}
+
+.ingredient-tips__description {
+  color: rgb(var(--color-foreground) / 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* 相性の良い成分テーブル */
+.ingredient-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.875rem;
+}
+
+.ingredient-table th {
+  text-align: left;
+  font-size: 0.6875rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground) / 0.5);
+  padding: 0.5rem 0.75rem;
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.15);
+}
+
+.ingredient-table td {
+  padding: 0.75rem;
+  border-bottom: 1px solid rgb(var(--color-foreground) / 0.07);
+  vertical-align: top;
+  line-height: 1.6;
+}
+
+.ingredient-table td:first-child {
+  font-weight: 600;
+  white-space: nowrap;
+  padding-right: 1rem;
+}
+
+/* 注意の組み合わせ */
+.ingredient-cautions {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.ingredient-cautions__item {
+  padding: 0.875rem 1rem;
+  border-left: 2px solid rgb(var(--color-foreground) / 0.25);
+  font-size: 0.875rem;
+}
+
+.ingredient-cautions__name {
+  font-weight: 600;
+  margin-bottom: 0.25rem;
+  font-size: 0.8125rem;
+}
+
+.ingredient-cautions__reason {
+  color: rgb(var(--color-foreground) / 0.7);
+  line-height: 1.6;
+  margin: 0;
+}
+
+/* サイドバー：妊娠注意 */
+.ingredient-sidebar-card {
+  padding: 1.25rem;
+  border: 1px solid rgb(var(--color-foreground) / 0.15);
+  font-size: 0.875rem;
+  line-height: 1.7;
+  color: rgb(var(--color-foreground) / 0.75);
+}
+
+.ingredient-sidebar-card__heading {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: rgb(var(--color-foreground));
+  margin: 0 0 0.75rem;
+}
+
+/* 参考文献 */
+.ingredient-references {
+  margin-top: 4rem;
+  padding-top: 2rem;
+  border-top: 1px solid rgb(var(--color-foreground) / 0.1);
+}
+
+.ingredient-references__heading {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground) / 0.5);
+  margin: 0 0 1.5rem;
+}
+
+.ingredient-references__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.ingredient-references__item {
+  display: grid;
+  grid-template-columns: 1.5rem 1fr;
+  gap: 0 0.75rem;
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: rgb(var(--color-foreground) / 0.7);
+}
+
+.ingredient-references__number {
+  font-weight: 600;
+  color: rgb(var(--color-foreground) / 0.4);
+  font-size: 0.75rem;
+  padding-top: 0.1em;
+}
+
+.ingredient-references__authors {
+  color: rgb(var(--color-foreground) / 0.85);
+}
+
+.ingredient-references__article-title {
+  font-style: italic;
+}
+
+.ingredient-references__journal {
+  color: rgb(var(--color-foreground) / 0.55);
+}
+
+/* 免責事項 */
+.ingredient-disclaimer {
+  margin-top: 3rem;
+  padding: 1rem 1.25rem;
+  background-color: rgb(var(--color-foreground) / 0.03);
+  border-left: 2px solid rgb(var(--color-foreground) / 0.1);
+  font-size: 0.8125rem;
+  line-height: 1.7;
+  color: rgb(var(--color-foreground) / 0.55);
+}
+
+/* Back link */
+.ingredient-article__back {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-size: 0.8125rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: rgb(var(--color-foreground) / 0.5);
+  text-decoration: none;
+  margin-bottom: 1.5rem;
+  padding-top: 2rem;
+  transition: color 0.15s ease;
+}
+
+@media (any-hover: hover) {
+  .ingredient-article__back:hover {
+    color: rgb(var(--color-foreground));
+  }
+}
+
+.ingredient-article__back:focus-visible {
+  outline: 2px solid rgb(var(--color-foreground));
+  outline-offset: 2px;
+}

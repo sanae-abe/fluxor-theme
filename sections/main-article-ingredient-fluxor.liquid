@@ -1,0 +1,225 @@
+{{ 'section-article-ingredient-fluxor.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign mf = article.metafields.ingredient
+  assign inci_name     = mf.inci_name.value
+  assign classification = mf.classification.value
+  assign origin        = mf.origin.value
+  assign roles         = mf.roles.value
+  assign usage_tips    = mf.usage_tips.value
+  assign compatible    = mf.compatible_ingredients.value
+  assign cautions      = mf.caution_ingredients.value
+  assign pregnancy_note = mf.pregnancy_note.value
+  assign references    = mf.references.value
+-%}
+
+<article class="ingredient-article color-{{ section.settings.color_scheme }} gradient">
+
+  {%- if article.image -%}
+    <div class="ingredient-article__hero">
+      <img
+        srcset="
+          {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+          {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+          {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+          {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
+          {{ article.image | image_url }} {{ article.image.width }}w
+        "
+        sizes="100vw"
+        src="{{ article.image | image_url: width: 1500 }}"
+        loading="eager"
+        fetchpriority="high"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+      >
+    </div>
+  {%- endif -%}
+
+  {%- if inci_name or classification or origin -%}
+    <div class="ingredient-article__meta-bar">
+      <div class="ingredient-article__meta-inner page-width">
+        {%- if inci_name != blank -%}
+          <div class="ingredient-article__meta-item">
+            <span class="ingredient-article__meta-label">INCI</span>
+            <span class="ingredient-article__meta-value">{{ inci_name | escape }}</span>
+          </div>
+        {%- endif -%}
+        {%- if classification != blank -%}
+          <div class="ingredient-article__meta-item">
+            <span class="ingredient-article__meta-label">分類</span>
+            <span class="ingredient-article__meta-value">{{ classification | escape }}</span>
+          </div>
+        {%- endif -%}
+        {%- if origin != blank -%}
+          <div class="ingredient-article__meta-item">
+            <span class="ingredient-article__meta-label">由来</span>
+            <span class="ingredient-article__meta-value">{{ origin | escape }}</span>
+          </div>
+        {%- endif -%}
+      </div>
+    </div>
+  {%- endif -%}
+
+  <div class="page-width page-width--narrow">
+
+    <a class="ingredient-article__back" href="{{ blog.url }}">
+      ← 成分事典に戻る
+    </a>
+
+    <header class="ingredient-article__header">
+      {%- if article.tags.size > 0 -%}
+        <p class="ingredient-article__eyebrow">{{ article.tags | first | escape }}</p>
+      {%- endif -%}
+      <h1 class="ingredient-article__title">{{ article.title | escape }}</h1>
+    </header>
+
+    <div class="ingredient-article__body">
+      <div class="ingredient-article__main">
+
+        {%- if article.content != blank -%}
+          <div class="ingredient-section">
+            <p class="ingredient-section__heading">この成分について</p>
+            <div class="ingredient-article__content">
+              {{ article.content }}
+            </div>
+          </div>
+        {%- endif -%}
+
+        {%- if roles != blank -%}
+          <div class="ingredient-section">
+            <p class="ingredient-section__heading">スキンケアにおける役割</p>
+            <ul class="ingredient-roles">
+              {%- for role in roles -%}
+                <li class="ingredient-roles__item">
+                  {%- if role.title != blank -%}
+                    <p class="ingredient-roles__title">{{ role.title | escape }}</p>
+                  {%- endif -%}
+                  {%- if role.description != blank -%}
+                    <p class="ingredient-roles__description">{{ role.description | escape }}</p>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- if usage_tips != blank -%}
+          <div class="ingredient-section">
+            <p class="ingredient-section__heading">使用上のポイント</p>
+            <ul class="ingredient-tips">
+              {%- for tip in usage_tips -%}
+                <li class="ingredient-tips__item">
+                  {%- if tip.title != blank -%}
+                    <span class="ingredient-tips__title">{{ tip.title | escape }}</span>
+                  {%- endif -%}
+                  {%- if tip.description != blank -%}
+                    <p class="ingredient-tips__description">{{ tip.description | escape }}</p>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+        {%- if compatible != blank -%}
+          <div class="ingredient-section">
+            <p class="ingredient-section__heading">相性の良い成分</p>
+            <table class="ingredient-table">
+              <thead>
+                <tr>
+                  <th>成分名</th>
+                  <th>理由</th>
+                </tr>
+              </thead>
+              <tbody>
+                {%- for item in compatible -%}
+                  <tr>
+                    <td>{{ item.name | escape }}</td>
+                    <td>{{ item.reason | escape }}</td>
+                  </tr>
+                {%- endfor -%}
+              </tbody>
+            </table>
+          </div>
+        {%- endif -%}
+
+        {%- if cautions != blank -%}
+          <div class="ingredient-section">
+            <p class="ingredient-section__heading">注意が必要な組み合わせ</p>
+            <ul class="ingredient-cautions">
+              {%- for item in cautions -%}
+                <li class="ingredient-cautions__item">
+                  {%- if item.name != blank -%}
+                    <p class="ingredient-cautions__name">{{ item.name | escape }}</p>
+                  {%- endif -%}
+                  {%- if item.reason != blank -%}
+                    <p class="ingredient-cautions__reason">{{ item.reason | escape }}</p>
+                  {%- endif -%}
+                </li>
+              {%- endfor -%}
+            </ul>
+          </div>
+        {%- endif -%}
+
+      </div>
+
+      <aside class="ingredient-article__sidebar">
+        {%- if pregnancy_note != blank -%}
+          <div class="ingredient-sidebar-card">
+            <p class="ingredient-sidebar-card__heading">妊娠中・授乳中の方へ</p>
+            <p>{{ pregnancy_note | escape }}</p>
+          </div>
+        {%- endif -%}
+      </aside>
+    </div>
+
+    {%- if references != blank -%}
+      <section class="ingredient-references" aria-label="参考文献">
+        <h2 class="ingredient-references__heading">参考文献</h2>
+        <ol class="ingredient-references__list">
+          {%- for ref in references -%}
+            <li class="ingredient-references__item">
+              <span class="ingredient-references__number">[{{ forloop.index }}]</span>
+              <div>
+                {%- if ref.authors != blank -%}
+                  <span class="ingredient-references__authors">{{ ref.authors | escape }}. </span>
+                {%- endif -%}
+                {%- if ref.title != blank -%}
+                  <span class="ingredient-references__article-title">"{{ ref.title | escape }}."</span>
+                {%- endif -%}
+                {%- if ref.journal != blank -%}
+                  <span class="ingredient-references__journal"> {{ ref.journal | escape }}.</span>
+                {%- endif -%}
+                {%- if ref.details != blank -%}
+                  <span class="ingredient-references__journal"> {{ ref.details | escape }}.</span>
+                {%- endif -%}
+              </div>
+            </li>
+          {%- endfor -%}
+        </ol>
+      </section>
+    {%- endif -%}
+
+    <div class="ingredient-disclaimer">
+      本ページは成分の一般的な情報提供を目的としており、特定の効能・効果を保証するものではありません。肌悩みについては皮膚科専門医へご相談ください。
+    </div>
+
+  </div>
+</article>
+
+{% schema %}
+{
+  "name": "成分記事 - Fluxor",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    }
+  ]
+}
+{% endschema %}
