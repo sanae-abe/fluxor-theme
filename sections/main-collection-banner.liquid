@@ -14,11 +14,15 @@
     <div class="collection-hero__text-wrapper">
       <h1 class="collection-hero__title">
         <span class="visually-hidden">{{ 'sections.collection_template.title' | t }}: </span>
-        {{- collection.title | escape -}}
+        {{- section.settings.custom_title | default: collection.title | escape -}}
       </h1>
 
       {%- if section.settings.show_collection_description -%}
-        <div class="collection-hero__description rte">{{ collection.description }}</div>
+        {%- if section.settings.custom_description != blank -%}
+          <div class="collection-hero__description rte">{{ section.settings.custom_description }}</div>
+        {%- elsif collection.description != blank -%}
+          <div class="collection-hero__description rte">{{ collection.description }}</div>
+        {%- endif -%}
       {%- endif -%}
     </div>
 
@@ -53,6 +57,18 @@
     {
       "type": "paragraph",
       "content": "t:sections.main-collection-banner.settings.paragraph.content"
+    },
+    {
+      "type": "text",
+      "id": "custom_title",
+      "label": "Custom heading",
+      "info": "Leave blank to use the collection name"
+    },
+    {
+      "type": "richtext",
+      "id": "custom_description",
+      "label": "Custom description",
+      "info": "Leave blank to use the collection description"
     },
     {
       "type": "checkbox",
