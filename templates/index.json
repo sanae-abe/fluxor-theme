@@ -163,7 +163,7 @@
         "heading_font": "heading",
         "body": "<p>科学的に研究が進む美容成分の一つ。<br/>使い続けることで肌のキメを整え、うるおいとともにハリ感をサポートします。</p><ul><li>肌のキメを整える</li><li>うるおいを与え、ハリ・弾力感をサポート</li><li>毛穴を目立たなくする</li><li>小じわを目立ちにくくする（※うるおいによる）</li></ul>",
         "button_label": "詳しく見る",
-        "button_link": "/ingredients/retinol"
+        "button_link": "shopify://blogs/ingredients/retinol"
       }
     },
     "product_grid_fluxor_RWyeiT": {
