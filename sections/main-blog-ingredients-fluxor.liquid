@@ -1,0 +1,211 @@
+{{ 'section-blog-ingredients-fluxor.css' | asset_url | stylesheet_tag }}
+
+{%- style -%}
+  #IngredientGlossary-{{ section.id }} {
+    padding-top: {{ section.settings.padding_top | times: 0.75 | round: 0 }}px;
+    padding-bottom: {{ section.settings.padding_bottom | times: 0.75 | round: 0 }}px;
+  }
+  @media screen and (min-width: 750px) {
+    #IngredientGlossary-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top }}px;
+      padding-bottom: {{ section.settings.padding_bottom }}px;
+    }
+  }
+{%- endstyle -%}
+
+{%- paginate blog.articles by section.settings.articles_per_page -%}
+
+<div
+  id="IngredientGlossary-{{ section.id }}"
+  class="ingredient-glossary color-{{ section.settings.color_scheme }} gradient"
+>
+  <div class="ingredient-glossary__inner page-width">
+
+    <div class="ingredient-glossary__header">
+      <h1 class="ingredient-glossary__title">
+        {{- section.settings.title | default: blog.title | escape -}}
+      </h1>
+      <p class="ingredient-glossary__count">{{ blog.articles_count }} Ingredients</p>
+      {%- if section.settings.description != blank -%}
+        <p class="ingredient-glossary__description">{{ section.settings.description | escape }}</p>
+      {%- endif -%}
+    </div>
+
+    {%- if blog.all_tags.size > 0 -%}
+      <nav class="ingredient-glossary__filters" aria-label="成分カテゴリーフィルター">
+        <a
+          href="{{ blog.url }}"
+          class="ingredient-filter-btn{% unless current_tags %} ingredient-filter-btn--active{% endunless %}"
+        >All</a>
+        {%- for tag in blog.all_tags -%}
+          <a
+            href="{{ blog.url }}/tagged/{{ tag | handle }}"
+            class="ingredient-filter-btn{% if current_tags contains tag %} ingredient-filter-btn--active{% endif %}"
+          >{{ tag }}</a>
+        {%- endfor -%}
+      </nav>
+    {%- endif -%}
+
+    <div class="ingredient-glossary__toolbar">
+      <p class="ingredient-glossary__showing">
+        {%- if current_tags -%}
+          {{ blog.articles.size }} results
+        {%- else -%}
+          Showing {{ blog.articles.size }} of {{ blog.articles_count }}
+        {%- endif -%}
+      </p>
+      <div class="ingredient-sort" role="group" aria-label="並び替え">
+        <button class="ingredient-sort__btn is-active" data-sort="a-z" aria-pressed="true">A → Z</button>
+        <button class="ingredient-sort__btn" data-sort="z-a" aria-pressed="false">Z → A</button>
+      </div>
+    </div>
+
+    <div class="ingredient-glossary__grid" id="IngredientGrid-{{ section.id }}">
+      {%- for article in blog.articles -%}
+        <a
+          class="ingredient-card"
+          href="{{ article.url }}"
+          data-title="{{ article.title | downcase | escape }}"
+        >
+          <div class="ingredient-card__media">
+            {%- if article.image != blank -%}
+              {{
+                article.image
+                | image_url: width: 600
+                | image_tag:
+                  loading: 'lazy',
+                  alt: article.title,
+                  class: 'ingredient-card__img',
+                  widths: '200, 300, 400, 600'
+              }}
+            {%- else -%}
+              <div class="ingredient-card__img-placeholder" aria-hidden="true">
+                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                  <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 4c1.93 0 3.5 1.57 3.5 3.5S13.93 13 12 13s-3.5-1.57-3.5-3.5S10.07 6 12 6zm0 14c-2.67 0-5.01-1.3-6.47-3.29C6.88 14.97 9.58 14 12 14s5.12.97 6.47 2.71C17.01 18.7 14.67 20 12 20z" fill="currentColor"/>
+                </svg>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <div class="ingredient-card__body">
+            {%- if article.tags.size > 0 -%}
+              <p class="ingredient-card__category">{{ article.tags | first }}</p>
+            {%- endif -%}
+            <h3 class="ingredient-card__name">{{ article.title | escape }}</h3>
+            {%- if article.excerpt != blank -%}
+              <p class="ingredient-card__excerpt">
+                {{- article.excerpt | strip_html | truncate: 90 -}}
+              </p>
+            {%- endif -%}
+          </div>
+        </a>
+      {%- else -%}
+        <p class="ingredient-glossary__empty">該当する成分がありません。</p>
+      {%- endfor -%}
+    </div>
+
+    {%- if paginate.pages > 1 -%}
+      {%- render 'pagination', paginate: paginate -%}
+    {%- endif -%}
+
+  </div>
+</div>
+
+{%- endpaginate -%}
+
+<script>
+  (function () {
+    const grid = document.getElementById('IngredientGrid-{{ section.id }}')
+    if (!grid) return
+
+    const sortBtns = grid.closest('.ingredient-glossary').querySelectorAll('.ingredient-sort__btn')
+
+    function sortCards(direction) {
+      const cards = Array.from(grid.querySelectorAll('.ingredient-card'))
+      cards.sort((a, b) => {
+        const ta = a.dataset.title || ''
+        const tb = b.dataset.title || ''
+        return direction === 'a-z'
+          ? ta.localeCompare(tb, 'en')
+          : tb.localeCompare(ta, 'en')
+      })
+      cards.forEach(card => grid.appendChild(card))
+    }
+
+    sortBtns.forEach(btn => {
+      btn.addEventListener('click', () => {
+        const sort = btn.dataset.sort
+        sortCards(sort)
+        sortBtns.forEach(b => {
+          b.classList.remove('is-active')
+          b.setAttribute('aria-pressed', 'false')
+        })
+        btn.classList.add('is-active')
+        btn.setAttribute('aria-pressed', 'true')
+      })
+    })
+  })()
+</script>
+
+{% schema %}
+{
+  "name": "成分事典 - Fluxor",
+  "tag": "section",
+  "class": "section",
+  "settings": [
+    {
+      "type": "header",
+      "content": "ヘッダー"
+    },
+    {
+      "type": "text",
+      "id": "title",
+      "label": "タイトル（空欄でブログ名を使用）"
+    },
+    {
+      "type": "textarea",
+      "id": "description",
+      "label": "説明文（任意）"
+    },
+    {
+      "type": "color_scheme",
+      "id": "color_scheme",
+      "label": "t:sections.all.colors.label",
+      "default": "scheme-1"
+    },
+    {
+      "type": "range",
+      "id": "articles_per_page",
+      "label": "1ページあたりの件数",
+      "min": 12,
+      "max": 48,
+      "step": 12,
+      "default": 24
+    },
+    {
+      "type": "header",
+      "content": "t:sections.all.padding.section_padding_heading"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_top",
+      "default": 36
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "min": 0,
+      "max": 100,
+      "step": 4,
+      "unit": "px",
+      "label": "t:sections.all.padding.padding_bottom",
+      "default": 72
+    }
+  ]
+}
+{% endschema %}

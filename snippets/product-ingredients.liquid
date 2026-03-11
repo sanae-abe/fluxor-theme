@@ -1,0 +1,64 @@
+{%- comment -%}
+  成分一覧スニペット
+  Parameters:
+    - product: 製品オブジェクト
+    - block: ブロックオブジェクト（shopify_attributes用）
+  メタフィールド: custom.ingredients（メタオブジェクト参照リスト）
+  メタオブジェクトフィールド: name, inci_name, description, feature, category
+{%- endcomment -%}
+
+{%- assign ingredients = product.metafields.custom.ingredients.value -%}
+
+{%- if ingredients and ingredients.size > 0 -%}
+  <div class="product-ingredients">
+    {%- for ingredient in ingredients -%}
+      <div class="product-ingredient">
+
+        {%- if ingredient.image != blank -%}
+          <div class="product-ingredient__image-wrapper">
+            {{-
+              ingredient.image
+              | image_url: width: 200
+              | image_tag: loading: 'lazy', alt: ingredient.name
+            -}}
+          </div>
+        {%- endif -%}
+
+        <div class="product-ingredient__body">
+          {%- if ingredient.category != blank -%}
+            <p class="product-ingredient__category">{{ ingredient.category }}</p>
+          {%- endif -%}
+
+          <h3 class="product-ingredient__name">{{ ingredient.name }}</h3>
+
+          {%- if ingredient.inci_name != blank -%}
+            <p class="product-ingredient__inci">{{ ingredient.inci_name }}</p>
+          {%- endif -%}
+
+          {%- if ingredient.description != blank -%}
+            <p class="product-ingredient__desc">{{ ingredient.description }}</p>
+          {%- endif -%}
+
+          {%- if ingredient.feature != blank -%}
+            <ul class="product-ingredient__features">
+              {%- assign feature_lines = ingredient.feature | newline_to_br | split: '<br />' -%}
+              {%- for feature_item in feature_lines -%}
+                {%- assign trimmed = feature_item | strip_html | strip -%}
+                {%- if trimmed != '' -%}
+                  <li>{{ trimmed }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          {%- endif -%}
+        </div>
+
+      </div>
+    {%- endfor -%}
+  </div>
+{%- else -%}
+  {%- if request.design_mode -%}
+    <p class="product-ingredients__empty">
+      製品にメタフィールド（custom.ingredients）が設定されていません。
+    </p>
+  {%- endif -%}
+{%- endif -%}

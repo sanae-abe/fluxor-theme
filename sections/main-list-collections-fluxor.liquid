@@ -18,6 +18,9 @@
   <div class="product-grid-fluxor">
     <div class="product-grid-fluxor__header">
       <h1 class="product-grid-fluxor__heading">{{ section.settings.title }}</h1>
+      {%- if section.settings.description != blank -%}
+        <div class="product-grid-fluxor__description rte">{{ section.settings.description }}</div>
+      {%- endif -%}
     </div>
 
     {%- liquid
@@ -73,6 +76,11 @@
       "id": "title",
       "label": "Heading",
       "default": "Collections"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description"
     },
     {
       "type": "select",

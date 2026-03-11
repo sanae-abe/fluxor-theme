@@ -37,6 +37,18 @@
   color: currentColor;
 }
 
+.product-grid-fluxor__description {
+  font-size: 0.9375rem;
+  line-height: 1.75;
+  color: rgba(var(--color-foreground), 0.65);
+  max-width: 42rem;
+  margin: 0.75rem 0 0;
+}
+
+.product-grid-fluxor__description p {
+  margin: 0;
+}
+
 .product-grid-fluxor__view-all {
   display: inline-flex;
   align-items: center;
