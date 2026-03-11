@@ -2,7 +2,12 @@
   display: grid;
   grid-template-columns: repeat(2, auto);
   grid-template-rows: repeat(2, auto);
-  padding-top: 1rem;
+}
+
+@media screen and (min-width: 750px) {
+  .facets-container {
+    padding-top: 1rem;
+  }
 }
 
 .active-facets-mobile {
