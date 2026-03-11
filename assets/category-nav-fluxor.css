@@ -185,12 +185,12 @@ category-nav-carousel {
 
 .category-nav-fluxor__btn--prev {
   left: -1.375rem;
-  transform: rotate(0deg);
+  transform: rotate(-180deg);
 }
 
 .category-nav-fluxor__btn--next {
   right: -1.375rem;
-  transform: rotate(-180deg);
+  transform: rotate(0deg);
 }
 
 /* デスクトップのみボタンを表示 */
