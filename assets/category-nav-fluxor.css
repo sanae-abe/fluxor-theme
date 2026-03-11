@@ -155,6 +155,7 @@ category-nav-carousel {
   padding: 0;
   transition: background-color 0.2s ease, opacity 0.2s ease;
   opacity: 0.9;
+  border: none;
 }
 
 .category-nav-fluxor__btn[aria-hidden="true"] {
