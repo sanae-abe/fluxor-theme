@@ -1,15 +1,7 @@
 {{ 'section-article-ingredient-fluxor.css' | asset_url | stylesheet_tag }}
 
-{% comment %} DEBUG: 実際のメタフィールドを確認したら下記を削除 {% endcomment %}
-<pre style="background:#111;color:#0f0;padding:1rem;font-size:11px;overflow:auto;position:fixed;top:0;right:0;z-index:9999;max-width:40vw;max-height:60vh;">
-[ingredient] inci_name: {{ article.metafields.ingredient.inci_name }}
-[ingredient] roles: {{ article.metafields.ingredient.roles.value | json }}
-[custom] inci_name: {{ article.metafields.custom.inci_name }}
-[custom] roles: {{ article.metafields.custom.roles.value | json }}
-</pre>
-
 {%- liquid
-  assign mf = article.metafields.ingredient
+  assign mf = article.metafields.custom
   assign inci_name     = mf.inci_name.value
   assign classification = mf.classification.value
   assign origin        = mf.origin.value
