@@ -22,8 +22,8 @@
 
 /* メタ情報バー（INCI名・分類・由来） */
 .ingredient-article__meta-bar {
-  background-color: rgb(var(--color-foreground) / 0.04);
-  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+  background-color: rgb(var(--color-foreground), 0.04);
+  border-bottom: 1px solid rgb(var(--color-foreground), 0.1);
   padding: 1rem 0 0;
 }
 
@@ -46,7 +46,7 @@
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: rgb(var(--color-foreground) / 0.5);
+  color: rgb(var(--color-foreground), 0.5);
   font-size: 0.6875rem;
 }
 
@@ -64,7 +64,7 @@
   font-size: 0.75rem;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground) / 0.5);
+  color: rgb(var(--color-foreground), 0.5);
   margin: 0 0 0.75rem;
 }
 
@@ -95,17 +95,17 @@
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground) / 0.5);
+  color: rgb(var(--color-foreground), 0.5);
   margin: 0 0 1rem;
   padding-bottom: 0.5rem;
-  border-bottom: 1px solid rgb(var(--color-foreground) / 0.1);
+  border-bottom: 1px solid rgb(var(--color-foreground), 0.1);
 }
 
 /* 本文 */
 .ingredient-article__content {
   font-size: 1rem;
   line-height: 1.8;
-  color: rgb(var(--color-foreground) / 0.85);
+  color: rgb(var(--color-foreground), 0.85);
 }
 
 .ingredient-article__content p {
@@ -124,8 +124,8 @@
 
 .ingredient-roles__item {
   padding: 0;
-  background-color: rgb(var(--color-foreground) / 0.03);
-  border-left: 2px solid rgb(var(--color-foreground) / 0.15);
+  background-color: rgb(var(--color-foreground), 0.03);
+  border-left: 2px solid rgb(var(--color-foreground), 0.15);
 }
 
 .ingredient-roles__title {
@@ -138,7 +138,7 @@
 .ingredient-roles__description {
   font-size: 1rem;
   line-height: 1.6;
-  color: rgb(var(--color-foreground) / 0.7);
+  color: rgb(var(--color-foreground), 0.7);
   margin: 0;
 }
 
@@ -157,7 +157,7 @@
   grid-template-columns: 1fr;
   gap: 0.25rem;
   padding: 0;
-  border: 1px solid rgb(var(--color-foreground) / 0.1);
+  border: 1px solid rgb(var(--color-foreground), 0.1);
   font-size: 1rem;
 }
 
@@ -168,7 +168,7 @@
 }
 
 .ingredient-tips__description {
-  color: rgb(var(--color-foreground) / 0.7);
+  color: rgb(var(--color-foreground), 0.7);
   line-height: 1.6;
   margin: 0;
 }
@@ -178,22 +178,22 @@
   width: 100%;
   border-collapse: collapse;
   font-size: 1rem;
-  border: 1px solid rgb(var(--color-foreground) / 0.15);
+  border: 1px solid rgb(var(--color-foreground), 0.15);
 }
 
 .ingredient-table th {
   text-align: left;
-  font-size: 0.6875rem;
+  font-size: 0.875rem;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground) / 0.5);
+  color: rgb(var(--color-foreground), 0.5);
   padding: 0.5rem 0.75rem;
-  border-bottom: 1px solid rgb(var(--color-foreground) / 0.15);
+  border-bottom: 1px solid rgb(var(--color-foreground), 0.15);
 }
 
 .ingredient-table td {
   padding: 0.75rem;
-  border-bottom: 1px solid rgb(var(--color-foreground) / 0.07);
+  border-bottom: 1px solid rgb(var(--color-foreground), 0.07);
   vertical-align: top;
   line-height: 1.6;
 }
@@ -227,7 +227,7 @@
 }
 
 .ingredient-cautions__reason {
-  color: rgb(var(--color-foreground) / 0.7);
+  color: rgb(var(--color-foreground), 0.7);
   line-height: 1.6;
   margin: 0;
 }
@@ -235,10 +235,10 @@
 /* サイドバー：妊娠注意 */
 .ingredient-sidebar-card {
   padding: 0;
-  border: 1px solid rgb(var(--color-foreground) / 0.15);
+  border: 1px solid rgb(var(--color-foreground), 0.15);
   font-size: 1rem;
   line-height: 1.7;
-  color: rgb(var(--color-foreground) / 0.75);
+  color: rgb(var(--color-foreground), 0.75);
 }
 
 .ingredient-sidebar-card__heading {
@@ -253,7 +253,7 @@
 /* 参考文献 */
 .ingredient-references {
   margin-top: 2.5rem;
-  border-top: 1px solid rgb(var(--color-foreground) / 0.1);
+  border-top: 1px solid rgb(var(--color-foreground), 0.1);
 }
 
 .ingredient-references__heading {
@@ -280,18 +280,18 @@
   gap: 0 0.75rem;
   font-size: 0.8125rem;
   line-height: 1.6;
-  color: rgb(var(--color-foreground) / 0.7);
+  color: rgb(var(--color-foreground), 0.7);
 }
 
 .ingredient-references__number {
   font-weight: 600;
-  color: rgb(var(--color-foreground) / 0.4);
+  color: rgb(var(--color-foreground), 0.4);
   font-size: 0.75rem;
   padding-top: 0.1em;
 }
 
 .ingredient-references__authors {
-  color: rgb(var(--color-foreground) / 0.85);
+  color: rgb(var(--color-foreground), 0.85);
 }
 
 .ingredient-references__article-title {
@@ -299,18 +299,18 @@
 }
 
 .ingredient-references__journal {
-  color: rgb(var(--color-foreground) / 0.55);
+  color: rgb(var(--color-foreground), 0.55);
 }
 
 /* 免責事項 */
 .ingredient-disclaimer {
   margin-top: 2.5rem;
   padding: 1rem;
-  background-color: rgb(var(--color-foreground) / 5%);
-  border-left: 2px solid rgb(var(--color-foreground) / 5%);
+  background-color: rgb(var(--color-foreground), 5%);
+  border-left: 2px solid rgb(var(--color-foreground), 5%);
   font-size: 0.8125rem;
   line-height: 1.7;
-  color: rgb(var(--color-foreground) / 5%);
+  color: rgb(var(--color-foreground), 5%);
 }
 
 /* Back link */
@@ -321,7 +321,7 @@
   font-size: 0.8125rem;
   letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgb(var(--color-foreground) / 0.5);
+  color: rgb(var(--color-foreground), 0.5);
   text-decoration: none;
   margin-bottom: 1.5rem;
   padding-top: 2rem;
