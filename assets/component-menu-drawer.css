@@ -213,9 +213,9 @@ details[open].menu-opening > .menu-drawer__submenu {
 }
 
 .menu-drawer__account account-icon > .svg-wrapper {
-  height: 2rem;
-  width: 2rem;
-  margin-right: 1rem;
+  height: 1.25rem;
+  width: 1.25rem;
+  margin-right: 0.625rem;
 }
 
 .menu-drawer__account shop-user-avatar {
