@@ -52,9 +52,14 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  gap: 1.5rem;
+  gap: 1rem;
 }
 
+@media screen and (min-width: 750px) {
+  .about-hero-fluxor__inner {
+    gap: 1.5rem;
+  }
+}
 
 /* ----------------------------------------------------------
    見出し階層
@@ -81,7 +86,6 @@
   letter-spacing: 0.04em;
   line-height: 1.7;
   margin: 0;
-  margin-top: 0.5rem;
   color: rgb(var(--color-foreground));
 }
 
