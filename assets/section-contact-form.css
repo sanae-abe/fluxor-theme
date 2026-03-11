@@ -25,6 +25,7 @@
   background-repeat: no-repeat;
   background-position: right 1rem center;
   background-size: 0.625rem auto;
+  line-height: 1.3;
 }
 
 @media screen and (min-width: 750px) {
