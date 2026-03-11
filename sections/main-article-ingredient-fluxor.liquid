@@ -19,7 +19,6 @@
       <p class="ingredient-article__eyebrow">{{ article.tags | first | escape }}</p>
     {%- endif -%}
     <h1 class="ingredient-article__title">{{ article.title | escape }}</h1>
-  </header>
 
   {%- if inci_name or classification or origin -%}
     <div class="ingredient-article__meta-bar">
@@ -45,6 +44,7 @@
       </div>
     </div>
   {%- endif -%}
+  </header>
 
   {%- if article.image -%}
     <div class="ingredient-article__hero">
@@ -73,7 +73,7 @@
 
         {%- if article.content != blank -%}
           <div class="ingredient-section">
-            <p class="ingredient-section__heading">この成分について</p>
+            <h2 class="ingredient-section__heading">この成分について</h2>
             <div class="ingredient-article__content">
               {{ article.content }}
             </div>
@@ -82,7 +82,7 @@
 
         {%- if roles != blank -%}
           <div class="ingredient-section">
-            <p class="ingredient-section__heading">スキンケアにおける役割</p>
+            <h2 class="ingredient-section__heading">スキンケアにおける役割</h2>
             <ul class="ingredient-roles">
               {%- for role in roles -%}
                 <li class="ingredient-roles__item">
@@ -100,7 +100,7 @@
 
         {%- if usage_tips != blank -%}
           <div class="ingredient-section">
-            <p class="ingredient-section__heading">使用上のポイント</p>
+            <h2 class="ingredient-section__heading">使用上のポイント</h2>
             <ul class="ingredient-tips">
               {%- for tip in usage_tips -%}
                 <li class="ingredient-tips__item">
@@ -118,7 +118,7 @@
 
         {%- if compatible != blank -%}
           <div class="ingredient-section">
-            <p class="ingredient-section__heading">相性の良い成分</p>
+            <h2 class="ingredient-section__heading">相性の良い成分</h2>
             <table class="ingredient-table">
               <thead>
                 <tr>
@@ -140,7 +140,7 @@
 
         {%- if cautions != blank -%}
           <div class="ingredient-section">
-            <p class="ingredient-section__heading">注意が必要な組み合わせ</p>
+            <h2 class="ingredient-section__heading">注意が必要な組み合わせ</h2>
             <ul class="ingredient-cautions">
               {%- for item in cautions -%}
                 <li class="ingredient-cautions__item">
