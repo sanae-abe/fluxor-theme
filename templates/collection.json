@@ -12,6 +12,8 @@
     "banner": {
       "type": "main-collection-banner",
       "settings": {
+        "custom_title": "すべての商品",
+        "custom_description": "<p>必要なものだけを、正確に。素肌と向き合うための、厳選されたラインナップ。</p>",
         "show_collection_description": true,
         "show_collection_image": false,
         "color_scheme": "scheme-1"
