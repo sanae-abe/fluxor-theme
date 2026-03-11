@@ -131,7 +131,7 @@
           件名 <span aria-hidden="true">*</span>
         </label>
       </div>
-      <div class="field" id="ContactForm-subject-other-wrapper" hidden>
+      <div class="field" id="ContactForm-subject-other-wrapper" style="display:none">
         <input
           type="text"
           id="ContactForm-subject-other"
@@ -189,11 +189,11 @@
   if (!select) return;
   select.addEventListener('change', function () {
     if (this.value === 'その他') {
-      otherWrapper.removeAttribute('hidden');
+      otherWrapper.style.display = 'block';
       otherInput.setAttribute('required', '');
       otherInput.setAttribute('aria-required', 'true');
     } else {
-      otherWrapper.setAttribute('hidden', '');
+      otherWrapper.style.display = 'none';
       otherInput.removeAttribute('required');
       otherInput.removeAttribute('aria-required');
       otherInput.value = '';
