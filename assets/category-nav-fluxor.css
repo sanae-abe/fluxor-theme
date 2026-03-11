@@ -131,3 +131,77 @@
     transition: none;
   }
 }
+
+/* ----------------------------------------------------------
+   Carousel wrapper & chevron buttons
+   ---------------------------------------------------------- */
+
+category-nav-carousel {
+  position: relative;
+}
+
+.category-nav-fluxor__btn {
+  display: none; /* モバイルでは非表示 */
+  position: absolute;
+  top: calc(50% - 1.5rem); /* ラベル分を除いた画像中央 */
+  z-index: 2;
+  width: 2.75rem;
+  height: 2.75rem;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  background: var(--color-base-background-1, #F6F4F0);
+  color: currentColor;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  transition: background-color 0.2s ease, opacity 0.2s ease;
+  opacity: 0.9;
+}
+
+.category-nav-fluxor__btn[aria-hidden="true"] {
+  pointer-events: none;
+  opacity: 0;
+}
+
+@media (any-hover: hover) {
+  .category-nav-fluxor__btn:hover {
+    background: var(--color-base-background-2, #EAE7E1);
+    opacity: 1;
+  }
+}
+
+.category-nav-fluxor__btn:focus-visible {
+  outline: 2px solid currentColor;
+  outline-offset: 2px;
+}
+
+/* caretアイコンを左右向きに回転 */
+.category-nav-fluxor__btn .icon-caret {
+  width: 1rem;
+  height: 1rem;
+  display: block;
+}
+
+.category-nav-fluxor__btn--prev {
+  left: -1.375rem;
+  transform: rotate(90deg);
+}
+
+.category-nav-fluxor__btn--next {
+  right: -1.375rem;
+  transform: rotate(-90deg);
+}
+
+/* デスクトップのみボタンを表示 */
+@media screen and (min-width: 990px) {
+  .category-nav-fluxor__btn {
+    display: flex;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .category-nav-fluxor__btn {
+    transition: none;
+  }
+}

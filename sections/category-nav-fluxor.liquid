@@ -7,29 +7,48 @@
     </div>
   {%- endif -%}
 
-  <div class="category-nav-fluxor__grid">
-    {%- for block in section.blocks -%}
-      <a
-        href="{{ block.settings.link | default: '#' }}"
-        class="category-nav-fluxor__item"
-        {{ block.shopify_attributes }}
-      >
-        <div class="category-nav-fluxor__image-wrapper">
-          {%- if block.settings.image != blank -%}
-            {{
-              block.settings.image
-              | image_url: width: 600
-              | image_tag: loading: 'lazy', alt: block.settings.label
-            }}
+  <category-nav-carousel class="category-nav-fluxor__carousel-wrapper">
+    <button
+      class="category-nav-fluxor__btn category-nav-fluxor__btn--prev"
+      aria-label="前へ"
+      aria-hidden="true"
+    >
+      {{- 'icon-caret.svg' | inline_asset_content -}}
+    </button>
+
+    <div class="category-nav-fluxor__grid">
+      {%- for block in section.blocks -%}
+        <a
+          href="{{ block.settings.link | default: '#' }}"
+          class="category-nav-fluxor__item"
+          {{ block.shopify_attributes }}
+        >
+          <div class="category-nav-fluxor__image-wrapper">
+            {%- if block.settings.image != blank -%}
+              {{
+                block.settings.image
+                | image_url: width: 600
+                | image_tag: loading: 'lazy', alt: block.settings.label
+              }}
+            {%- endif -%}
+          </div>
+          {%- if block.settings.label != blank -%}
+            <p class="category-nav-fluxor__label">{{ block.settings.label | escape }}</p>
           {%- endif -%}
-        </div>
-        {%- if block.settings.label != blank -%}
-          <p class="category-nav-fluxor__label">{{ block.settings.label | escape }}</p>
-        {%- endif -%}
-      </a>
-    {%- endfor -%}
-  </div>
+        </a>
+      {%- endfor -%}
+    </div>
+
+    <button
+      class="category-nav-fluxor__btn category-nav-fluxor__btn--next"
+      aria-label="次へ"
+    >
+      {{- 'icon-caret.svg' | inline_asset_content -}}
+    </button>
+  </category-nav-carousel>
 </div>
+
+<script src="{{ 'category-nav-fluxor.js' | asset_url }}" defer></script>
 
 {% schema %}
 {
