@@ -43,7 +43,7 @@
 
 .about-philosophy-fluxor__subtitle {
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  font-size: clamp(0.875rem, 1.3vw, 1rem);
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;

@@ -99,7 +99,7 @@
 
 .category-nav-fluxor__label {
   font-family: var(--font-body-family);
-  font-size: clamp(0.75rem, 1.3vw, 1rem);
+  font-size: clamp(0.875rem, 1.3vw, 1rem);
   letter-spacing: 0.02em;
   text-transform: uppercase;
   text-align: center;

@@ -164,7 +164,7 @@
 
   .fluxor-product-card__title {
     font-family: var(--font-body-family);
-    font-size: clamp(0.75rem, 1.3vw, 1rem);
+    font-size: clamp(0.875rem, 1.3vw, 1rem);
     letter-spacing: 0.04em;
     line-height: 1.4;
     margin: 0;
