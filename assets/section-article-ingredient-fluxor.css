@@ -262,6 +262,7 @@
   text-transform: uppercase;
   color: currentColor;
   margin: 0 0 1.5rem;
+  font-weight: 500;
 }
 
 .ingredient-references__list {
