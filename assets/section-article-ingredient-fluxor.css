@@ -8,7 +8,7 @@
 /* ヒーロー */
 .ingredient-article__hero {
   position: relative;
-  aspect-ratio: 16 / 6;
+  aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: var(--color-background);
 } 
