@@ -313,7 +313,7 @@
   border-left: 2px solid rgb(var(--color-foreground), 5%);
   font-size: 0.8125rem;
   line-height: 1.7;
-  color: rgb(var(--color-foreground), 5%);
+  color: rgb(var(--color-foreground));
 }
 
 /* Back link */
