@@ -14,6 +14,15 @@
   margin-bottom: 1.5rem;
 }
 
+.contact__subject-select .field__label {
+  top: 1.5rem;
+}
+
+.contact__subject-select select.field__input {
+  padding-top: 1.5rem;
+  cursor: pointer;
+}
+
 @media screen and (min-width: 750px) {
   .contact .field {
     margin-bottom: 2rem;

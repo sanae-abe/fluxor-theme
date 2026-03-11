@@ -16,16 +16,9 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
-    {%- liquid
-      if section.settings.heading_preset == 'custom'
-        assign heading_text = section.settings.heading_custom
-      else
-        assign heading_text = section.settings.heading_preset
-      endif
-    -%}
-    {%- if heading_text != blank -%}
+    {%- if section.settings.heading != blank -%}
       <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {{ heading_text }}
+        {{ section.settings.heading }}
       </h2>
     {%- else -%}
       <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
@@ -119,6 +112,35 @@
         >
         <label class="field__label" for="ContactForm-phone">{{ 'templates.contact.form.phone' | t }}</label>
       </div>
+      <div class="field contact__subject-select">
+        <select
+          id="ContactForm-subject"
+          class="field__input"
+          name="contact[件名]"
+          required
+          aria-required="true"
+        >
+          <option value="" disabled selected></option>
+          <option value="ご注文・配送について">ご注文・配送について</option>
+          <option value="製品について">製品について</option>
+          <option value="フィードバック">フィードバック</option>
+          <option value="不具合・返品について">不具合・返品について</option>
+          <option value="その他">その他</option>
+        </select>
+        <label class="field__label" for="ContactForm-subject">
+          件名 <span aria-hidden="true">*</span>
+        </label>
+      </div>
+      <div class="field" id="ContactForm-subject-other-wrapper" hidden>
+        <input
+          type="text"
+          id="ContactForm-subject-other"
+          class="field__input"
+          name="contact[件名詳細]"
+          placeholder="件名を入力してください"
+        >
+        <label class="field__label" for="ContactForm-subject-other">件名（詳細）</label>
+      </div>
       <div class="field">
         <textarea
           rows="10"
@@ -159,6 +181,27 @@
   </div>
 </div>
 
+<script>
+(function () {
+  var select = document.getElementById('ContactForm-subject');
+  var otherWrapper = document.getElementById('ContactForm-subject-other-wrapper');
+  var otherInput = document.getElementById('ContactForm-subject-other');
+  if (!select) return;
+  select.addEventListener('change', function () {
+    if (this.value === 'その他') {
+      otherWrapper.removeAttribute('hidden');
+      otherInput.setAttribute('required', '');
+      otherInput.setAttribute('aria-required', 'true');
+    } else {
+      otherWrapper.setAttribute('hidden', '');
+      otherInput.removeAttribute('required');
+      otherInput.removeAttribute('aria-required');
+      otherInput.value = '';
+    }
+  });
+})();
+</script>
+
 {% schema %}
 {
   "name": "t:sections.contact-form.name",
@@ -169,22 +212,10 @@
   },
   "settings": [
     {
-      "type": "select",
-      "id": "heading_preset",
-      "label": "見出しタイトル",
-      "options": [
-        { "value": "お問い合わせ", "label": "お問い合わせ" },
-        { "value": "Contact Us", "label": "Contact Us" },
-        { "value": "Get in Touch", "label": "Get in Touch" },
-        { "value": "custom", "label": "その他（カスタム入力）" }
-      ],
-      "default": "お問い合わせ"
-    },
-    {
-      "type": "text",
-      "id": "heading_custom",
-      "label": "カスタム見出し（「その他」選択時に入力）",
-      "default": ""
+      "type": "inline_richtext",
+      "id": "heading",
+      "default": "t:sections.contact-form.settings.title.default",
+      "label": "t:sections.contact-form.settings.title.label"
     },
     {
       "type": "select",
