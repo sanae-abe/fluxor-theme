@@ -12,7 +12,7 @@
     "main": {
       "type": "main-list-collections-fluxor",
       "settings": {
-        "title": "Collections",
+        "title": "Shop",
         "color_scheme": "scheme-1",
         "sort": "alphabetical",
         "show_count": false,
