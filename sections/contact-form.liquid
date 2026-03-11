@@ -16,9 +16,16 @@
 
 <div class="color-{{ section.settings.color_scheme }} gradient">
   <div class="contact page-width page-width--narrow section-{{ section.id }}-padding">
-    {%- if section.settings.heading != blank -%}
+    {%- liquid
+      if section.settings.heading_preset == 'custom'
+        assign heading_text = section.settings.heading_custom
+      else
+        assign heading_text = section.settings.heading_preset
+      endif
+    -%}
+    {%- if heading_text != blank -%}
       <h2 class="title title-wrapper--no-top-margin inline-richtext {{ section.settings.heading_size }}{% if settings.animations_reveal_on_scroll %} scroll-trigger animate--slide-in{% endif %}">
-        {{ section.settings.heading }}
+        {{ heading_text }}
       </h2>
     {%- else -%}
       <h2 class="visually-hidden">{{ 'templates.contact.form.title' | t }}</h2>
@@ -162,10 +169,22 @@
   },
   "settings": [
     {
-      "type": "inline_richtext",
-      "id": "heading",
-      "default": "t:sections.contact-form.settings.title.default",
-      "label": "t:sections.contact-form.settings.title.label"
+      "type": "select",
+      "id": "heading_preset",
+      "label": "見出しタイトル",
+      "options": [
+        { "value": "お問い合わせ", "label": "お問い合わせ" },
+        { "value": "Contact Us", "label": "Contact Us" },
+        { "value": "Get in Touch", "label": "Get in Touch" },
+        { "value": "custom", "label": "その他（カスタム入力）" }
+      ],
+      "default": "お問い合わせ"
+    },
+    {
+      "type": "text",
+      "id": "heading_custom",
+      "label": "カスタム見出し（「その他」選択時に入力）",
+      "default": ""
     },
     {
       "type": "select",
