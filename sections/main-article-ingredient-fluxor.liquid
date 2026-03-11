@@ -21,27 +21,6 @@
     <h1 class="ingredient-article__title">{{ article.title | escape }}</h1>
   </header>
 
-  {%- if article.image -%}
-    <div class="ingredient-article__hero">
-      <img
-        srcset="
-          {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
-          {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
-          {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
-          {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
-          {{ article.image | image_url }} {{ article.image.width }}w
-        "
-        sizes="100vw"
-        src="{{ article.image | image_url: width: 1500 }}"
-        loading="eager"
-        fetchpriority="high"
-        width="{{ article.image.width }}"
-        height="{{ article.image.height }}"
-        alt="{{ article.image.alt | default: article.title | escape }}"
-      >
-    </div>
-  {%- endif -%}
-
   {%- if inci_name or classification or origin -%}
     <div class="ingredient-article__meta-bar">
       <div class="ingredient-article__meta-inner">
@@ -64,6 +43,27 @@
           </div>
         {%- endif -%}
       </div>
+    </div>
+  {%- endif -%}
+
+  {%- if article.image -%}
+    <div class="ingredient-article__hero">
+      <img
+        srcset="
+          {% if article.image.width >= 750 %}{{ article.image | image_url: width: 750 }} 750w,{% endif %}
+          {% if article.image.width >= 1100 %}{{ article.image | image_url: width: 1100 }} 1100w,{% endif %}
+          {% if article.image.width >= 1500 %}{{ article.image | image_url: width: 1500 }} 1500w,{% endif %}
+          {% if article.image.width >= 2200 %}{{ article.image | image_url: width: 2200 }} 2200w,{% endif %}
+          {{ article.image | image_url }} {{ article.image.width }}w
+        "
+        sizes="100vw"
+        src="{{ article.image | image_url: width: 1500 }}"
+        loading="eager"
+        fetchpriority="high"
+        width="{{ article.image.width }}"
+        height="{{ article.image.height }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+      >
     </div>
   {%- endif -%}
 
