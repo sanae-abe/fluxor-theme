@@ -147,7 +147,7 @@ category-nav-carousel {
   z-index: 2;
   width: 2.75rem;
   height: 2.75rem;
-  border: 1px solid currentColor;
+  border: none;
   border-radius: 50%;
   background: var(--color-base-background-1, #F6F4F0);
   color: currentColor;
