@@ -12,8 +12,8 @@
     "main": {
       "type": "main-list-collections-fluxor",
       "settings": {
-        "title": "Shop",
-        "description": "<p>必要なものだけを、正確に。素肌と向き合うための、厳選されたラインナップ。</p>",
+        "title": "Collections",
+        "description": "",
         "color_scheme": "scheme-1",
         "sort": "alphabetical",
         "show_count": false,
