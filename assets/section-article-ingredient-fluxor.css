@@ -1,5 +1,6 @@
 .ingredient-article {
   padding-bottom: 6rem;
+  max-width: 60rem;
 }
 
 /* ヒーロー */
@@ -8,7 +9,7 @@
   aspect-ratio: 16 / 6;
   overflow: hidden;
   background-color: var(--color-background);
-}
+} 
 
 .ingredient-article__hero img {
   width: 100%;
@@ -72,20 +73,6 @@
   font-size: clamp(2rem, 5vw, 3.5rem);
   line-height: 1.1;
   margin: 0;
-}
-
-/* コンテンツ本体のレイアウト */
-.ingredient-article__body {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 3rem;
-}
-
-@media screen and (min-width: 990px) {
-  .ingredient-article__body {
-    grid-template-columns: 1fr 300px;
-    gap: 4rem;
-  }
 }
 
 .ingredient-article__main {
