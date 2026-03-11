@@ -797,7 +797,7 @@ a.active-facets__button.focused .active-facets__button-inner {
 
 .mobile-facets__header {
   border-bottom: 0.1rem solid rgba(var(--color-foreground), 0.08);
-  padding: 1rem 2.5rem;
+  padding: 0.625rem 1.5625rem;
   text-align: center;
   display: flex;
   position: sticky;
@@ -815,7 +815,7 @@ a.active-facets__button.focused .active-facets__button-inner {
 }
 
 .mobile-facets__heading {
-  font-size: calc(var(--font-heading-scale) * 1.4rem);
+  font-size: 0.875rem;
   margin: 0;
 }
 
@@ -876,17 +876,17 @@ a.active-facets__button.focused .active-facets__button-inner {
   align-items: center;
   justify-content: center;
   position: fixed;
-  top: 0.7rem;
-  right: 1rem;
-  width: 2.75rem;
-  height: 2.75rem;
+  right: 0.625rem;
+  right: 0.625rem;
+  width: 1.71875rem;
+  width: 1.71875rem;
   z-index: 101;
   opacity: 0;
   transition: opacity var(--duration-short) ease;
 }
 
 .mobile-facets__close .svg-wrapper {
-  width: 2.2rem;
+  width: 1.375rem;
 }
 
 details.menu-opening .mobile-facets__close {
@@ -954,7 +954,7 @@ details.menu-opening .mobile-facets__close .svg-wrapper {
 }
 
 .mobile-facets__summary {
-  padding: 1.3rem 2.5rem;
+  padding: 0.8125rem 1.5625rem;
 }
 
 .mobile-facets__summary .svg-wrapper {
