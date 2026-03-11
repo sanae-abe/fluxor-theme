@@ -1,5 +1,12 @@
 {{ 'section-article-ingredient-fluxor.css' | asset_url | stylesheet_tag }}
 
+{% comment %} DEBUG: 実際のメタフィールドを確認したら下記を削除 {% endcomment %}
+{% if request.design_mode or content_for_header contains 'shopify-web-pixels' %}
+  <pre style="background:#111;color:#0f0;padding:1rem;font-size:11px;overflow:auto;position:fixed;top:0;right:0;z-index:9999;max-width:40vw;max-height:60vh;">
+    all metafields: {{ article.metafields | json }}
+  </pre>
+{% endif %}
+
 {%- liquid
   assign mf = article.metafields.ingredient
   assign inci_name     = mf.inci_name.value
