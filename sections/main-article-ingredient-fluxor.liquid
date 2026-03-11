@@ -162,7 +162,7 @@
         {%- if pregnancy_note != blank -%}
           <div class="ingredient-sidebar-card">
             <p class="ingredient-sidebar-card__heading">妊娠中・授乳中の方へ</p>
-            <p>{{ pregnancy_note | escape }}</p>
+            <p class="ingredient-sidebar-card__content">{{ pregnancy_note | escape }}</p>
           </div>
         {%- endif -%}
       </aside>
