@@ -175,6 +175,17 @@
   margin: 1rem 0;
 }
 
+.image-with-text-fluxor__cta {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+@media screen and (min-width: 750px) {
+  .image-with-text-fluxor__cta {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
 
 /* ----------------------------------------------------------
    右側: 画像
