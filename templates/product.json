@@ -12,15 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "collapsible_tab_GQcqnU": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "折りたたみ可能な行",
-            "icon": "check_mark",
-            "content": "",
-            "page": ""
-          }
-        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -119,6 +110,16 @@
             "page": ""
           }
         },
+        "collapsible_tab_zD6ihM": {
+          "type": "collapsible_tab",
+          "name": "適合肌タイプ",
+          "settings": {
+            "heading": "適合肌タイプ",
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom.skin_type | metafield_tag: field: 'skin_type2' }}",
+            "page": ""
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -127,7 +128,6 @@
         }
       },
       "block_order": [
-        "collapsible_tab_GQcqnU",
         "vendor",
         "title",
         "judge_me_reviews_preview_badge_CxbAYH",
@@ -142,6 +142,7 @@
         "collapsible-row-2",
         "collapsible_tab_zUxLRQ",
         "collapsible_tab_9EJWEk",
+        "collapsible_tab_zD6ihM",
         "share"
       ],
       "settings": {
