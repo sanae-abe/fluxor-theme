@@ -12,6 +12,15 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "collapsible_tab_3pAqYq": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "折りたたみ可能な行",
+            "icon": "check_mark",
+            "content": "",
+            "page": ""
+          }
+        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -62,10 +71,11 @@
         },
         "collapsible-row-0": {
           "type": "collapsible_tab",
+          "name": "ご使用方法",
           "settings": {
             "heading": "ご使用方法",
             "icon": "check_mark",
-            "content": "<p>{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}</p>",
+            "content": "{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}",
             "page": ""
           }
         },
@@ -81,10 +91,21 @@
         },
         "collapsible_tab_zUxLRQ": {
           "type": "collapsible_tab",
+          "name": "効能・効果",
           "settings": {
             "heading": "効能・効果",
             "icon": "check_mark",
             "content": "{{ product.metafields.custom.product_benefits | metafield_tag: field: 'description' }}",
+            "page": ""
+          }
+        },
+        "collapsible_tab_9EJWEk": {
+          "type": "collapsible_tab",
+          "name": "全成分",
+          "settings": {
+            "heading": "全成分",
+            "icon": "check_mark",
+            "content": "<p>{{ product.metafields.custom.full_ingredients.value.all_ingredients | metafield_tag }}</p>",
             "page": ""
           }
         },
@@ -96,6 +117,7 @@
         }
       },
       "block_order": [
+        "collapsible_tab_3pAqYq",
         "vendor",
         "title",
         "judge_me_reviews_preview_badge_CxbAYH",
@@ -108,6 +130,7 @@
         "collapsible-row-0",
         "collapsible-row-2",
         "collapsible_tab_zUxLRQ",
+        "collapsible_tab_9EJWEk",
         "share"
       ],
       "settings": {
