@@ -62,7 +62,6 @@
         },
         "collapsible-row-0": {
           "type": "collapsible_tab",
-          "source": "{{ product.metafields.custom[\"how-to-use\"].value }}",
           "settings": {
             "heading": "ご使用方法",
             "icon": "check_mark",
