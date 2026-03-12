@@ -71,6 +71,7 @@
         },
         "collapsible_tab_3pAqYq": {
           "type": "collapsible_tab",
+          "name": "キー成分",
           "settings": {
             "heading": "キー成分",
             "icon": "check_mark",
