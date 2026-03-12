@@ -82,10 +82,9 @@
         },
         "collapsible_tab_zUxLRQ": {
           "type": "collapsible_tab",
-          "repeater": "{{ product.metafields.custom.product_benefits.value }}",
           "settings": {
-            "heading": "効果・効能",
-            "content": "<p>{{ block.repeater.category.value }}</p>"
+            "heading": "効能・効果",
+            "content": "{{ product.metafields.custom.product_benefits | metafield_tag: field: 'description' }}"
           }
         },
         "share": {
