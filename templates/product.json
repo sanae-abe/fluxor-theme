@@ -56,16 +56,6 @@
           "type": "description",
           "settings": {}
         },
-        "collapsible-row-3": {
-          "type": "collapsible_tab",
-          "repeater": "{{ product.metafields.shopify[\"active-ingredient\"].value }}",
-          "settings": {
-            "heading": "有効成分",
-            "icon": "check_mark",
-            "content": "<p>{{ block.repeater.label.value }}</p>",
-            "page": ""
-          }
-        },
         "collapsible-row-0": {
           "type": "collapsible_tab",
           "source": "{{ product.metafields.custom[\"how-to-use\"].value }}",
@@ -81,15 +71,9 @@
           "source": "{{ product.metafields.custom.warnings.value }}",
           "settings": {
             "heading": "ご注意",
-            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}"
-          }
-        },
-        "collapsible-row-1": {
-          "type": "collapsible_tab",
-          "source": "{{ product.metafields.custom[\"all-ingredients\"].value }}",
-          "settings": {
-            "heading": "成分",
-            "content": "{{ product.metafields.custom[\"all-ingredients\"].value.ingredients | metafield_tag }}"
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}",
+            "page": ""
           }
         },
         "share": {
@@ -108,10 +92,8 @@
         "quantity_selector",
         "buy_buttons",
         "description",
-        "collapsible-row-3",
         "collapsible-row-0",
         "collapsible-row-2",
-        "collapsible-row-1",
         "share"
       ],
       "settings": {
@@ -201,11 +183,32 @@
         "padding_top": 36,
         "padding_bottom": 28
       }
+    },
+    "1773286878995b32b1": {
+      "type": "apps",
+      "blocks": {
+        "judge_me_reviews_review_widget_FxkdLd": {
+          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {
+            "review_data": "sample_data",
+            "max_width": 1200,
+            "show_shop_reviews": false,
+            "empty_state": "empty_widget"
+          }
+        }
+      },
+      "block_order": [
+        "judge_me_reviews_review_widget_FxkdLd"
+      ],
+      "settings": {
+        "include_margins": true
+      }
     }
   },
   "order": [
     "main",
     "multicolumn_BP7Q6D",
-    "related-products"
+    "related-products",
+    "1773286878995b32b1"
   ]
 }
