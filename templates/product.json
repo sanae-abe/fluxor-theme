@@ -65,13 +65,13 @@
           "settings": {
             "heading": "ご使用方法",
             "icon": "check_mark",
-            "content": "{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}",
+            "content": "<p>{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}</p>",
             "page": ""
           }
         },
         "collapsible-row-2": {
           "type": "collapsible_tab",
-          "source": "{{ product.metafields.custom.warnings.value }}",
+          "name": "ご注意",
           "settings": {
             "heading": "ご注意",
             "icon": "check_mark",
@@ -83,7 +83,9 @@
           "type": "collapsible_tab",
           "settings": {
             "heading": "効能・効果",
-            "content": "{{ product.metafields.custom.product_benefits | metafield_tag: field: 'description' }}"
+            "icon": "check_mark",
+            "content": "{{ product.metafields.custom.product_benefits | metafield_tag: field: 'description' }}",
+            "page": ""
           }
         },
         "share": {
