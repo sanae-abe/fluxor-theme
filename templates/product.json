@@ -80,6 +80,14 @@
             "page": ""
           }
         },
+        "collapsible_tab_zUxLRQ": {
+          "type": "collapsible_tab",
+          "repeater": "{{ product.metafields.custom.product_benefits.value }}",
+          "settings": {
+            "heading": "効果・効能",
+            "content": "<p>{{ block.repeater.category.value }}</p>"
+          }
+        },
         "share": {
           "type": "share",
           "settings": {
@@ -99,6 +107,7 @@
         "description",
         "collapsible-row-0",
         "collapsible-row-2",
+        "collapsible_tab_zUxLRQ",
         "share"
       ],
       "settings": {
