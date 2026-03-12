@@ -12,6 +12,15 @@
     "main": {
       "type": "main-product",
       "blocks": {
+        "collapsible_tab_GQcqnU": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "折りたたみ可能な行",
+            "icon": "check_mark",
+            "content": "",
+            "page": ""
+          }
+        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -65,7 +74,7 @@
           "settings": {
             "heading": "キー成分",
             "icon": "check_mark",
-            "content": "",
+            "content": "{{ product.metafields.custom.key_ingredient | metafield_tag: field: 'name' }}",
             "page": ""
           }
         },
@@ -117,6 +126,7 @@
         }
       },
       "block_order": [
+        "collapsible_tab_GQcqnU",
         "vendor",
         "title",
         "judge_me_reviews_preview_badge_CxbAYH",
