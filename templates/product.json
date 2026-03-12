@@ -12,15 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "collapsible_tab_3pAqYq": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "折りたたみ可能な行",
-            "icon": "check_mark",
-            "content": "",
-            "page": ""
-          }
-        },
         "vendor": {
           "type": "text",
           "settings": {
@@ -68,6 +59,15 @@
         "description": {
           "type": "description",
           "settings": {}
+        },
+        "collapsible_tab_3pAqYq": {
+          "type": "collapsible_tab",
+          "settings": {
+            "heading": "キー成分",
+            "icon": "check_mark",
+            "content": "",
+            "page": ""
+          }
         },
         "collapsible-row-0": {
           "type": "collapsible_tab",
@@ -117,7 +117,6 @@
         }
       },
       "block_order": [
-        "collapsible_tab_3pAqYq",
         "vendor",
         "title",
         "judge_me_reviews_preview_badge_CxbAYH",
@@ -127,6 +126,7 @@
         "quantity_selector",
         "buy_buttons",
         "description",
+        "collapsible_tab_3pAqYq",
         "collapsible-row-0",
         "collapsible-row-2",
         "collapsible_tab_zUxLRQ",
