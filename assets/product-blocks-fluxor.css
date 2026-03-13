@@ -1,4 +1,34 @@
 /* ===========================
+   商品ページ ヘッダーグループ
+   （brand / title / caption / rating）
+   =========================== */
+
+/* タイトルフォントサイズ (Figma: 32px) */
+.product__title h1 {
+  font-size: 2rem;
+  line-height: 1.3;
+}
+
+/* vendor → title の余白を詰める */
+.product__info-container .product__vendor + .product__title {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+}
+
+/* title → caption の余白 */
+.product__info-container .product__title + .product__text {
+  margin-top: 0.75rem;
+  margin-bottom: 0;
+}
+
+/* 価格エリアの前に区切り線 */
+.product__info-container .product-price-wrapper {
+  margin-top: 1.5rem;
+  padding-top: 1.25rem;
+  border-top: 1px solid rgb(var(--color-foreground), 0.08);
+}
+
+/* ===========================
    製品の特徴リスト（✓ チェックリスト）
    =========================== */
 
