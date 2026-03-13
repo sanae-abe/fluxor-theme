@@ -225,41 +225,64 @@
 }
 
 /* ===========================
-   数量セレクター + カートボタン
+   数量 + カートボタン 横一列レイアウト
    =========================== */
 
-.product-form__buttons {
+.fluxor-qty-buy-row {
   display: flex;
   gap: 1rem;
   align-items: flex-start;
-  max-width: none;
 }
 
-/* 数量セレクター */
-.product-form__quantity .quantity {
+/* 数量ラベル「数量」を非表示 */
+.fluxor-qty-buy-row .quantity__label {
+  display: none;
+}
+
+/* 数量コンテナ */
+.fluxor-qty-buy-row .product-form__input.product-form__quantity {
+  flex-shrink: 0;
+  padding: 0;
+  margin: 0;
+}
+
+/* 数量セレクター本体 */
+.fluxor-qty-buy-row .quantity {
   width: 9rem;
   min-height: 3rem;
   border-radius: 0;
 }
 
-/* Dawn の box-shadow ボーダーをリセットして線ボーダーで上書き */
-.product-form__quantity .quantity::after {
+/* Dawn の box-shadow ボーダーをリセットして線ボーダーを適用 */
+.fluxor-qty-buy-row .quantity::after {
   box-shadow: none;
   border: 1px solid rgba(35, 24, 21, 0.2);
   border-radius: 0;
 }
 
-.product-form__quantity .quantity__button,
-.product-form__quantity .quantity__input {
+.fluxor-qty-buy-row .quantity__button,
+.fluxor-qty-buy-row .quantity__input {
   border-radius: 0;
 }
 
+/* カートボタン側（product-form）を横幅いっぱいに伸ばす */
+.fluxor-qty-buy-row .product-form {
+  flex: 1;
+  min-width: 0;
+}
+
+.fluxor-qty-buy-row .product-form__buttons {
+  max-width: none;
+}
+
 /* カートに追加ボタン */
-.product-form__submit {
-  min-height: 3rem;
+.fluxor-qty-buy-row .product-form__submit {
   height: 3rem;
+  min-height: 3rem;
   margin-bottom: 0;
   font-size: 1rem;
   border-radius: 0;
-  flex: 1;
+  background-color: #1a1714;
+  color: #ffffff;
+  border-color: #1a1714;
 }
