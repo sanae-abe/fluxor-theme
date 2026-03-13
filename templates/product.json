@@ -52,6 +52,10 @@
             "custom_spec_2": ""
           }
         },
+        "quantity_selector_QGbdJ3": {
+          "type": "quantity_selector",
+          "settings": {}
+        },
         "buy_buttons": {
           "type": "buy_buttons",
           "settings": {
@@ -69,6 +73,7 @@
         "product_highlights",
         "ingredient_card_fluxor",
         "product_specs",
+        "quantity_selector_QGbdJ3",
         "buy_buttons"
       ],
       "settings": {
