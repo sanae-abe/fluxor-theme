@@ -1,0 +1,265 @@
+/* ===========================
+   製品の特徴リスト（✓ チェックリスト）
+   =========================== */
+
+.product-highlights {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.product-highlights__item {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+  font-size: 0.875rem;
+  line-height: 1.5;
+}
+
+.product-highlights__check {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: #2A3B35;
+}
+
+.product-highlights__check svg {
+  width: 100%;
+  height: 100%;
+}
+
+.product-highlights__text {
+  color: rgb(var(--color-foreground), 0.85);
+}
+
+/* ===========================
+   製品仕様バッジ（チップ）
+   =========================== */
+
+.product-specs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  align-items: center;
+}
+
+.product-specs__chip {
+  display: inline-flex;
+  align-items: center;
+  background-color: #ffffff;
+  padding: 0.375rem;
+  border: 1px solid rgba(35, 24, 21, 0.2);
+  font-size: 0.75rem;
+  white-space: nowrap;
+}
+
+.product-specs__label {
+  color: rgb(var(--color-foreground), 0.5);
+  font-size: 0.75rem;
+  margin-right: 0.125rem;
+}
+
+/* ===========================
+   安心バッジ（トラストバッジ）
+   =========================== */
+
+.product-trust {
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+  padding-top: 0.5rem;
+  border-top: 1px solid rgb(var(--color-foreground), 0.1);
+}
+
+.product-trust__item {
+  display: flex;
+  align-items: center;
+  gap: 0.625rem;
+  font-size: 0.875rem;
+  color: rgb(var(--color-foreground), 0.7);
+}
+
+.product-trust__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 1.125rem;
+  height: 1.125rem;
+  color: rgb(var(--color-foreground), 0.45);
+}
+
+.product-trust__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+/* ===========================
+   ブランド名（vendor）
+   =========================== */
+
+.product__vendor {
+  font-size: 0.875rem;
+  line-height: 1;
+  opacity: 0.5;
+  margin: 0;
+}
+
+/* ===========================
+   注目成分カード
+   =========================== */
+
+.ingredient-card {
+  background-color: #EAE7E1;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.625rem;
+}
+
+.ingredient-card__header {
+  display: flex;
+  align-items: center;
+  gap: 0.25rem;
+}
+
+.ingredient-card__icon {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  width: 1rem;
+  height: 1rem;
+  color: rgb(var(--color-foreground), 0.55);
+}
+
+.ingredient-card__icon svg {
+  width: 100%;
+  height: 100%;
+}
+
+.ingredient-card__title {
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: rgb(var(--color-foreground));
+}
+
+.ingredient-card__list {
+  list-style: disc;
+  padding-left: 1.3125rem;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  font-size: 0.875rem;
+  color: rgb(var(--color-foreground), 0.85);
+  line-height: 1.5;
+}
+
+/* ===========================
+   製品詳細情報
+   =========================== */
+
+.product-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 2rem;
+  font-size: 0.875rem;
+  color: rgb(var(--color-foreground));
+  margin: 0;
+}
+
+.product-meta__item {
+  display: flex;
+}
+
+.product-meta__item dt {
+  font-weight: 500;
+}
+
+.product-meta__item dt::after {
+  content: '：';
+}
+
+.product-meta__item dd {
+  margin: 0;
+}
+
+/* ===========================
+   価格エリア（価格＋割引バッジ）
+   =========================== */
+
+.product-price-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.product-discount-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.25rem 0.5rem;
+  background-color: #2A3B35;
+  color: #ffffff;
+  font-size: 0.75rem;
+  font-weight: 500;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+/* ===========================
+   Judge.me スター評価
+   =========================== */
+
+.jdgm-star {
+  color: #B8892A;
+}
+
+.jdgm-star--empty {
+  color: rgb(var(--color-foreground), 0.15);
+}
+
+/* ===========================
+   数量セレクター + カートボタン
+   =========================== */
+
+.product-form__buttons {
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  max-width: none;
+}
+
+/* 数量セレクター */
+.product-form__quantity .quantity {
+  width: 9rem;
+  min-height: 3rem;
+  border-radius: 0;
+}
+
+/* Dawn の box-shadow ボーダーをリセットして線ボーダーで上書き */
+.product-form__quantity .quantity::after {
+  box-shadow: none;
+  border: 1px solid rgba(35, 24, 21, 0.2);
+  border-radius: 0;
+}
+
+.product-form__quantity .quantity__button,
+.product-form__quantity .quantity__input {
+  border-radius: 0;
+}
+
+/* カートに追加ボタン */
+.product-form__submit {
+  min-height: 3rem;
+  height: 3rem;
+  margin-bottom: 0;
+  font-size: 1rem;
+  border-radius: 0;
+  flex: 1;
+}
