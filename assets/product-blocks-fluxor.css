@@ -21,12 +21,6 @@
   margin-bottom: 0;
 }
 
-/* 価格エリアの前に区切り線 */
-.product__info-container .product-price-wrapper {
-  margin-top: 1.5rem;
-  padding-top: 1.25rem;
-  border-top: 1px solid rgb(var(--color-foreground), 0.08);
-}
 
 /* ===========================
    製品の特徴リスト（✓ チェックリスト）
