@@ -243,6 +243,9 @@ a.product__text {
 .product__title {
   word-break: break-word;
   margin-bottom: 1.25rem;
+  color: currentColor;
+  font-weight: 500;
+  line-height: 1.3;
 }
 
 .product__title > * {
