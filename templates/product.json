@@ -12,15 +12,6 @@
     "main": {
       "type": "main-product",
       "blocks": {
-        "collapsible_tab_GQcqnU": {
-          "type": "collapsible_tab",
-          "settings": {
-            "heading": "折りたたみ可能な行",
-            "icon": "check_mark",
-            "content": "",
-            "page": ""
-          }
-        },
         "vendor": {
           "type": "vendor",
           "settings": {}
@@ -56,7 +47,17 @@
         },
         "product_specs": {
           "type": "product_specs",
-          "settings": {}
+          "settings": {
+            "custom_spec_1": "",
+            "custom_spec_2": ""
+          }
+        },
+        "buy_buttons_JkbNeC": {
+          "type": "buy_buttons",
+          "settings": {
+            "show_dynamic_checkout": true,
+            "show_gift_card_recipient": true
+          }
         },
         "variant_picker": {
           "type": "variant_picker",
@@ -69,16 +70,13 @@
           "type": "quantity_selector",
           "settings": {}
         },
-        "buy_buttons": {
-          "type": "buy_buttons",
-          "settings": {
-            "show_dynamic_checkout": true,
-            "show_gift_card_recipient": true
-          }
-        },
         "product_meta_fluxor": {
           "type": "product_meta",
-          "settings": {}
+          "settings": {
+            "skin_type": "",
+            "ph_level": "",
+            "texture": ""
+          }
         },
         "trust_badges": {
           "type": "trust_badges",
@@ -87,70 +85,9 @@
             "badge_2": "30日間返品・交換保証",
             "badge_3": "100%正規品保証"
           }
-        },
-        "description": {
-          "type": "description",
-          "settings": {}
-        },
-        "collapsible_tab_3pAqYq": {
-          "type": "collapsible_tab",
-          "name": "注目成分",
-          "settings": {
-            "heading": "注目成分",
-            "icon": "check_mark",
-            "content": "{{ product.metafields.custom.key_ingredient | metafield_tag: field: 'name' }}",
-            "page": ""
-          }
-        },
-        "collapsible-row-0": {
-          "type": "collapsible_tab",
-          "name": "ご使用方法",
-          "settings": {
-            "heading": "ご使用方法",
-            "icon": "check_mark",
-            "content": "{{ product.metafields.custom[\"how-to-use\"].value.how_to_use | metafield_tag }}",
-            "page": ""
-          }
-        },
-        "collapsible-row-2": {
-          "type": "collapsible_tab",
-          "name": "ご注意",
-          "settings": {
-            "heading": "ご注意",
-            "icon": "check_mark",
-            "content": "{{ product.metafields.custom.warnings.value.warnings | metafield_tag }}",
-            "page": ""
-          }
-        },
-        "collapsible_tab_zUxLRQ": {
-          "type": "collapsible_tab",
-          "name": "効能・効果",
-          "settings": {
-            "heading": "効能・効果",
-            "icon": "check_mark",
-            "content": "{{ product.metafields.custom.product_benefits | metafield_tag: field: 'description' }}",
-            "page": ""
-          }
-        },
-        "collapsible_tab_9EJWEk": {
-          "type": "collapsible_tab",
-          "name": "全成分",
-          "settings": {
-            "heading": "全成分",
-            "icon": "check_mark",
-            "content": "<p>{{ product.metafields.custom.full_ingredients.value.all_ingredients | metafield_tag }}</p>",
-            "page": ""
-          }
-        },
-        "share": {
-          "type": "share",
-          "settings": {
-            "share_label": "Share"
-          }
         }
       },
       "block_order": [
-        "collapsible_tab_GQcqnU",
         "vendor",
         "title",
         "judge_me_reviews_preview_badge_CxbAYH",
@@ -159,18 +96,11 @@
         "product_highlights",
         "ingredient_card_fluxor",
         "product_specs",
+        "buy_buttons_JkbNeC",
         "variant_picker",
         "quantity_selector",
-        "buy_buttons",
         "product_meta_fluxor",
-        "trust_badges",
-        "description",
-        "collapsible_tab_3pAqYq",
-        "collapsible-row-0",
-        "collapsible-row-2",
-        "collapsible_tab_zUxLRQ",
-        "collapsible_tab_9EJWEk",
-        "share"
+        "trust_badges"
       ],
       "settings": {
         "enable_sticky_info": true,
