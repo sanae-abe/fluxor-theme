@@ -10,7 +10,7 @@
   aspect-ratio: 16 / 9;
   overflow: hidden;
   background-color: var(--color-background);
-} 
+}
 
 .ingredient-article__hero img {
   width: 100%;
