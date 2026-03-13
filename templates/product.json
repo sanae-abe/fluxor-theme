@@ -61,8 +61,8 @@
         "variant_picker": {
           "type": "variant_picker",
           "settings": {
-            "custom_spec_1": "",
-            "custom_spec_2": ""
+            "picker_type": "button",
+            "swatch_shape": "circle"
           }
         },
         "quantity_selector": {
@@ -178,7 +178,7 @@
         "media_size": "large",
         "constrain_to_viewport": true,
         "media_fit": "contain",
-        "gallery_layout": "stacked",
+        "gallery_layout": "thumbnail",
         "mobile_thumbnails": "hide",
         "media_position": "left",
         "image_zoom": "lightbox",

@@ -240,9 +240,8 @@
 }
 
 /* 数量コンテナ */
-/* Dawn の .product-form__input { flex: 0 0 100% } を上書き */
 .fluxor-qty-buy-row .product-form__input.product-form__quantity {
-  flex: 0 0 9rem;
+  flex-shrink: 0;
   padding: 0;
   margin: 0;
 }
@@ -282,6 +281,42 @@
 .fluxor-buy-col .product-form__buttons {
   max-width: none;
   width: 100%;
+}
+
+/* ===========================
+   サムネイルギャラリー（Figmaデザイン準拠）
+   上：メイン画像、下：横並びサムネイル4枚
+   =========================== */
+
+/* サムネイルリストを横並び・均等幅グリッドに統一 */
+@media screen and (min-width: 750px) {
+  .product--thumbnail .thumbnail-list,
+  .product--thumbnail_slider .thumbnail-list {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    padding: 0;
+  }
+
+  /* 各サムネイルアイテムのアスペクト比を1:1に固定 */
+  .product--thumbnail .thumbnail-list__item,
+  .product--thumbnail_slider .thumbnail-list__item {
+    aspect-ratio: 1 / 1;
+  }
+}
+
+/* 選択中サムネイル: box-shadow→2px solid border に変更（Figmaデザイン） */
+.thumbnail[aria-current="true"],
+.thumbnail[aria-current] {
+  box-shadow: none !important;
+  outline: 2px solid #1a1714;
+  outline-offset: -1px;
+}
+
+/* hover時のopacity軽減 */
+.product--thumbnail .thumbnail:hover,
+.product--thumbnail_slider .thumbnail:hover {
+  opacity: 0.8;
 }
 
 /* カートに追加ボタン */
