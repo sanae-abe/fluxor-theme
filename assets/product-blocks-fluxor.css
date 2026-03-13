@@ -265,18 +265,28 @@
   border-radius: 0;
 }
 
-/* カートボタン側（product-form）を横幅いっぱいに伸ばす */
-.fluxor-qty-buy-row .product-form {
+/* buy-buttons の外側ラッパー div を伸ばす */
+.fluxor-qty-buy-row > div:not(.product-form__input) {
   flex: 1;
   min-width: 0;
 }
 
+/* product-form カスタム要素と form を全幅に */
+.fluxor-qty-buy-row product-form,
+.fluxor-qty-buy-row .product-form,
+.fluxor-qty-buy-row form {
+  width: 100%;
+  display: block;
+}
+
 .fluxor-qty-buy-row .product-form__buttons {
   max-width: none;
+  width: 100%;
 }
 
 /* カートに追加ボタン */
 .fluxor-qty-buy-row .product-form__submit {
+  width: 100%;
   height: 3rem;
   min-height: 3rem;
   margin-bottom: 0;
