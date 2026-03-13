@@ -174,3 +174,14 @@ button.shopify-payment-button__button--unbranded {
     transition: none;
   }
 }
+
+/* ----------------------------------------------------------
+   価格税込みラベル
+   ---------------------------------------------------------- */
+
+.price-tax-label {
+  font-size: 0.75em;
+  font-weight: 400;
+  margin-left: 0.25rem;
+  opacity: 0.7;
+}
