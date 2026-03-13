@@ -20,16 +20,16 @@
           "type": "title",
           "settings": {}
         },
-        "judge_me_reviews_preview_badge_CxbAYH": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
         "caption": {
           "type": "text",
           "settings": {
             "text": "{{ product.metafields.descriptors.subtitle.value }}",
             "text_style": "subtitle"
           }
+        },
+        "judge_me_reviews_preview_badge_CxbAYH": {
+          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
+          "settings": {}
         },
         "price": {
           "type": "price",
@@ -39,10 +39,14 @@
           "type": "product_highlights",
           "settings": {}
         },
-        "ingredient_card_fluxor": {
-          "type": "ingredient_card",
+        "collapsible_tab_gktrM7": {
+          "type": "collapsible_tab",
+          "disabled": true,
           "settings": {
-            "heading": "注目の成分"
+            "heading": "全成分",
+            "icon": "check_mark",
+            "content": "<p>{{ product.metafields.custom.full_ingredients.value.all_ingredients | metafield_tag }}</p><p></p>",
+            "page": ""
           }
         },
         "product_specs": {
@@ -50,6 +54,12 @@
           "settings": {
             "custom_spec_1": "",
             "custom_spec_2": ""
+          }
+        },
+        "ingredient_card_fluxor": {
+          "type": "ingredient_card",
+          "settings": {
+            "heading": "注目の成分"
           }
         },
         "quantity_selector_HxkCJ9": {
@@ -71,8 +81,9 @@
         "judge_me_reviews_preview_badge_CxbAYH",
         "price",
         "product_highlights",
-        "ingredient_card_fluxor",
+        "collapsible_tab_gktrM7",
         "product_specs",
+        "ingredient_card_fluxor",
         "quantity_selector_HxkCJ9",
         "buy_buttons"
       ],
