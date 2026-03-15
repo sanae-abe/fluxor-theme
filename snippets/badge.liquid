@@ -1,0 +1,31 @@
+{% comment %}
+  Badge コンポーネント
+  Parameters:
+    label   {String}  バッジのテキスト（必須）
+    variant {String}  default | secondary | ghost | accent | premium（省略時: default）
+{% endcomment %}
+
+{%- liquid
+  assign badge_variant = variant | default: 'default'
+  case badge_variant
+    when 'secondary'
+      assign badge_bg   = 'bg-transparent border border-stone-900'
+      assign badge_text = 'text-stone-900'
+    when 'ghost'
+      assign badge_bg   = 'bg-transparent border border-white'
+      assign badge_text = 'text-white'
+    when 'accent'
+      assign badge_bg   = 'bg-[#0b4f4a]'
+      assign badge_text = 'text-white'
+    when 'premium'
+      assign badge_bg   = 'bg-[#bb4d00]'
+      assign badge_text = 'text-white'
+    else
+      assign badge_bg   = 'bg-stone-900'
+      assign badge_text = 'text-white'
+  endcase
+-%}
+
+<span class="inline-flex items-center justify-center px-2 py-[2px] rounded-full {{ badge_bg }} {{ badge_text }} text-[12px] font-medium leading-[18px] whitespace-nowrap">
+  {{- label -}}
+</span>

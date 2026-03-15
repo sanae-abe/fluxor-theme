@@ -1,0 +1,61 @@
+<section class="max-w-xl mx-auto px-5 py-16">
+  <h1 class="text-3xl font-light mb-10">お問い合わせ</h1>
+
+  {%- form 'contact', id: 'ContactForm' -%}
+    {%- if form.posted_successfully? -%}
+      <p class="text-sm text-teal-900 mb-8 p-4 border border-teal-900/30 bg-teal-50">
+        お問い合わせを受け付けました。ありがとうございます。
+      </p>
+    {%- endif -%}
+
+    <div class="space-y-6">
+      <div>
+        <label for="ContactForm-name" class="block text-xs tracking-widest uppercase text-stone-500 mb-2">お名前</label>
+        <input
+          type="text"
+          id="ContactForm-name"
+          name="contact[name]"
+          value="{{ form.name }}"
+          class="w-full border-b border-stone-200 bg-transparent py-2.5 text-sm focus:outline-none focus:border-stone-900 transition-colors"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="ContactForm-email" class="block text-xs tracking-widest uppercase text-stone-500 mb-2">メールアドレス</label>
+        <input
+          type="email"
+          id="ContactForm-email"
+          name="contact[email]"
+          value="{{ form.email }}"
+          class="w-full border-b border-stone-200 bg-transparent py-2.5 text-sm focus:outline-none focus:border-stone-900 transition-colors"
+          required
+        >
+      </div>
+
+      <div>
+        <label for="ContactForm-message" class="block text-xs tracking-widest uppercase text-stone-500 mb-2">メッセージ</label>
+        <textarea
+          id="ContactForm-message"
+          name="contact[body]"
+          rows="6"
+          class="w-full border-b border-stone-200 bg-transparent py-2.5 text-sm focus:outline-none focus:border-stone-900 transition-colors resize-none"
+          required
+        >{{ form.body }}</textarea>
+      </div>
+
+      {%- render 'button',
+        label: '送信する',
+        type: 'submit',
+        size: 'lg',
+        full_width: true
+      -%}
+    </div>
+  {%- endform -%}
+</section>
+
+{% schema %}
+{
+  "name": "Contact"
+}
+{% endschema %}

@@ -1,0 +1,29 @@
+{
+  "sections": {
+    "hero": {
+      "type": "hero",
+      "settings": {}
+    },
+    "category-nav": {
+      "type": "category-nav",
+      "blocks": {
+        "item-1": { "type": "item", "settings": { "label": "クレンジング・洗顔" } },
+        "item-2": { "type": "item", "settings": { "label": "美容液・オイル" } },
+        "item-3": { "type": "item", "settings": { "label": "化粧水" } },
+        "item-4": { "type": "item", "settings": { "label": "乳液・クリーム" } },
+        "item-5": { "type": "item", "settings": { "label": "アイ・リップケア" } }
+      },
+      "block_order": ["item-1", "item-2", "item-3", "item-4", "item-5"],
+      "settings": {}
+    },
+    "about": {
+      "type": "about",
+      "settings": {}
+    },
+    "featured-products": {
+      "type": "featured-products",
+      "settings": {}
+    }
+  },
+  "order": ["hero", "category-nav", "about", "featured-products"]
+}

@@ -1,0 +1,24 @@
+{%- if section.settings.text != blank -%}
+  <div class="bg-stone-950 text-stone-50 h-9 flex items-center justify-center px-10">
+    <p class="text-sm tracking-wide text-center">{{ section.settings.text }}</p>
+  </div>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "Announcement Bar",
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "テキスト",
+      "default": "全品送料無料キャンペーン実施中 | 15,000円以上のお買い上げで10%オフ"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Announcement Bar"
+    }
+  ]
+}
+{% endschema %}

@@ -1,0 +1,216 @@
+<section class="max-w-screen-xl mx-auto px-5 py-12">
+  <div class="grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-20">
+
+    <!-- 左カラム: 画像ギャラリー -->
+    <div
+      x-data="{ active: 0 }"
+      class="space-y-4"
+    >
+      <!-- メイン画像 -->
+      <div class="aspect-square bg-stone-200 overflow-hidden">
+        {%- for media in product.media -%}
+          <img
+            src="{{ media | image_url: width: 1200 }}"
+            alt="{{ media.alt | escape | default: product.title }}"
+            class="w-full h-full object-contain transition-opacity duration-300"
+            x-show="active === {{ forloop.index0 }}"
+            loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
+            width="1200"
+            height="1200"
+          >
+        {%- endfor -%}
+      </div>
+
+      <!-- サムネイル（2枚以上の場合） -->
+      {%- if product.media.size > 1 -%}
+        <div class="grid grid-cols-4 gap-3">
+          {%- for media in product.media -%}
+            <button
+              type="button"
+              @click="active = {{ forloop.index0 }}"
+              class="aspect-square bg-stone-200 overflow-hidden transition-all duration-200"
+              :class="active === {{ forloop.index0 }} ? 'outline outline-2 outline-stone-900 outline-offset-[-1px]' : 'opacity-50 hover:opacity-100'"
+              aria-label="{{ media.alt | default: product.title | escape }}"
+            >
+              <img
+                src="{{ media | image_url: width: 300 }}"
+                alt=""
+                class="w-full h-full object-cover"
+                loading="lazy"
+                width="300"
+                height="300"
+              >
+            </button>
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    <!-- 右カラム: 商品情報 -->
+    <div class="flex flex-col gap-6">
+
+      <!-- ヘッダーグループ: ブランド / タイトル / キャプション / レーティング -->
+      <div class="space-y-3">
+        {%- if product.vendor != blank -%}
+          <p class="text-sm text-stone-500 tracking-wide uppercase">{{ product.vendor }}</p>
+        {%- endif -%}
+
+        <h1 class="text-3xl font-light leading-tight">{{ product.title }}</h1>
+
+        {%- if product.metafields.descriptors.subtitle.value != blank -%}
+          <p class="text-sm text-stone-500 leading-relaxed">{{ product.metafields.descriptors.subtitle.value }}</p>
+        {%- endif -%}
+
+        <!-- Judge.me レーティング -->
+        <div class="jdgm-widget jdgm-preview-badge" data-id="{{ product.id }}"></div>
+      </div>
+
+      <!-- 価格 -->
+      <div class="flex items-center gap-3">
+        {%- render 'price', product: product -%}
+
+        {%- assign variant = product.selected_or_first_available_variant -%}
+        {%- if variant.compare_at_price > variant.price -%}
+          {%- assign discount_pct = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
+          <span class="inline-flex items-center px-2 py-0.5 bg-amber-700 text-stone-50 text-xs font-medium">
+            {{ discount_pct }}% OFF
+          </span>
+        {%- endif -%}
+      </div>
+
+      <!-- 商品説明（短文） -->
+      {%- if product.description != blank -%}
+        <div class="text-sm text-stone-600 leading-relaxed">
+          {{ product.description | truncatewords: 60 }}
+        </div>
+      {%- endif -%}
+
+      <!-- カートフォーム -->
+      {%- form 'product', product, id: 'product-form', novalidate: 'novalidate', x-data: "productForm()" -%}
+        <input type="hidden" name="id" :value="selectedVariantId">
+
+        <!-- バリアント選択 -->
+        {%- unless product.has_only_default_variant -%}
+          <div class="space-y-4">
+            {%- for option in product.options_with_values -%}
+              <fieldset>
+                <legend class="text-xs tracking-widest uppercase text-stone-500 mb-2">{{ option.name }}</legend>
+                <div class="flex flex-wrap gap-2">
+                  {%- for value in option.values -%}
+                    <label class="cursor-pointer">
+                      <input
+                        type="radio"
+                        name="{{ option.name }}"
+                        value="{{ value }}"
+                        class="sr-only peer"
+                        @change="updateVariant($event)"
+                      >
+                      <span class="inline-block border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 peer-checked:border-stone-900 peer-checked:bg-stone-900 peer-checked:text-stone-50 transition-colors">
+                        {{ value }}
+                      </span>
+                    </label>
+                  {%- endfor -%}
+                </div>
+              </fieldset>
+            {%- endfor -%}
+          </div>
+        {%- endunless -%}
+
+        <!-- 数量 + カートボタン -->
+        <div class="flex gap-3 items-stretch">
+          <!-- 数量 -->
+          <div class="flex border border-stone-200 h-12">
+            <button
+              type="button"
+              @click="qty > 1 && qty--"
+              class="w-10 flex items-center justify-center text-lg text-stone-400 hover:text-stone-900 transition-colors"
+              aria-label="数量を減らす"
+            >−</button>
+            <input
+              type="number"
+              name="quantity"
+              x-model="qty"
+              min="1"
+              class="w-12 text-center text-sm border-x border-stone-200 bg-transparent focus:outline-none"
+              aria-label="数量"
+            >
+            <button
+              type="button"
+              @click="qty++"
+              class="w-10 flex items-center justify-center text-lg text-stone-400 hover:text-stone-900 transition-colors"
+              aria-label="数量を増やす"
+            >+</button>
+          </div>
+
+          <!-- カートに追加 -->
+          <button
+            type="submit"
+            name="add"
+            class="flex-1 h-12 bg-stone-900 text-stone-50 text-sm tracking-wide hover:bg-stone-800 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+            :disabled="!available"
+            x-text="available ? 'カートに追加' : '売り切れ'"
+          ></button>
+        </div>
+      {%- endform -%}
+
+      <!-- トラストバッジ -->
+      <ul class="border-t border-stone-200 pt-5 space-y-2.5 text-sm text-stone-500 list-none m-0 p-0">
+        <li class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M8.25 18.75a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h6m-9 0H3.375a1.125 1.125 0 01-1.125-1.125V14.25m17.25 4.5a1.5 1.5 0 01-3 0m3 0a1.5 1.5 0 00-3 0m3 0h1.125c.621 0 1.129-.504 1.09-1.124a17.902 17.902 0 00-3.213-9.193 2.056 2.056 0 00-1.58-.86H14.25M16.5 18.75h-2.25m0-11.177v-.958c0-.568-.422-1.048-.987-1.106a48.554 48.554 0 00-10.026 0 1.106 1.106 0 00-.987 1.106v7.635m12-6.677v6.677m0 4.5v-4.5m0 0h-12" /></svg>
+          <span>¥5,500（税込）以上で送料無料</span>
+        </li>
+        <li class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75m-3-7.036A11.959 11.959 0 013.598 6 11.99 11.99 0 003 9.749c0 5.592 3.824 10.29 9 11.623 5.176-1.332 9-6.03 9-11.622 0-1.31-.21-2.571-.598-3.751h-.152c-3.196 0-6.1-1.248-8.25-3.285z" /></svg>
+          <span>天然由来成分・無添加（パラベンフリー）</span>
+        </li>
+        <li class="flex items-center gap-2.5">
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 flex-shrink-0 text-stone-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5"><path stroke-linecap="round" stroke-linejoin="round" d="M16.023 9.348h4.992v-.001M2.985 19.644v-4.992m0 0h4.992m-4.993 0l3.181 3.183a8.25 8.25 0 0013.803-3.7M4.031 9.865a8.25 8.25 0 0113.803-3.7l3.181 3.182m0-4.991v4.99" /></svg>
+          <span>定期便は15% OFF・いつでも解約可能</span>
+        </li>
+      </ul>
+
+    </div>
+  </div>
+
+  <!-- 詳細説明 -->
+  {%- if product.description != blank -%}
+    <div class="mt-20 max-w-2xl mx-auto">
+      <div class="prose prose-sm text-stone-600 leading-relaxed">
+        {{ product.description }}
+      </div>
+    </div>
+  {%- endif -%}
+</section>
+
+<script>
+  function productForm() {
+    return {
+      qty: 1,
+      available: {{ product.selected_or_first_available_variant.available | json }},
+      selectedVariantId: {{ product.selected_or_first_available_variant.id | json }},
+      variants: {{ product.variants | json }},
+
+      updateVariant(event) {
+        const selected = {}
+        this.$el.querySelectorAll('input[type="radio"]:checked').forEach(input => {
+          selected[input.name] = input.value
+        })
+        const match = this.variants.find(v =>
+          v.options.every((opt, i) => opt === selected[Object.keys(selected)[i]])
+        )
+        if (match) {
+          this.selectedVariantId = match.id
+          this.available = match.available
+        }
+      }
+    }
+  }
+</script>
+
+{% schema %}
+{
+  "name": "Product",
+  "tag": "section",
+  "settings": []
+}
+{% endschema %}

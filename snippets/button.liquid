@@ -1,0 +1,127 @@
+{% comment %}
+  Button component — Figma node 3083:6379
+
+  Accepts:
+  - label:      {String}  ボタンテキスト（必須）
+  - url:        {String}  URLを指定すると<a>、省略すると<button>
+  - variant:    {String}  'solid' | 'outline'  （デフォルト: 'solid'）
+  - color:      {String}  'dark' | 'light' | 'teal' | 'amber' | 'muted'  （デフォルト: 'dark'）
+  - size:       {String}  'xl' | 'lg' | 'md' | 'sm' | 'xs'  （デフォルト: 'md'）
+  - icon_left:  {Boolean} 左矢印を表示  （デフォルト: false）
+  - icon_right: {Boolean} 右矢印を表示  （デフォルト: false）
+  - type:       {String}  button の type 属性  （デフォルト: 'button'）
+  - disabled:   {Boolean} 非活性状態
+  - full_width: {Boolean} 横幅100%
+  - attr:       {String}  追加 HTML 属性（Alpine.js @click など）
+  - class:      {String}  追加 CSS クラス
+
+  Usage:
+  {% render 'button', label: 'Shop Now', url: collection.url, icon_right: true %}
+  {% render 'button', label: 'カートに追加', size: 'lg' %}
+  {% render 'button', label: '詳しく見る', variant: 'outline', color: 'teal', icon_left: true, icon_right: true %}
+{% endcomment %}
+
+{%- liquid
+  assign btn_variant  = variant  | default: 'solid'
+  assign btn_color    = color    | default: 'dark'
+  assign btn_size     = size     | default: 'md'
+
+  # ── サイズ ──────────────────────────────────────────────────────
+  case btn_size
+  when 'xl'
+    assign size_cls = 'h-14 px-8 text-base gap-3'
+    assign icon_cls = 'w-5 h-5'
+  when 'lg'
+    assign size_cls = 'h-12 px-7 text-sm gap-2.5'
+    assign icon_cls = 'w-4 h-4'
+  when 'sm'
+    assign size_cls = 'h-9 px-4 text-xs gap-1.5'
+    assign icon_cls = 'w-3.5 h-3.5'
+  when 'xs'
+    assign size_cls = 'h-7 px-3 text-xs gap-1'
+    assign icon_cls = 'w-3 h-3'
+  else
+    assign size_cls = 'h-11 px-6 text-sm gap-2'
+    assign icon_cls = 'w-4 h-4'
+  endcase
+
+  # ── カラー × バリアント ─────────────────────────────────────────
+  case btn_color
+  when 'light'
+    if btn_variant == 'outline'
+      assign color_cls = 'bg-transparent text-stone-50 border-stone-50 hover:bg-stone-50 hover:text-stone-900'
+    else
+      assign color_cls = 'bg-stone-50 text-stone-900 border-stone-50 hover:bg-stone-200 hover:border-stone-200'
+    endif
+  when 'teal'
+    if btn_variant == 'outline'
+      assign color_cls = 'bg-transparent text-teal-900 border-teal-900 hover:bg-teal-900 hover:text-stone-50'
+    else
+      assign color_cls = 'bg-teal-900 text-stone-50 border-teal-900 hover:bg-teal-800 hover:border-teal-800'
+    endif
+  when 'amber'
+    if btn_variant == 'outline'
+      assign color_cls = 'bg-transparent text-amber-700 border-amber-700 hover:bg-amber-700 hover:text-stone-50'
+    else
+      assign color_cls = 'bg-amber-700 text-stone-50 border-amber-700 hover:bg-amber-800 hover:border-amber-800'
+    endif
+  when 'muted'
+    if btn_variant == 'outline'
+      assign color_cls = 'bg-transparent text-stone-400 border-stone-400 hover:bg-stone-400 hover:text-stone-50'
+    else
+      assign color_cls = 'bg-stone-400 text-stone-50 border-stone-400 hover:bg-stone-500 hover:border-stone-500'
+    endif
+  else
+    # dark（デフォルト）
+    if btn_variant == 'outline'
+      assign color_cls = 'bg-transparent text-stone-900 border-stone-900 hover:bg-stone-900 hover:text-stone-50'
+    else
+      assign color_cls = 'bg-stone-900 text-stone-50 border-stone-900 hover:bg-stone-800 hover:border-stone-800'
+    endif
+  endcase
+
+  assign width_cls   = ''
+  if full_width
+    assign width_cls = 'w-full'
+  endif
+
+  assign disabled_cls = ''
+  if disabled
+    assign disabled_cls = 'opacity-40 cursor-not-allowed pointer-events-none'
+  endif
+
+  assign base_cls = 'inline-flex items-center justify-center border font-sans tracking-wide transition-colors duration-200 select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+-%}
+
+{%- capture btn_inner -%}
+  {%- if icon_left -%}
+    <svg xmlns="http://www.w3.org/2000/svg" class="{{ icon_cls }} flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
+    </svg>
+  {%- endif -%}
+
+  <span>{{ label }}</span>
+
+  {%- if icon_right -%}
+    <svg xmlns="http://www.w3.org/2000/svg" class="{{ icon_cls }} flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+    </svg>
+  {%- endif -%}
+{%- endcapture -%}
+
+{%- assign all_cls = base_cls | append: ' ' | append: size_cls | append: ' ' | append: color_cls | append: ' ' | append: width_cls | append: ' ' | append: disabled_cls | append: ' ' | append: class -%}
+
+{%- if url and disabled == false -%}
+  <a href="{{ url }}" class="{{ all_cls }}" {{ attr }}>
+    {{ btn_inner }}
+  </a>
+{%- else -%}
+  <button
+    type="{{ type | default: 'button' }}"
+    class="{{ all_cls }}"
+    {% if disabled %}disabled aria-disabled="true"{% endif %}
+    {{ attr }}
+  >
+    {{ btn_inner }}
+  </button>
+{%- endif -%}

@@ -1,0 +1,233 @@
+{%- assign has_bg_image = false -%}
+{%- if section.settings.background_image != blank -%}
+  {%- assign has_bg_image = true -%}
+{%- endif -%}
+
+{%- assign show_particles = true -%}
+{%- if section.settings.enable_particles == false -%}
+  {%- assign show_particles = false -%}
+{%- endif -%}
+
+{%- if section.settings.color_scheme == 'bg-stone-950' or has_bg_image -%}
+  {%- assign text_color = 'text-stone-50' -%}
+  {%- assign border_color = 'border-stone-50' -%}
+  {%- assign btn_hover = 'hover:bg-stone-50 hover:text-stone-900' -%}
+{%- else -%}
+  {%- assign text_color = 'text-stone-900' -%}
+  {%- assign border_color = 'border-stone-900' -%}
+  {%- assign btn_hover = 'hover:bg-stone-900 hover:text-stone-50' -%}
+{%- endif -%}
+
+
+<section class="relative {{ section.settings.color_scheme }} px-10 py-[60px] overflow-hidden">
+
+  <!-- 背景画像 -->
+  {%- if has_bg_image -%}
+    <div class="absolute inset-0">
+      <img
+        src="{{ section.settings.background_image | image_url: width: 2400 }}"
+        alt=""
+        class="w-full h-full object-cover"
+        loading="lazy"
+        width="2400"
+        height="1600"
+        aria-hidden="true"
+      >
+      <div class="absolute inset-0 bg-black/50"></div>
+    </div>
+  {%- endif -%}
+
+  <!-- パーティクル（分子ネットワーク） -->
+  {%- if show_particles -%}
+    {%- if has_bg_image or section.settings.color_scheme == 'bg-stone-950' -%}
+      {%- assign particle_color = '#f0ede8' -%}
+    {%- else -%}
+      {%- assign particle_color = '#2a3b35' -%}
+    {%- endif -%}
+
+    <div
+      id="about-ptcl-{{ section.id }}"
+      class="absolute inset-0 pointer-events-none"
+      aria-hidden="true"
+    ></div>
+
+    <script>
+      (function () {
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        var containerId = 'about-ptcl-{{ section.id }}';
+        var color = '{{ particle_color }}';
+
+        function initParticles() {
+          tsParticles.load(containerId, {
+            fullScreen: { enable: false },
+            fpsLimit: 60,
+            particles: {
+              color: { value: color },
+              links: {
+                color: color,
+                distance: 140,
+                enable: true,
+                opacity: 0.3,
+                width: 1
+              },
+              move: {
+                enable: true,
+                outModes: { default: 'bounce' },
+                random: true,
+                speed: 0.5,
+                straight: false
+              },
+              number: {
+                density: { enable: true, area: 900 },
+                value: 55
+              },
+              opacity: { value: { min: 0.3, max: 0.7 } },
+              shape: { type: 'circle' },
+              size: { value: { min: 2, max: 4 } }
+            },
+            detectRetina: true
+          });
+        }
+
+        function load() {
+          if (window.tsParticles) {
+            initParticles();
+          } else {
+            var s = document.createElement('script');
+            s.src = 'https://cdn.jsdelivr.net/npm/tsparticles-slim@2.12.0/tsparticles.slim.bundle.min.js';
+            s.onload = initParticles;
+            document.head.appendChild(s);
+          }
+        }
+
+        if (document.readyState === 'loading') {
+          document.addEventListener('DOMContentLoaded', load);
+        } else {
+          load();
+        }
+      })();
+    </script>
+  {%- endif -%}
+
+  <div class="relative max-w-screen-xl mx-auto flex items-center justify-center">
+    <div class="max-w-[720px] w-full flex flex-col items-center gap-11 text-center">
+
+      <!-- Heading + Tagline -->
+      <div class="flex flex-col gap-6 w-full">
+        {%- if section.settings.heading != blank -%}
+          <h2 class="text-[42px] font-semibold leading-[1.5] {{ text_color }}">
+            {{ section.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if section.settings.tagline != blank -%}
+          <p class="text-[30px] font-semibold leading-[1.5] {{ text_color }}">
+            {{ section.settings.tagline }}
+          </p>
+        {%- endif -%}
+      </div>
+
+      <!-- Paragraph -->
+      {%- if section.settings.paragraph != blank -%}
+        <div class="text-xl leading-[1.75] {{ text_color }} opacity-80 [&_p]:mb-0">
+          {{ section.settings.paragraph }}
+        </div>
+      {%- endif -%}
+
+      <!-- Button -->
+      {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
+        <a
+          href="{{ section.settings.button_url }}"
+          class="inline-flex items-center gap-3 border-2 {{ border_color }} {{ text_color }} px-[18px] py-3 min-h-[60px] min-w-[180px] justify-center {{ btn_hover }} transition-colors duration-200"
+        >
+          <span class="text-lg font-medium">{{ section.settings.button_label }}</span>
+          {%- if section.settings.button_icon != blank -%}
+            <img
+              src="{{ section.settings.button_icon | image_url: width: 48 }}"
+              alt=""
+              class="w-5 h-5 flex-shrink-0"
+              aria-hidden="true"
+            >
+          {%- else -%}
+            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
+            </svg>
+          {%- endif -%}
+        </a>
+      {%- endif -%}
+
+    </div>
+  </div>
+
+</section>
+
+{% schema %}
+{
+  "name": "About",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "カラースキーム",
+      "options": [
+        { "value": "bg-white", "label": "ホワイト（デフォルト）" },
+        { "value": "bg-stone-50", "label": "ライト" },
+        { "value": "bg-stone-100", "label": "ライトグレー" },
+        { "value": "bg-stone-200", "label": "グレー" },
+        { "value": "bg-stone-950", "label": "ダーク" }
+      ],
+      "default": "bg-white"
+    },
+    {
+      "type": "image_picker",
+      "id": "background_image",
+      "label": "背景画像"
+    },
+    {
+      "type": "checkbox",
+      "id": "enable_particles",
+      "label": "パーティクルアニメーションを表示",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し（Heading）",
+      "default": "Curated with Conviction"
+    },
+    {
+      "type": "text",
+      "id": "tagline",
+      "label": "タグライン",
+      "default": "信頼できるものだけを。"
+    },
+    {
+      "type": "richtext",
+      "id": "paragraph",
+      "label": "本文（Paragraph）",
+      "default": "<p>成分表を読み込み、ブランドの背景を調べ、実際に自分たちで使って確かめる。その積み重ねから生まれた、Fluxorのスキンケアセレクション。</p>"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "ボタンのリンク先"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンテキスト",
+      "default": "Fluxorについて"
+    },
+    {
+      "type": "image_picker",
+      "id": "button_icon",
+      "label": "ボタンアイコン画像（省略時は矢印）"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About"
+    }
+  ]
+}
+{% endschema %}

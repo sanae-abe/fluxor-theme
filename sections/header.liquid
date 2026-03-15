@@ -1,0 +1,123 @@
+<header
+  class="sticky top-0 z-50 bg-stone-50 border-b border-stone-900/10 px-10"
+  x-data
+>
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between h-20">
+
+    <!-- ロゴ -->
+    <a href="{{ routes.root_url }}" class="flex-shrink-0" aria-label="{{ shop.name | escape }}">
+      {%- if settings.logo -%}
+        <img
+          src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
+          alt="{{ shop.name | escape }}"
+          width="{{ settings.logo_width }}"
+          loading="eager"
+        >
+      {%- else -%}
+        <svg xmlns="http://www.w3.org/2000/svg" width="130" height="24" viewBox="0 0 130 24" fill="none">
+          <g clip-path="url(#clip0_3084_7063)">
+            <path d="M115.108 13.7259V10.2617H120.447C121.539 10.2617 122.379 9.98931 122.969 9.44466C123.581 8.87816 123.886 8.10475 123.886 7.12432C123.886 6.23101 123.581 5.49028 122.969 4.90201C122.379 4.29197 121.539 3.98695 120.447 3.98695H115.108V0.359375H120.84C122.325 0.359375 123.624 0.653503 124.738 1.24176C125.874 1.80822 126.747 2.59257 127.358 3.59478C127.991 4.59699 128.308 5.75173 128.308 7.05896C128.308 8.40975 127.991 9.58626 127.358 10.5885C126.747 11.5689 125.874 12.3423 124.738 12.9088C123.602 13.4535 122.281 13.7259 120.774 13.7259H115.108ZM111.832 23.334V0.359375H116.287V23.334H111.832ZM124.41 23.334L116.811 13.399L120.905 12.1245L129.815 23.334H124.41Z" fill="#1C1917"/>
+            <path d="M95.3856 23.6936C93.7038 23.6936 92.1315 23.3886 90.6687 22.7786C89.2275 22.1685 87.9608 21.3297 86.8691 20.2621C85.7989 19.1728 84.958 17.9091 84.3468 16.4711C83.7352 15.0114 83.4297 13.4536 83.4297 11.7978C83.4297 10.1419 83.7245 8.60594 84.3141 7.18979C84.9252 5.75183 85.7661 4.49907 86.8363 3.43149C87.928 2.34213 89.1947 1.50332 90.636 0.915064C92.0772 0.305021 93.6383 0 95.3201 0C97.0234 0 98.5957 0.305021 100.037 0.915064C101.478 1.50332 102.734 2.34213 103.804 3.43149C104.896 4.49907 105.747 5.75183 106.359 7.18979C106.97 8.62774 107.276 10.1746 107.276 11.8305C107.276 13.4863 106.97 15.0332 106.359 16.4711C105.747 17.9091 104.896 19.1728 103.804 20.2621C102.734 21.3297 101.478 22.1685 100.037 22.7786C98.6172 23.3886 97.0669 23.6936 95.3856 23.6936ZM95.3201 19.5431C96.8048 19.5431 98.0931 19.2163 99.1853 18.5627C100.277 17.9091 101.129 17.0049 101.74 15.8502C102.373 14.6955 102.69 13.3447 102.69 11.7978C102.69 10.6648 102.515 9.62997 102.166 8.69311C101.816 7.75624 101.314 6.95014 100.659 6.27472C100.004 5.57755 99.2288 5.04374 98.3336 4.67336C97.438 4.30298 96.4338 4.11779 95.3201 4.11779C93.8788 4.11779 92.6013 4.4446 91.4876 5.09821C90.3954 5.73003 89.533 6.62334 88.8999 7.77804C88.2883 8.93275 87.9828 10.2727 87.9828 11.7978C87.9828 12.9525 88.1573 14.0092 88.5069 14.9678C88.8779 15.9265 89.38 16.7435 90.0136 17.4189C90.6687 18.0943 91.4436 18.6172 92.3393 18.9876C93.2565 19.3579 94.2499 19.5431 95.3201 19.5431Z" fill="#1C1917"/>
+            <path d="M76.5775 23.334L69.9608 13.1049H69.3057L60.3306 0.359375H65.6043L72.1882 10.0002H72.8433L81.7857 23.334H76.5775ZM59.9375 23.334L68.5523 11.046L71.8279 13.2356L64.9819 23.334H59.9375ZM73.0726 12.4186L69.797 10.229L76.3482 0.359375H81.3926L73.0726 12.4186Z" fill="#1C1917"/>
+            <path d="M47.458 23.6608C45.6456 23.6608 44.0296 23.2687 42.6102 22.4843C41.2126 21.6782 40.1098 20.5779 39.3018 19.1836C38.4939 17.7892 38.0898 16.2096 38.0898 14.4448V0.359375H42.5446V14.5756C42.5446 15.5995 42.7521 16.4819 43.167 17.2227C43.6038 17.9634 44.1934 18.5408 44.9358 18.9548C45.7002 19.347 46.5409 19.543 47.458 19.543C48.3971 19.543 49.2269 19.347 49.9475 18.9548C50.6681 18.5408 51.2361 17.9634 51.6506 17.2227C52.0877 16.4819 52.3058 15.6104 52.3058 14.6082V0.359375H56.7933V14.4775C56.7933 16.2423 56.3895 17.8218 55.5813 19.2162C54.7737 20.5888 53.6708 21.6782 52.273 22.4843C50.8974 23.2687 49.2924 23.6608 47.458 23.6608Z" fill="#1C1917"/>
+            <path d="M19.9609 23.334V0.359375H24.4157V23.334H19.9609ZM23.2365 23.334V19.3796H34.9631V23.334H23.2365Z" fill="#1C1917"/>
+            <path d="M0 23.334V0.359375H4.4548V23.334H0ZM3.27559 13.9219V9.96755H14.8712V13.9219H3.27559ZM3.27559 4.28108V0.359375H15.428V4.28108H3.27559Z" fill="#1C1917"/>
+          </g>
+          <defs>
+            <clipPath id="clip0_3084_7063">
+              <rect width="130" height="24" fill="white"/>
+            </clipPath>
+          </defs>
+        </svg>
+      {%- endif -%}
+    </a>
+
+    <!-- ナビゲーション（デスクトップ） -->
+    <nav class="hidden md:flex items-center gap-8" aria-label="Main">
+      {%- if section.settings.menu != blank -%}
+        {%- for link in linklists[section.settings.menu].links -%}
+          <a
+            href="{{ link.url }}"
+            class="text-sm text-stone-900 tracking-[1px] hover:underline underline-offset-[8px] decoration-stone-900 transition-all duration-200"
+            {% if link.active %}aria-current="page"{% endif %}
+          >
+            {{ link.title | upcase }}
+          </a>
+        {%- endfor -%}
+      {%- endif -%}
+    </nav>
+
+    <!-- 右アイコン群 -->
+    <div class="flex items-center">
+
+      <!-- 検索 -->
+      <a
+        href="{{ routes.search_url }}"
+        class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
+        aria-label="検索"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-5.197-5.197m0 0A7.5 7.5 0 105.196 5.196a7.5 7.5 0 0010.607 10.607z" />
+        </svg>
+      </a>
+
+      <!-- アカウント -->
+      <a
+        href="{{ routes.account_url }}"
+        class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
+        aria-label="アカウント"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+        </svg>
+      </a>
+
+      <!-- カート -->
+      <button
+        type="button"
+        class="relative flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
+        @click="$store.cart.toggle()"
+        aria-label="カートを開く"
+      >
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
+        </svg>
+        <span
+          x-show="$store.cart.itemCount > 0"
+          x-text="$store.cart.itemCount"
+          class="absolute top-0 right-0 bg-stone-900 text-stone-50 text-[10px] leading-none w-4 h-4 rounded-full flex items-center justify-center"
+          aria-hidden="true"
+        ></span>
+      </button>
+
+      <!-- ハンバーガー（モバイル） -->
+      <button
+        type="button"
+        class="md:hidden flex flex-col gap-1.5 p-3 text-stone-900"
+        x-data="{ open: false }"
+        @click="open = !open"
+        aria-label="メニューを開く"
+      >
+        <span class="block w-5 h-px bg-current transition-all duration-200" :class="open ? 'rotate-45 translate-y-2' : ''"></span>
+        <span class="block w-5 h-px bg-current transition-all duration-200" :class="open ? 'opacity-0' : ''"></span>
+        <span class="block w-5 h-px bg-current transition-all duration-200" :class="open ? '-rotate-45 -translate-y-2' : ''"></span>
+      </button>
+
+    </div>
+
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "link_list",
+      "id": "menu",
+      "label": "Navigation menu",
+      "default": "main-menu"
+    }
+  ]
+}
+{% endschema %}

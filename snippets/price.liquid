@@ -1,0 +1,50 @@
+{% comment %}
+  Renders product price.
+
+  Accepts:
+  - product: {Object} Product object
+  - variant: {Object} Variant object (optional, overrides product)
+  - class: {String} Extra CSS classes
+
+  Usage:
+  {% render 'price', product: product %}
+  {% render 'price', variant: product.selected_or_first_available_variant %}
+{% endcomment %}
+{%- liquid
+  if variant
+    assign target = variant
+  elsif product
+    assign target = product.selected_or_first_available_variant
+  endif
+
+  assign price = target.price
+  assign compare_price = target.compare_at_price
+  assign available = target.available
+  assign on_sale = false
+  if compare_price > price
+    assign on_sale = true
+  endif
+-%}
+
+<div class="price {{ class }}{% if on_sale %} price--on-sale{% endif %}{% unless available %} price--sold-out{% endunless %}">
+  {%- if on_sale -%}
+    <span class="price__sale">
+      <span class="sr-only">セール価格</span>
+      {{ price | money }}
+      <span class="price__tax-note">（税込）</span>
+    </span>
+    <span class="price__compare">
+      <span class="sr-only">通常価格</span>
+      <s>{{ compare_price | money }}</s>
+    </span>
+  {%- else -%}
+    <span class="price__regular">
+      {{ price | money }}
+      <span class="price__tax-note">（税込）</span>
+    </span>
+  {%- endif -%}
+
+  {%- unless available -%}
+    <span class="price__badge-sold-out">売り切れ</span>
+  {%- endunless -%}
+</div>

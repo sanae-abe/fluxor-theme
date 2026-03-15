@@ -1,0 +1,11 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Judge.me スター評価 */
+.jdgm-star { color: theme('colors.amber.700'); }
+.jdgm-star--empty { color: theme('colors.stone.200'); }
+
+/* 価格：セール時の打ち消し線 */
+.price--on-sale .price__compare s { color: theme('colors.stone.400'); }
+.price--on-sale .price__sale { color: theme('colors.stone.900'); }

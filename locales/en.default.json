@@ -1,0 +1,65 @@
+{
+  "general": {
+    "accessibility": {
+      "skip_to_content": "コンテンツへスキップ"
+    },
+    "search": {
+      "search": "検索",
+      "placeholder": "キーワードを入力"
+    }
+  },
+  "products": {
+    "product": {
+      "add_to_cart": "カートに追加",
+      "sold_out": "売り切れ",
+      "unavailable": "現在ご購入いただけません",
+      "quantity": {
+        "label": "数量",
+        "increase": "数量を増やす",
+        "decrease": "数量を減らす"
+      },
+      "price": {
+        "tax_included": "税込"
+      }
+    },
+    "facets": {
+      "filter_by": "絞り込み",
+      "sort_by_label": "並び替え",
+      "clear_all": "すべてクリア"
+    }
+  },
+  "cart": {
+    "title": "カート",
+    "empty": "カートに商品がありません",
+    "subtotal": "小計",
+    "checkout": "購入手続きへ",
+    "remove": "削除",
+    "quantity": "数量"
+  },
+  "blogs": {
+    "article": {
+      "by_author": "by {{ author }}",
+      "read_more": "続きを読む"
+    },
+    "comments": {
+      "title": "コメント"
+    }
+  },
+  "contact": {
+    "form": {
+      "name": "お名前",
+      "email": "メールアドレス",
+      "message": "メッセージ",
+      "send": "送信する"
+    }
+  },
+  "layout": {
+    "navigation": {
+      "menu": "メニュー",
+      "close": "閉じる"
+    },
+    "footer": {
+      "country_region_label": "国・地域"
+    }
+  }
+}

@@ -1,0 +1,61 @@
+<article class="max-w-2xl mx-auto px-5 py-12">
+  <header class="mb-10 space-y-4">
+    {%- if article.tags.size > 0 -%}
+      <p class="text-xs tracking-widest uppercase text-stone-400">{{ article.tags | join: ' / ' }}</p>
+    {%- endif -%}
+    <h1 class="text-3xl font-light leading-tight">{{ article.title }}</h1>
+    <div class="flex items-center gap-3 text-xs text-stone-400">
+      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y.%m.%d' }}</time>
+      {%- if article.author != blank -%}
+        <span>by {{ article.author }}</span>
+      {%- endif -%}
+    </div>
+  </header>
+
+  {%- if article.image -%}
+    <div class="aspect-[16/9] overflow-hidden bg-stone-200 mb-10">
+      <img
+        src="{{ article.image | image_url: width: 1200 }}"
+        alt="{{ article.image.alt | escape | default: article.title }}"
+        class="w-full h-full object-cover"
+        loading="eager"
+        width="1200"
+        height="675"
+      >
+    </div>
+  {%- endif -%}
+
+  <div class="prose prose-sm max-w-none text-stone-700 leading-relaxed">
+    {{ article.content }}
+  </div>
+
+  {%- if article.tags.size > 0 -%}
+    <div class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-stone-200">
+      {%- for tag in article.tags -%}
+        <a
+          href="{{ blog.url }}/tagged/{{ tag | handle }}"
+          class="text-xs border border-stone-200 px-3 py-1 hover:border-stone-900 transition-colors"
+        >
+          {{ tag }}
+        </a>
+      {%- endfor -%}
+    </div>
+  {%- endif -%}
+
+  <nav class="flex justify-between mt-10 pt-8 border-t border-stone-200 text-sm">
+    {%- if blog.previous_article -%}
+      <a href="{{ blog.previous_article }}" class="text-stone-400 hover:text-stone-900 transition-colors">← 前の記事</a>
+    {%- else -%}
+      <span></span>
+    {%- endif -%}
+    {%- if blog.next_article -%}
+      <a href="{{ blog.next_article }}" class="text-stone-400 hover:text-stone-900 transition-colors">次の記事 →</a>
+    {%- endif -%}
+  </nav>
+</article>
+
+{% schema %}
+{
+  "name": "Article"
+}
+{% endschema %}
