@@ -23,7 +23,33 @@
     "featured-products": {
       "type": "featured-products",
       "settings": {}
+    },
+    "best-sellers": {
+      "type": "best-sellers",
+      "settings": {}
+    },
+    "new-arrivals": {
+      "type": "featured-products",
+      "settings": {
+        "heading": "新着商品",
+        "subheading": "最新のスキンケア製品が入荷しました",
+        "link_label": "すべて見る"
+      }
+    },
+    "ingredient-guide": {
+      "type": "image-text",
+      "settings": {}
+    },
+    "journal": {
+      "type": "image-text",
+      "settings": {
+        "image_position": "right",
+        "badge_label": "JOURNAL",
+        "heading": "乾燥肌のための朝のルーティン",
+        "paragraph": "<p>乾燥肌の朝は、「落としすぎない洗顔」と「高保湿な水分＆油分補給」が鍵になります。ぬるま湯洗顔か低刺激な洗顔料で皮脂を落としすぎず、化粧水でたっぷり水分を与えた後、乳液やクリームで蓋をして、必ず日焼け止めで乾燥・紫外線から肌を守りましょう。</p>",
+        "button_label": "記事を詳しく見る"
+      }
     }
   },
-  "order": ["hero", "category-nav", "about", "featured-products"]
+  "order": ["hero", "category-nav", "about", "featured-products", "ingredient-guide", "new-arrivals", "journal", "best-sellers"]
 }

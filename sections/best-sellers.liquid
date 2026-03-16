@@ -1,0 +1,208 @@
+{%- assign col = collections[section.settings.collection] -%}
+{%- assign products_limit = section.settings.products_to_show | default: 3 -%}
+
+<section class="bg-stone-50 px-10 py-[60px]">
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
+
+    <!-- ヘッダー（中央揃え） -->
+    <div class="flex flex-col gap-2 items-center text-center">
+      {%- if section.settings.heading != blank -%}
+        <h2 class="text-[42px] font-semibold leading-[1.5] text-stone-900">
+          {{ section.settings.heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.subheading != blank -%}
+        <p class="text-lg leading-[27px] text-stone-900 opacity-70">
+          {{ section.settings.subheading }}
+        </p>
+      {%- endif -%}
+    </div>
+
+    <!-- 製品グリッド（3カラム） -->
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      {%- if col != blank -%}
+        {%- for product in col.products limit: products_limit -%}
+          {%- assign variant = product.selected_or_first_available_variant -%}
+          {%- assign on_sale = false -%}
+          {%- if variant.compare_at_price > variant.price -%}
+            {%- assign on_sale = true -%}
+          {%- endif -%}
+          {%- assign rating_value = product.metafields.reviews.rating.value -%}
+          {%- assign rating_count = product.metafields.reviews.rating_count.value -%}
+
+          <article
+            class="group bg-white rounded-2xl overflow-hidden [transform:translateZ(0)]"
+            x-data="{
+              adding: false,
+              async addToCart() {
+                if (this.adding) return;
+                this.adding = true;
+                await $store.cart.add({{ variant.id }});
+                this.adding = false;
+              }
+            }"
+          >
+
+            <!-- 画像エリア -->
+            <div
+              class="relative w-full aspect-square cursor-pointer"
+              @click="window.location.href='{{ product.url }}'"
+            >
+
+              <!-- ランクバッジ -->
+              <div class="absolute top-4 left-4 z-10 w-12 h-12 rounded-full bg-[#bb4d00] flex items-center justify-center gap-0.5">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 text-white flex-shrink-0" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+                  <path fill-rule="evenodd" d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z" clip-rule="evenodd" />
+                </svg>
+                <span class="text-white font-medium text-base leading-[18px]">{{ forloop.index }}</span>
+              </div>
+
+              <!-- 1枚目 -->
+              {%- if product.featured_image -%}
+                <img
+                  src="{{ product.featured_image | image_url: width: 600 }}"
+                  alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+                  class="absolute inset-0 w-full h-full object-cover transition-opacity duration-500 group-hover:opacity-0"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {%- else -%}
+                <div class="w-full h-full flex items-center justify-center text-stone-300">
+                  <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                  </svg>
+                </div>
+              {%- endif -%}
+
+              <!-- 2枚目（hover時） -->
+              {%- if product.images.size > 1 -%}
+                <img
+                  src="{{ product.images[1] | image_url: width: 600 }}"
+                  alt="{{ product.images[1].alt | escape | default: product.title | escape }}"
+                  class="absolute inset-0 w-full h-full object-cover opacity-0 transition-opacity duration-500 group-hover:opacity-100"
+                  loading="lazy"
+                  width="600"
+                  height="600"
+                >
+              {%- endif -%}
+
+            </div>
+
+            <!-- 商品情報 + カートボタン -->
+            <div class="flex items-end justify-between p-4 gap-3">
+
+              <!-- 左：テキスト情報 -->
+              <a href="{{ product.url }}" class="flex flex-col gap-2 min-w-0">
+
+                <!-- ベンダー -->
+                {%- if product.vendor != blank -%}
+                  <p class="text-sm leading-[21px] text-stone-900 opacity-60 truncate">{{ product.vendor }}</p>
+                {%- endif -%}
+
+                <!-- タイトル -->
+                <h3 class="text-xl font-medium leading-[35px] text-stone-900">{{ product.title }}</h3>
+
+                <!-- 評価 -->
+                {%- if rating_value != blank -%}
+                  <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-1">
+                      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-stone-900" viewBox="0 0 16 16" aria-hidden="true">
+                        <path d="M8 1.5 9.796 5.14l4.018.583-2.907 2.833.686 4L8 10.666l-3.593 1.89.686-4L2.186 5.723l4.018-.583z"/>
+                      </svg>
+                      <span class="text-sm font-medium leading-5 text-stone-900">{{ rating_value | round: 1 }}</span>
+                    </div>
+                    {%- if rating_count != blank -%}
+                      <span class="text-sm leading-5 text-stone-900 opacity-40">({{ rating_count }}+ レビュー)</span>
+                    {%- endif -%}
+                  </div>
+                {%- endif -%}
+
+                <!-- 価格 -->
+                <div class="flex items-center gap-2">
+                  {%- if on_sale -%}
+                    <s class="text-base leading-[21px] text-stone-900 opacity-50">{{ variant.compare_at_price | money }}</s>
+                  {%- endif -%}
+                  <span class="text-xl font-semibold leading-[27px] text-stone-900">{{ variant.price | money }}</span>
+                </div>
+
+              </a>
+
+              <!-- 右：カートに追加ボタン -->
+              {%- if product.available -%}
+                <button
+                  type="button"
+                  class="flex-shrink-0 bg-[#0b4f4a] border-2 border-[#0b4f4a] text-white flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 transition-opacity duration-200"
+                  :class="adding ? 'opacity-70 cursor-wait' : ''"
+                  @click.stop="addToCart()"
+                  :disabled="adding"
+                >
+                  <span class="text-[15px] font-medium leading-[22.5px]" x-show="!adding">カートに追加</span>
+                  <span class="text-[15px] font-medium leading-[22.5px]" x-show="adding" x-cloak>追加中…</span>
+                </button>
+              {%- else -%}
+                <span class="flex-shrink-0 border-2 border-stone-300 text-stone-400 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 text-[15px] font-medium leading-[22.5px]">
+                  売り切れ
+                </span>
+              {%- endif -%}
+
+            </div>
+          </article>
+        {%- else -%}
+          <p class="col-span-3 text-stone-400">コレクションに商品がありません。</p>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..products_limit) -%}
+          <div class="bg-white rounded-2xl overflow-hidden">
+            <div class="w-full aspect-square bg-stone-200 animate-pulse"></div>
+            <div class="p-4 flex flex-col gap-2">
+              <div class="h-3 w-1/3 bg-stone-200 rounded animate-pulse"></div>
+              <div class="h-5 w-2/3 bg-stone-200 rounded animate-pulse"></div>
+              <div class="h-4 w-1/4 bg-stone-200 rounded animate-pulse"></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "ベストセラー",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "ベストセラー"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "サブテキスト",
+      "default": "多くのお客様に選ばれている、実力派スキンケア製品"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "表示するコレクション"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "表示件数",
+      "min": 1,
+      "max": 6,
+      "step": 1,
+      "default": 3
+    }
+  ],
+  "presets": [
+    {
+      "name": "ベストセラー"
+    }
+  ]
+}
+{% endschema %}
