@@ -88,7 +88,7 @@
 
 | name | uses | tailwind color |
 |:-----------|------------:|:------------:|
-| base | background | stone-50 |
+| base | background | white |
 | surface | card | stone-200 |
 | muted | label | stone-900 |
 | sub texts | stone-900 |
