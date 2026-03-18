@@ -5,38 +5,15 @@
   <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
 
     <!-- ヘッダー行 -->
-    {%- if section.settings.show_view_all -%}
-      <div class="flex items-end justify-between gap-6">
-        <div class="flex flex-col gap-4">
-          {%- if section.settings.heading != blank -%}
-            <h2 class="text-[42px] font-semibold leading-tight text-stone-900">
-              {{ section.settings.heading }}
-            </h2>
-          {%- endif -%}
-          {%- if section.settings.subheading != blank -%}
-            <p class="text-lg leading-tight text-stone-900 opacity-70">
-              {{ section.settings.subheading }}
-            </p>
-          {%- endif -%}
-        </div>
-        {%- if section.settings.link_label != blank and link_url != blank -%}
-          {%- render 'link-view-all', url: link_url, label: section.settings.link_label -%}
-        {%- endif -%}
-      </div>
-    {%- else -%}
-      <div class="flex flex-col gap-4 items-center text-center">
-        {%- if section.settings.heading != blank -%}
-          <h2 class="text-[42px] font-semibold leading-tight text-stone-900">
-            {{ section.settings.heading }}
-          </h2>
-        {%- endif -%}
-        {%- if section.settings.subheading != blank -%}
-          <p class="text-lg leading-tight text-stone-900 opacity-70">
-            {{ section.settings.subheading }}
-          </p>
-        {%- endif -%}
-      </div>
-    {%- endif -%}
+    {%- assign header_align = 'center' -%}
+    {%- if section.settings.show_view_all -%}{%- assign header_align = 'left' -%}{%- endif -%}
+    {%- render 'section-header',
+      heading: section.settings.heading,
+      subheading: section.settings.subheading,
+      link_url: link_url,
+      link_label: section.settings.link_label,
+      align: header_align
+    -%}
 
     <!-- 製品グリッド -->
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">

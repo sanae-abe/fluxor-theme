@@ -56,12 +56,12 @@
   endcase
 -%}
 
-{%- if icon_left != blank -%}
-  {%- render 'icon', icon: icon_left, class: icon_cls -%}
-{%- endif -%}
-<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ badge_bg }} {{ badge_text }} font-medium leading-tight whitespace-nowrap uppercase">
+<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ badge_bg }} {{ badge_text }} font-medium palt tracking-wider leading-tight whitespace-nowrap uppercase">
+  {%- if icon_left != blank -%}
+    {%- render 'icon', icon: icon_left, class: icon_cls -%}
+  {%- endif -%}
   {{- label -}}
+  {%- if icon_right != blank -%}
+    {%- render 'icon', icon: icon_right, class: icon_cls -%}
+  {%- endif -%}
 </span>
-{%- if icon_right != blank -%}
-  {%- render 'icon', icon: icon_right, class: icon_cls -%}
-{%- endif -%}

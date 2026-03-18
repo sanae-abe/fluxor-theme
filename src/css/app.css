@@ -16,6 +16,12 @@
   }
 }
 
+@layer utilities {
+  .palt {
+    font-feature-settings: "palt" on;
+  }
+}
+
 /* Judge.me スター評価 */
 .jdgm-star { color: theme('colors.amber.700'); }
 .jdgm-star--empty { color: theme('colors.stone.200'); }

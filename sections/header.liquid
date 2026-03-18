@@ -38,7 +38,7 @@
         {%- for link in linklists[section.settings.menu].links -%}
           <a
             href="{{ link.url }}"
-            class="text-sm text-stone-900 font-medium hover:underline underline-offset-[8px] decoration-stone-900 transition-all duration-200"
+            class="text-md text-stone-900 font-medium palt tracking-wider hover:underline underline-offset-[8px] decoration-stone-900 transition-all duration-200"
             {% if link.active %}aria-current="page"{% endif %}
           >
             {{ link.title | upcase }}
