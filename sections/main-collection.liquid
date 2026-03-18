@@ -11,7 +11,7 @@
   {%- if collection.products.size > 0 -%}
     <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 md:gap-8">
       {%- for product in collection.products -%}
-        {%- render 'card-product', product: product -%}
+        {%- render 'card-product-4col', product: product -%}
       {%- endfor -%}
     </div>
 

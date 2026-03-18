@@ -1,0 +1,16 @@
+{% comment %}
+  「すべて見る」リンクコンポーネント
+  Parameters:
+    url   {String}  リンク先URL（必須）
+    label {String}  リンクテキスト（省略時: "すべて見る"）
+{% endcomment %}
+
+{%- assign view_all_label = label | default: 'すべて見る' -%}
+
+<a
+  href="{{ url }}"
+  class="flex-shrink-0 flex items-center gap-2 text-base leading-6 text-stone-900 hover:opacity-60 transition-opacity duration-200"
+>
+  <span>{{ view_all_label }}</span>
+  {%- render 'icon', icon: 'arrow-right', class: 'w-6 h-6 flex-shrink-0' -%}
+</a>

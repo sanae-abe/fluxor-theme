@@ -21,13 +21,7 @@
           {%- endif -%}
         </div>
         {%- if section.settings.link_label != blank and link_url != blank -%}
-          <a
-            href="{{ link_url }}"
-            class="flex-shrink-0 flex items-center gap-2 text-base leading-6 text-stone-900 hover:opacity-60 transition-opacity duration-200"
-          >
-            <span>{{ section.settings.link_label }}</span>
-            {%- render 'icon', icon: 'arrow-right', class: 'w-6 h-6 flex-shrink-0' -%}
-          </a>
+          {%- render 'link-view-all', url: link_url, label: section.settings.link_label -%}
         {%- endif -%}
       </div>
     {%- else -%}
