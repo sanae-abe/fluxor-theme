@@ -1,5 +1,5 @@
 {% comment %}
-  製品カードコンポーネント
+  4カラムレイアウト用 製品カード（Featured Products）
   Parameters:
     product {Object} Shopify product オブジェクト（必須）
 {% endcomment %}
@@ -82,8 +82,8 @@
           @click.stop="addToCart()"
           :disabled="adding"
         >
-          <span class="text-base font-medium leading-tight" x-show="!adding">カートに追加</span>
-          <span class="text-base font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
+          <span class="text-[15px] font-medium leading-[22.5px]" x-show="!adding">カートに追加</span>
+          <span class="text-[15px] font-medium leading-[22.5px]" x-show="adding" x-cloak>追加中…</span>
         </button>
       </div>
     {%- endif -%}

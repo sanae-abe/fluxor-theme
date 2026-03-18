@@ -111,17 +111,17 @@
   {%- endif -%}
 
   <div class="relative max-w-screen-xl mx-auto flex items-center justify-center">
-    <div class="max-w-[720px] w-full flex flex-col items-center gap-11 text-center">
+    <div class="w-full flex flex-col items-center gap-11 text-center">
 
       <!-- Heading + Tagline -->
       <div class="flex flex-col gap-6 w-full">
         {%- if section.settings.heading != blank -%}
-          <h2 class="text-[42px] font-semibold leading-[1.5] {{ text_color }}">
+          <h2 class="text-[42px] font-semibold leading-tight {{ text_color }}">
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}
         {%- if section.settings.tagline != blank -%}
-          <p class="text-[30px] font-semibold leading-[1.5] {{ text_color }}">
+          <p class="text-[30px] font-semibold leading-tight {{ text_color }}">
             {{ section.settings.tagline }}
           </p>
         {%- endif -%}
@@ -129,7 +129,7 @@
 
       <!-- Paragraph -->
       {%- if section.settings.paragraph != blank -%}
-        <div class="text-xl leading-[1.75] {{ text_color }} opacity-80 [&_p]:mb-0">
+        <div class="text-xl leading-relaxed {{ text_color }} opacity-80 [&_p]:mb-0">
           {{ section.settings.paragraph }}
         </div>
       {%- endif -%}
@@ -170,13 +170,12 @@
       "id": "color_scheme",
       "label": "カラースキーム",
       "options": [
-        { "value": "bg-white", "label": "ホワイト（デフォルト）" },
-        { "value": "bg-stone-50", "label": "ライト" },
+        { "value": "bg-stone-50", "label": "ライト（デフォルト）" },
         { "value": "bg-stone-100", "label": "ライトグレー" },
         { "value": "bg-stone-200", "label": "グレー" },
         { "value": "bg-stone-950", "label": "ダーク" }
       ],
-      "default": "bg-white"
+      "default": "bg-stone-50"
     },
     {
       "type": "image_picker",
@@ -205,7 +204,7 @@
       "type": "richtext",
       "id": "paragraph",
       "label": "本文（Paragraph）",
-      "default": "<p>成分表を読み込み、ブランドの背景を調べ、実際に自分たちで使って確かめる。その積み重ねから生まれた、Fluxorのスキンケアセレクション。</p>"
+      "default": "<p>成分表を読み込み、ブランドの背景を調べ、実際に自分たちで使って確かめる。<br>その積み重ねから生まれた、Fluxorのスキンケアセレクション。</p>"
     },
     {
       "type": "url",

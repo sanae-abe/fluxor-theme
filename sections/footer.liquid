@@ -1,4 +1,4 @@
-<footer class="bg-[#1c1917] px-10 py-[60px]">
+<footer class="bg-stone-900 px-10 py-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
 
     <!-- 3カラム：Quick Links / Information / メルマガ＋SNS -->
@@ -7,15 +7,15 @@
       <!-- Quick Links -->
       {%- if section.settings.menu_1 != blank -%}
         <div class="flex-1 flex flex-col gap-4">
-          <p class="text-base font-medium text-white uppercase leading-6">
+          <p class="text-sm font-medium text-stone-400 uppercase leading-tight">
             {{ section.settings.menu_1_title | default: 'Quick Links' }}
           </p>
-          <ul class="flex flex-col gap-2">
+          <ul class="flex flex-col gap-4">
             {%- for link in linklists[section.settings.menu_1].links -%}
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-sm text-white opacity-80 uppercase leading-[21px] hover:opacity-100 transition-opacity duration-200"
+                  class="text-base text-stone-50 uppercase leading-tight hover:underline underline-offset-[8px]"
                 >{{ link.title }}</a>
               </li>
             {%- endfor -%}
@@ -26,15 +26,15 @@
       <!-- Information -->
       {%- if section.settings.menu_2 != blank -%}
         <div class="flex-1 flex flex-col gap-4">
-          <p class="text-base font-medium text-white uppercase leading-6">
+          <p class="text-sm font-medium text-stone-400 uppercase leading-tight">
             {{ section.settings.menu_2_title | default: 'Information' }}
           </p>
-          <ul class="flex flex-col gap-2">
+          <ul class="flex flex-col gap-4">
             {%- for link in linklists[section.settings.menu_2].links -%}
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-sm text-white opacity-80 uppercase leading-[21px] hover:opacity-100 transition-opacity duration-200"
+                  class="text-base text-stone-100 uppercase leading-tight hover:underline underline-offset-[8px]"
                 >{{ link.title }}</a>
               </li>
             {%- endfor -%}
@@ -47,8 +47,8 @@
 
         <!-- メルマガ -->
         <div class="flex flex-col gap-4">
-          <p class="text-base font-medium text-white uppercase leading-6">メルマガ登録</p>
-          <p class="text-sm text-white opacity-80 leading-[21px]">
+          <p class="text-sm font-medium text-stone-400 uppercase leading-tight">メルマガ登録</p>
+          <p class="text-sm text-stone-50 leading-tight">
             新しい製品やセールのお知らせをメールで配信しています。
           </p>
 
@@ -57,7 +57,7 @@
               <input type="hidden" name="contact[tags]" value="newsletter">
 
               {%- if form.posted_successfully? -%}
-                <p class="text-sm text-white opacity-80 py-3">ご登録ありがとうございます。</p>
+                <p class="text-sm text-stone-50 py-3">ご登録ありがとうございます。</p>
               {%- else -%}
 
                 <!-- メールアドレス入力 + 送信ボタン -->
@@ -77,9 +77,7 @@
                     :disabled="!agreed"
                     aria-label="メルマガ登録"
                   >
-                    <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                    </svg>
+                    {%- render 'icon', icon: 'arrow-right', class: 'w-6 h-6' -%}
                   </button>
                 </div>
 
@@ -88,9 +86,9 @@
                   <input
                     type="checkbox"
                     x-model="agreed"
-                    class="w-5 h-5 flex-shrink-0 border border-stone-200 bg-white cursor-pointer"
+                    class="w-5 h-5 flex-shrink-0 border border-stone-200 bg-stone-50 cursor-pointer"
                   >
-                  <span class="text-sm text-white opacity-80 leading-[21px]">
+                  <span class="text-sm text-white opacity-80 leading-tight">
                     {%- if section.settings.privacy_url != blank -%}
                       <a href="{{ section.settings.privacy_url }}" class="underline hover:opacity-70 transition-opacity duration-200">プライバシーポリシー</a>に同意します
                     {%- else -%}
@@ -114,9 +112,7 @@
               class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
               aria-label="Instagram"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
-              </svg>
+              {%- render 'icon', icon: 'instagram', class: 'w-5 h-5 text-white' -%}
             </a>
           {%- endif -%}
 
@@ -142,9 +138,7 @@
               class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
               aria-label="TikTok"
             >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.69a8.16 8.16 0 004.78 1.52V6.76a4.85 4.85 0 01-1.01-.07z"/>
-              </svg>
+              {%- render 'icon', icon: 'tiktok', class: 'w-5 h-5 text-white' -%}
             </a>
           {%- endif -%}
         </div>
@@ -163,7 +157,7 @@
 
     <!-- 注意書き -->
     {%- if section.settings.disclaimer != blank -%}
-      <p class="text-sm text-white opacity-40 leading-[21px]">
+      <p class="text-sm text-white opacity-40 leading-tight">
         {{ section.settings.disclaimer }}
       </p>
     {%- endif -%}

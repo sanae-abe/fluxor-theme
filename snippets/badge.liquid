@@ -1,12 +1,33 @@
 {% comment %}
   Badge コンポーネント
   Parameters:
-    label   {String}  バッジのテキスト（必須）
-    variant {String}  default | secondary | ghost | accent | premium（省略時: default）
+    label      {String}  バッジのテキスト（必須）
+    variant    {String}  default | secondary | ghost | accent | premium | teal | amber | stone（省略時: default）
+    size       {String}  sm | md（省略時: sm)
+    icon_left  {String}  左側アイコン名（例: 'arrow-left'）
+    icon_right {String}  右側アイコン名（例: 'arrow-right'）
+
+  利用可能なアイコン:
+    arrow-left, arrow-right, hash, search, user, star, cart,
+    trending-up, flask-conical, notebook-pen, x, instagram, tiktok,
+    minus, plus
 {% endcomment %}
 
 {%- liquid
   assign badge_variant = variant | default: 'default'
+  assign badge_size    = size    | default: 'sm'
+
+  # ── サイズ ──────────────────────────────────────────────────────
+  case badge_size
+  when 'md'
+    assign size_cls = 'px-3 py-1 text-sm gap-2'
+    assign icon_cls = 'w-[14px] h-[14px] flex-shrink-0'
+  else
+    assign size_cls = 'px-2 py-1 text-xs gap-1'
+    assign icon_cls = 'w-3 h-3 flex-shrink-0'
+  endcase
+
+  # ── カラー × バリアント ─────────────────────────────────────────
   case badge_variant
     when 'secondary'
       assign badge_bg   = 'bg-transparent border border-stone-900'
@@ -15,17 +36,32 @@
       assign badge_bg   = 'bg-transparent border border-white'
       assign badge_text = 'text-white'
     when 'accent'
-      assign badge_bg   = 'bg-[#0b4f4a]'
+      assign badge_bg   = 'bg-accent'
       assign badge_text = 'text-white'
     when 'premium'
-      assign badge_bg   = 'bg-[#bb4d00]'
+      assign badge_bg   = 'bg-amber-700'
       assign badge_text = 'text-white'
+    when 'teal'
+      assign badge_bg   = 'bg-teal-50'
+      assign badge_text = 'text-teal-900'
+    when 'amber'
+      assign badge_bg   = 'bg-amber-50'
+      assign badge_text = 'text-amber-800'
+    when 'stone'
+      assign badge_bg   = 'bg-stone-100'
+      assign badge_text = 'text-stone-700'
     else
       assign badge_bg   = 'bg-stone-900'
       assign badge_text = 'text-white'
   endcase
 -%}
 
-<span class="inline-flex items-center justify-center px-2 py-[2px] rounded-full {{ badge_bg }} {{ badge_text }} text-[12px] font-medium leading-[18px] whitespace-nowrap uppercase">
+{%- if icon_left != blank -%}
+  {%- render 'icon', icon: icon_left, class: icon_cls -%}
+{%- endif -%}
+<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ badge_bg }} {{ badge_text }} font-medium leading-tight whitespace-nowrap uppercase">
   {{- label -}}
 </span>
+{%- if icon_right != blank -%}
+  {%- render 'icon', icon: icon_right, class: icon_cls -%}
+{%- endif -%}

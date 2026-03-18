@@ -7,18 +7,23 @@
   - variant:    {String}  'solid' | 'outline'  （デフォルト: 'solid'）
   - color:      {String}  'dark' | 'light' | 'teal' | 'amber' | 'muted'  （デフォルト: 'dark'）
   - size:       {String}  'xl' | 'lg' | 'md' | 'sm' | 'xs'  （デフォルト: 'md'）
-  - icon_left:  {Boolean} 左矢印を表示  （デフォルト: false）
-  - icon_right: {Boolean} 右矢印を表示  （デフォルト: false）
+  - icon_left:  {String}  左側アイコン名（例: 'arrow-left'）
+  - icon_right: {String}  右側アイコン名（例: 'arrow-right'）
   - type:       {String}  button の type 属性  （デフォルト: 'button'）
   - disabled:   {Boolean} 非活性状態
   - full_width: {Boolean} 横幅100%
   - attr:       {String}  追加 HTML 属性（Alpine.js @click など）
   - class:      {String}  追加 CSS クラス
 
+  利用可能なアイコン:
+  arrow-left, arrow-right, hash, search, user, star, cart,
+  trending-up, flask-conical, notebook-pen, x, instagram, tiktok,
+  minus, plus
+
   Usage:
-  {% render 'button', label: 'Shop Now', url: collection.url, icon_right: true %}
+  {% render 'button', label: 'Shop Now', url: collection.url, icon_right: 'arrow-right' %}
   {% render 'button', label: 'カートに追加', size: 'lg' %}
-  {% render 'button', label: '詳しく見る', variant: 'outline', color: 'teal', icon_left: true, icon_right: true %}
+  {% render 'button', label: '詳しく見る', variant: 'outline', color: 'teal', icon_left: 'arrow-left', icon_right: 'arrow-right' %}
 {% endcomment %}
 
 {%- liquid
@@ -91,21 +96,18 @@
   endif
 
   assign base_cls = 'inline-flex items-center justify-center border font-sans tracking-wide transition-colors duration-200 select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2'
+  assign icon_svg_cls = icon_cls | append: ' flex-shrink-0'
 -%}
 
 {%- capture btn_inner -%}
-  {%- if icon_left -%}
-    <svg xmlns="http://www.w3.org/2000/svg" class="{{ icon_cls }} flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 19.5L3 12m0 0l7.5-7.5M3 12h18" />
-    </svg>
+  {%- if icon_left != blank -%}
+    {%- render 'icon', icon: icon_left, class: icon_svg_cls -%}
   {%- endif -%}
 
   <span>{{ label }}</span>
 
-  {%- if icon_right -%}
-    <svg xmlns="http://www.w3.org/2000/svg" class="{{ icon_cls }} flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-    </svg>
+  {%- if icon_right != blank -%}
+    {%- render 'icon', icon: icon_right, class: icon_svg_cls -%}
   {%- endif -%}
 {%- endcapture -%}
 

@@ -8,7 +8,7 @@
           {{ block.shopify_attributes }}
         >
           <!-- 丸画像 -->
-          <div class="w-full aspect-square rounded-full bg-white overflow-hidden [transform:translateZ(0)]">
+          <div class="w-full aspect-square rounded-full bg-stone-50 overflow-hidden [transform:translateZ(0)]">
             {%- if block.settings.image -%}
               <img
                 src="{{ block.settings.image | image_url: width: 500 }}"
@@ -49,7 +49,6 @@
       "label": "背景色",
       "options": [
         { "value": "bg-stone-100", "label": "ライトグレー（デフォルト）" },
-        { "value": "bg-white", "label": "ホワイト" },
         { "value": "bg-stone-50", "label": "ライト" },
         { "value": "bg-stone-200", "label": "グレー" },
         { "value": "bg-stone-950", "label": "ダーク" }
