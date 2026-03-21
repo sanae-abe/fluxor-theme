@@ -79,6 +79,7 @@
     },
     "journal": {
       "type": "image-text",
+      "name": "Journal",
       "settings": {
         "color_scheme": "bg-stone-50",
         "image_position": "right",
