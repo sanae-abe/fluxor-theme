@@ -155,11 +155,17 @@
       </div>
     {%- endunless -%}
 
-    <!-- 注意書き -->
-    {%- if section.settings.disclaimer != blank -%}
-      <p class="text-sm text-white opacity-40 leading-tight">
-        {{ section.settings.disclaimer }}
-      </p>
+    <!-- 個人輸入・薬機法 注意事項 -->
+    {%- if section.settings.import_notice_footer != blank or section.settings.disclaimer != blank -%}
+      <div class="border-t border-[rgba(246,244,240,0.1)] pt-8 flex flex-col gap-3">
+        <p class="text-xs font-medium text-stone-400 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
+        {%- if section.settings.import_notice_footer != blank -%}
+          <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.import_notice_footer }}</p>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.disclaimer }}</p>
+        {%- endif -%}
+      </div>
     {%- endif -%}
 
     <!-- ボトムバー（コピーライト） -->
@@ -229,6 +235,16 @@
       "type": "url",
       "id": "social_tiktok_url",
       "label": "TikTok URL"
+    },
+    {
+      "type": "header",
+      "content": "個人輸入代行に関する注意事項"
+    },
+    {
+      "type": "textarea",
+      "id": "import_notice_footer",
+      "label": "個人輸入に関する注意文",
+      "default": "当店は商品の販売者ではなく、お客様に代わって海外事業者から商品を手配する「個人輸入代行」サービスです。海外コスメは日本の薬機法に基づく承認を受けておらず、ご使用はお客様の自己責任となります。個人輸入品の転売は法律により禁じられています。商品代金が約16,666円を超える場合、関税・消費税等が別途発生する場合があります（お客様負担）。発注完了後のキャンセル・返品は原則お受けできません。"
     },
     {
       "type": "header",
