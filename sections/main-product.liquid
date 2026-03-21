@@ -278,46 +278,6 @@
       {%- comment %} 区切り線 {%- endcomment %}
       <hr class="border-stone-200">
 
-      {%- comment %} 個人輸入代行に関する注意事項 {%- endcomment %}
-      {%- if section.settings.show_import_notice -%}
-        <div class="flex flex-col gap-4 p-4 bg-amber-50 border border-amber-200 text-sm leading-relaxed">
-          <p class="font-semibold text-stone-900">&#9888; 個人輸入代行に関する重要なご注意</p>
-
-          {%- if section.settings.import_notice_declaration != blank -%}
-            <div class="flex flex-col gap-1">
-              <p class="font-medium text-stone-900">&#9670; 本サービスについて</p>
-              <p class="text-stone-700">{{ section.settings.import_notice_declaration }}</p>
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.import_notice_liability != blank or section.settings.import_notice_resale != blank -%}
-            <div class="flex flex-col gap-1">
-              <p class="font-medium text-stone-900">&#9670; ご使用上の注意と免責事項</p>
-              {%- if section.settings.import_notice_liability != blank -%}
-                <p class="text-stone-700">{{ section.settings.import_notice_liability }}</p>
-              {%- endif -%}
-              {%- if section.settings.import_notice_resale != blank -%}
-                <p class="text-stone-700">{{ section.settings.import_notice_resale }}</p>
-              {%- endif -%}
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.import_notice_customs != blank -%}
-            <div class="flex flex-col gap-1">
-              <p class="font-medium text-stone-900">&#9670; 関税および輸入制限について</p>
-              <p class="text-stone-700">{{ section.settings.import_notice_customs }}</p>
-            </div>
-          {%- endif -%}
-
-          {%- if section.settings.import_notice_returns != blank -%}
-            <div class="flex flex-col gap-1">
-              <p class="font-medium text-stone-900">&#9670; キャンセル・返品・交換について</p>
-              <p class="text-stone-700">{{ section.settings.import_notice_returns }}</p>
-            </div>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
-
       {%- comment %} 商品メタ情報 {%- endcomment %}
       {%- if skin_type != blank or ph_level != blank or origin != blank or texture != blank or usage_timing != blank -%}
         <div class="flex flex-wrap gap-x-8 gap-y-2">
@@ -418,6 +378,54 @@
     </div>
   </div>
 </section>
+
+
+
+{%- comment %}======================================================
+  個人輸入代行に関する注意事項
+======================================================{%- endcomment %}
+{%- if section.settings.show_import_notice -%}
+<section class="bg-stone-50 px-10 py-[60px]">
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
+    <div class="flex flex-col gap-4 p-4 bg-amber-50 border border-amber-200 text-sm leading-relaxed">
+      <p class="font-semibold text-stone-900">&#9888; 個人輸入代行に関する重要なご注意</p>
+
+      {%- if section.settings.import_notice_declaration != blank -%}
+        <div class="flex flex-col gap-1">
+          <p class="font-medium text-stone-900">&#9670; 本サービスについて</p>
+          <p class="text-stone-700">{{ section.settings.import_notice_declaration }}</p>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.import_notice_liability != blank or section.settings.import_notice_resale != blank -%}
+        <div class="flex flex-col gap-1">
+          <p class="font-medium text-stone-900">&#9670; ご使用上の注意と免責事項</p>
+          {%- if section.settings.import_notice_liability != blank -%}
+            <p class="text-stone-700">{{ section.settings.import_notice_liability }}</p>
+          {%- endif -%}
+          {%- if section.settings.import_notice_resale != blank -%}
+            <p class="text-stone-700">{{ section.settings.import_notice_resale }}</p>
+          {%- endif -%}
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.import_notice_customs != blank -%}
+        <div class="flex flex-col gap-1">
+          <p class="font-medium text-stone-900">&#9670; 関税および輸入制限について</p>
+          <p class="text-stone-700">{{ section.settings.import_notice_customs }}</p>
+        </div>
+      {%- endif -%}
+
+      {%- if section.settings.import_notice_returns != blank -%}
+        <div class="flex flex-col gap-1">
+          <p class="font-medium text-stone-900">&#9670; キャンセル・返品・交換について</p>
+          <p class="text-stone-700">{{ section.settings.import_notice_returns }}</p>
+        </div>
+      {%- endif -%}
+    </div>
+  </div>
+</section>
+{%- endif -%}
 
 {%- comment %}======================================================
   関連商品セクション
