@@ -4,17 +4,17 @@
 
   対応メタフィールド (名前空間: custom):
     volume            {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
-    benefits          {list.single_line_text_field}    効能・効果リスト
-    key_ingredients   {list.single_line_text_field}    注目成分リスト
-    labels            {list.single_line_text_field}    製品ラベル（クルエルティフリー、ヴィーガン等）
-    skin_type         {single_line_text_field}         おすすめの肌質
+    benefits          {list.metaobject_reference}      効能・効果リスト (product_benefits: number, description, category)
+    key_ingredients   {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient.name_ja, ingredient.article, amount）
+    certifications    {list.metaobject_reference}      製品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
+    skin_type         {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
     ph_level          {single_line_text_field}         pHレベル
     origin            {single_line_text_field}         原産国
     texture           {single_line_text_field}         テクスチャー
-    usage_timing      {single_line_text_field}         使用タイミング
+    usage_timing      {multi_line_text_field}          使用タイミング
     all_ingredients   {multi_line_text_field}          全成分テキスト
     usage_method      {richtext}                       使用方法テキスト
-    precautions       {richtext}                       注意事項テキスト
+    wargnins          {richtext}                       注意事項テキスト
     shipping_return   {richtext}                       配送・返品情報（省略時は管理画面設定を使用）
 {% endcomment %}
 
@@ -26,22 +26,22 @@
     assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
   endif
 
-  assign rating_value = product.metafields.reviews.rating.value
-  assign rating_count = product.metafields.reviews.rating_count.value
+  assign rating_value = product.metafields.judgeme.avg_rating
+  assign rating_count = product.metafields.judgeme.review_count
 
-  assign volume          = product.metafields.custom.volume
-  assign benefits        = product.metafields.custom.benefits.value
-  assign key_ingredients = product.metafields.custom.key_ingredients.value
-  assign labels          = product.metafields.custom.labels.value
-  assign skin_type       = product.metafields.custom.skin_type
-  assign ph_level        = product.metafields.custom.ph_level
-  assign origin          = product.metafields.custom.origin
-  assign texture         = product.metafields.custom.texture
-  assign usage_timing    = product.metafields.custom.usage_timing
-  assign all_ingredients = product.metafields.custom.all_ingredients
-  assign usage_method    = product.metafields.custom.usage_method
-  assign precautions     = product.metafields.custom.precautions
-  assign shipping_return = product.metafields.custom.shipping_return
+  assign volume           = product.metafields.custom.volume
+  assign product_benefits = product.metafields.custom.product_benefits.value
+  assign key_ingredients  = product.metafields.custom.key_ingredients.value
+  assign certifications   = product.metafields.custom.certifications.value
+  assign skin_types       = product.metafields.shopify.suitable-for-skin-type.value
+  assign ph_level         = product.metafields.custom.ph_level
+  assign origin           = product.metafields.custom.origin
+  assign texture          = product.metafields.custom.texture
+  assign usage_timing     = product.metafields.custom.usage_timing
+  assign all_ingredients  = product.metafields.custom.all_ingredients
+  assign usage_method     = product.metafields.custom.usage_method
+  assign wargnins         = product.metafields.custom.wargnins
+  assign shipping_return  = product.metafields.custom.shipping_return
 -%}
 
 {%- comment %}======================================================
@@ -127,7 +127,7 @@
     </div>
 
     {%- comment %}--- 右カラム: 商品情報 ---{%- endcomment %}
-    <div class="w-full lg:flex-1 flex flex-col gap-8 lg:sticky lg:top-20">
+    <div class="w-full lg:flex-1 flex flex-col gap-6 lg:sticky lg:top-20">
 
       {%- comment %} ブランド・タイトル・容量・評価 {%- endcomment %}
       <div class="flex flex-col gap-4">
@@ -138,7 +138,7 @@
         <h1 class="text-3xl font-medium leading-tight text-stone-900 palt tracking-wider">{{ product.title }}</h1>
 
         {%- if volume != blank -%}
-          <p class="text-sm text-stone-900 leading-relaxed">{{ volume }}</p>
+          <p class="text-sm text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
         {%- endif -%}
 
         {%- if rating_value != blank -%}
@@ -170,15 +170,14 @@
       </div>
 
       {%- comment %} 効能・効果 {%- endcomment %}
-      {%- if benefits != blank -%}
+      {%- if product_benefits != blank -%}
         <div class="flex flex-col gap-2">
-          {%- for benefit in benefits -%}
+          {%- for product_benefit in product_benefits -%}
             <div class="flex items-start gap-2">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-stone-900 flex-shrink-0 mt-0.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
-                <path d="m9 11 3 3L22 4"/>
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M2 8.55556L6.8 13L14 3" stroke="#0B4F4A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <p class="text-sm text-stone-900 leading-relaxed">{{ benefit }}</p>
+              <p class="text-sm text-stone-900 leading-relaxed">{{ product_benefit.description }}</p>
             </div>
           {%- endfor -%}
         </div>
@@ -188,22 +187,35 @@
       {%- if key_ingredients != blank -%}
         <div class="bg-stone-100 rounded-2xl p-4 flex flex-col gap-2.5">
           <div class="flex items-center gap-1">
-            {%- render 'icon', icon: 'flask-conical', class: 'w-4 h-4 text-stone-900 flex-shrink-0' -%}
+            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M2.42397 6.97718C2.28957 7.11145 2.18294 7.27089 2.11019 7.44639C2.03744 7.6219 2 7.81002 2 8C2 8.18998 2.03744 8.3781 2.11019 8.55361C2.18294 8.72911 2.28957 8.88855 2.42397 9.02282L6.97718 13.576C7.11145 13.7104 7.27089 13.8171 7.44639 13.8898C7.6219 13.9626 7.81002 14 8 14C8.18998 14 8.3781 13.9626 8.55361 13.8898C8.72911 13.8171 8.88855 13.7104 9.02282 13.576L13.576 9.02282C13.7104 8.88855 13.8171 8.72911 13.8898 8.55361C13.9626 8.3781 14 8.18998 14 8C14 7.81002 13.9626 7.6219 13.8898 7.44639C13.8171 7.27089 13.7104 7.11145 13.576 6.97718L9.02282 2.42397C8.88855 2.28957 8.72911 2.18294 8.55361 2.11019C8.3781 2.03744 8.18998 2 8 2C7.81002 2 7.6219 2.03744 7.44639 2.11019C7.27089 2.18294 7.11145 2.28957 6.97718 2.42397L2.42397 6.97718Z" stroke="#1C1917" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
             <span class="text-sm font-medium text-stone-900 leading-tight">注目の成分</span>
           </div>
           <ul class="flex flex-col gap-2 text-sm text-stone-900 leading-relaxed">
-            {%- for ingredient in key_ingredients -%}
-              <li class="list-disc ml-5">{{ ingredient }}</li>
+            {%- for key_ingredient in key_ingredients -%}
+              {%- assign ingredient = key_ingredient.ingredient.value -%}
+              {%- assign article = ingredient.article.value -%}
+              <li class="list-disc ml-5">
+                {%- if article != blank -%}
+                  <a href="{{ article.url }}" class="underline hover:opacity-70 transition-opacity">{{ ingredient.name_ja }}</a>
+                {%- else -%}
+                  {{ ingredient.name_ja }}
+                {%- endif -%}
+                {%- if key_ingredient.amount != blank -%}
+                  &nbsp;-&nbsp;{{ key_ingredient.amount }}
+                {%- endif -%}
+              </li>
             {%- endfor -%}
           </ul>
         </div>
       {%- endif -%}
 
       {%- comment %} ラベル {%- endcomment %}
-      {%- if labels != blank -%}
+      {%- if certifications != blank -%}
         <div class="flex flex-wrap gap-2">
-          {%- for label in labels -%}
-            <span class="bg-white border border-stone-200 px-1.5 py-[6px] text-xs text-stone-900 leading-tight">{{ label }}</span>
+          {%- for certification in certifications -%}
+            <span class="bg-white border border-stone-200 px-1.5 py-[6px] text-xs text-stone-900 leading-tight">{{ certification.name }}</span>
           {%- endfor -%}
         </div>
       {%- endif -%}
@@ -279,11 +291,11 @@
       <hr class="border-stone-200">
 
       {%- comment %} 商品メタ情報 {%- endcomment %}
-      {%- if skin_type != blank or ph_level != blank or origin != blank or texture != blank or usage_timing != blank -%}
+      {%- if skin_types != blank or ph_level != blank or origin != blank or texture != blank or usage_timing != blank -%}
         <div class="flex flex-wrap gap-x-8 gap-y-2">
-          {%- if skin_type != blank -%}
+          {%- if skin_types != blank -%}
             <p class="text-sm text-stone-900 leading-relaxed">
-              <span class="font-medium">おすすめの肌質：</span>{{ skin_type }}
+              <span class="font-medium">おすすめの肌質：</span>{%- for skin_type in skin_types -%}{{ skin_type.label }}{%- unless forloop.last -%}、{%- endunless -%}{%- endfor -%}
             </p>
           {%- endif -%}
           {%- if ph_level != blank -%}
@@ -358,8 +370,8 @@
       </div>
 
       <div x-show="activeTab === 2" x-cloak role="tabpanel">
-        {%- if precautions != blank -%}
-          <div class="text-base text-stone-900 leading-relaxed">{{ precautions }}</div>
+        {%- if wargnins != blank -%}
+          <div class="text-base text-stone-900 leading-relaxed">{{ wargnins }}</div>
         {%- else -%}
           <p class="text-stone-400 text-sm">注意事項は現在準備中です。</p>
         {%- endif -%}
