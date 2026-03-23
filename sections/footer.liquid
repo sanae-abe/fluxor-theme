@@ -157,14 +157,19 @@
 
     <!-- 個人輸入・薬機法 注意事項 -->
     {%- if section.settings.import_notice_footer != blank or section.settings.disclaimer != blank -%}
-      <div class="border-t border-[rgba(246,244,240,0.1)] pt-8 flex flex-col gap-3">
-        <p class="text-xs font-medium text-stone-400 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
-        {%- if section.settings.import_notice_footer != blank -%}
-          <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.import_notice_footer }}</p>
-        {%- endif -%}
-        {%- if section.settings.disclaimer != blank -%}
-          <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.disclaimer }}</p>
-        {%- endif -%}
+      <div class="border-t border-[rgba(246,244,240,0.1)] pt-8 flex flex-col gap-8">
+        <div class="flex flex-col gap-1">
+          <p class="text-xs font-medium text-stone-400 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
+          {%- if section.settings.import_notice_footer != blank -%}
+            <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.import_notice_footer }}</p>
+          {%- endif -%}
+        </div>
+        <div class="flex flex-col gap-1">
+          <p class="text-xs font-medium text-stone-400 uppercase leading-tight tracking-wider">本サイトにおける各用語の定義</p>
+          {%- if section.settings.disclaimer != blank -%}
+            <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.disclaimer }}</p>
+          {%- endif -%}
+        </div>
       </div>
     {%- endif -%}
 
@@ -248,13 +253,13 @@
     },
     {
       "type": "header",
-      "content": "その他"
+      "content": "本サイトにおける各用語の定義"
     },
     {
       "type": "textarea",
       "id": "disclaimer",
       "label": "注意書き（薬機法等）",
-      "default": "※本サイトにおける各用語の定義は以下の通りです。 エイジングケア：年齢に応じた潤いによるお手入れのこと。 ニキビケア：洗浄により肌を清浄にし、ニキビを防ぐこと。 毛穴ケア：潤いを与え、キメを整えることで毛穴を目立たなくすること。 美白：メラニンの生成を抑え、シミ・そばかすを防ぐこと（※医薬部外品の場合）。 浸透：角質層まで。"
+      "default": "エイジングケア：年齢に応じた潤いによるお手入れのこと。 ニキビケア：洗浄により肌を清浄にし、ニキビを防ぐこと。 毛穴ケア：潤いを与え、キメを整えることで毛穴を目立たなくすること。 美白：メラニンの生成を抑え、シミ・そばかすを防ぐこと（※医薬部外品の場合）。 浸透：角質層まで。"
     }
   ]
 }

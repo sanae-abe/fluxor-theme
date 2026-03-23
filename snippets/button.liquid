@@ -26,6 +26,19 @@
   {% render 'button', label: '詳しく見る', variant: 'outline', color: 'teal', icon_left: 'arrow-left', icon_right: 'arrow-right' %}
 {% endcomment %}
 
+<style>
+  .btn-slide {
+    transition: background-color 0.15s ease, color 0.15s ease;
+  }
+
+  @media (any-hover: hover) {
+    .btn-slide:not(:disabled):hover {
+      background-color: var(--hover-bg);
+      color: var(--hover-text);
+    }
+  }
+</style>
+
 {%- liquid
   assign btn_variant  = variant  | default: 'solid'
   assign btn_color    = color    | default: 'dark'
@@ -54,34 +67,54 @@
   case btn_color
   when 'light'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-50 border-stone-50 hover:bg-stone-50 hover:text-stone-900'
+      assign color_cls = 'bg-transparent text-stone-50 border-stone-50'
+      assign hover_bg = '#fafaf9'
+      assign hover_text = '#1c1917'
     else
-      assign color_cls = 'bg-stone-50 text-stone-900 border-stone-50 hover:bg-stone-200 hover:border-stone-200'
+      assign color_cls = 'bg-stone-50 text-stone-900 border-stone-50'
+      assign hover_bg = '#e7e5e4'
+      assign hover_text = '#1c1917'
     endif
   when 'teal'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-teal-900 border-teal-900 hover:bg-teal-900 hover:text-stone-50'
+      assign color_cls = 'bg-transparent text-teal-900 border-teal-900'
+      assign hover_bg = '#134e4a'
+      assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-teal-900 text-stone-50 border-teal-900 hover:bg-teal-800 hover:border-teal-800'
+      assign color_cls = 'bg-teal-900 text-stone-50 border-teal-900'
+      assign hover_bg = '#115e59'
+      assign hover_text = '#fafaf9'
     endif
   when 'amber'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-amber-700 border-amber-700 hover:bg-amber-700 hover:text-stone-50'
+      assign color_cls = 'bg-transparent text-amber-700 border-amber-700'
+      assign hover_bg = '#b45309'
+      assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-amber-700 text-stone-50 border-amber-700 hover:bg-amber-800 hover:border-amber-800'
+      assign color_cls = 'bg-amber-700 text-stone-50 border-amber-700'
+      assign hover_bg = '#92400e'
+      assign hover_text = '#fafaf9'
     endif
   when 'muted'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-400 border-stone-400 hover:bg-stone-400 hover:text-stone-50'
+      assign color_cls = 'bg-transparent text-stone-400 border-stone-400'
+      assign hover_bg = '#a8a29e'
+      assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-stone-400 text-stone-50 border-stone-400 hover:bg-stone-500 hover:border-stone-500'
+      assign color_cls = 'bg-stone-400 text-stone-50 border-stone-400'
+      assign hover_bg = '#78716c'
+      assign hover_text = '#fafaf9'
     endif
   else
     # dark（デフォルト）
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-900 border-stone-900 hover:bg-stone-900 hover:text-stone-50'
+      assign color_cls = 'bg-transparent text-stone-900 border-stone-900'
+      assign hover_bg = '#1c1917'
+      assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-stone-900 text-stone-50 border-stone-900 hover:bg-stone-800 hover:border-stone-800'
+      assign color_cls = 'bg-stone-900 text-stone-50 border-stone-900'
+      assign hover_bg = '#ffffff'
+      assign hover_text = '#0c0a09'
     endif
   endcase
 
@@ -95,7 +128,7 @@
     assign disabled_cls = 'opacity-40 cursor-not-allowed pointer-events-none'
   endif
 
-  assign base_cls = 'inline-flex items-center justify-center border font-sans tracking-wide transition-colors duration-200 select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt tracking-wider'
+  assign base_cls = 'btn-slide inline-flex items-center justify-center border font-sans tracking-wide select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt tracking-wider'
   assign icon_svg_cls = icon_cls | append: ' flex-shrink-0'
 -%}
 
@@ -114,13 +147,14 @@
 {%- assign all_cls = base_cls | append: ' ' | append: size_cls | append: ' ' | append: color_cls | append: ' ' | append: width_cls | append: ' ' | append: disabled_cls | append: ' ' | append: class -%}
 
 {%- if url and disabled == false -%}
-  <a href="{{ url }}" class="{{ all_cls }}" {{ attr }}>
+  <a href="{{ url }}" class="{{ all_cls }}" style="--hover-bg: {{ hover_bg }}; --hover-text: {{ hover_text }};" {{ attr }}>
     {{ btn_inner }}
   </a>
 {%- else -%}
   <button
     type="{{ type | default: 'button' }}"
     class="{{ all_cls }}"
+    style="--hover-bg: {{ hover_bg }}; --hover-text: {{ hover_text }};"
     {% if disabled %}disabled aria-disabled="true"{% endif %}
     {{ attr }}
   >

@@ -56,7 +56,7 @@
   endcase
 -%}
 
-<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ badge_bg }} {{ badge_text }} font-medium palt tracking-wider leading-tight whitespace-nowrap uppercase">
+<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ badge_bg }} {{ badge_text }} font-medium palt tracking-wider leading-tight whitespace-nowrap uppercase align-middle">
   {%- if icon_left != blank -%}
     {%- render 'icon', icon: icon_left, class: icon_cls -%}
   {%- endif -%}

@@ -3,19 +3,19 @@
   使用: templates/product.json に追加して使用
 
   対応メタフィールド (名前空間: custom):
-    volume            {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
-    benefits          {list.metaobject_reference}      効能・効果リスト (product_benefits: number, description, category)
-    key_ingredients   {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient.name_ja, ingredient.article, amount）
-    certifications    {list.metaobject_reference}      製品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
-    skin_type         {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
-    ph_level          {single_line_text_field}         pHレベル
-    origin            {single_line_text_field}         原産国
-    texture           {single_line_text_field}         テクスチャー
-    usage_timing      {multi_line_text_field}          使用タイミング
-    all_ingredients   {multi_line_text_field}          全成分テキスト
-    usage_method      {richtext}                       使用方法テキスト
-    wargnins          {richtext}                       注意事項テキスト
-    shipping_return   {richtext}                       配送・返品情報（省略時は管理画面設定を使用）
+    volume              {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
+    benefits            {list.metaobject_reference}      効能・効果リスト (product_benefits: number, description, category)
+    key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient.name_ja, ingredient.article, amount）
+    certifications      {list.metaobject_reference}      製品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
+    skin_type           {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
+    ph_level            {single_line_text_field}         pHレベル
+    origin              {single_line_text_field}         原産国
+    texture             {single_line_text_field}         テクスチャー
+    all_ingredients     {multi_line_text_field}          全成分テキスト
+    all_ingredients_ja  {multi_line_text_field}          全成分テキスト（日本語）
+    usage_timing        {multi_line_text_field}          使用タイミング
+    usage_method        {richtext}                       使用方法テキスト
+    how_to_store        {richtext}                       保管方法テキスト
 {% endcomment %}
 
 {%- liquid
@@ -29,24 +29,37 @@
   assign rating_value = product.metafields.judgeme.avg_rating
   assign rating_count = product.metafields.judgeme.review_count
 
-  assign volume           = product.metafields.custom.volume
-  assign product_benefits = product.metafields.custom.product_benefits.value
-  assign key_ingredients  = product.metafields.custom.key_ingredients.value
-  assign certifications   = product.metafields.custom.certifications.value
-  assign skin_types       = product.metafields.shopify.suitable-for-skin-type.value
-  assign ph_level         = product.metafields.custom.ph_level
-  assign origin           = product.metafields.custom.origin
-  assign texture          = product.metafields.custom.texture
-  assign usage_timing     = product.metafields.custom.usage_timing
-  assign all_ingredients  = product.metafields.custom.all_ingredients
-  assign usage_method     = product.metafields.custom.usage_method
-  assign wargnins         = product.metafields.custom.wargnins
-  assign shipping_return  = product.metafields.custom.shipping_return
+  assign volume             = product.metafields.custom.volume
+  assign product_benefits   = product.metafields.custom.product_benefits.value
+  assign key_ingredients    = product.metafields.custom.key_ingredients.value
+  assign certifications     = product.metafields.custom.certifications.value
+  assign skin_types         = product.metafields.shopify.suitable-for-skin-type.value
+  assign ph_level           = product.metafields.custom.ph_level
+  assign origin             = product.metafields.custom.origin
+  assign texture            = product.metafields.custom.texture
+  assign all_ingredients    = product.metafields.custom.all_ingredients
+  assign all_ingredients_ja = product.metafields.custom.all_ingredients_ja | default: all_ingredients
+  assign usage_timing       = product.metafields.custom.usage_timing
+  assign usage_method       = product.metafields.custom.usage_method
+  assign how_to_store       = product.metafields.custom.how_to_store
 -%}
 
 {%- comment %}======================================================
   商品情報セクション
 ======================================================{%- endcomment %}
+<style>
+  .btn-add-to-cart {
+    transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  @media (any-hover: hover) {
+    .btn-add-to-cart:not(:disabled):hover {
+      background-color: #ffffff;
+      color: #0c0a09;
+    }
+  }
+</style>
+
 <script>
   function productPageData() {
     return {
@@ -135,7 +148,12 @@
           <p class="text-sm text-stone-900 opacity-50 leading-tight">{{ product.vendor }}</p>
         {%- endif -%}
 
-        <h1 class="text-3xl font-medium leading-tight text-stone-900 palt tracking-wider">{{ product.title }}</h1>
+        <div class="flex flex-wrap items-start gap-2">
+          <h1 class="text-3xl font-medium leading-tight text-stone-900 palt tracking-wider">{{ product.title }}
+          {%- if product.tags contains 'new' or product.tags contains 'NEW' or product.tags contains 'New' -%}
+            {%- render 'badge', label: 'NEW', variant: 'accent', size: 'sm' -%}
+          {%- endif -%}</h1>
+        </div>
 
         {%- if volume != blank -%}
           <p class="text-sm text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
@@ -162,7 +180,7 @@
         {%- if on_sale -%}
           <s class="text-base text-stone-900 opacity-50 leading-tight">{{ variant.compare_at_price | money }}</s>
         {%- endif -%}
-        <span class="text-sm text-stone-900 leading-tight">(税込)</span>
+        <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
           {%- assign discount_label = discount | append: '% OFF' -%}
           {%- render 'badge', label: discount_label, variant: 'premium', size: 'sm' -%}
@@ -173,11 +191,11 @@
       {%- if product_benefits != blank -%}
         <div class="flex flex-col gap-2">
           {%- for product_benefit in product_benefits -%}
-            <div class="flex items-start gap-2">
+            <div class="flex items-center gap-2">
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 8.55556L6.8 13L14 3" stroke="#0B4F4A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <p class="text-sm text-stone-900 leading-relaxed">{{ product_benefit.description }}</p>
+              <p class="text-sm text-stone-900 leading-relaxed">{{ product_benefit.benefit }}</p>
             </div>
           {%- endfor -%}
         </div>
@@ -192,7 +210,7 @@
             </svg>
             <span class="text-sm font-medium text-stone-900 leading-tight">注目の成分</span>
           </div>
-          <ul class="flex flex-col gap-2 text-sm text-stone-900 leading-relaxed">
+          <ul class="flex flex-col gap-1 text-sm text-stone-900 leading-relaxed">
             {%- for key_ingredient in key_ingredients -%}
               {%- assign ingredient = key_ingredient.ingredient.value -%}
               {%- assign article = ingredient.article.value -%}
@@ -203,7 +221,7 @@
                   {{ ingredient.name_ja }}
                 {%- endif -%}
                 {%- if key_ingredient.amount != blank -%}
-                  &nbsp;-&nbsp;{{ key_ingredient.amount }}
+                  &nbsp;({{ key_ingredient.amount }})
                 {%- endif -%}
               </li>
             {%- endfor -%}
@@ -277,7 +295,7 @@
 
         <button
           type="button"
-          class="flex-1 bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 transition-opacity focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          class="btn-add-to-cart flex-1 bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
           :class="(adding || !variantAvailable) ? 'opacity-70 cursor-wait' : ''"
           @click="addToCart()"
           :disabled="adding || !variantAvailable"
@@ -313,11 +331,6 @@
               <span class="font-medium">テクスチャー：</span>{{ texture }}
             </p>
           {%- endif -%}
-          {%- if usage_timing != blank -%}
-            <p class="text-sm text-stone-900 leading-relaxed">
-              <span class="font-medium">使用タイミング：</span>{{ usage_timing }}
-            </p>
-          {%- endif -%}
         </div>
       {%- endif -%}
 
@@ -336,7 +349,7 @@
 
     {%- comment %} タブバー {%- endcomment %}
     <div class="flex h-[48px]" role="tablist">
-      {%- assign tab_names = '全成分,ご使用方法,ご注意,配送・返品について' | split: ',' -%}
+      {%- assign tab_names = '全成分,ご使用方法,使用タイミング,保管方法' | split: ',' -%}
       {%- for tab_name in tab_names -%}
         {%- assign tab_i = forloop.index0 -%}
         <button
@@ -354,7 +367,9 @@
     <div class="py-10">
 
       <div x-show="activeTab === 0" role="tabpanel">
-        {%- if all_ingredients != blank -%}
+        {%- if all_ingredients_ja != blank -%}
+          <p class="text-base text-stone-900 leading-relaxed">{{ all_ingredients_ja | newline_to_br }}</p>
+        {%- elsif all_ingredients != blank -%}
           <p class="text-base text-stone-900 leading-relaxed">{{ all_ingredients | newline_to_br }}</p>
         {%- else -%}
           <p class="text-stone-400 text-sm">成分情報は現在準備中です。</p>
@@ -370,20 +385,18 @@
       </div>
 
       <div x-show="activeTab === 2" x-cloak role="tabpanel">
-        {%- if wargnins != blank -%}
-          <div class="text-base text-stone-900 leading-relaxed">{{ wargnins }}</div>
+        {%- if usage_timing != blank -%}
+          <div class="text-base text-stone-900 leading-relaxed">{{ usage_timing }}</div>
         {%- else -%}
-          <p class="text-stone-400 text-sm">注意事項は現在準備中です。</p>
+          <p class="text-stone-400 text-sm">使用タイミングは現在準備中です。</p>
         {%- endif -%}
       </div>
 
       <div x-show="activeTab === 3" x-cloak role="tabpanel">
-        {%- if shipping_return != blank -%}
-          <div class="text-base text-stone-900 leading-relaxed">{{ shipping_return }}</div>
-        {%- elsif section.settings.shipping_return_content != blank -%}
-          <div class="text-base text-stone-900 leading-relaxed">{{ section.settings.shipping_return_content }}</div>
+        {%- if how_to_store != blank -%}
+          <div class="text-base text-stone-900 leading-relaxed">{{ how_to_store }}</div>
         {%- else -%}
-          <p class="text-stone-400 text-sm">配送・返品情報は現在準備中です。</p>
+          <p class="text-stone-400 text-sm">保管方法は現在準備中です。</p>
         {%- endif -%}
       </div>
 
@@ -398,7 +411,7 @@
 ======================================================{%- endcomment %}
 {%- if section.settings.show_import_notice -%}
 <section class="bg-stone-50 px-10 py-[60px]">
-  <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-8">
     <div class="flex flex-col gap-4 p-4 bg-amber-50 border border-amber-200 text-sm leading-relaxed">
       <p class="font-semibold text-stone-900">&#9888; 個人輸入代行に関する重要なご注意</p>
 
@@ -511,12 +524,6 @@
     {
       "type": "header",
       "content": "配送・返品タブ"
-    },
-    {
-      "type": "richtext",
-      "id": "shipping_return_content",
-      "label": "配送・返品の内容",
-      "info": "商品メタフィールド（custom.shipping_return）が設定されている場合はそちらが優先されます"
     },
     {
       "type": "header",

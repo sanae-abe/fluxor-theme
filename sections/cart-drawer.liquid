@@ -18,7 +18,7 @@
   <!-- ヘッダー -->
   <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
     <h2 class="text-sm tracking-widest uppercase">
-      Cart
+      カート
       <span x-text="$store.cart.itemCount > 0 ? '(' + $store.cart.itemCount + ')' : ''" class="text-stone-400"></span>
     </h2>
     <button
@@ -93,12 +93,11 @@
       <span x-text="new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format($store.cart.items.reduce((s, i) => s + i.final_line_price, 0) / 100)"></span>
     </div>
     <p class="text-xs text-stone-400 text-center">送料・消費税は購入手続き時に確認できます</p>
-    <a
-      href="{{ routes.cart_url }}"
-      class="block w-full text-center bg-stone-900 text-stone-50 py-3 text-sm tracking-wide hover:bg-stone-800 transition-colors"
-    >
-      購入手続きへ
-    </a>
+    {%- render 'button',
+      label: '購入手続きへ',
+      url: routes.cart_url,
+      full_width: true
+    -%}
   </div>
 </div>
 
