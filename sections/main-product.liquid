@@ -116,7 +116,7 @@
       {%- comment %} サムネイル {%- endcomment %}
       {%- if product.images.size > 1 -%}
         <div class="grid grid-cols-4 gap-3">
-          {%- for image in product.images limit: 4 -%}
+          {%- for image in product.images limit: 12 -%}
             {%- assign thumb_url = image | image_url: width: 800 -%}
             <button
               type="button"
