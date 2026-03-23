@@ -5,7 +5,7 @@
   <div class="max-w-screen-xl mx-auto flex items-center justify-between h-20">
 
     <!-- ロゴ -->
-    <a href="{{ routes.root_url }}" class="flex-shrink-0" aria-label="{{ shop.name | escape }}">
+    {%- capture logo_inner -%}
       {%- if settings.logo -%}
         <img
           src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
@@ -30,7 +30,18 @@
           </defs>
         </svg>
       {%- endif -%}
-    </a>
+    {%- endcapture -%}
+    {%- if template.name == 'index' -%}
+      <h1 class="flex-shrink-0 leading-none m-0">
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+          {{ logo_inner }}
+        </a>
+      </h1>
+    {%- else -%}
+      <a href="{{ routes.root_url }}" class="flex-shrink-0" aria-label="{{ shop.name | escape }}">
+        {{ logo_inner }}
+      </a>
+    {%- endif -%}
 
     <!-- ナビゲーション（デスクトップ） -->
     <nav class="hidden md:flex items-center gap-10" aria-label="Main">
