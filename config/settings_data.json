@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "current": {
     "color_background": "#F6F4F0",
@@ -6,7 +15,41 @@
     "color_button": "#1A1714",
     "color_button_text": "#F6F4F0",
     "color_accent": "#2A3B35",
-    "logo_width": 120
+    "logo_width": 120,
+    "sections": {
+      "announcement-bar": {
+        "type": "announcement-bar",
+        "settings": {
+          "text": "オープン記念セール開催中🎉全商品20%オフ！"
+        }
+      },
+      "header": {
+        "type": "header",
+        "settings": {
+          "menu": "main-menu"
+        }
+      },
+      "cart-drawer": {
+        "type": "cart-drawer",
+        "settings": {}
+      },
+      "footer": {
+        "type": "footer",
+        "settings": {
+          "menu_1": "footer",
+          "menu_1_title": "Quick Links",
+          "menu_2": "info",
+          "menu_2_title": "Information",
+          "privacy_url": "",
+          "social_instagram_url": "",
+          "social_x_url": "",
+          "social_tiktok_url": "",
+          "import_notice_footer": "当店は商品の販売者ではなく、お客様に代わって海外事業者から商品を手配する「個人輸入代行」サービスです。海外コスメは日本の薬機法に基づく承認を受けておらず、ご使用はお客様の自己責任となります。個人輸入品の転売は法律により禁じられています。商品代金が約16,666円を超える場合、関税・消費税等が別途発生する場合があります（お客様負担）。発注完了後のキャンセル・返品は原則お受けできません。",
+          "disclaimer": "エイジングケア：年齢に応じた潤いによるお手入れのこと。 ニキビケア：洗浄により肌を清浄にし、ニキビを防ぐこと。 毛穴ケア：潤いを与え、キメを整えることで毛穴を目立たなくすること。 美白：メラニンの生成を抑え、シミ・そばかすを防ぐこと（※医薬部外品の場合）。 浸透：角質層まで。"
+        }
+      }
+    },
+    "content_for_index": []
   },
   "presets": {}
 }

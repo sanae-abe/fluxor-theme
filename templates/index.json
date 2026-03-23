@@ -58,7 +58,7 @@
         "badge_icon_right": "",
         "heading": "レチノール",
         "paragraph": "<p>科学的に研究が進む美容成分の一つ。使い続けることで肌のキメを整え、うるおいとともにハリ感をサポートします。</p>",
-        "button_url": "",
+        "button_url": "shopify://blogs/ingredients/retinol",
         "button_label": "成分について詳しく見る",
         "button_icon_left": "",
         "button_icon_right": "arrow-right"
@@ -116,8 +116,8 @@
         "enable_particles": true,
         "heading": "Curated with Conviction",
         "tagline": "信頼できるものだけを。",
-        "paragraph": "<p>成分表を読み込み、ブランドの背景を調べ、実際に自分たちで使って確かめる。<br>その積み重ねから生まれた、Fluxorのスキンケアセレクション。</p>",
-        "button_url": "",
+        "paragraph": "<p>成分表を読み込み、ブランドの背景を調べ、実際に自分たちで使って確かめる。<br/>その積み重ねから生まれた、Fluxorのスキンケアセレクション。</p>",
+        "button_url": "shopify://pages/about",
         "button_label": "Fluxorについて"
       }
     }
