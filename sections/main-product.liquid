@@ -5,7 +5,7 @@
   対応メタフィールド (名前空間: custom):
     volume              {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
     benefits            {list.metaobject_reference}      効能・効果リスト (product_benefits: number, description, category)
-    key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient.name_ja, ingredient.article, amount）
+    key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient, ingredient.article, amount）
     certifications      {list.metaobject_reference}      製品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
     skin_type           {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
     ph_level            {single_line_text_field}         pHレベル
@@ -216,9 +216,9 @@
               {%- assign article = ingredient.article.value -%}
               <li class="list-disc ml-5">
                 {%- if article != blank -%}
-                  <a href="{{ article.url }}" class="underline hover:opacity-70 transition-opacity">{{ ingredient.name_ja }}</a>
+                  <a href="{{ article.url }}" class="underline hover:opacity-70 transition-opacity">{{ key_ingredient.ingredient }}</a>
                 {%- else -%}
-                  {{ ingredient.name_ja }}
+                  {{ key_ingredient.ingredient }}
                 {%- endif -%}
                 {%- if key_ingredient.amount != blank -%}
                   &nbsp;({{ key_ingredient.amount }})

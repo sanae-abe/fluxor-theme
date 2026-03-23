@@ -56,7 +56,7 @@
       :class="current === {{ forloop.index0 }} ? 'opacity-100' : 'opacity-0 pointer-events-none'"
     >
       <div class="max-w-screen-xl mx-auto px-10 py-[60px] w-full">
-        <div class="max-w-[640px] flex flex-col gap-8">
+        <div class="max-w-[640px] flex flex-col gap-8 items-start">
 
           <!-- テキストグループ -->
           <div class="flex flex-col gap-5">
@@ -79,25 +79,19 @@
 
           <!-- CTAボタン -->
           {%- if block.settings.cta_label != blank and block.settings.cta_url != blank -%}
-            <a
-              href="{{ block.settings.cta_url }}"
-              class="inline-flex items-center gap-4 self-start border-2 border-stone-50 text-stone-50 px-5 py-[21px] text-xl font-medium min-w-[216px] hover:bg-stone-50 hover:text-stone-900 transition-colors duration-200"
-              {% if block.settings.cta_target %}target="_blank" rel="noopener noreferrer"{% endif %}
-            >
-              <span>{{ block.settings.cta_label }}</span>
-              {%- if block.settings.cta_icon -%}
-                <img
-                  src="{{ block.settings.cta_icon | image_url: width: 48 }}"
-                  alt=""
-                  class="w-6 h-6 flex-shrink-0"
-                  aria-hidden="true"
-                >
-              {%- else -%}
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-6 h-6 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-                </svg>
-              {%- endif -%}
-            </a>
+            {%- assign cta_attr = '' -%}
+            {%- if block.settings.cta_target -%}
+              {%- assign cta_attr = 'target="_blank" rel="noopener noreferrer"' -%}
+            {%- endif -%}
+            {%- render 'button',
+              label: block.settings.cta_label,
+              url: block.settings.cta_url,
+              variant: 'outline',
+              color: 'light',
+              size: 'lg',
+              icon_right: 'arrow-right',
+              attr: cta_attr
+            -%}
           {%- endif -%}
 
         </div>

@@ -10,12 +10,10 @@
 
 {%- if section.settings.color_scheme == 'bg-stone-950' or has_bg_image -%}
   {%- assign text_color = 'text-stone-50' -%}
-  {%- assign border_color = 'border-stone-50' -%}
-  {%- assign btn_hover = 'hover:bg-stone-50 hover:text-stone-900' -%}
+  {%- assign btn_color = 'light' -%}
 {%- else -%}
   {%- assign text_color = 'text-stone-900' -%}
-  {%- assign border_color = 'border-stone-900' -%}
-  {%- assign btn_hover = 'hover:bg-stone-900 hover:text-stone-50' -%}
+  {%- assign btn_color = 'dark' -%}
 {%- endif -%}
 
 
@@ -136,24 +134,14 @@
 
       <!-- Button -->
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
-        <a
-          href="{{ section.settings.button_url }}"
-          class="inline-flex items-center gap-3 border-2 {{ border_color }} {{ text_color }} px-[18px] py-3 min-h-[60px] min-w-[180px] justify-center {{ btn_hover }} transition-colors duration-200"
-        >
-          <span class="text-lg font-medium">{{ section.settings.button_label }}</span>
-          {%- if section.settings.button_icon != blank -%}
-            <img
-              src="{{ section.settings.button_icon | image_url: width: 48 }}"
-              alt=""
-              class="w-5 h-5 flex-shrink-0"
-              aria-hidden="true"
-            >
-          {%- else -%}
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
-              <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 4.5L21 12m0 0l-7.5 7.5M21 12H3" />
-            </svg>
-          {%- endif -%}
-        </a>
+        {%- render 'button',
+          label: section.settings.button_label,
+          url: section.settings.button_url,
+          variant: 'outline',
+          color: btn_color,
+          size: 'lg',
+          icon_right: 'arrow-right'
+        -%}
       {%- endif -%}
 
     </div>

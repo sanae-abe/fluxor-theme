@@ -44,6 +44,18 @@
         >{{ form.body }}</textarea>
       </div>
 
+      <div class="flex items-start gap-3">
+        <input
+          type="checkbox"
+          id="ContactForm-privacy"
+          required
+          class="mt-0.5 w-4 h-4 accent-stone-900 focus-visible:outline focus-visible:outline-2 focus-visible:outline-stone-900"
+        >
+        <label for="ContactForm-privacy" class="text-sm text-stone-600 leading-relaxed">
+          <a href="{{ shop.privacy_policy.url | default: '/policies/privacy-policy' }}" class="underline hover:text-stone-900 transition-colors" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
+        </label>
+      </div>
+
       {%- render 'button',
         label: '送信する',
         type: 'submit',

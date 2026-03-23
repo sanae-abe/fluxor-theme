@@ -60,18 +60,16 @@
 
         <!-- ボタン -->
         {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
-          <a
-            href="{{ section.settings.button_url }}"
-            class="self-start inline-flex items-center gap-3 border-2 border-stone-900 text-stone-900 px-[18px] py-3 min-h-[60px] min-w-[180px] justify-center hover:bg-stone-900 hover:text-stone-50 transition-colors duration-200"
-          >
-            {%- if section.settings.button_icon_left != blank -%}
-              {%- render 'icon', icon: section.settings.button_icon_left, class: 'w-5 h-5 flex-shrink-0' -%}
-            {%- endif -%}
-            <span class="text-lg font-medium">{{ section.settings.button_label }}</span>
-            {%- if section.settings.button_icon_right != blank -%}
-              {%- render 'icon', icon: section.settings.button_icon_right, class: 'w-5 h-5 flex-shrink-0' -%}
-            {%- endif -%}
-          </a>
+          {%- render 'button',
+            label: section.settings.button_label,
+            url: section.settings.button_url,
+            variant: 'outline',
+            color: 'dark',
+            size: 'lg',
+            icon_left: section.settings.button_icon_left,
+            icon_right: section.settings.button_icon_right,
+            class: 'self-start'
+          -%}
         {%- endif -%}
 
       </div>
