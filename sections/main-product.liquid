@@ -5,7 +5,7 @@
   対応メタフィールド (名前空間: custom):
     title_notes         {list.single_line_text_field}    タイトル注釈リスト（例: 透明感：うるおいを与え、キメを整えることによる）
     volume              {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
-    benefits            {list.metaobject_reference}      効能・効果リスト (product_benefits: number, description, category)
+    product_benefits    {list.single_line_text_field}    効能・効果リスト
     key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient, ingredient.article, amount）
     certifications      {list.metaobject_reference}      製品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
     skin_type           {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
@@ -229,7 +229,7 @@
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 8.55556L6.8 13L14 3" stroke="#0B4F4A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <p class="text-stone-900 leading-relaxed">{{ product_benefit.benefit }}</p>
+              <p class="text-stone-900 leading-relaxed">{{ product_benefit }}</p>
             </div>
           {%- endfor -%}
         </div>
