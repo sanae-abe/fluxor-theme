@@ -356,7 +356,7 @@ button.jm-custom-answer-filter--active {
 .jdgm-review-list {
   display: flex !important;
   flex-direction: column !important;
-  gap: 2rem !important;
+  gap: 1rem !important;
 }
 
 .jm-box {
