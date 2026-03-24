@@ -317,10 +317,17 @@
   display: flex !important;
   flex-direction: column !important;
   gap: 2rem !important;
+}
+
+.jm-box {
   padding: 2rem !important;
   border: 1px solid #E7E5E4 important;
 }
 
 .jm-reviewer-avatar {
   display: none !important;
+}
+
+.jm-star-rating__font-icon {
+  font-size: 1rem !important;
 }
