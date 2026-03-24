@@ -87,19 +87,19 @@
   </div>
 
   <!-- 商品情報 + カートボタン -->
-  <div class="flex items-end justify-between p-4 gap-3">
+  <div class="p-4">
 
     <!-- 左：テキスト情報 -->
     <a href="{{ product.url }}" class="flex flex-col gap-2 min-w-0">
-
       <!-- ベンダー -->
       {%- if product.vendor != blank -%}
         <p class="text-sm leading-tight text-stone-900 opacity-60 truncate">{{ product.vendor }}</p>
       {%- endif -%}
-
       <!-- タイトル -->
       <h3 class="text-xl font-medium leading-tight text-stone-900">{{ product.title }}</h3>
+    </a>
 
+    <div class="flex justify-between gap-3 mt-4">
       <!-- 評価 -->
       {%- if rating_value != blank -%}
         <div class="flex items-center gap-2">
@@ -114,7 +114,6 @@
           {%- endif -%}
         </div>
       {%- endif -%}
-
       <!-- 価格 -->
       <div class="flex items-center gap-2">
         {%- if on_sale -%}
@@ -122,26 +121,24 @@
         {%- endif -%}
         <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
       </div>
+      <!-- 右：カートに追加ボタン -->
+      {%- if product.available -%}
+        <button
+          type="button"
+          class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2"
+          :class="adding ? 'opacity-70 cursor-wait' : ''"
+          @click.stop="addToCart()"
+          :disabled="adding"
+        >
+          <span class="font-medium leading-tight" x-show="!adding">カートに追加</span>
+          <span class="font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
+        </button>
+      {%- else -%}
+        <span class="flex-shrink-0 border-2 border-stone-300 text-stone-400 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 font-medium leading-tight">
+          売り切れ
+        </span>
+      {%- endif -%}
 
-    </a>
-
-    <!-- 右：カートに追加ボタン -->
-    {%- if product.available -%}
-      <button
-        type="button"
-        class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[44px] min-w-[144px] px-4 py-2"
-        :class="adding ? 'opacity-70 cursor-wait' : ''"
-        @click.stop="addToCart()"
-        :disabled="adding"
-      >
-        <span class="text-sm font-medium leading-tight" x-show="!adding">カートに追加</span>
-        <span class="text-sm font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
-      </button>
-    {%- else -%}
-      <span class="flex-shrink-0 border-2 border-stone-300 text-stone-400 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 text-sm font-medium leading-tight">
-        売り切れ
-      </span>
-    {%- endif -%}
-
+    </div>
   </div>
 </article>
