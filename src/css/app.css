@@ -373,6 +373,7 @@ button.jm-custom-answer-filter--active {
 }
 
 .jm-pagination-controls {
+  margin-top: 2rem !important;
   margin-bottom: 0 !important;
 }
 
