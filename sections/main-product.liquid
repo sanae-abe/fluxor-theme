@@ -575,16 +575,6 @@
 
 
 {%- comment %}======================================================
-  Judge.me レビューウィジェット
-======================================================{%- endcomment %}
-<section class="bg-white px-10 py-[60px]">
-  <div class="max-w-screen-xl mx-auto">
-    {% render 'judgeme_widgets', widget_type: 'judgeme_product_reviews', jdgm_product: product, product: product %}
-  </div>
-</section>
-
-
-{%- comment %}======================================================
   関連商品セクション
 ======================================================{%- endcomment %}
 {%- assign related_col = collections[section.settings.related_collection] -%}
