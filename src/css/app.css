@@ -305,12 +305,26 @@
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 
+.jm-review-item {
+  margin-top:  0 !important;
+}
+
+.jm-reviewer-info,
+.jm-review-content {
+  margin-top: 0.5rem !important;
+}
+
 .jm-text.jm-review-content__title {
   font-size: 1rem !important;
+  font-weight: 500 !important;
 }
 
 .jdgm-review-content__body-content {
   font-size: 0.875rem !important;
+}
+
+.jm-reviewer-info__name {
+  font-weight: 500 !important;
 }
 
 .jdgm-review-list {
@@ -320,7 +334,7 @@
 }
 
 .jm-box {
-  padding: 2rem !important;
+  padding: 1rem !important;
   border: 1px solid #E7E5E4 !important;
 }
 
