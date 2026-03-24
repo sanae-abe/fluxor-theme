@@ -18,38 +18,13 @@
         "import_notice_resale": "個人輸入された商品は、輸入したご本人のみが使用することを前提としています。第三者への譲渡・転売（メルカリ等での販売を含む）は日本の法律により固く禁じられています。",
         "import_notice_customs": "化粧品の個人輸入には数量制限がございます（標準サイズで1品目につき24個まで）。制限を超えるご注文があった場合、分割発送のご相談をさせていただく場合がございます。また、ご購入金額（商品代金）が日本円で約16,666円を超える場合、日本の税関で関税・消費税等が発生する場合がございます。その際に発生した税金等につきましては、お客様（輸入者様）のご負担となりますので予めご了承ください。",
         "import_notice_returns": "個人輸入代行というサービスの性質上、海外事業者への発注が完了した後のキャンセル、返品、交換は原則としてお受けできません。ただし、商品到着時に明らかな破損・液漏れ、またはご注文と異なる商品が届いた場合に限り、到着後3日以内にご連絡いただければ、海外事業者への返金・再送の交渉をサポートいたします。",
-        "shipping_return_content": "",
         "related_heading": "あわせてお試しください",
         "related_collection": "",
         "related_products_count": 4
       }
-    },
-    "17740954503b223a79": {
-      "type": "apps",
-      "blocks": {
-        "judge_me_reviews_preview_badge_RF6hQP": {
-          "type": "shopify://apps/judge-me-reviews/blocks/preview_badge/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {}
-        },
-        "judge_me_reviews_review_widget_qxUUPG": {
-          "type": "shopify://apps/judge-me-reviews/blocks/review_widget/61ccd3b1-a9f2-4160-9fe9-4fec8413e5d8",
-          "settings": {
-            "review_data": "sample_data",
-            "max_width": 1200,
-            "show_shop_reviews": true,
-            "empty_state": "empty_widget"
-          }
-        }
-      },
-      "block_order": [
-        "judge_me_reviews_preview_badge_RF6hQP",
-        "judge_me_reviews_review_widget_qxUUPG"
-      ],
-      "settings": {}
     }
   },
   "order": [
-    "main",
-    "17740954503b223a79"
+    "main"
   ]
 }
