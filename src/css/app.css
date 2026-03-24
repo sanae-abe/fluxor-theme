@@ -306,9 +306,9 @@
 [x-cloak] { display: none !important; }
 
 .jm-text {
-  font-size: 1rem;
+  font-size: 1rem !important;
 }
 
 .jdgm-review-content__body-content {
-  font-size: 0.875rem;
+  font-size: 0.875rem !important;
 }
