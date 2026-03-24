@@ -52,10 +52,10 @@
   <!-- ── コンテンツレイヤー ──────────────────────────── -->
   {%- for block in section.blocks -%}
     <div
-      class="absolute inset-0 flex items-center transition-opacity duration-700"
+      class="absolute inset-0 flex items-center transition-opacity duration-700 px-10"
       :class="current === {{ forloop.index0 }} ? 'opacity-100' : 'opacity-0 pointer-events-none'"
     >
-      <div class="max-w-screen-xl mx-auto px-10 py-[60px] w-full">
+      <div class="max-w-screen-xl mx-auto py-[60px] w-full">
         <div class="max-w-[640px] flex flex-col gap-8 items-start">
 
           <!-- テキストグループ -->
@@ -71,7 +71,7 @@
             {%- endif -%}
 
             {%- if block.settings.subheading != blank -%}
-              <p class="text-stone-500 text-2xl leading-tight">
+              <p class="text-stone-200 text-2xl leading-tight">
                 {{ block.settings.subheading }}
               </p>
             {%- endif -%}

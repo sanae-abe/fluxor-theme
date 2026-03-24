@@ -19,12 +19,12 @@
   <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
     <h2 class="text-sm tracking-widest uppercase">
       カート
-      <span x-text="$store.cart.itemCount > 0 ? '(' + $store.cart.itemCount + ')' : ''" class="text-stone-400"></span>
+      <span x-text="$store.cart.itemCount > 0 ? '(' + $store.cart.itemCount + ')' : ''" class="text-stone-500"></span>
     </h2>
     <button
       type="button"
       @click="$store.cart.open = false"
-      class="text-stone-400 hover:text-stone-900 transition-colors"
+      class="text-stone-500 hover:text-stone-900 transition-colors"
       aria-label="カートを閉じる"
     >
       <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
@@ -38,7 +38,7 @@
     <svg xmlns="http://www.w3.org/2000/svg" class="w-12 h-12 text-stone-300" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1">
       <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 3h1.386c.51 0 .955.343 1.087.835l.383 1.437M7.5 14.25a3 3 0 00-3 3h15.75m-12.75-3h11.218c1.121-2.3 2.1-4.684 2.924-7.138a60.114 60.114 0 00-16.536-1.84M7.5 14.25L5.106 5.272M6 20.25a.75.75 0 11-1.5 0 .75.75 0 011.5 0zm12.75 0a.75.75 0 11-1.5 0 .75.75 0 011.5 0z" />
     </svg>
-    <p class="text-sm text-stone-400">カートに商品がありません</p>
+    <p class="text-sm text-stone-500">カートに商品がありません</p>
     <a
       href="{{ routes.all_products_collection_url }}"
       @click="$store.cart.open = false"
@@ -64,19 +64,19 @@
 
         <!-- 情報 -->
         <div class="flex-1 min-w-0">
-          <p class="text-xs text-stone-400 mb-0.5" x-text="item.vendor"></p>
+          <p class="text-xs text-stone-500 mb-0.5" x-text="item.vendor"></p>
           <a :href="item.url" @click="$store.cart.open = false" class="text-sm font-medium leading-snug" x-text="item.product_title"></a>
-          <p x-show="item.variant_title && item.variant_title !== 'Default Title'" class="text-xs text-stone-400 mt-0.5" x-text="item.variant_title"></p>
+          <p x-show="item.variant_title && item.variant_title !== 'Default Title'" class="text-xs text-stone-500 mt-0.5" x-text="item.variant_title"></p>
 
           <div class="flex items-center justify-between mt-2">
             <p class="text-sm">
               <span x-text="new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format(item.final_line_price / 100)"></span>
-              <span class="text-xs text-stone-400">（税込）</span>
+              <span class="text-xs text-stone-500">（税込）</span>
             </p>
             <button
               type="button"
               @click="$store.cart.remove(item.key)"
-              class="text-xs text-stone-400 hover:text-stone-900 underline transition-colors"
+              class="text-xs text-stone-500 hover:text-stone-900 underline transition-colors"
             >
               削除
             </button>
@@ -92,7 +92,6 @@
       <span class="text-stone-500">小計</span>
       <span x-text="new Intl.NumberFormat('ja-JP', { style: 'currency', currency: 'JPY' }).format($store.cart.items.reduce((s, i) => s + i.final_line_price, 0) / 100)"></span>
     </div>
-    <p class="text-xs text-stone-400 text-center">送料・消費税は購入手続き時に確認できます</p>
     {%- render 'button',
       label: '購入手続きへ',
       url: routes.cart_url,
