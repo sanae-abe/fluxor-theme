@@ -42,7 +42,7 @@
 
   <!-- 画像エリア（クリックで商品ページへ） -->
   <div
-    class="relative w-full aspect-square rounded-2xl bg-stone-50 overflow-hidden [transform:translateZ(0)] cursor-pointer"
+    class="relative w-full aspect-square bg-stone-50 overflow-hidden [transform:translateZ(0)] cursor-pointer"
     @click="window.location.href='{{ product.url }}'"
   >
     <!-- 1枚目 -->
@@ -111,7 +111,8 @@
     {%- endif -%}
 
     <!-- タイトル -->
-    <h3 class="text-lg font-medium leading-tight text-stone-900">{{ product.title }}</h3>
+    {%- assign card_title = product.title | replace: '※1', '' | replace: '※2', '' | replace: '※3', '' | replace: '※4', '' | replace: '※5', '' | replace: '※', '' -%}
+    <h3 class="text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
 
     <!-- 評価 -->
     {%- if rating_value != blank -%}

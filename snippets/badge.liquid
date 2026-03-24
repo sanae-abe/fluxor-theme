@@ -19,12 +19,15 @@
 
   # ── サイズ ──────────────────────────────────────────────────────
   case badge_size
-  when 'md'
-    assign size_cls = 'px-3 py-1 text-sm gap-2'
-    assign icon_cls = 'w-[14px] h-[14px] flex-shrink-0'
-  else
+  when 'sm'
     assign size_cls = 'px-2 py-1 text-xs gap-1'
     assign icon_cls = 'w-3 h-3 flex-shrink-0'
+  when 'lg'
+    assign size_cls = 'px-3 py-2 text-md gap-2'
+    assign icon_cls = 'w-4 h-4 flex-shrink-0'
+  else
+    assign size_cls = 'px-4 py-2 text-sm gap-2'
+    assign icon_cls = 'w-[14px] h-[14px] flex-shrink-0'
   endcase
 
   # ── カラー × バリアント ─────────────────────────────────────────
