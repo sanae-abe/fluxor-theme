@@ -382,6 +382,10 @@ button.jm-custom-answer-filter--active {
   gap: 0.25rem !important;
 }
 
+.jdgm-widget div:empty {
+  display: none !important;
+}
+
 .jdgm-prev-badge__text {
   font-size: 0.875rem !important;
   color: #79716B !important;
