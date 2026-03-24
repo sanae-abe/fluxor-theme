@@ -443,7 +443,7 @@
   <div class="max-w-screen-xl mx-auto">
     <div class="flex flex-col gap-4 p-10 bg-stone-100 rounded-2xl">
       <div class="flex items-center gap-1">
-        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
           <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
           <path d="M12 9v4"/>
           <path d="M12 17h.01"/>
@@ -453,14 +453,14 @@
 
       {%- if section.settings.import_notice_declaration != blank -%}
         <div class="flex flex-col gap-1">
-          <p class="font-medium text-stone-900 text-sm">◆ 本サービスについて</p>
+          <p class="font-medium text-stone-900 text-sm">本サービスについて</p>
           <p class="text-stone-900 text-sm leading-relaxed">{{ section.settings.import_notice_declaration }}</p>
         </div>
       {%- endif -%}
 
       {%- if section.settings.import_notice_liability != blank or section.settings.import_notice_resale != blank -%}
         <div class="flex flex-col gap-1">
-          <p class="font-medium text-stone-900 text-sm">◆ ご使用上の注意と免責事項</p>
+          <p class="font-medium text-stone-900 text-sm">ご使用上の注意と免責事項</p>
           {%- if section.settings.import_notice_liability != blank -%}
             <p class="text-stone-900 text-sm leading-relaxed">{{ section.settings.import_notice_liability }}</p>
           {%- endif -%}
@@ -472,14 +472,14 @@
 
       {%- if section.settings.import_notice_customs != blank -%}
         <div class="flex flex-col gap-1">
-          <p class="font-medium text-stone-900 text-sm">◆ 関税および輸入制限について</p>
+          <p class="font-medium text-stone-900 text-sm">関税および輸入制限について</p>
           <p class="text-stone-900 text-sm leading-relaxed">{{ section.settings.import_notice_customs }}</p>
         </div>
       {%- endif -%}
 
       {%- if section.settings.import_notice_returns != blank -%}
         <div class="flex flex-col gap-1">
-          <p class="font-medium text-stone-900 text-sm">◆ キャンセル・返品・交換について</p>
+          <p class="font-medium text-stone-900 text-sm">キャンセル・返品・交換について</p>
           <p class="text-stone-900 text-sm leading-relaxed">{{ section.settings.import_notice_returns }}</p>
         </div>
       {%- endif -%}
