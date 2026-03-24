@@ -1,0 +1,8 @@
+product_handle,state,rating,title,body,reviewer_name,reviewer_email,created_at,verified_buyer,featured
+oil-free-moisturizer,published,5,使い続けて正解でした！,友人に勧められて購入しました。最初は半信半疑でしたが、2週間ほど使い続けたら肌のトーンが明らかに変わりました。朝のスキンケアが楽しみになっています。,M. Tanaka,reviewer1@example.com,2025-01-15,true,true
+oil-free-moisturizer,published,5,肌がもちもちになった,乾燥が気になる季節に使い始めました。テクスチャーが軽くてべたつかないのに、しっかり保湿される感じがお気に入りです。リピート購入しています。,S. Yamamoto,reviewer2@example.com,2025-01-22,true,false
+oil-free-moisturizer,published,4,効果を実感中,使い始めて1ヶ月が経ちました。毛穴が気になっていたのですが、少し目立ちにくくなった気がします。香りも上品で気に入っています。,K. Suzuki,reviewer3@example.com,2025-02-03,true,false
+oil-free-moisturizer,published,5,海外コスメに初挑戦,日本未発売のコスメが欲しくてこちらで購入しました。丁寧な梱包で届き、使い心地も抜群です。また購入したいと思います。,A. Ito,reviewer4@example.com,2025-02-10,true,true
+oil-free-moisturizer,published,4,コスパも満足,SNSで見かけて気になっていた商品です。日本で買うより断然お得でした。肌なじみが良く、毎日使いやすいです。,R. Watanabe,reviewer5@example.com,2025-02-18,true,false
+oil-free-moisturizer,published,5,リピート購入です,前回とても良かったのでまた購入しました。肌のキメが整ってきた気がして、メイクのノリも良くなりました。これからも使い続けます！,Y. Kobayashi,reviewer6@example.com,2025-03-01,true,false
+oil-free-moisturizer,published,3,効果は個人差あり,期待が大きすぎたのかもしれませんが、私の肌にはそこまで劇的な変化はありませんでした。ただ使い心地は良く、肌への刺激もなかったので引き続き様子を見ようと思います。,N. Kato,reviewer7@example.com,2025-03-08,true,false
