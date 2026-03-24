@@ -86,9 +86,10 @@
   }
 </script>
 
+<div x-data="productPageData()">
 <section
+  id="product-info"
   class="bg-stone-50 px-10 py-[60px]"
-  x-data="productPageData()"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-10 items-start">
 
@@ -512,6 +513,116 @@
     </div>
   </section>
 {%- endif -%}
+
+{%- comment %}======================================================
+  フローティングカートバー（スクロール追従）
+======================================================{%- endcomment %}
+<style>
+  #floating-cart-bar {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  #floating-cart-bar.is-visible {
+    transform: translateY(0);
+  }
+</style>
+
+<div
+  id="floating-cart-bar"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-stone-50 border-t border-stone-200 px-10 py-4"
+  role="complementary"
+  aria-label="クイックカート"
+  aria-hidden="true"
+>
+  <div class="max-w-screen-xl mx-auto flex items-center justify-between gap-4">
+
+    <div class="flex items-center gap-4 min-w-0">
+      <div class="w-[67px] h-[67px] shrink-0 overflow-hidden bg-stone-100">
+        {%- if product.featured_image -%}
+          <img
+            src="{{ product.featured_image | image_url: width: 200 }}"
+            alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+            class="w-full h-full object-cover"
+            width="67"
+            height="67"
+            loading="lazy"
+          >
+        {%- endif -%}
+      </div>
+      <div class="flex flex-col gap-2 min-w-0">
+        {%- if product.vendor != blank -%}
+          <p class="text-sm text-stone-500 leading-none">{{ product.vendor }}</p>
+        {%- endif -%}
+        <p class="text-base font-medium text-stone-900 leading-tight truncate">{{ product.title }}</p>
+      </div>
+    </div>
+
+    <div class="flex items-center gap-4 shrink-0">
+      <div class="flex items-end gap-2 whitespace-nowrap">
+        <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
+        {%- if on_sale -%}
+          <s class="text-base text-stone-900 opacity-50 leading-tight">{{ variant.compare_at_price | money }}</s>
+        {%- endif -%}
+      </div>
+
+      <div class="flex items-center border border-stone-200 w-[144px]">
+        <button
+          type="button"
+          class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+          @click="qty = Math.max(1, qty - 1)"
+          aria-label="数量を減らす"
+        >
+          {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
+        </button>
+        <div
+          class="flex items-center justify-center flex-1 h-12 text-base text-stone-900 select-none"
+          x-text="qty"
+          aria-live="polite"
+          aria-label="数量"
+        >1</div>
+        <button
+          type="button"
+          class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+          @click="qty++"
+          aria-label="数量を増やす"
+        >
+          {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
+        </button>
+      </div>
+
+      <button
+        type="button"
+        class="btn-add-to-cart bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+        :class="(adding || !variantAvailable) ? 'opacity-70 cursor-wait' : ''"
+        @click="addToCart()"
+        :disabled="adding || !variantAvailable"
+      >
+        <span class="text-base font-medium leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+        <span class="text-base font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+</div>{{- '' -}}{%- comment -%}x-data wrapper close{%- endcomment -%}
+
+<script>
+  (function () {
+    const bar = document.getElementById('floating-cart-bar');
+    const target = document.getElementById('product-info');
+    if (!bar || !target) return;
+
+    new IntersectionObserver(
+      ([entry]) => {
+        const visible = !entry.isIntersecting;
+        bar.classList.toggle('is-visible', visible);
+        bar.setAttribute('aria-hidden', String(!visible));
+      },
+      { threshold: 0 }
+    ).observe(target);
+  })();
+</script>
 
 {% schema %}
 {
