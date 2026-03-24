@@ -305,7 +305,7 @@
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 
-.jm-text {
+.jm-text.jm-review-content__title {
   font-size: 1rem !important;
 }
 
