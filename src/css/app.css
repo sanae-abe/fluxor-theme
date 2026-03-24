@@ -376,7 +376,7 @@ button.jm-custom-answer-filter--active {
   margin-bottom: 0 !important;
 }
 
-.jdgm-prev-badge {
+.jdgm-widget .jdgm-prev-badge {
   display: flex !important;
   align-items: center !important;
   gap: 0.25rem !important;
