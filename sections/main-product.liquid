@@ -44,6 +44,7 @@
   assign usage_timing       = product.metafields.custom.usage_timing
   assign usage_method       = product.metafields.custom.usage_method
   assign how_to_store       = product.metafields.custom.how_to_store
+  assign product_name_en    = product.metafields.custom.product_name_en
 -%}
 
 {%- comment %}======================================================
@@ -184,7 +185,9 @@
           {%- endif -%}</h1>
         </div>
 
-        <p class="text-stone-400 text-sm leading-tight">(2% Cica Exosomes Hydra Balance Oil-Free Moisturizer)</p>
+        {%- if product_name_en != blank -%}
+          <p class="text-stone-400 text-sm leading-tight">{{ product_name_en }}</p>
+        {%- endif -%}
 
         {%- if volume != blank -%}
           <p class="text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
@@ -297,9 +300,6 @@
         </div>
       {%- endunless -%}
 
-      {%- comment %} 区切り線 {%- endcomment %}
-      <hr class="border-stone-200">
-
       {%- comment %} 商品メタ情報 {%- endcomment %}
       {%- if skin_types != blank or ph_level != blank or origin != blank or texture != blank or usage_timing != blank -%}
         <div class="flex flex-wrap gap-x-8 gap-y-2">
@@ -325,6 +325,9 @@
           {%- endif -%}
         </div>
       {%- endif -%}
+
+      {%- comment %} 区切り線 {%- endcomment %}
+      <hr class="border-stone-200">
 
       {%- comment %} 数量カウンター + カートに追加 {%- endcomment %}
       <div class="flex flex-col gap-4">
@@ -444,7 +447,7 @@
   個人輸入代行に関する注意事項
 ======================================================{%- endcomment %}
 {%- if section.settings.show_import_notice -%}
-<section class="px-10 py-5">
+<section class="px-10 py-10">
   <div class="max-w-screen-xl mx-auto">
     <div class="flex flex-col gap-4 p-10 bg-stone-100">
       <div class="flex items-center gap-1">
