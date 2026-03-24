@@ -321,7 +321,7 @@
 
 .jm-box {
   padding: 2rem !important;
-  border: 1px solid #E7E5E4 important;
+  border: 1px solid #E7E5E4 !important;
 }
 
 .jm-reviewer-avatar {
