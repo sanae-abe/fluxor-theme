@@ -304,3 +304,11 @@
 
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
+
+.jm-text {
+  font-size: 1rem;
+}
+
+.jdgm-review-content__body-content {
+  font-size: 0.875rem;
+}
