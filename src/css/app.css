@@ -305,6 +305,28 @@
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 
+
+.jm-action-buttons__button {
+  border-radius: 0 !important;
+}
+
+button.jm-custom-answer-filter,
+select.jdgm-sort-dropdown.jm-sort-filter__select {
+  border-radius: 0 !important;
+  background: none !important;
+}
+
+select.jdgm-sort-dropdown.jm-sort-filter__select:hover,
+button.jm-custom-answer-filter:hover,
+button.jm-custom-answer-filter--active {
+  background: #1C1917 !important;
+  color: #fff !important;
+}
+
+.jm-review-widget {
+  padding-bottom: 0 !important;
+}
+
 .jm-review-item {
   margin-top:  0 !important;
 }
@@ -344,4 +366,8 @@
 
 .jm-star-rating__font-icon {
   font-size: 1rem !important;
+}
+
+.jm-pagination-controls {
+  margin-bottom: 0 !important;
 }
