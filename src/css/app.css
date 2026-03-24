@@ -312,3 +312,15 @@
 .jdgm-review-content__body-content {
   font-size: 0.875rem !important;
 }
+
+.jdgm-review-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 2rem !important;
+  padding: 2rem !important;
+  border: 1px solid #E7E5E4 important;
+}
+
+.jm-reviewer-avatar {
+  display: none !important;
+}
