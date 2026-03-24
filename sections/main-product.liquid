@@ -3,6 +3,7 @@
   使用: templates/product.json に追加して使用
 
   対応メタフィールド (名前空間: custom):
+    title_notes         {list.single_line_text_field}    タイトル注釈リスト（例: 透明感：うるおいを与え、キメを整えることによる）
     volume              {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
     benefits            {list.metaobject_reference}      効能・効果リスト (product_benefits: number, description, category)
     key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient, ingredient.article, amount）
@@ -29,6 +30,7 @@
   assign rating_value = product.metafields.judgeme.avg_rating
   assign rating_count = product.metafields.judgeme.review_count
 
+  assign title_notes        = product.metafields.custom.title_notes.value
   assign volume             = product.metafields.custom.volume
   assign product_benefits   = product.metafields.custom.product_benefits.value
   assign key_ingredients    = product.metafields.custom.key_ingredients.value
@@ -148,12 +150,39 @@
           <p class="text-sm text-stone-900 opacity-50 leading-tight">{{ product.vendor }}</p>
         {%- endif -%}
 
+        {%- assign _s = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
+        {%- assign _sup1 = _s | append: '※1</sup>' -%}
+        {%- assign _sup2 = _s | append: '※2</sup>' -%}
+        {%- assign _sup3 = _s | append: '※3</sup>' -%}
+        {%- assign _sup4 = _s | append: '※4</sup>' -%}
+        {%- assign _sup5 = _s | append: '※5</sup>' -%}
+        {%- assign _sup  = _s | append: '※</sup>' -%}
+        {%- assign display_title = product.title
+          | replace: '※1', _sup1
+          | replace: '※2', _sup2
+          | replace: '※3', _sup3
+          | replace: '※4', _sup4
+          | replace: '※5', _sup5
+          | replace: '※',  _sup
+        -%}
         <div class="flex flex-wrap items-start gap-2">
-          <h1 class="text-3xl font-medium leading-tight text-stone-900 palt tracking-wider">{{ product.title }}
+          <h1 class="text-3xl font-medium leading-tight text-stone-900 palt tracking-wider">{{ display_title }}
           {%- if product.tags contains 'new' or product.tags contains 'NEW' or product.tags contains 'New' -%}
             {%- render 'badge', label: 'NEW', variant: 'accent', size: 'sm' -%}
           {%- endif -%}</h1>
         </div>
+
+        {%- if title_notes != blank -%}
+          <div class="flex flex-col gap-0.5">
+            {%- if title_notes.size == 1 -%}
+              <p class="text-xs text-stone-400 leading-relaxed">※{{ title_notes.first }}</p>
+            {%- else -%}
+              {%- for note in title_notes -%}
+                <p class="text-xs text-stone-400 leading-relaxed">※{{ forloop.index }}{{ note }}</p>
+              {%- endfor -%}
+            {%- endif -%}
+          </div>
+        {%- endif -%}
 
         {%- if volume != blank -%}
           <p class="text-sm text-stone-900 leading-relaxed">内容量：{{ volume }}</p>

@@ -18,7 +18,19 @@
 
     <!-- 製品グリッド（3カラム） -->
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-      {%- if col != blank -%}
+      {%- if section.blocks.size > 0 -%}
+        {%- for block in section.blocks -%}
+          {%- assign product = all_products[block.settings.product] -%}
+          {%- if product != blank -%}
+            {%- if section.settings.show_rank -%}
+              {%- assign card_rank = forloop.index -%}
+            {%- else -%}
+              {%- assign card_rank = '' -%}
+            {%- endif -%}
+            {%- render 'card-product-3col', product: product, rank: card_rank -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- elsif col != blank -%}
         {%- for product in col.products limit: products_limit -%}
           {%- if section.settings.show_rank -%}
             {%- assign card_rank = forloop.index -%}
@@ -100,6 +112,20 @@
       "default": 3
     }
   ],
+  "blocks": [
+    {
+      "type": "product_item",
+      "name": "商品",
+      "settings": [
+        {
+          "type": "product",
+          "id": "product",
+          "label": "商品"
+        }
+      ]
+    }
+  ],
+  "max_blocks": 6,
   "presets": [
     {
       "name": "ベストセラー"
