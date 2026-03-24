@@ -323,6 +323,10 @@ button.jm-custom-answer-filter--active {
   color: #fff !important;
 }
 
+.jm-average-rating-display {
+  font-size: 1.25 rem !important;
+}
+
 .jm-review-widget {
   padding-bottom: 0 !important;
 }
