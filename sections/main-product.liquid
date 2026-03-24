@@ -148,7 +148,7 @@
       {%- comment %} ブランド・タイトル・容量・評価 {%- endcomment %}
       <div class="flex flex-col gap-4">
         {%- if product.vendor != blank -%}
-          <p class="text-sm text-stone-900 opacity-50 leading-tight">{{ product.vendor }}</p>
+          <p class="text-sm text-stone-500 leading-tight">{{ product.vendor }}</p>
         {%- endif -%}
 
         {%- assign _s = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
@@ -170,23 +170,24 @@
           <h1 class="text-3xl font-medium leading-tight text-stone-900 palt tracking-wider">{{ display_title }}
           {%- if product.tags contains 'new' or product.tags contains 'NEW' or product.tags contains 'New' -%}
             {%- render 'badge', label: 'NEW', variant: 'accent', size: 'sm' -%}
+          {%- endif -%}
+          {%- if title_notes != blank -%}
+            <span class="inline-flex gap-1 align-middle">
+              {%- if title_notes.size == 1 -%}
+                <span class="text-xs text-stone-400">※{{ title_notes.first }}</span>
+              {%- else -%}
+                {%- for note in title_notes -%}
+                  <span class="text-xs text-stone-400">※{{ forloop.index }}{{ note }}</span>
+                {%- endfor -%}
+              {%- endif -%}
+            </span>
           {%- endif -%}</h1>
         </div>
 
-        {%- if title_notes != blank -%}
-          <div class="flex flex-col gap-0.5">
-            {%- if title_notes.size == 1 -%}
-              <p class="text-xs text-stone-400 leading-relaxed">※{{ title_notes.first }}</p>
-            {%- else -%}
-              {%- for note in title_notes -%}
-                <p class="text-xs text-stone-400 leading-relaxed">※{{ forloop.index }}{{ note }}</p>
-              {%- endfor -%}
-            {%- endif -%}
-          </div>
-        {%- endif -%}
+        <p class="text-stone-400 text-sm leading-tight">(2% Cica Exosomes Hydra Balance Oil-Free Moisturizer)</p>
 
         {%- if volume != blank -%}
-          <p class="text-sm text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
+          <p class="text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
         {%- endif -%}
 
         {%- if rating_value != blank -%}
@@ -198,7 +199,7 @@
               <span class="text-sm font-medium text-stone-900 leading-tight">{{ rating_value | round: 1 }}</span>
             </div>
             {%- if rating_count != blank -%}
-              <span class="text-sm text-stone-900 opacity-40 leading-tight">（{{ rating_count }}件のレビュー）</span>
+              <span class="text-sm text-stone-500 leading-tight">（{{ rating_count }}件のレビュー）</span>
             {%- endif -%}
           </div>
         {%- endif -%}
@@ -208,7 +209,7 @@
       <div class="flex items-end gap-2 flex-wrap">
         <span class="text-3xl font-semibold text-stone-900 leading-tight">{{ variant.price | money }}</span>
         {%- if on_sale -%}
-          <s class="text-base text-stone-900 opacity-50 leading-tight">{{ variant.compare_at_price | money }}</s>
+          <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
         {%- endif -%}
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
@@ -225,7 +226,7 @@
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M2 8.55556L6.8 13L14 3" stroke="#0B4F4A" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
               </svg>
-              <p class="text-sm text-stone-900 leading-relaxed">{{ product_benefit.benefit }}</p>
+              <p class="text-stone-900 leading-relaxed">{{ product_benefit.benefit }}</p>
             </div>
           {%- endfor -%}
         </div>
@@ -233,14 +234,14 @@
 
       {%- comment %} 注目の成分 {%- endcomment %}
       {%- if key_ingredients != blank -%}
-        <div class="bg-stone-100 rounded-2xl p-4 flex flex-col gap-2.5">
+        <div class="bg-stone-100 p-4 flex flex-col gap-2.5">
           <div class="flex items-center gap-1">
             <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M2.42397 6.97718C2.28957 7.11145 2.18294 7.27089 2.11019 7.44639C2.03744 7.6219 2 7.81002 2 8C2 8.18998 2.03744 8.3781 2.11019 8.55361C2.18294 8.72911 2.28957 8.88855 2.42397 9.02282L6.97718 13.576C7.11145 13.7104 7.27089 13.8171 7.44639 13.8898C7.6219 13.9626 7.81002 14 8 14C8.18998 14 8.3781 13.9626 8.55361 13.8898C8.72911 13.8171 8.88855 13.7104 9.02282 13.576L13.576 9.02282C13.7104 8.88855 13.8171 8.72911 13.8898 8.55361C13.9626 8.3781 14 8.18998 14 8C14 7.81002 13.9626 7.6219 13.8898 7.44639C13.8171 7.27089 13.7104 7.11145 13.576 6.97718L9.02282 2.42397C8.88855 2.28957 8.72911 2.18294 8.55361 2.11019C8.3781 2.03744 8.18998 2 8 2C7.81002 2 7.6219 2.03744 7.44639 2.11019C7.27089 2.18294 7.11145 2.28957 6.97718 2.42397L2.42397 6.97718Z" stroke="#1C1917" stroke-linecap="round" stroke-linejoin="round"/>
             </svg>
             <span class="text-sm font-medium text-stone-900 leading-tight">注目の成分</span>
           </div>
-          <ul class="flex flex-col gap-1 text-sm text-stone-900 leading-relaxed">
+          <ul class="flex flex-col gap-1 text-stone-900">
             {%- for key_ingredient in key_ingredients -%}
               {%- assign ingredient = key_ingredient.ingredient.value -%}
               {%- assign article = ingredient.article.value -%}
@@ -296,45 +297,6 @@
         </div>
       {%- endunless -%}
 
-      {%- comment %} 数量カウンター + カートに追加 {%- endcomment %}
-      <div class="flex items-center gap-4">
-        <div class="flex items-center border border-stone-200 flex-shrink-0">
-          <button
-            type="button"
-            class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
-            @click="qty = Math.max(1, qty - 1)"
-            aria-label="数量を減らす"
-          >
-            {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
-          </button>
-          <div
-            class="flex items-center justify-center w-12 h-12 text-base text-stone-900 select-none"
-            x-text="qty"
-            aria-live="polite"
-            aria-label="数量"
-          >1</div>
-          <button
-            type="button"
-            class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
-            @click="qty++"
-            aria-label="数量を増やす"
-          >
-            {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
-          </button>
-        </div>
-
-        <button
-          type="button"
-          class="btn-add-to-cart flex-1 bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
-          :class="(adding || !variantAvailable) ? 'opacity-70 cursor-wait' : ''"
-          @click="addToCart()"
-          :disabled="adding || !variantAvailable"
-        >
-          <span class="text-base font-bold leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
-          <span class="text-base font-bold leading-tight" x-show="adding" x-cloak>追加中…</span>
-        </button>
-      </div>
-
       {%- comment %} 区切り線 {%- endcomment %}
       <hr class="border-stone-200">
 
@@ -364,6 +326,48 @@
         </div>
       {%- endif -%}
 
+      {%- comment %} 数量カウンター + カートに追加 {%- endcomment %}
+      <div class="flex flex-col gap-4">
+        <div class="flex items-center gap-4">
+          <div class="flex items-center border border-stone-200 flex-shrink-0 bg-white">
+            <button
+              type="button"
+              class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+              @click="qty = Math.max(1, qty - 1)"
+              aria-label="数量を減らす"
+            >
+              {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
+            </button>
+            <div
+              class="flex items-center justify-center w-12 h-12 text-base text-stone-900 select-none"
+              x-text="qty"
+              aria-live="polite"
+              aria-label="数量"
+            >1</div>
+            <button
+              type="button"
+              class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+              @click="qty++"
+              aria-label="数量を増やす"
+            >
+              {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
+            </button>
+          </div>
+
+          <button
+            type="button"
+            class="btn-add-to-cart flex-1 bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+            :class="(adding || !variantAvailable) ? 'opacity-70 cursor-wait' : ''"
+            @click="addToCart()"
+            :disabled="adding || !variantAvailable"
+          >
+            <span class="text-base font-bold leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+            <span class="text-base font-bold leading-tight" x-show="adding" x-cloak>追加中…</span>
+          </button>
+        </div>
+
+        <p class="flex gap-2 text-sm justify-end">{%- render 'icon', icon: 'van', class: 'w-5 h-5 flex-shrink-0 stroke-1.5' -%}国際配送のため、通常ご注文から約14〜21営業日でお届けいたします。</p>
+      </div>
     </div>
   </div>
 </section>
@@ -442,7 +446,7 @@
 {%- if section.settings.show_import_notice -%}
 <section class="px-10 py-5">
   <div class="max-w-screen-xl mx-auto">
-    <div class="flex flex-col gap-4 p-10 bg-stone-100 rounded-2xl">
+    <div class="flex flex-col gap-4 p-10 bg-stone-100">
       <div class="flex items-center gap-1">
         <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#1c1917" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="shrink-0">
           <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"/>
@@ -561,7 +565,7 @@
       <div class="flex items-end gap-2 whitespace-nowrap">
         <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- if on_sale -%}
-          <s class="text-base text-stone-900 opacity-50 leading-tight">{{ variant.compare_at_price | money }}</s>
+          <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
         {%- endif -%}
       </div>
 
@@ -608,20 +612,39 @@
 </div>{{- '' -}}{%- comment -%}x-data wrapper close{%- endcomment -%}
 
 <script>
-  (function () {
+  document.addEventListener('DOMContentLoaded', function () {
     const bar = document.getElementById('floating-cart-bar');
-    const target = document.getElementById('product-info');
-    if (!bar || !target) return;
+    const productSection = document.getElementById('product-info');
+    const footer = document.getElementById('site-footer');
+    if (!bar || !productSection) return;
+
+    let productPassed = false;
+    let footerVisible = false;
+
+    function updateVisibility() {
+      const visible = productPassed && !footerVisible;
+      bar.classList.toggle('is-visible', visible);
+      bar.setAttribute('aria-hidden', String(!visible));
+    }
 
     new IntersectionObserver(
       ([entry]) => {
-        const visible = !entry.isIntersecting;
-        bar.classList.toggle('is-visible', visible);
-        bar.setAttribute('aria-hidden', String(!visible));
+        productPassed = !entry.isIntersecting;
+        updateVisibility();
       },
       { threshold: 0 }
-    ).observe(target);
-  })();
+    ).observe(productSection);
+
+    if (footer) {
+      new IntersectionObserver(
+        ([entry]) => {
+          footerVisible = entry.isIntersecting;
+          updateVisibility();
+        },
+        { threshold: 0 }
+      ).observe(footer);
+    }
+  });
 </script>
 
 {% schema %}

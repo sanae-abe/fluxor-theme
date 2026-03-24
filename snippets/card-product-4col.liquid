@@ -107,7 +107,7 @@
 
     <!-- ベンダー -->
     {%- if product.vendor != blank -%}
-      <p class="text-sm leading-tight text-stone-900 opacity-60">{{ product.vendor }}</p>
+      <p class="text-sm leading-tight text-stone-500">{{ product.vendor }}</p>
     {%- endif -%}
 
     <!-- タイトル -->
@@ -124,7 +124,7 @@
           <span class="text-sm font-medium leading-5 text-stone-900">{{ rating_value | round: 1 }}</span>
         </div>
         {%- if rating_count != blank -%}
-          <span class="text-sm leading-5 text-stone-900 opacity-40">({{ rating_count }}+ レビュー)</span>
+          <span class="text-sm leading-5 text-stone-500">({{ rating_count }}+ レビュー)</span>
         {%- endif -%}
       </div>
     {%- endif -%}
@@ -132,7 +132,7 @@
     <!-- 価格 -->
     <div class="flex items-center gap-2">
       {%- if on_sale -%}
-        <s class="text-sm leading-tight text-stone-900 opacity-50">{{ variant.compare_at_price | money }}</s>
+        <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
       {%- endif -%}
       <span class="text-lg font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
     </div>

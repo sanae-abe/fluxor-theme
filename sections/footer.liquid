@@ -1,4 +1,4 @@
-<footer class="bg-stone-900 px-10 py-[60px]">
+<footer id="site-footer" class="bg-stone-900 px-10 py-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
 
     <!-- 3カラム：Quick Links / Information / メルマガ＋SNS -->
@@ -7,7 +7,7 @@
       <!-- Quick Links -->
       {%- if section.settings.menu_1 != blank -%}
         <div class="flex-1 flex flex-col gap-4">
-          <p class="text-sm font-medium text-stone-400 uppercase leading-tight">
+          <p class="text-sm font-medium text-stone-500 uppercase leading-tight">
             {{ section.settings.menu_1_title | default: 'Quick Links' }}
           </p>
           <ul class="flex flex-col gap-4">
@@ -15,7 +15,7 @@
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-base text-stone-50 uppercase leading-tight palt tracking-wider hover:underline underline-offset-[8px]"
+                  class="text-base text-stone-200 uppercase leading-tight palt tracking-wider hover:underline underline-offset-[8px]"
                 >{{ link.title }}</a>
               </li>
             {%- endfor -%}
@@ -26,7 +26,7 @@
       <!-- Information -->
       {%- if section.settings.menu_2 != blank -%}
         <div class="flex-1 flex flex-col gap-4">
-          <p class="text-sm font-medium text-stone-400 uppercase leading-tight">
+          <p class="text-sm font-medium text-stone-500 uppercase leading-tight">
             {{ section.settings.menu_2_title | default: 'Information' }}
           </p>
           <ul class="flex flex-col gap-4">
@@ -34,7 +34,7 @@
               <li>
                 <a
                   href="{{ link.url }}"
-                  class="text-base text-stone-50 uppercase leading-tight palt tracking-wider hover:underline underline-offset-[8px]"
+                  class="text-base text-stone-200 uppercase leading-tight palt tracking-wider hover:underline underline-offset-[8px]"
                 >{{ link.title }}</a>
               </li>
             {%- endfor -%}
@@ -47,8 +47,8 @@
 
         <!-- メルマガ -->
         <div class="flex flex-col gap-4">
-          <p class="text-sm font-medium text-stone-400 uppercase leading-tight">メルマガ登録</p>
-          <p class="text-sm text-stone-50 leading-tight">
+          <p class="text-sm font-medium text-stone-500 uppercase leading-tight">メルマガ登録</p>
+          <p class="text-sm text-stone-200 leading-tight">
             新しい製品やセールのお知らせをメールで配信しています。
           </p>
 
@@ -57,7 +57,7 @@
               <input type="hidden" name="contact[tags]" value="newsletter">
 
               {%- if form.posted_successfully? -%}
-                <p class="text-sm text-stone-50 py-3">ご登録ありがとうございます。</p>
+                <p class="text-sm text-stone-200 py-3">ご登録ありがとうございます。</p>
               {%- else -%}
 
                 <!-- メールアドレス入力 + 送信ボタン -->
@@ -86,9 +86,9 @@
                   <input
                     type="checkbox"
                     x-model="agreed"
-                    class="w-5 h-5 flex-shrink-0 border border-stone-200 bg-stone-50 cursor-pointer"
+                    class="w-3 h-3 flex-shrink-0 border border-stone-200 bg-stone-50 cursor-pointer"
                   >
-                  <span class="text-sm text-white opacity-80 leading-tight">
+                  <span class="text-xs text-stone-200 leading-tight">
                     {%- if section.settings.privacy_url != blank -%}
                       <a href="{{ section.settings.privacy_url }}" class="underline hover:opacity-70 transition-opacity duration-200">プライバシーポリシー</a>に同意します
                     {%- else -%}
@@ -159,15 +159,15 @@
     {%- if section.settings.import_notice_footer != blank or section.settings.disclaimer != blank -%}
       <div class="border-t border-[rgba(246,244,240,0.1)] pt-8 flex flex-col gap-8">
         <div class="flex flex-col gap-1">
-          <p class="text-xs font-medium text-stone-400 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
+          <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
           {%- if section.settings.import_notice_footer != blank -%}
-            <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.import_notice_footer }}</p>
+            <p class="text-xs text-stone-500 leading-relaxed">{{ section.settings.import_notice_footer }}</p>
           {%- endif -%}
         </div>
         <div class="flex flex-col gap-1">
-          <p class="text-xs font-medium text-stone-400 uppercase leading-tight tracking-wider">本サイトにおける各用語の定義</p>
+          <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">本サイトにおける各用語の定義</p>
           {%- if section.settings.disclaimer != blank -%}
-            <p class="text-xs text-white opacity-50 leading-relaxed">{{ section.settings.disclaimer }}</p>
+            <p class="text-xs text-stone-500 leading-relaxed">{{ section.settings.disclaimer }}</p>
           {%- endif -%}
         </div>
       </div>
@@ -175,7 +175,7 @@
 
     <!-- ボトムバー（コピーライト） -->
     <div class="border-t border-[rgba(246,244,240,0.1)] pt-10 flex items-center justify-center">
-      <p class="text-sm text-white opacity-80 leading-5">
+      <p class="text-sm text-stone-500 leading-5">
         &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}
       </p>
     </div>
