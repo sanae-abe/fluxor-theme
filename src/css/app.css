@@ -375,3 +375,14 @@ button.jm-custom-answer-filter--active {
 .jm-pagination-controls {
   margin-bottom: 0 !important;
 }
+
+.jdgm-prev-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+}
+
+.jdgm-prev-badge__text {
+  font-size: 0.875rem !important;
+  color: #79716B !important;
+}
