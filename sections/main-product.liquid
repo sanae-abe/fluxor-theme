@@ -288,20 +288,20 @@
             {%- comment %} 左矢印 {%- endcomment %}
             <button
               type="button"
-              class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-6 h-6 transition-opacity focus-visible:outline-none"
+              class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-6 h-full transition-opacity focus-visible:outline-none"
               :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
               @click="$refs.track.scrollLeft -= 198; $nextTick(() => updateNav())"
               aria-label="前へ"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/><path d="m14 8-4 4 4 4"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#79716B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="#ffffff"/><path d="m14 8-4 4 4 4"/>
               </svg>
             </button>
 
             {%- comment %} トラック {%- endcomment %}
             <div
               x-ref="track"
-              class="ingredient-track flex gap-2 overflow-x-auto scroll-smooth mx-7"
+              class="ingredient-track flex gap-2 overflow-x-auto scroll-smooth"
               @scroll="updateNav()"
             >
                 {%- for key_ingredient in key_ingredients -%}
@@ -318,7 +318,7 @@
                     {%- comment %} カード {%- endcomment %}
                     <div
                       class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[72px]"
-                      :class="active === {{ ing_idx }} ? 'border-stone-900' : 'border-stone-200'"
+                      :class="active === {{ ing_idx }} ? 'border-stone-500' : 'border-stone-200'"
                     >
 
                       {%- comment %} サムネイル {%- endcomment %}
@@ -331,7 +331,7 @@
                         >
                       {%- else -%}
                         <div class="w-12 h-12 rounded-full bg-stone-100 border border-stone-200 shrink-0 flex items-center justify-center">
-                          {%- render 'icon', icon: 'gem', class: 'w-5 h-5 text-stone-300' -%}
+                          {%- render 'icon', icon: 'flask-conical', class: 'w-5 h-5 text-stone-300' -%}
                         </div>
                       {%- endif -%}
 
@@ -350,13 +350,13 @@
             {%- comment %} 右矢印 {%- endcomment %}
             <button
               type="button"
-              class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-6 h-6 transition-opacity focus-visible:outline-none"
+              class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-6 h-full transition-opacity focus-visible:outline-none"
               :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
               @click="$refs.track.scrollLeft += 198; $nextTick(() => updateNav())"
               aria-label="次へ"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10"/><path d="m10 8 4 4-4 4"/>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#79716B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" fill="#ffffff"/><path d="m10 8 4 4-4 4"/>
               </svg>
             </button>
           </div>

@@ -54,7 +54,7 @@
         "image": "shopify://shop_images/home-ingredient-image_compressed.webp",
         "badge_label": "Ingredient",
         "badge_variant": "teal",
-        "badge_icon_left": "gem",
+        "badge_icon_left": "flask-conical",
         "badge_icon_right": "",
         "heading": "レチノール",
         "paragraph": "<p>科学的に研究が進む美容成分の一つ。使い続けることで肌のキメを整え、うるおいとともにハリ感をサポートします。</p>",
