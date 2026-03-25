@@ -332,7 +332,7 @@ button.jm-custom-answer-filter--active {
 }
 
 .jm-review-item {
-  padding: relative !important;
+  position: relative !important;
   margin-top:  0 !important;
 }
 
