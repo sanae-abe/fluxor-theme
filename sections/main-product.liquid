@@ -259,29 +259,142 @@
         </div>
       {%- endif -%}
 
-      {%- comment %} 注目の成分 {%- endcomment %}
+      {%- comment %} 注目の成分 — カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
-        <div class="bg-stone-100 p-4 flex flex-col gap-2.5">
-          <div class="flex items-center gap-1">
-            {%- render 'icon', icon: 'gem', class: 'w-4 h-4' -%}
-            <span class="text-sm font-medium text-stone-900 leading-tight">注目の成分</span>
+        {%- assign ing_total = key_ingredients.size -%}
+        <div
+          class="bg-stone-100 p-4"
+          x-data="{
+            active: null,
+            offset: 0,
+            cardW: 190,
+            gapW: 8,
+            vis: 3,
+            total: {{ ing_total }},
+            get step() { return this.cardW + this.gapW; },
+            get maxOffset() { return Math.max(0, (this.total - this.vis) * this.step); },
+            canPrev() { return this.offset > 0; },
+            canNext() { return this.offset < this.maxOffset; },
+            prev() { this.offset = Math.max(0, this.offset - this.step); },
+            next() { this.offset = Math.min(this.maxOffset, this.offset + this.step); }
+          }"
+        >
+
+          {%- comment %} ヘッダー {%- endcomment %}
+          <div class="flex items-center gap-1 mb-3">
+            {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900 shrink-0' -%}
+            <span class="text-sm font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
           </div>
-          <ul class="flex flex-col gap-1 text-stone-900">
-            {%- for key_ingredient in key_ingredients -%}
-              {%- assign ingredient = key_ingredient.ingredient.value -%}
-              {%- assign article = ingredient.article.value -%}
-              <li class="list-disc ml-5">
-                {%- if article != blank -%}
-                  <a href="{{ article.url }}" class="underline hover:opacity-70 transition-opacity">{{ key_ingredient.ingredient }}</a>
-                {%- else -%}
-                  {{ key_ingredient.ingredient }}
+
+          {%- comment %} カルーセル {%- endcomment %}
+          <div class="relative">
+
+            {%- comment %} 左矢印 {%- endcomment %}
+            <button
+              type="button"
+              class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-6 h-6 transition-opacity focus-visible:outline-none"
+              :class="canPrev() ? 'opacity-100 text-stone-600 hover:text-stone-900' : 'opacity-0 pointer-events-none'"
+              @click="prev()"
+              aria-label="前へ"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="m14 8-4 4 4 4"/>
+              </svg>
+            </button>
+
+            {%- comment %} トラック {%- endcomment %}
+            <div class="overflow-hidden" :class="total > vis ? 'mx-7' : ''">
+              <div
+                class="flex gap-2 transition-transform duration-300 ease-in-out will-change-transform"
+                :style="{ transform: 'translateX(-' + offset + 'px)' }"
+              >
+                {%- for key_ingredient in key_ingredients -%}
+                  {%- assign ing     = key_ingredient.ingredient.value -%}
+                  {%- assign amount  = key_ingredient.amount -%}
+                  {%- assign ing_idx = forloop.index0 -%}
+
+                  <div
+                    class="shrink-0 w-[190px] cursor-default select-none"
+                    @mouseenter="active = {{ ing_idx }}"
+                    @mouseleave="active = null"
+                    @click.stop="active = active === {{ ing_idx }} ? null : {{ ing_idx }}"
+                  >
+                    {%- comment %} カード {%- endcomment %}
+                    <div
+                      class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[72px]"
+                      :class="active === {{ ing_idx }} ? 'border-stone-900' : 'border-stone-200'"
+                    >
+
+                      {%- comment %} サムネイル {%- endcomment %}
+                      {%- if ing != blank and ing.thumbnail != blank -%}
+                        <img
+                          src="{{ ing.thumbnail | image_url: width: 96, height: 96, crop: 'center' }}"
+                          alt="{{ key_ingredient.ingredient }}"
+                          class="w-12 h-12 rounded-full object-cover shrink-0"
+                          width="48" height="48" loading="lazy"
+                        >
+                      {%- else -%}
+                        <div class="w-12 h-12 rounded-full bg-stone-100 border border-stone-200 shrink-0 flex items-center justify-center">
+                          {%- render 'icon', icon: 'gem', class: 'w-5 h-5 text-stone-300' -%}
+                        </div>
+                      {%- endif -%}
+
+                      {%- comment %} 成分名・配合量 {%- endcomment %}
+                      <div class="text-sm text-stone-900 leading-snug palt min-w-0">
+                        <p class="line-clamp-2 break-words">{{ key_ingredient.ingredient }}</p>
+                        {%- if amount != blank -%}
+                          <p class="text-stone-500 text-xs mt-0.5">({{ amount }})</p>
+                        {%- endif -%}
+                      </div>
+                    </div>
+                  </div>
+                {%- endfor -%}
+              </div>
+            </div>
+
+            {%- comment %} 右矢印 {%- endcomment %}
+            <button
+              type="button"
+              class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-6 h-6 transition-opacity focus-visible:outline-none"
+              :class="canNext() ? 'opacity-100 text-stone-600 hover:text-stone-900' : 'opacity-0 pointer-events-none'"
+              @click="next()"
+              aria-label="次へ"
+            >
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <circle cx="12" cy="12" r="10"/><path d="m10 8 4 4-4 4"/>
+              </svg>
+            </button>
+          </div>
+
+          {%- comment %} hover 詳細エリア（カルーセル下） {%- endcomment %}
+          {%- assign has_desc = false -%}
+          {%- for key_ingredient in key_ingredients -%}
+            {%- assign ing = key_ingredient.ingredient.value -%}
+            {%- if ing.description != blank -%}{%- assign has_desc = true -%}{%- endif -%}
+          {%- endfor -%}
+          {%- if has_desc -%}
+            <div class="mt-2">
+              {%- for key_ingredient in key_ingredients -%}
+                {%- assign ing = key_ingredient.ingredient.value -%}
+                {%- if ing.description != blank -%}
+                  <div
+                    class="bg-white border border-stone-200 p-3 text-xs text-stone-700 leading-relaxed"
+                    x-show="active === {{ forloop.index0 }}"
+                    x-cloak
+                    x-transition:enter="transition ease-out duration-150"
+                    x-transition:enter-start="opacity-0 -translate-y-1"
+                    x-transition:enter-end="opacity-100 translate-y-0"
+                    x-transition:leave="transition ease-in duration-100"
+                    x-transition:leave-start="opacity-100"
+                    x-transition:leave-end="opacity-0"
+                  >
+                    {{ ing.description | newline_to_br }}
+                  </div>
                 {%- endif -%}
-                {%- if key_ingredient.amount != blank -%}
-                  &nbsp;({{ key_ingredient.amount }})
-                {%- endif -%}
-              </li>
-            {%- endfor -%}
-          </ul>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
+
         </div>
       {%- endif -%}
 
