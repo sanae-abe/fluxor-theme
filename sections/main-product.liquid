@@ -146,7 +146,7 @@
     </div>
 
     {%- comment %}--- 右カラム: 商品情報 ---{%- endcomment %}
-    <div class="w-full lg:flex-1 flex flex-col gap-6 lg:sticky lg:top-20">
+    <div class="w-full lg:flex-1 flex flex-col gap-6 lg:sticky lg:top-20 min-w-0">
 
       {%- comment %} ブランド・タイトル・容量・評価 {%- endcomment %}
       <div class="flex flex-col gap-4">
@@ -262,7 +262,7 @@
       {%- comment %} 注目の成分 — カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
         <div
-          class="bg-stone-100 p-4"
+          class="bg-stone-100 p-4 min-w-0 overflow-x-hidden"
           x-data="{
             active: null,
             atStart: true,
