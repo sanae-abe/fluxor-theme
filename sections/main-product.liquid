@@ -261,7 +261,6 @@
 
       {%- comment %} 注目の成分 — カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
-        {%- assign ing_total = key_ingredients.size -%}
         <div
           class="bg-stone-100 p-4"
           x-data="{
@@ -346,7 +345,6 @@
                     </div>
                   </div>
                 {%- endfor -%}
-              </div>
             </div>
 
             {%- comment %} 右矢印 {%- endcomment %}
