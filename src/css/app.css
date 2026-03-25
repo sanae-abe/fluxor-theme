@@ -305,6 +305,10 @@
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 
+/* 成分カルーセル：スクロールバー非表示 */
+.ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }
+.ingredient-track::-webkit-scrollbar { display: none; }
+
 
 .jm-action-buttons__button {
   border-radius: 0 !important;

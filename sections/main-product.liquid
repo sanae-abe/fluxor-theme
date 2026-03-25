@@ -266,18 +266,15 @@
           class="bg-stone-100 p-4"
           x-data="{
             active: null,
-            offset: 0,
-            cardW: 190,
-            gapW: 8,
-            vis: 3,
-            total: {{ ing_total }},
-            get step() { return this.cardW + this.gapW; },
-            get maxOffset() { return Math.max(0, (this.total - this.vis) * this.step); },
-            canPrev() { return this.offset > 0; },
-            canNext() { return this.offset < this.maxOffset; },
-            prev() { this.offset = Math.max(0, this.offset - this.step); },
-            next() { this.offset = Math.min(this.maxOffset, this.offset + this.step); }
+            atStart: true,
+            atEnd: false,
+            updateNav() {
+              const t = this.$refs.track;
+              this.atStart = t.scrollLeft <= 0;
+              this.atEnd   = t.scrollLeft >= t.scrollWidth - t.clientWidth - 1;
+            }
           }"
+          x-init="$nextTick(() => updateNav())"
         >
 
           {%- comment %} ヘッダー {%- endcomment %}
@@ -293,8 +290,8 @@
             <button
               type="button"
               class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-6 h-6 transition-opacity focus-visible:outline-none"
-              :class="canPrev() ? 'opacity-100 text-stone-600 hover:text-stone-900' : 'opacity-0 pointer-events-none'"
-              @click="prev()"
+              :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
+              @click="$refs.track.scrollLeft -= 198; $nextTick(() => updateNav())"
               aria-label="前へ"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -303,11 +300,11 @@
             </button>
 
             {%- comment %} トラック {%- endcomment %}
-            <div class="overflow-hidden" :class="total > vis ? 'mx-7' : ''">
-              <div
-                class="flex gap-2 transition-transform duration-300 ease-in-out will-change-transform"
-                :style="{ transform: 'translateX(-' + offset + 'px)' }"
-              >
+            <div
+              x-ref="track"
+              class="ingredient-track flex gap-2 overflow-x-auto scroll-smooth mx-7"
+              @scroll="updateNav()"
+            >
                 {%- for key_ingredient in key_ingredients -%}
                   {%- assign ing     = key_ingredient.ingredient.value -%}
                   {%- assign amount  = key_ingredient.amount -%}
@@ -356,8 +353,8 @@
             <button
               type="button"
               class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-6 h-6 transition-opacity focus-visible:outline-none"
-              :class="canNext() ? 'opacity-100 text-stone-600 hover:text-stone-900' : 'opacity-0 pointer-events-none'"
-              @click="next()"
+              :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
+              @click="$refs.track.scrollLeft += 198; $nextTick(() => updateNav())"
               aria-label="次へ"
             >
               <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -411,7 +408,7 @@
       {%- unless product.has_only_default_variant -%}
         <div class="flex flex-col gap-4">
           {%- for option in product.options_with_values -%}
-            <div class="flex flex-col gap-2">
+            <div class="flex flex-col gap-1">
               <p class="text-xs font-medium text-stone-900 uppercase tracking-wider">{{ option.name }}</p>
               <div class="flex flex-wrap gap-2">
                 {%- for value in option.values -%}
