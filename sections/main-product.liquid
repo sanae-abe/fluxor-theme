@@ -177,25 +177,25 @@
           {%- if title_notes != blank -%}
             <span class="inline-flex gap-1 align-middle">
               {%- if title_notes.size == 1 -%}
-                <span class="text-xs text-stone-400">※{{ title_notes.first }}</span>
+                <span class="text-xs text-stone-400 font-normal">※{{ title_notes.first }}</span>
               {%- else -%}
                 {%- for note in title_notes -%}
-                  <span class="text-xs text-stone-400">※{{ forloop.index }}{{ note }}</span>
+                  <span class="text-xs text-stone-400 font-normal ">※{{ forloop.index }}{{ note }}</span>
                 {%- endfor -%}
               {%- endif -%}
             </span>
           {%- endif -%}</h1>
         </div>
 
+        {%- if product_name_en != blank -%}
+          <p class="text-stone-400 text-sm leading-tight">{{ product_name_en }}</p>
+        {%- endif -%}
+
         <!-- Start of Judge.me code -->
         <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
           {{ product.metafields.judgeme.badge }}
         </div>
-        <!-- End of Judge.me code -->
-
-        {%- if product_name_en != blank -%}
-          <p class="text-stone-400 text-sm leading-tight">{{ product_name_en }}</p>
-        {%- endif -%}
+        <!-- End of Judge.me code --> 
 
         {%- if volume != blank -%}
           <p class="text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
