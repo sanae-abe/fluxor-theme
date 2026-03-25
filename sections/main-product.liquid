@@ -444,39 +444,6 @@
       </div>
     </div>
 
-    {%- comment %} 使用方法 {%- endcomment %}
-    <div class="bg-stone-50">
-      <button
-        type="button"
-        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
-        @click="openItem = openItem === 1 ? null : 1"
-        :aria-expanded="openItem === 1"
-      >
-        <span class="text-base font-medium text-stone-900 leading-tight">使用方法</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 1 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-      <div
-        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 1 ? '1fr' : '0fr' }"
-        role="region"
-        :aria-hidden="openItem !== 1"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="pb-6 px-6 transition duration-300"
-            :class="openItem === 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-            {%- if usage_method != blank -%}
-              <div class="text-sm text-stone-900 leading-relaxed">{{ usage_method | newline_to_br}}</div>
-            {%- else -%}
-              <p class="text-stone-400 text-sm">使用方法は現在準備中です。</p>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    </div>
-
     {%- comment %} 使用タイミング {%- endcomment %}
     <div class="bg-stone-50">
       <button
@@ -504,6 +471,39 @@
               <div class="text-sm text-stone-900 leading-relaxed">{{ usage_timing | newline_to_br }}</div>
             {%- else -%}
               <p class="text-stone-400 text-sm">使用タイミングは現在準備中です。</p>
+            {%- endif -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} 使用方法 {%- endcomment %}
+    <div class="bg-stone-50">
+      <button
+        type="button"
+        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
+        @click="openItem = openItem === 1 ? null : 1"
+        :aria-expanded="openItem === 1"
+      >
+        <span class="text-base font-medium text-stone-900 leading-tight">使用方法</span>
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 1 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+          <path d="m6 9 6 6 6-6"/>
+        </svg>
+      </button>
+      <div
+        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 1 ? '1fr' : '0fr' }"
+        role="region"
+        :aria-hidden="openItem !== 1"
+      >
+        <div class="overflow-hidden">
+          <div
+            class="pb-6 px-6 transition duration-300"
+            :class="openItem === 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+          >
+            {%- if usage_method != blank -%}
+              <div class="text-sm text-stone-900 leading-relaxed">{{ usage_method | newline_to_br}}</div>
+            {%- else -%}
+              <p class="text-stone-400 text-sm">使用方法は現在準備中です。</p>
             {%- endif -%}
           </div>
         </div>

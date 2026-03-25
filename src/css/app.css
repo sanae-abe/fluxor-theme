@@ -332,12 +332,19 @@ button.jm-custom-answer-filter--active {
 }
 
 .jm-review-item {
+  padding: relative !important;
   margin-top:  0 !important;
 }
 
 .jm-reviewer-info,
 .jm-review-content {
   margin-top: 0.5rem !important;
+}
+
+.jm-reviewer-info__details div:not(:has(.jm-reviewer-info__name)) {
+  position: absolute !important;
+  right: 8px !important;
+  top: 8px !important;
 }
 
 .jm-text.jm-review-content__title {
