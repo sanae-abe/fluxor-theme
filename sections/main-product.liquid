@@ -305,10 +305,8 @@
               @scroll="updateNav()"
             >
                 {%- for key_ingredient in key_ingredients -%}
-                  {%- assign ing     = key_ingredient.ingredient.value -%}
                   {%- assign amount  = key_ingredient.amount -%}
                   {%- assign ing_idx = forloop.index0 -%}
-
                   <div
                     class="shrink-0 w-[190px] cursor-default select-none"
                     @mouseenter="active = {{ ing_idx }}"
@@ -322,9 +320,9 @@
                     >
 
                       {%- comment %} サムネイル {%- endcomment %}
-                      {%- if ing != blank and ing.thumbnail != blank -%}
+                      {%- if key_ingredient.thumbnail != blank -%}
                         <img
-                          src="{{ ing.thumbnail | image_url: width: 96, height: 96, crop: 'center' }}"
+                          src="{{ key_ingredient.thumbnail | image_url: width: 96, height: 96, crop: 'center' }}"
                           alt="{{ key_ingredient.ingredient }}"
                           class="w-12 h-12 rounded-full object-cover shrink-0"
                           width="48" height="48" loading="lazy"
@@ -364,14 +362,12 @@
           {%- comment %} hover 詳細エリア（カルーセル下） {%- endcomment %}
           {%- assign has_desc = false -%}
           {%- for key_ingredient in key_ingredients -%}
-            {%- assign ing = key_ingredient.ingredient.value -%}
-            {%- if ing.description != blank -%}{%- assign has_desc = true -%}{%- endif -%}
+            {%- if key_ingredient.description != blank -%}{%- assign has_desc = true -%}{%- endif -%}
           {%- endfor -%}
           {%- if has_desc -%}
             <div class="mt-2">
               {%- for key_ingredient in key_ingredients -%}
-                {%- assign ing = key_ingredient.ingredient.value -%}
-                {%- if ing.description != blank -%}
+                {%- if key_ingredient.description != blank -%}
                   <div
                     class="bg-white border border-stone-200 p-3 text-xs text-stone-700 leading-relaxed"
                     x-show="active === {{ forloop.index0 }}"
@@ -383,7 +379,7 @@
                     x-transition:leave-start="opacity-100"
                     x-transition:leave-end="opacity-0"
                   >
-                    {{ ing.description | newline_to_br }}
+                    {{ key_ingredient.description | newline_to_br }}
                   </div>
                 {%- endif -%}
               {%- endfor -%}
