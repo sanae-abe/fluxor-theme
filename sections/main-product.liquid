@@ -261,29 +261,46 @@
 
       {%- comment %} 注目の成分 — カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
+        {%- assign _desc_idx = '' -%}
+        {%- for _ki in key_ingredients -%}
+          {%- if _ki.description != blank -%}
+            {%- if _desc_idx != '' -%}{%- assign _desc_idx = _desc_idx | append: ',' -%}{%- endif -%}
+            {%- assign _desc_idx = _desc_idx | append: forloop.index0 -%}
+          {%- endif -%}
+        {%- endfor -%}
         <div
-          class="bg-stone-100 p-4 min-w-0 overflow-x-hidden"
+          class="bg-stone-100 p-4 min-w-0 relative"
           x-data="{
             active: null,
             atStart: true,
             atEnd: false,
+            descIdx: [{{ _desc_idx }}],
             updateNav() {
               const t = this.$refs.track;
               this.atStart = t.scrollLeft <= 0;
               this.atEnd   = t.scrollLeft >= t.scrollWidth - t.clientWidth - 1;
+            },
+            tooltipLeft() {
+              if (this.active === null || !this.$refs.track) return 0;
+              const cardLeft = this.active * 198 - this.$refs.track.scrollLeft;
+              return Math.min(Math.max(cardLeft, 0), this.$refs.track.offsetWidth - 288);
             }
           }"
           x-init="$nextTick(() => updateNav())"
         >
 
           {%- comment %} ヘッダー {%- endcomment %}
-          <div class="flex items-center gap-1 mb-3">
-            {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900 shrink-0' -%}
-            <span class="text-sm font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
+          <div class="flex items-center justify-between gap-1 mb-3">
+            <div class="flex items-center gap-1">
+              {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900 shrink-0' -%}
+              <span class="text-sm font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
+            </div>
+            <div class="text-xs text-stone-400 text-right">※すべて整肌・保湿成分として</div>
           </div>
 
           {%- comment %} カルーセル {%- endcomment %}
-          <div class="relative">
+          <div class="overflow-x-hidden min-w-0">
+          <div class="relative" x-ref="carouselRow">
 
             {%- comment %} 左矢印 {%- endcomment %}
             <button
@@ -308,14 +325,14 @@
                   {%- assign amount  = key_ingredient.amount -%}
                   {%- assign ing_idx = forloop.index0 -%}
                   <div
-                    class="shrink-0 w-[190px] cursor-default select-none"
+                    class="shrink-0 w-[190  px] cursor-default select-none"
                     @mouseenter="active = {{ ing_idx }}"
                     @mouseleave="active = null"
                     @click.stop="active = active === {{ ing_idx }} ? null : {{ ing_idx }}"
                   >
                     {%- comment %} カード {%- endcomment %}
                     <div
-                      class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[72px]"
+                      class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[64px]"
                       :class="active === {{ ing_idx }} ? 'border-stone-500' : 'border-stone-200'"
                     >
 
@@ -335,10 +352,11 @@
 
                       {%- comment %} 成分名・配合量 {%- endcomment %}
                       <div class="text-sm text-stone-900 leading-snug palt min-w-0">
-                        <p class="line-clamp-2 break-words">{{ key_ingredient.ingredient }}</p>
+                        <p class="line-clamp-2 break-words">{{ key_ingredient.ingredient }}
                         {%- if amount != blank -%}
-                          <p class="text-stone-500 text-xs mt-0.5">({{ amount }})</p>
+                          ({{ amount }})
                         {%- endif -%}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -358,31 +376,38 @@
               </svg>
             </button>
           </div>
+          </div>
 
-          {%- comment %} hover 詳細エリア（カルーセル下） {%- endcomment %}
+          {%- comment %} 吹き出し詳細エリア {%- endcomment %}
           {%- assign has_desc = false -%}
           {%- for key_ingredient in key_ingredients -%}
             {%- if key_ingredient.description != blank -%}{%- assign has_desc = true -%}{%- endif -%}
           {%- endfor -%}
           {%- if has_desc -%}
-            <div class="mt-2">
-              {%- for key_ingredient in key_ingredients -%}
-                {%- if key_ingredient.description != blank -%}
-                  <div
-                    class="bg-white border border-stone-200 p-3 text-xs text-stone-700 leading-relaxed"
-                    x-show="active === {{ forloop.index0 }}"
-                    x-cloak
-                    x-transition:enter="transition ease-out duration-150"
-                    x-transition:enter-start="opacity-0 -translate-y-1"
-                    x-transition:enter-end="opacity-100 translate-y-0"
-                    x-transition:leave="transition ease-in duration-100"
-                    x-transition:leave-start="opacity-100"
-                    x-transition:leave-end="opacity-0"
-                  >
-                    {{ key_ingredient.description | newline_to_br }}
-                  </div>
-                {%- endif -%}
-              {%- endfor -%}
+            <div
+              class="absolute z-20 w-80"
+              x-show="descIdx.includes(active)"
+              x-cloak
+              :style="{ left: tooltipLeft() + 'px', top: ($refs.carouselRow ? $refs.carouselRow.offsetTop + $refs.carouselRow.offsetHeight + 12 : 0) + 'px' }"
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0 translate-y-1"
+              x-transition:enter-end="opacity-100 translate-y-0"
+              x-transition:leave="transition ease-in duration-100"
+              x-transition:leave-start="opacity-100"
+              x-transition:leave-end="opacity-0"
+            >
+              {%- comment %} 上向き矢印 {%- endcomment %}
+              <div class="absolute -top-[7px] left-[calc(50%-7px)] w-3 h-3 bg-white border-l border-t border-stone-200 rotate-45"></div>
+              {%- comment %} 吹き出し本体 {%- endcomment %}
+              <div class="bg-white border border-stone-200 rounded-lg shadow-sm p-3 text-sm text-stone-700 leading-[1.625]">
+                {%- for key_ingredient in key_ingredients -%}
+                  {%- if key_ingredient.description != blank -%}
+                    <div x-show="active === {{ forloop.index0 }}">
+                      {{ key_ingredient.description | newline_to_br }}
+                    </div>
+                  {%- endif -%}
+                {%- endfor -%}
+              </div>
             </div>
           {%- endif -%}
 
