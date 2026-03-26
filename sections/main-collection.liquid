@@ -1,154 +1,156 @@
 {%- paginate collection.products by section.settings.products_per_page -%}
 
-<section
-  class="max-w-screen-xl mx-auto py-12 px-4"
-  x-data="{ filtersOpen: false }"
->
-  {%- comment %} コレクションヘッダー {%- endcomment %}
-  <div class="mb-8">
-    <h1 class="text-4xl font-semibold">{{ collection.title }}</h1>
-    {%- if collection.description != blank -%}
-      <p class="mt-3 text-sm text-stone-500 max-w-xl leading-relaxed">{{ collection.description }}</p>
-    {%- endif -%}
-  </div>
-
-  {%- comment %} アクティブフィルター数の計算 {%- endcomment %}
-  {%- assign active_filter_count = 0 -%}
-  {%- for filter in collection.filters -%}
-    {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
-    {%- if filter.type == 'price_range' -%}
-      {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
-        {%- assign active_filter_count = active_filter_count | plus: 1 -%}
+<div class="py-12 px-4">
+  <section
+    class="max-w-screen-xl mx-auto"
+    x-data="{ filtersOpen: false }"
+  >
+    {%- comment %} コレクションヘッダー {%- endcomment %}
+    <div class="mb-8">
+      <h1 class="text-4xl font-semibold">{{ collection.title }}</h1>
+      {%- if collection.description != blank -%}
+        <p class="mt-3 text-sm text-stone-500 max-w-xl leading-relaxed">{{ collection.description }}</p>
       {%- endif -%}
-    {%- endif -%}
-  {%- endfor -%}
-
-  {%- comment %} ツールバー {%- endcomment %}
-  <div class="flex items-center gap-4 mb-6 pb-4 border-b border-stone-200">
-    {%- if collection.filters.size > 0 -%}
-      {%- comment %} 絞り込みボタン（モバイル） {%- endcomment %}
-      <button
-        type="button"
-        @click="filtersOpen = true"
-        class="flex items-center gap-2 text-sm font-medium md:hidden"
-      >
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-          <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 8h12M9 12h6" />
-        </svg>
-        絞り込み
-        {%- if active_filter_count > 0 -%}
-          <span class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none">{{ active_filter_count }}</span>
-        {%- endif -%}
-      </button>
-    {%- endif -%}
-
-    {%- comment %} 件数表示 {%- endcomment %}
-    <p class="text-sm text-stone-500{% if collection.filters.size > 0 %} hidden md:block{% endif %}">{{ paginate.items }}点</p>
-
-    {%- comment %} ソート {%- endcomment %}
-    <div class="ml-auto flex items-center gap-2">
-      <label for="SortBy" class="text-sm text-stone-500 whitespace-nowrap hidden sm:block">並び順:</label>
-      <select
-        id="SortBy"
-        class="text-sm border border-stone-200 rounded px-2 py-1.5 bg-white focus:outline-none focus:border-stone-400"
-        onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"
-      >
-        {%- for option in collection.sort_options -%}
-          <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
-        {%- endfor -%}
-      </select>
     </div>
-  </div>
 
-  {%- comment %} アクティブフィルター chips {%- endcomment %}
-  {%- if active_filter_count > 0 -%}
-    <div class="flex flex-wrap gap-2 mb-6">
-      {%- for filter in collection.filters -%}
-        {%- if filter.type == 'price_range' -%}
-          {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
-            <a href="{{ filter.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
-              価格:
-              {%- if filter.min_value.value != blank -%}¥{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{%- else -%}¥0{%- endif -%}
-              〜
-              {%- if filter.max_value.value != blank -%}¥{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{%- endif -%}
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-            </a>
+    {%- comment %} アクティブフィルター数の計算 {%- endcomment %}
+    {%- assign active_filter_count = 0 -%}
+    {%- for filter in collection.filters -%}
+      {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
+      {%- if filter.type == 'price_range' -%}
+        {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+          {%- assign active_filter_count = active_filter_count | plus: 1 -%}
+        {%- endif -%}
+      {%- endif -%}
+    {%- endfor -%}
+
+    {%- comment %} ツールバー {%- endcomment %}
+    <div class="flex items-center gap-4 mb-6 pb-4 border-b border-stone-200">
+      {%- if collection.filters.size > 0 -%}
+        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment %}
+        <button
+          type="button"
+          @click="filtersOpen = true"
+          class="flex items-center gap-2 text-sm font-medium md:hidden"
+        >
+          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 8h12M9 12h6" />
+          </svg>
+          絞り込み
+          {%- if active_filter_count > 0 -%}
+            <span class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none">{{ active_filter_count }}</span>
           {%- endif -%}
-        {%- else -%}
-          {%- for value in filter.active_values -%}
-            <a href="{{ value.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
-              {{ value.label }}
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
-            </a>
-          {%- endfor -%}
-        {%- endif -%}
-      {%- endfor -%}
-      <a href="{{ collection.url }}" class="text-xs text-stone-400 underline self-center hover:text-stone-900 transition-colors ml-1">すべてクリア</a>
-    </div>
-  {%- endif -%}
-
-  <div class="flex gap-8">
-    {%- comment %} デスクトップサイドバー {%- endcomment %}
-    {%- if collection.filters.size > 0 -%}
-      <aside class="hidden md:block w-52 flex-shrink-0">
-        {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
-      </aside>
-    {%- endif -%}
-
-    {%- comment %} 商品グリッド {%- endcomment %}
-    <div class="flex-1 min-w-0">
-      {%- if collection.products.size > 0 -%}
-        <div class="grid grid-cols-2 {%- if collection.filters.size > 0 %} lg:grid-cols-3{%- else %} md:grid-cols-3 lg:grid-cols-4{%- endif %} gap-6 md:gap-8">
-          {%- for product in collection.products -%}
-            {%- render 'card-product-4col', product: product -%}
-          {%- endfor -%}
-        </div>
-
-        {%- if paginate.pages > 1 -%}
-          <nav class="flex justify-center gap-2 mt-16" aria-label="ページネーション">
-            {%- if paginate.previous -%}
-              <a href="{{ paginate.previous.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">前へ</a>
-            {%- endif -%}
-            {%- for part in paginate.parts -%}
-              {%- if part.is_link -%}
-                <a href="{{ part.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">{{ part.title }}</a>
-              {%- elsif part.title == paginate.current_page -%}
-                <span class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
-              {%- else -%}
-                <span class="px-4 py-2 text-sm text-stone-300">{{ part.title }}</span>
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if paginate.next -%}
-              <a href="{{ paginate.next.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">次へ</a>
-            {%- endif -%}
-          </nav>
-        {%- endif -%}
-      {%- else -%}
-        <p class="text-sm text-stone-400 py-20 text-center">条件に一致する商品がありません。</p>
+        </button>
       {%- endif -%}
-    </div>
-  </div>
 
-  {%- comment %} モバイルフィルタードロワー {%- endcomment %}
-  {%- if collection.filters.size > 0 -%}
-    <div x-show="filtersOpen" x-cloak class="fixed inset-0 z-50 md:hidden">
-      <div class="absolute inset-0 bg-black/40" @click="filtersOpen = false" aria-hidden="true"></div>
-      <div class="absolute inset-y-0 left-0 w-80 max-w-full bg-white overflow-y-auto">
-        <div class="p-5">
-          <div class="flex items-center justify-between mb-6">
-            <h2 class="font-medium text-sm">絞り込み</h2>
-            <button @click="filtersOpen = false" class="text-stone-400 hover:text-stone-900 transition-colors" aria-label="閉じる">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-          {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
-        </div>
+      {%- comment %} 件数表示 {%- endcomment %}
+      <p class="text-sm text-stone-500{% if collection.filters.size > 0 %} hidden md:block{% endif %}">{{ paginate.items }}点の製品　</p>
+
+      {%- comment %} ソート {%- endcomment %}
+      <div class="ml-auto flex items-center gap-2">
+        <label for="SortBy" class="text-sm text-stone-500 whitespace-nowrap hidden sm:block">並び順:</label>
+        <select
+          id="SortBy"
+          class="text-sm border border-stone-200 rounded px-2 py-1.5 bg-white focus:outline-none focus:border-stone-400"
+          onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"
+        >
+          {%- for option in collection.sort_options -%}
+            <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+          {%- endfor -%}
+        </select>
       </div>
     </div>
-  {%- endif -%}
-</section>
+
+    {%- comment %} アクティブフィルター chips {%- endcomment %}
+    {%- if active_filter_count > 0 -%}
+      <div class="flex flex-wrap gap-2 mb-6">
+        {%- for filter in collection.filters -%}
+          {%- if filter.type == 'price_range' -%}
+            {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+              <a href="{{ filter.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
+                価格:
+                {%- if filter.min_value.value != blank -%}¥{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{%- else -%}¥0{%- endif -%}
+                〜
+                {%- if filter.max_value.value != blank -%}¥{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{%- endif -%}
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </a>
+            {%- endif -%}
+          {%- else -%}
+            {%- for value in filter.active_values -%}
+              <a href="{{ value.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
+                {{ value.label }}
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+              </a>
+            {%- endfor -%}
+          {%- endif -%}
+        {%- endfor -%}
+        <a href="{{ collection.url }}" class="text-xs text-stone-400 underline self-center hover:text-stone-900 transition-colors ml-1">すべてクリア</a>
+      </div>
+    {%- endif -%}
+
+    <div class="flex gap-8">
+      {%- comment %} デスクトップサイドバー {%- endcomment %}
+      {%- if collection.filters.size > 0 -%}
+        <aside class="hidden md:block w-[calc(25%-2rem)] flex-shrink-0">
+          {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
+        </aside>
+      {%- endif -%}
+
+      {%- comment %} 商品グリッド {%- endcomment %}
+      <div class="flex-1 min-w-0">
+        {%- if collection.products.size > 0 -%}
+          <div class="grid grid-cols-2 {%- if collection.filters.size > 0 %} lg:grid-cols-3{%- else %} md:grid-cols-3 lg:grid-cols-4{%- endif %} gap-6 md:gap-8">
+            {%- for product in collection.products -%}
+              {%- render 'card-product-4col', product: product -%}
+            {%- endfor -%}
+          </div>
+
+          {%- if paginate.pages > 1 -%}
+            <nav class="flex justify-center gap-2 mt-16" aria-label="ページネーション">
+              {%- if paginate.previous -%}
+                <a href="{{ paginate.previous.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">前へ</a>
+              {%- endif -%}
+              {%- for part in paginate.parts -%}
+                {%- if part.is_link -%}
+                  <a href="{{ part.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">{{ part.title }}</a>
+                {%- elsif part.title == paginate.current_page -%}
+                  <span class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
+                {%- else -%}
+                  <span class="px-4 py-2 text-sm text-stone-300">{{ part.title }}</span>
+                {%- endif -%}
+              {%- endfor -%}
+              {%- if paginate.next -%}
+                <a href="{{ paginate.next.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">次へ</a>
+              {%- endif -%}
+            </nav>
+          {%- endif -%}
+        {%- else -%}
+          <p class="text-sm text-stone-400 py-20 text-center">条件に一致する商品がありません。</p>
+        {%- endif -%}
+      </div>
+    </div>
+
+    {%- comment %} モバイルフィルタードロワー {%- endcomment %}
+    {%- if collection.filters.size > 0 -%}
+      <div x-show="filtersOpen" x-cloak class="fixed inset-0 z-50 md:hidden">
+        <div class="absolute inset-0 bg-black/40" @click="filtersOpen = false" aria-hidden="true"></div>
+        <div class="absolute inset-y-0 left-0 w-80 max-w-full bg-white overflow-y-auto">
+          <div class="p-5">
+            <div class="flex items-center justify-between mb-6">
+              <h2 class="font-medium text-sm">絞り込み</h2>
+              <button @click="filtersOpen = false" class="text-stone-400 hover:text-stone-900 transition-colors" aria-label="閉じる">
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+            {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
+          </div>
+        </div>
+      </div>
+    {%- endif -%}
+  </section>
+</div> 
 
 {%- endpaginate -%}
 
