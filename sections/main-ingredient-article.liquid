@@ -1,0 +1,509 @@
+{%- comment %} ============================================================
+  Hero — 全幅背景画像 + 成分名テキスト
+  ============================================================ {%- endcomment %}
+<div class="relative w-full min-h-[500px] flex flex-col items-center justify-center gap-4 overflow-hidden px-10 py-[60px]">
+  {%- if article.image -%}
+    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+      <img
+        src="{{ article.image | image_url: width: 1920 }}"
+        alt="{{ article.image.alt | escape | default: article.title | escape }}"
+        class="absolute inset-0 w-full h-full object-cover"
+        loading="eager"
+        fetchpriority="high"
+        width="1920"
+        height="800"
+      >
+      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
+    </div>
+  {%- else -%}
+    <div class="absolute inset-0 bg-stone-800" aria-hidden="true"></div>
+  {%- endif -%}
+
+  <p class="relative text-sm font-medium tracking-[1.12px] text-white uppercase">INGREDIENTS</p>
+
+  <h1 class="relative text-5xl md:text-[60px] font-semibold leading-tight tracking-wider text-white text-center max-w-3xl">
+    {{ article.title }}
+  </h1>
+
+  {%- assign name_ja = article.metafields.ingredient.name_ja.value -%}
+  {%- if name_ja != blank -%}
+    <p class="relative text-lg font-medium text-white">{{ name_ja }}</p>
+  {%- endif -%}
+</div>
+
+{%- comment %} パンくずリスト {%- endcomment %}
+<nav
+  class="w-full max-w-[896px] mx-auto px-10 pt-10 flex items-center gap-2 text-sm"
+  aria-label="パンくずリスト"
+>
+  <a href="{{ routes.root_url }}" class="text-stone-500">ホーム</a>
+  <span class="text-stone-500" aria-hidden="true">/</span>
+  <a href="{{ blog.url }}" class="text-stone-500">成分ガイド</a>
+  <span class="text-stone-500" aria-hidden="true">/</span>
+  <span class="text-stone-900">{{ name_ja | default: article.title }}</span>
+</nav>
+
+{%- comment %} ============================================================
+  ブロックレンダリング
+  ============================================================ {%- endcomment %}
+{%- for block in section.blocks -%}
+
+  {%- comment %} テキストセクション {%- endcomment %}
+  {%- if block.type == 'text_section' -%}
+    <div
+      class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
+      {{ block.shopify_attributes }}
+    >
+      <div class="w-full max-w-[896px] flex flex-col gap-6">
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-[36px] font-semibold leading-tight tracking-wider text-stone-900">
+            {{ block.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if block.settings.content1 != blank -%}
+          <div class="text-base leading-7 text-stone-900">{{ block.settings.content1 }}</div>
+        {%- endif -%}
+        {%- if block.settings.content2 != blank -%}
+          <div class="text-base leading-7 text-stone-900">{{ block.settings.content2 }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  {%- comment %} ベネフィットカードグループ {%- endcomment %}
+  {%- elsif block.type == 'benefits_group' -%}
+    <div
+      class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
+      {{ block.shopify_attributes }}
+    >
+      <div class="w-full max-w-[896px] flex flex-col gap-6">
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-[36px] font-semibold leading-tight tracking-wider text-stone-900">
+            {{ block.settings.heading }}
+          </h2>
+        {%- endif -%}
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {%- for n in (1..4) -%}
+            {%- liquid
+              assign icon_key = 'card' | append: n | append: '_icon'
+              assign title_key = 'card' | append: n | append: '_title'
+              assign desc_key = 'card' | append: n | append: '_description'
+              assign card_icon = block.settings[icon_key]
+              assign card_title = block.settings[title_key]
+              assign card_desc = block.settings[desc_key]
+            -%}
+            {%- if card_title != blank -%}
+              <div class="bg-stone-100 rounded-2xl p-6 flex flex-col gap-4">
+                <div class="pb-2">
+                  <div class="bg-sky-600 rounded-full w-12 h-12 flex items-center justify-center">
+                    {%- render 'icon', icon: card_icon, class: 'w-6 h-6 text-white' -%}
+                  </div>
+                </div>
+                <h3 class="text-2xl font-medium text-stone-900">{{ card_title }}</h3>
+                {%- if card_desc != blank -%}
+                  <p class="text-sm leading-relaxed text-stone-900">{{ card_desc }}</p>
+                {%- endif -%}
+              </div>
+            {%- endif -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </div>
+
+  {%- comment %} 免責事項ノート {%- endcomment %}
+  {%- elsif block.type == 'disclaimer' -%}
+    <div
+      class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
+      {{ block.shopify_attributes }}
+    >
+      <div class="w-full max-w-[896px]">
+        <div class="bg-stone-100 rounded-2xl p-4 flex gap-2 items-start">
+          <div class="shrink-0 pt-1">
+            {%- render 'icon', icon: 'info', class: 'w-5 h-5 text-stone-900' -%}
+          </div>
+          <div class="flex-1 text-base leading-7 text-stone-900">{{ block.settings.text }}</div>
+        </div>
+      </div>
+    </div>
+
+  {%- endif -%}
+{%- endfor -%}
+
+{%- comment %} ============================================================
+  参考文献
+  ============================================================ {%- endcomment %}
+{%- assign ref_blocks = section.blocks | where: 'type', 'reference_entry' -%}
+{%- if ref_blocks.size > 0 -%}
+  <div class="w-full bg-stone-100 flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]">
+    <div class="w-full max-w-[896px] flex flex-col gap-5">
+      {%- if section.settings.references_heading != blank -%}
+        <p class="text-base font-medium text-stone-900">{{ section.settings.references_heading }}</p>
+      {%- endif -%}
+      <ol class="flex flex-col gap-4 list-none">
+        {%- for block in ref_blocks -%}
+          <li class="flex gap-3" {{ block.shopify_attributes }}>
+            <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
+            <div class="flex flex-col gap-1 min-w-0">
+              {%- if block.settings.url != blank -%}
+                <a
+                  href="{{ block.settings.url }}"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  class="text-sm font-medium text-stone-900 underline underline-offset-2 break-words"
+                >{{ block.settings.title }}</a>
+              {%- else -%}
+                <p class="text-sm font-medium text-stone-900">{{ block.settings.title }}</p>
+              {%- endif -%}
+              {%- liquid
+                assign meta_parts = ''
+                if block.settings.author != blank
+                  assign meta_parts = block.settings.author
+                endif
+                if block.settings.journal != blank
+                  if meta_parts != blank
+                    assign meta_parts = meta_parts | append: ' / ' | append: block.settings.journal
+                  else
+                    assign meta_parts = block.settings.journal
+                  endif
+                endif
+                if block.settings.year != blank
+                  if meta_parts != blank
+                    assign meta_parts = meta_parts | append: ', ' | append: block.settings.year
+                  else
+                    assign meta_parts = block.settings.year
+                  endif
+                endif
+              -%}
+              {%- if meta_parts != blank -%}
+                <p class="text-sm text-stone-500">{{ meta_parts }}</p>
+              {%- endif -%}
+            </div>
+          </li>
+        {%- endfor -%}
+      </ol>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment %} ============================================================
+  この成分を配合した製品
+  ============================================================ {%- endcomment %}
+{%- assign ingredient_col = collections[section.settings.collection] -%}
+{%- if section.settings.collection != blank -%}
+  <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-10 py-[60px]">
+    <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
+      {%- if section.settings.products_heading != blank -%}
+        <h2 class="text-[36px] font-semibold tracking-wider text-stone-900">
+          {{ section.settings.products_heading }}
+        </h2>
+      {%- endif -%}
+      {%- if section.settings.products_subheading != blank -%}
+        <p class="text-lg text-stone-900/70">{{ section.settings.products_subheading }}</p>
+      {%- endif -%}
+    </div>
+
+    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-6">
+      {%- if ingredient_col != blank -%}
+        {%- for product in ingredient_col.products limit: section.settings.products_to_show -%}
+          {%- render 'card-product-4col', product: product -%}
+        {%- else -%}
+          <p class="col-span-4 text-stone-400">コレクションに商品がありません。</p>
+        {%- endfor -%}
+      {%- else -%}
+        {%- for i in (1..section.settings.products_to_show) -%}
+          <div class="flex flex-col gap-4">
+            <div class="w-full aspect-square rounded-2xl bg-stone-200 animate-pulse"></div>
+            <div class="flex flex-col gap-2">
+              <div class="h-3 w-1/3 bg-stone-200 rounded animate-pulse"></div>
+              <div class="h-4 w-2/3 bg-stone-200 rounded animate-pulse"></div>
+              <div class="h-4 w-1/4 bg-stone-200 rounded animate-pulse"></div>
+            </div>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+    </div>
+  </section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "成分ガイド記事",
+  "blocks": [
+    {
+      "type": "text_section",
+      "name": "テキストセクション",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し"
+        },
+        {
+          "type": "richtext",
+          "id": "content1",
+          "label": "本文1"
+        },
+        {
+          "type": "richtext",
+          "id": "content2",
+          "label": "本文2（省略可）"
+        }
+      ]
+    },
+    {
+      "type": "benefits_group",
+      "name": "ベネフィットカードグループ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "スキンケアにおける役割"
+        },
+        {
+          "type": "select",
+          "id": "card1_icon",
+          "label": "カード1 アイコン",
+          "options": [
+            { "value": "layout-grid", "label": "Layout Grid" },
+            { "value": "droplet", "label": "Droplet" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "sun", "label": "Sun" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "citrus", "label": "Citrus" },
+            { "value": "flask-conical", "label": "Flask" },
+            { "value": "gem", "label": "Gem" }
+          ],
+          "default": "layout-grid"
+        },
+        {
+          "type": "text",
+          "id": "card1_title",
+          "label": "カード1 タイトル",
+          "default": "肌を整える"
+        },
+        {
+          "type": "textarea",
+          "id": "card1_description",
+          "label": "カード1 説明",
+          "default": "肌のキメを整え、なめらかな肌へと導きます。健やかな肌環境を保ちます。"
+        },
+        {
+          "type": "select",
+          "id": "card2_icon",
+          "label": "カード2 アイコン",
+          "options": [
+            { "value": "layout-grid", "label": "Layout Grid" },
+            { "value": "droplet", "label": "Droplet" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "sun", "label": "Sun" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "citrus", "label": "Citrus" },
+            { "value": "flask-conical", "label": "Flask" },
+            { "value": "gem", "label": "Gem" }
+          ],
+          "default": "droplet"
+        },
+        {
+          "type": "text",
+          "id": "card2_title",
+          "label": "カード2 タイトル",
+          "default": "うるおいを与える"
+        },
+        {
+          "type": "textarea",
+          "id": "card2_description",
+          "label": "カード2 説明",
+          "default": "肌にうるおいを与え、しっとりとした質感を保ちます。乾燥から肌を守ります。"
+        },
+        {
+          "type": "select",
+          "id": "card3_icon",
+          "label": "カード3 アイコン",
+          "options": [
+            { "value": "layout-grid", "label": "Layout Grid" },
+            { "value": "droplet", "label": "Droplet" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "sun", "label": "Sun" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "citrus", "label": "Citrus" },
+            { "value": "flask-conical", "label": "Flask" },
+            { "value": "gem", "label": "Gem" }
+          ],
+          "default": "sparkle"
+        },
+        {
+          "type": "text",
+          "id": "card3_title",
+          "label": "カード3 タイトル",
+          "default": "肌を清浄にする"
+        },
+        {
+          "type": "textarea",
+          "id": "card3_description",
+          "label": "カード3 説明",
+          "default": "肌を清浄に保ち、清潔な状態を維持します。肌本来の健やかさをサポートします。"
+        },
+        {
+          "type": "select",
+          "id": "card4_icon",
+          "label": "カード4 アイコン",
+          "options": [
+            { "value": "layout-grid", "label": "Layout Grid" },
+            { "value": "droplet", "label": "Droplet" },
+            { "value": "sparkle", "label": "Sparkle" },
+            { "value": "sun", "label": "Sun" },
+            { "value": "leaf", "label": "Leaf" },
+            { "value": "citrus", "label": "Citrus" },
+            { "value": "flask-conical", "label": "Flask" },
+            { "value": "gem", "label": "Gem" }
+          ],
+          "default": "sun"
+        },
+        {
+          "type": "text",
+          "id": "card4_title",
+          "label": "カード4 タイトル",
+          "default": "爽やかな香り"
+        },
+        {
+          "type": "textarea",
+          "id": "card4_description",
+          "label": "カード4 説明",
+          "default": "柑橘系の爽やかな香りが、スキンケアタイムをリフレッシュする時間へと変えます。"
+        }
+      ]
+    },
+    {
+      "type": "disclaimer",
+      "name": "免責事項ノート",
+      "settings": [
+        {
+          "type": "richtext",
+          "id": "text",
+          "label": "テキスト",
+          "default": "<p>本ページは成分の一般的な情報提供を目的としており、特定の効能・効果を保証するものではありません。肌悩みについては皮膚科専門医へご相談ください。</p>"
+        }
+      ]
+    },
+    {
+      "type": "reference_entry",
+      "name": "参考文献",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "論文・記事タイトル"
+        },
+        {
+          "type": "text",
+          "id": "author",
+          "label": "著者名（省略可）"
+        },
+        {
+          "type": "text",
+          "id": "journal",
+          "label": "雑誌・出版社名（省略可）"
+        },
+        {
+          "type": "text",
+          "id": "year",
+          "label": "出版年（省略可）"
+        },
+        {
+          "type": "url",
+          "id": "url",
+          "label": "URL（省略可）"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "references_heading",
+      "label": "参考文献 見出し",
+      "default": "参考文献"
+    },
+    {
+      "type": "collection",
+      "id": "collection",
+      "label": "この成分を配合した製品 コレクション"
+    },
+    {
+      "type": "text",
+      "id": "products_heading",
+      "label": "製品グリッド 見出し",
+      "default": "この成分を配合した製品"
+    },
+    {
+      "type": "text",
+      "id": "products_subheading",
+      "label": "製品グリッド サブ見出し"
+    },
+    {
+      "type": "range",
+      "id": "products_to_show",
+      "label": "表示件数",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "成分ガイド記事",
+      "blocks": [
+        {
+          "type": "text_section",
+          "settings": {
+            "heading": "この成分について"
+          }
+        },
+        {
+          "type": "benefits_group",
+          "settings": {
+            "heading": "スキンケアにおける役割"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "heading": "使用上のポイント"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "heading": "相性の良い成分"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "heading": "注意が必要な組み合わせ"
+          }
+        },
+        {
+          "type": "text_section",
+          "settings": {
+            "heading": "妊娠・授乳中の方へ"
+          }
+        },
+        {
+          "type": "disclaimer"
+        },
+        {
+          "type": "reference_entry",
+          "settings": {
+            "title": "参考文献タイトル例",
+            "author": "著者名",
+            "journal": "Journal of Example",
+            "year": "2024"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
