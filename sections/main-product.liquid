@@ -233,7 +233,7 @@
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
           {%- assign discount_label = discount | append: '% OFF' -%}
-          {%- render 'badge', label: discount_label, variant: 'premium', size: 'sm' -%}
+          {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
         {%- endif -%}
       </div>
 

@@ -12,9 +12,6 @@ module.exports = {
       fontFamily: {
         sans: ['Outfit', 'Noto Sans JP', 'sans-serif'],
       },
-      colors: {
-        accent: '#2a3b35',
-      },
     },
   },
   plugins: [],

@@ -5,18 +5,6 @@
     rank    {Number}  ランク番号（省略時はバッジ非表示）
 {% endcomment %}
 
-<style>
-  .btn-card-add {
-    transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @media (any-hover: hover) {
-    .btn-card-add:not(:disabled):hover {
-      background-color: #ffffff;
-      color: #0c0a09;
-    }
-  }
-</style>
 
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign on_sale = false -%}
@@ -40,21 +28,21 @@
   }"
 >
 
-  <!-- 画像エリア -->
+  {%- comment %} 画像エリア {%- endcomment %}
   <div
     class="relative w-full aspect-square cursor-pointer"
     @click="window.location.href='{{ product.url }}'"
   >
 
-    <!-- ランクバッジ -->
+    {%- comment %} ランクバッジ {%- endcomment %}
     {%- if rank != blank -%}
-      <div class="absolute top-4 left-4 z-10 w-12 h-12 rounded-full bg-amber-700 flex items-center justify-center gap-0.5">
+      <div class="absolute top-4 left-4 z-10 w-12 h-12 rounded-full bg-amber-900 flex items-center justify-center gap-0.5">
         {%- render 'icon', icon: 'hash', class: 'w-3.5 h-3.5 text-white flex-shrink-0' -%}
         <span class="text-white font-medium text-base leading-tight">{{ rank }}</span>
       </div>
     {%- endif -%}
 
-    <!-- 1枚目 -->
+    {%- comment %} 1枚目 {%- endcomment %}
     {%- if product.featured_image -%}
       <img
         src="{{ product.featured_image | image_url: width: 600 }}"
@@ -72,7 +60,7 @@
       </div>
     {%- endif -%}
 
-    <!-- 2枚目（hover時） -->
+    {%- comment %} 2枚目（hover時） {%- endcomment %}
     {%- if product.images.size > 1 -%}
       <img
         src="{{ product.images[1] | image_url: width: 600 }}"
@@ -86,22 +74,22 @@
 
   </div>
 
-  <!-- 商品情報 + カートボタン -->
+  {%- comment %} 商品情報 + カートボタン {%- endcomment %}
   <div class="p-4">
 
-    <!-- 左：テキスト情報 -->
+    {%- comment %} 左：テキスト情報 {%- endcomment %}
     <a href="{{ product.url }}" class="flex flex-col gap-2 min-w-0">
-      <!-- ベンダー -->
+      {%- comment %} ベンダー {%- endcomment %}
       {%- if product.vendor != blank -%}
         <p class="text-sm leading-tight text-stone-500 truncate">{{ product.vendor }}</p>
       {%- endif -%}
-      <!-- タイトル -->
+      {%- comment %} タイトル {%- endcomment %}
       {%- assign card_title = product.title | replace: '※1', '' | replace: '※2', '' | replace: '※3', '' | replace: '※4', '' | replace: '※5', '' | replace: '※', '' -%}
       <h3 class="text-xl font-medium leading-tight text-stone-900">{{ card_title }}</h3>
     </a>
 
     <div class="flex justify-between gap-3 mt-4">
-      <!-- 評価 -->
+      {%- comment %} 評価 {%- endcomment %}
       {%- if rating_value != blank -%}
         <div class="flex items-center gap-2">
           <div class="flex items-center gap-1">
@@ -115,14 +103,14 @@
           {%- endif -%}
         </div>
       {%- endif -%}
-      <!-- 価格 -->
+      {%- comment %} 価格 {%- endcomment %}
       <div class="flex items-center gap-2">
         {%- if on_sale -%}
           <s class="text-base leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
         {%- endif -%}
         <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
       </div>
-      <!-- 右：カートに追加ボタン -->
+      {%- comment %} 右：カートに追加ボタン {%- endcomment %}
       {%- if product.available -%}
         <button
           type="button"

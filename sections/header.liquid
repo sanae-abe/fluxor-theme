@@ -4,7 +4,7 @@
 >
   <div class="max-w-screen-xl mx-auto flex items-center justify-between h-20">
 
-    <!-- ロゴ -->
+    {%- comment %} ロゴ {%- endcomment %}
     {%- capture logo_inner -%}
       {%- if settings.logo -%}
         <img
@@ -43,7 +43,7 @@
       </a>
     {%- endif -%}
 
-    <!-- ナビゲーション（デスクトップ） -->
+    {%- comment %} ナビゲーション（デスクトップ） {%- endcomment %}
     <nav class="hidden md:flex items-center gap-10" aria-label="Main">
       {%- if section.settings.menu != blank -%}
         {%- for link in linklists[section.settings.menu].links -%}
@@ -58,28 +58,24 @@
       {%- endif -%}
     </nav>
 
-    <!-- 右アイコン群 -->
+    {%- comment %} 右アイコン群 {%- endcomment %}
     <div class="flex items-center">
 
-      <!-- 検索 -->
-      <a
-        href="{{ routes.search_url }}"
-        class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
-        aria-label="検索"
-      >
-        {%- render 'icon', icon: 'search', class: 'w-6 h-6' -%}
-      </a>
+      {%- comment %} 検索・アカウント {%- endcomment %}
+      {%- assign _nav_urls   = routes.search_url | append: '|' | append: routes.account_url | split: '|' -%}
+      {%- assign _nav_icons  = 'search,user' | split: ',' -%}
+      {%- assign _nav_labels = '検索,アカウント' | split: ',' -%}
+      {%- for _icon in _nav_icons -%}
+        <a
+          href="{{ _nav_urls[forloop.index0] }}"
+          class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
+          aria-label="{{ _nav_labels[forloop.index0] }}"
+        >
+          {%- render 'icon', icon: _icon, class: 'w-6 h-6' -%}
+        </a>
+      {%- endfor -%}
 
-      <!-- アカウント -->
-      <a
-        href="{{ routes.account_url }}"
-        class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
-        aria-label="アカウント"
-      >
-        {%- render 'icon', icon: 'user', class: 'w-6 h-6' -%}
-      </a>
-
-      <!-- カート -->
+      {%- comment %} カート {%- endcomment %}
       <button
         type="button"
         class="relative flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
@@ -95,7 +91,7 @@
         ></span>
       </button>
 
-      <!-- ハンバーガー（モバイル） -->
+      {%- comment %} ハンバーガー（モバイル） {%- endcomment %}
       <button
         type="button"
         class="md:hidden flex flex-col gap-1.5 p-3 text-stone-900"

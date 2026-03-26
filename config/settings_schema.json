@@ -14,37 +14,19 @@
         "type": "color",
         "id": "color_background",
         "label": "Background",
-        "default": "#F6F4F0"
+        "default": "#fafaf9"
       },
       {
         "type": "color",
         "id": "color_text",
         "label": "Text",
-        "default": "#1A1714"
-      },
-      {
-        "type": "color",
-        "id": "color_border",
-        "label": "Border",
-        "default": "#1A1714"
-      },
-      {
-        "type": "color",
-        "id": "color_button",
-        "label": "Button background",
-        "default": "#1A1714"
-      },
-      {
-        "type": "color",
-        "id": "color_button_text",
-        "label": "Button text",
-        "default": "#F6F4F0"
+        "default": "#1c1917"
       },
       {
         "type": "color",
         "id": "color_accent",
-        "label": "Accent (botanical)",
-        "default": "#2A3B35"
+        "label": "Accent (brand)",
+        "default": "#0f766e"
       }
     ]
   },

@@ -9,12 +9,9 @@
  */
 {
   "current": {
-    "color_background": "#F6F4F0",
-    "color_text": "#1A1714",
-    "color_border": "#1A1714",
-    "color_button": "#1A1714",
-    "color_button_text": "#F6F4F0",
-    "color_accent": "#2A3B35",
+    "color_background": "#fafaf9",
+    "color_text": "#1c1917",
+    "color_accent": "#0f766e",
     "logo_width": 120,
     "sections": {
       "announcement-bar": {

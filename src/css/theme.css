@@ -1,0 +1,21 @@
+/* 価格：セール時の打ち消し線 */
+.price--on-sale .price__compare s { color: theme('colors.stone.400'); }
+.price--on-sale .price__sale { color: theme('colors.stone.900'); }
+
+/* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
+[x-cloak] { display: none !important; }
+
+/* 成分カルーセル：スクロールバー非表示 */
+.ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }
+.ingredient-track::-webkit-scrollbar { display: none; }
+
+/* 商品カード：カートに追加ボタン */
+.btn-card-add {
+  transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (any-hover: hover) {
+  .btn-card-add:not(:disabled):hover {
+    background-color: #ffffff;
+    color: #0c0a09;
+  }
+}

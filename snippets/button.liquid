@@ -5,8 +5,8 @@
   - label:      {String}  ボタンテキスト（必須）
   - url:        {String}  URLを指定すると<a>、省略すると<button>
   - variant:    {String}  'solid' | 'outline'  （デフォルト: 'solid'）
-  - color:      {String}  'dark' | 'light' | 'teal' | 'amber' | 'muted'  （デフォルト: 'dark'）
-  - size:       {String}  'xl' | 'lg' | 'md' | 'sm' | 'xs'  （デフォルト: 'md'）
+  - color:      {String}  'dark' | 'light' | 'teal' | 'muted'  （デフォルト: 'dark'）
+  - size:       {String}  'lg' | 'md' | 'sm' | 'xs'  （デフォルト: 'md'）
   - icon_left:  {String}  左側アイコン名（例: 'arrow-left'）
   - icon_right: {String}  右側アイコン名（例: 'arrow-right'）
   - type:       {String}  button の type 属性  （デフォルト: 'button'）
@@ -46,9 +46,6 @@
 
   # ── サイズ ──────────────────────────────────────────────────────
   case btn_size
-  when 'xl'
-    assign size_cls = 'h-[72px] px-5 text-xl gap-2 border-2 font-medium'
-    assign icon_cls = 'w-6 h-6'
   when 'lg'
     assign size_cls = 'h-[60px] px-[18px] text-lg gap-3 border-2 font-medium'
     assign icon_cls = 'w-5 h-5'
@@ -83,16 +80,6 @@
     else
       assign color_cls = 'bg-teal-900 text-stone-50 border-teal-900'
       assign hover_bg = '#115e59'
-      assign hover_text = '#fafaf9'
-    endif
-  when 'amber'
-    if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-amber-700 border-amber-700'
-      assign hover_bg = '#b45309'
-      assign hover_text = '#fafaf9'
-    else
-      assign color_cls = 'bg-amber-700 text-stone-50 border-amber-700'
-      assign hover_bg = '#92400e'
       assign hover_text = '#fafaf9'
     endif
   when 'muted'

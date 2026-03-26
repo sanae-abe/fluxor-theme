@@ -4,7 +4,7 @@
 <section class="bg-stone-100 px-10 py-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
 
-    <!-- ヘッダー行 -->
+    {%- comment %} ヘッダー行 {%- endcomment %}
     {%- assign header_align = 'center' -%}
     {%- if section.settings.show_view_all -%}{%- assign header_align = 'left' -%}{%- endif -%}
     {%- render 'section-header',
@@ -15,7 +15,7 @@
       align: header_align
     -%}
 
-    <!-- 製品グリッド -->
+    {%- comment %} 製品グリッド {%- endcomment %}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
       {%- if col != blank -%}
         {%- for product in col.products limit: section.settings.products_to_show -%}

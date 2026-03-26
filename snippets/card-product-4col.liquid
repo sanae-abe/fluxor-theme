@@ -4,18 +4,6 @@
     product {Object} Shopify product オブジェクト（必須）
 {% endcomment %}
 
-<style>
-  .btn-card-add {
-    transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
-
-  @media (any-hover: hover) {
-    .btn-card-add:not(:disabled):hover {
-      background-color: #ffffff;
-      color: #0c0a09;
-    }
-  }
-</style>
 
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign on_sale = false -%}
@@ -40,12 +28,12 @@
   }"
 >
 
-  <!-- 画像エリア（クリックで商品ページへ） -->
+  {%- comment %} 画像エリア（クリックで商品ページへ） {%- endcomment %}
   <div
     class="relative w-full aspect-square bg-stone-50 overflow-hidden [transform:translateZ(0)] cursor-pointer"
     @click="window.location.href='{{ product.url }}'"
   >
-    <!-- 1枚目 -->
+    {%- comment %} 1枚目 {%- endcomment %}
     {%- if product.featured_image -%}
       <img
         src="{{ product.featured_image | image_url: width: 600 }}"
@@ -63,7 +51,7 @@
       </div>
     {%- endif -%}
 
-    <!-- 2枚目（hover時） -->
+    {%- comment %} 2枚目（hover時） {%- endcomment %}
     {%- if product.images.size > 1 -%}
       <img
         src="{{ product.images[1] | image_url: width: 600 }}"
@@ -75,17 +63,17 @@
       >
     {%- endif -%}
 
-    <!-- バッジ -->
+    {%- comment %} バッジ {%- endcomment %}
     <div class="absolute top-4 left-4 z-10">
       {%- if product.available == false -%}
         {% render 'badge', label: '売り切れ', variant: 'secondary' %}
       {%- elsif on_sale -%}
         {%- assign badge_label = discount | append: '% OFF' -%}
-        {% render 'badge', label: badge_label, variant: 'premium' %}
+        {% render 'badge', label: badge_label, variant: 'sale' %}
       {%- endif -%}
     </div>
 
-    <!-- カートに追加ボタン（hover時に表示） -->
+    {%- comment %} カートに追加ボタン（hover時に表示） {%- endcomment %}
     {%- if product.available -%}
       <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
@@ -102,19 +90,19 @@
     {%- endif -%}
   </div>
 
-  <!-- 商品情報（クリックで商品ページへ） -->
+  {%- comment %} 商品情報（クリックで商品ページへ） {%- endcomment %}
   <a href="{{ product.url }}" class="flex flex-col gap-2 mt-4">
 
-    <!-- ベンダー -->
+    {%- comment %} ベンダー {%- endcomment %}
     {%- if product.vendor != blank -%}
       <p class="text-sm leading-tight text-stone-500">{{ product.vendor }}</p>
     {%- endif -%}
 
-    <!-- タイトル -->
+    {%- comment %} タイトル {%- endcomment %}
     {%- assign card_title = product.title | replace: '※1', '' | replace: '※2', '' | replace: '※3', '' | replace: '※4', '' | replace: '※5', '' | replace: '※', '' -%}
     <h3 class="text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
 
-    <!-- 評価 -->
+    {%- comment %} 評価 {%- endcomment %}
     {%- if rating_value != blank -%}
       <div class="flex items-center gap-2">
         <div class="flex items-center gap-1">
@@ -129,7 +117,7 @@
       </div>
     {%- endif -%}
 
-    <!-- 価格 -->
+    {%- comment %} 価格 {%- endcomment %}
     <div class="flex items-center gap-2">
       {%- if on_sale -%}
         <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>

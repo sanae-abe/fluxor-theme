@@ -1,0 +1,369 @@
+/* =====================================================
+   Judge.me ウィジェット — Fluxor テーマカスタマイズ
+   ===================================================== */
+
+/* ── ベース ─────────────────────────────────────────── */
+.jdgm-widget {
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  color: #1c1917;
+}
+
+/* ── スター ─────────────────────────────────────────── */
+.jdgm-star,
+.jdgm__star { color: var(--color-premium); } /* amber-700 */
+
+.jdgm-star--empty,
+.jdgm__star--empty { color: #e7e5e4; } /* stone-200 */
+
+/* ── プレビューバッジ（商品タイトル横） ────────────── */
+.jdgm-preview-badge,
+.jdgm-prev-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.375rem;
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  color: #1c1917;
+  text-decoration: none !important;
+}
+.jdgm-prev-badge__rating {
+  font-weight: 600;
+  color: #1c1917;
+}
+.jdgm-prev-badge__count {
+  color: #78716c; /* stone-500 */
+}
+.jdgm-prev-badge[data-average-rating="0"] { display: none; }
+
+/* ── ヘッダー（総合評価エリア） ─────────────────────── */
+.jdgm-rev-widg-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 2rem;
+  padding-bottom: 2.5rem;
+  border-bottom: 1px solid #e7e5e4;
+  margin-bottom: 2.5rem;
+}
+
+/* 総合スコア（大きい数字） */
+.jdgm-rev-widg-header__summary-score {
+  font-size: 3.5rem;
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #1c1917;
+}
+
+/* "X件のレビュー" テキスト */
+.jdgm-rev-widg-header__summary-text {
+  font-size: 0.8125rem;
+  color: #78716c;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ヒストグラム（星ごとの棒グラフ） */
+.jdgm-histogram__bar {
+  background-color: #e7e5e4;
+  border-radius: 0 !important;
+  height: 5px;
+}
+.jdgm-histogram__bar-fill {
+  background-color: var(--color-premium);
+  border-radius: 0 !important;
+}
+.jdgm-histogram__bar-count,
+.jdgm-histogram__bar-label {
+  font-size: 0.75rem;
+  color: #78716c;
+}
+
+/* ── レビューを書くボタン ────────────────────────────── */
+.jdgm-write-rev-link,
+.jdgm-write-rev-link:visited {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding: 0 1.25rem;
+  background-color: #1c1917 !important;
+  color: #fafaf9 !important;
+  border: 2px solid #1c1917 !important;
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  text-decoration: none !important;
+  transition: background-color 0.15s ease, color 0.15s ease;
+  border-radius: 0 !important;
+  cursor: pointer;
+}
+@media (any-hover: hover) {
+  .jdgm-write-rev-link:hover {
+    background-color: #ffffff !important;
+    color: #0c0a09 !important;
+  }
+}
+
+/* ── ソート・フィルタードロップダウン ──────────────── */
+.jdgm-rev-sort select,
+.jdgm-form select {
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.875rem;
+  color: #1c1917;
+  background-color: #fafaf9;
+  border: 1px solid #e7e5e4;
+  border-radius: 0 !important;
+  padding: 0.5rem 2rem 0.5rem 0.75rem;
+  appearance: none;
+  -webkit-appearance: none;
+  letter-spacing: 0.04em;
+}
+
+/* ── 個別レビューカード ──────────────────────────────── */
+.jdgm-rev {
+  padding: 2rem 0 !important;
+  border-bottom: 1px solid #e7e5e4 !important;
+  border-top: none !important;
+  border-left: none !important;
+  border-right: none !important;
+  border-radius: 0 !important;
+  background: transparent !important;
+  box-shadow: none !important;
+}
+.jdgm-rev:first-child {
+  border-top: 1px solid #e7e5e4 !important;
+}
+
+/* レビュータイトル */
+.jdgm-rev__title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #1c1917;
+  letter-spacing: 0.03em;
+  margin-bottom: 0.5rem;
+}
+
+/* レビュー本文 */
+.jdgm-rev__body {
+  font-size: 0.9375rem;
+  color: #44403c; /* stone-700 */
+  line-height: 1.75;
+  letter-spacing: 0.02em;
+}
+
+/* 投稿者名 */
+.jdgm-rev__author {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #1c1917;
+  letter-spacing: 0.05em;
+}
+
+/* 日付 */
+.jdgm-rev__timestamp {
+  font-size: 0.75rem;
+  color: #a8a29e; /* stone-400 */
+  letter-spacing: 0.05em;
+}
+
+/* Verified Buyer バッジ */
+.jdgm-rev__info,
+.jdgm-badge-icon--verified-buyer,
+.jdgm-verified-info {
+  font-size: 0.75rem;
+  color: #2a3b35 !important; /* accent */
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+/* ── レビュー写真 ───────────────────────────────────── */
+.jdgm-rev__pic-img {
+  border-radius: 0 !important;
+  width: 80px !important;
+  height: 80px !important;
+  object-fit: cover;
+  border: 1px solid #e7e5e4 !important;
+}
+
+/* ── ページネーション ────────────────────────────────── */
+.jdgm-paginate {
+  margin-top: 2.5rem;
+  display: flex;
+  gap: 0.25rem;
+  justify-content: center;
+}
+.jdgm-paginate__page {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 2.5rem;
+  height: 2.5rem;
+  padding: 0 0.5rem;
+  border: 1px solid #e7e5e4;
+  background-color: transparent;
+  color: #1c1917;
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.875rem;
+  letter-spacing: 0.04em;
+  border-radius: 0 !important;
+  cursor: pointer;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+  text-decoration: none !important;
+}
+.jdgm-paginate__page.jdgm-paginate__page--active {
+  background-color: #1c1917;
+  color: #fafaf9;
+  border-color: #1c1917;
+}
+@media (any-hover: hover) {
+  .jdgm-paginate__page:hover {
+    background-color: #1c1917;
+    color: #fafaf9;
+    border-color: #1c1917;
+  }
+}
+
+/* ── レビュー投稿フォーム ────────────────────────────── */
+.jdgm-rev-add__title-input,
+.jdgm-rev-add__body-input,
+.jdgm-rev-add__name-input,
+.jdgm-rev-add__email-input {
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.9375rem;
+  color: #1c1917;
+  background-color: #fafaf9;
+  border: 1px solid #e7e5e4 !important;
+  border-radius: 0 !important;
+  padding: 0.75rem 1rem;
+  letter-spacing: 0.02em;
+}
+.jdgm-rev-add__title-input:focus,
+.jdgm-rev-add__body-input:focus,
+.jdgm-rev-add__name-input:focus,
+.jdgm-rev-add__email-input:focus {
+  outline: 2px solid #1c1917;
+  outline-offset: 0;
+  border-color: #1c1917 !important;
+}
+.jdgm-form__submit,
+.jdgm-rev-add__submit {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  padding: 0 1.5rem;
+  background-color: #1c1917 !important;
+  color: #fafaf9 !important;
+  border: 2px solid #1c1917 !important;
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-size: 0.9375rem;
+  font-weight: 500;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+  border-radius: 0 !important;
+}
+@media (any-hover: hover) {
+  .jdgm-form__submit:hover,
+  .jdgm-rev-add__submit:hover {
+    background-color: #44403c !important;
+    border-color: #44403c !important;
+  }
+}
+
+/* ── JM 拡張スタイル ─────────────────────────────────── */
+.jm-action-buttons__button {
+  border-radius: 0 !important;
+}
+
+button.jm-custom-answer-filter,
+select.jdgm-sort-dropdown.jm-sort-filter__select {
+  border-radius: 0 !important;
+  background: none !important;
+}
+
+select.jdgm-sort-dropdown.jm-sort-filter__select:hover,
+button.jm-custom-answer-filter:hover,
+button.jm-custom-answer-filter--active {
+  background: #1C1917 !important;
+  color: #fff !important;
+}
+
+.jm-average-rating-display {
+  font-size: 1.25rem !important;
+}
+
+.jm-review-widget {
+  padding-bottom: 0 !important;
+}
+
+.jm-review-item {
+  position: relative !important;
+  margin-top:  0 !important;
+}
+
+.jm-reviewer-info,
+.jm-review-content {
+  margin-top: 0.5rem !important;
+}
+
+.jm-reviewer-info__details div:not(:has(.jm-reviewer-info__name)) {
+  position: absolute !important;
+  right: 8px !important;
+  top: 8px !important;
+}
+
+.jm-text.jm-review-content__title {
+  font-size: 1rem !important;
+  font-weight: 500 !important;
+}
+
+.jdgm-review-content__body-content {
+  font-size: 0.875rem !important;
+}
+
+.jm-reviewer-info__name {
+  font-weight: 500 !important;
+}
+
+.jdgm-review-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 1rem !important;
+}
+
+.jm-box {
+  padding: 1rem !important;
+  border: 1px solid #E7E5E4 !important;
+}
+
+.jm-reviewer-avatar {
+  display: none !important;
+}
+
+.jm-star-rating__font-icon {
+  font-size: 1rem !important;
+}
+
+.jm-pagination-controls {
+  margin-top: 2rem !important;
+  margin-bottom: 0 !important;
+}
+
+.jdgm-widget .jdgm-prev-badge {
+  display: flex !important;
+  align-items: center !important;
+  gap: 0.25rem !important;
+}
+
+.jdgm-widget div:empty {
+  display: none !important;
+}
+
+.jdgm-prev-badge__text {
+  font-size: 0.875rem !important;
+  color: #79716B !important;
+}

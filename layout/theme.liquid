@@ -15,7 +15,7 @@
 
     {{ content_for_header }}
 
-    <!-- Google Fonts: Outfit + Noto Sans JP -->
+    {%- comment %} Google Fonts: Outfit + Noto Sans JP {%- endcomment %}
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -23,11 +23,19 @@
       rel="stylesheet"
     >
 
-    <!-- Theme CSS (Tailwind) -->
+    {%- comment %} Theme CSS (Tailwind) {%- endcomment %}
     {{ 'app.css' | asset_url | stylesheet_tag }}
 
+    {%- comment %} 管理画面カラー設定を CSS 変数に注入（app.css のデフォルト値を上書き） {%- endcomment %}
+    {%- style -%}
+      :root {
+        --color-background: {{ settings.color_background }};
+        --color-text:       {{ settings.color_text }};
+        --color-accent:     {{ settings.color_accent }};
+      }
+    {%- endstyle -%}
+
     <style>
-      /* Tailwind stone-50/#fafaf9 をページ背景に */
       body {
         font-family: 'Outfit', 'Noto Sans JP', sans-serif;
         -webkit-font-smoothing: antialiased;
@@ -50,7 +58,7 @@
 
     {%- section 'footer' -%}
 
-    <!-- Alpine.js -->
+    {%- comment %} Alpine.js {%- endcomment %}
     <script src="{{ 'app.js' | asset_url }}" defer></script>
   </body>
 </html>

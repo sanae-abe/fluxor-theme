@@ -5,7 +5,7 @@
     {%- form 'cart', cart -%}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-        <!-- カートアイテム -->
+        {%- comment %} カートアイテム {%- endcomment %}
         <div class="lg:col-span-2 space-y-8">
           {%- for item in cart.items -%}
             <div class="flex gap-5 pb-8 border-b border-stone-200">
@@ -55,7 +55,7 @@
           {%- endfor -%}
         </div>
 
-        <!-- 合計・チェックアウト -->
+        {%- comment %} 合計・チェックアウト {%- endcomment %}
         <div class="lg:col-span-1">
           <div class="bg-stone-100 p-6 space-y-4 sticky top-24">
             <h2 class="text-sm tracking-widest uppercase">注文内容</h2>

@@ -19,7 +19,7 @@
 
 <section class="relative {{ section.settings.color_scheme }} px-10 py-[60px] overflow-hidden">
 
-  <!-- 背景画像 -->
+  {%- comment %} 背景画像 {%- endcomment %}
   {%- if has_bg_image -%}
     <div class="absolute inset-0">
       <img
@@ -35,7 +35,7 @@
     </div>
   {%- endif -%}
 
-  <!-- パーティクル（分子ネットワーク） -->
+  {%- comment %} パーティクル（分子ネットワーク） {%- endcomment %}
   {%- if show_particles -%}
     {%- if has_bg_image or section.settings.color_scheme == 'bg-stone-950' -%}
       {%- assign particle_color = '#f0ede8' -%}
@@ -111,7 +111,7 @@
   <div class="relative max-w-screen-xl mx-auto flex items-center justify-center">
     <div class="w-full flex flex-col items-center gap-11 text-center">
 
-      <!-- Heading + Tagline -->
+      {%- comment %} Heading + Tagline {%- endcomment %}
       <div class="flex flex-col gap-6 w-full">
         {%- if section.settings.heading != blank -%}
           <h2 class="text-4xl font-semibold leading-tight palt tracking-wider {{ text_color }}">
@@ -125,14 +125,14 @@
         {%- endif -%}
       </div>
 
-      <!-- Paragraph -->
+      {%- comment %} Paragraph {%- endcomment %}
       {%- if section.settings.paragraph != blank -%}
         <div class="text-md leading-relaxed {{ text_color }} opacity-80 [&_p]:mb-0">
           {{ section.settings.paragraph }}
         </div>
       {%- endif -%}
 
-      <!-- Button -->
+      {%- comment %} Button {%- endcomment %}
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
         {%- render 'button',
           label: section.settings.button_label,
