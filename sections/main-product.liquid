@@ -63,6 +63,14 @@
       color: #0c0a09;
     }
   }
+
+  #floating-cart-bar {
+    transform: translateY(100%);
+    transition: transform 0.3s ease;
+  }
+  #floating-cart-bar.is-visible {
+    transform: translateY(0);
+  }
 </style>
 
 <script>
@@ -325,7 +333,7 @@
                   {%- assign amount  = key_ingredient.amount -%}
                   {%- assign ing_idx = forloop.index0 -%}
                   <div
-                    class="shrink-0 w-[190  px] cursor-default select-none"
+                    class="shrink-0 w-[190px] cursor-default select-none"
                     @mouseenter="active = {{ ing_idx }}"
                     @mouseleave="active = null"
                     @click.stop="active = active === {{ ing_idx }} ? null : {{ ing_idx }}"
@@ -379,11 +387,7 @@
           </div>
 
           {%- comment %} 吹き出し詳細エリア {%- endcomment %}
-          {%- assign has_desc = false -%}
-          {%- for key_ingredient in key_ingredients -%}
-            {%- if key_ingredient.description != blank -%}{%- assign has_desc = true -%}{%- endif -%}
-          {%- endfor -%}
-          {%- if has_desc -%}
+          {%- if _desc_idx != '' -%}
             <div
               class="absolute z-20 w-80"
               x-show="descIdx.includes(active)"
@@ -535,175 +539,55 @@
 >
   <div class="max-w-4xl mx-auto flex flex-col gap-6">
 
-    {%- comment %} 全成分 {%- endcomment %}
-    <div class="bg-stone-50">
-      <button
-        type="button"
-        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
-        @click="openItem = openItem === 0 ? null : 0"
-        :aria-expanded="openItem === 0"
-      >
-        <span class="text-base font-medium text-stone-900 leading-tight">全成分</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 0 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-      <div
-        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 0 ? '1fr' : '0fr' }"
-        role="region"
-        :aria-hidden="openItem !== 0"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="pb-6 px-6 transition duration-300"
-            :class="openItem === 0 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-            {%- if all_ingredients_ja != blank -%}
-              <p class="text-sm text-stone-900 leading-relaxed">{{ all_ingredients_ja | newline_to_br }}</p>
-              {%- if all_ingredients != blank -%}
-                <p class="text-xs text-stone-400 leading-relaxed mt-4">{{ all_ingredients | newline_to_br }}</p>
-              {%- endif -%}
-            {%- elsif all_ingredients != blank -%}
-              <p class="text-sm text-stone-900 leading-relaxed">{{ all_ingredients | newline_to_br }}</p>
-            {%- else -%}
-              <p class="text-stone-400 text-sm">成分情報は現在準備中です。</p>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    </div>
+    {%- capture _acc_body -%}
+      {%- if all_ingredients_ja != blank -%}
+        <p class="text-sm text-stone-900 leading-relaxed">{{ all_ingredients_ja | newline_to_br }}</p>
+        {%- if all_ingredients != blank -%}
+          <p class="text-xs text-stone-400 leading-relaxed mt-4">{{ all_ingredients | newline_to_br }}</p>
+        {%- endif -%}
+      {%- elsif all_ingredients != blank -%}
+        <p class="text-sm text-stone-900 leading-relaxed">{{ all_ingredients | newline_to_br }}</p>
+      {%- else -%}
+        <p class="text-stone-400 text-sm">成分情報は現在準備中です。</p>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'accordion-item', title: '全成分', body: _acc_body, index: 0 -%}
 
-    {%- comment %} 使用タイミング {%- endcomment %}
-    <div class="bg-stone-50">
-      <button
-        type="button"
-        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
-        @click="openItem = openItem === 2 ? null : 2"
-        :aria-expanded="openItem === 2"
-      >
-        <span class="text-base font-medium text-stone-900 leading-tight">使用タイミング</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 2 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-      <div
-        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 2 ? '1fr' : '0fr' }"
-        role="region"
-        :aria-hidden="openItem !== 2"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="pb-6 px-6 transition duration-300"
-            :class="openItem === 2 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-            {%- if usage_timing != blank -%}
-              <div class="text-sm text-stone-900 leading-relaxed">{{ usage_timing | newline_to_br }}</div>
-            {%- else -%}
-              <p class="text-stone-400 text-sm">使用タイミングは現在準備中です。</p>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    </div>
+    {%- capture _acc_body -%}
+      {%- if usage_timing != blank -%}
+        <div class="text-sm text-stone-900 leading-relaxed">{{ usage_timing | newline_to_br }}</div>
+      {%- else -%}
+        <p class="text-stone-400 text-sm">使用タイミングは現在準備中です。</p>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'accordion-item', title: '使用タイミング', body: _acc_body, index: 1 -%}
 
-    {%- comment %} 使用方法 {%- endcomment %}
-    <div class="bg-stone-50">
-      <button
-        type="button"
-        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
-        @click="openItem = openItem === 1 ? null : 1"
-        :aria-expanded="openItem === 1"
-      >
-        <span class="text-base font-medium text-stone-900 leading-tight">使用方法</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 1 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-      <div
-        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 1 ? '1fr' : '0fr' }"
-        role="region"
-        :aria-hidden="openItem !== 1"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="pb-6 px-6 transition duration-300"
-            :class="openItem === 1 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-            {%- if usage_method != blank -%}
-              <div class="text-sm text-stone-900 leading-relaxed">{{ usage_method | newline_to_br}}</div>
-            {%- else -%}
-              <p class="text-stone-400 text-sm">使用方法は現在準備中です。</p>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    </div>
+    {%- capture _acc_body -%}
+      {%- if usage_method != blank -%}
+        <div class="text-sm text-stone-900 leading-relaxed">{{ usage_method | newline_to_br }}</div>
+      {%- else -%}
+        <p class="text-stone-400 text-sm">使用方法は現在準備中です。</p>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'accordion-item', title: '使用方法', body: _acc_body, index: 2 -%}
 
-    {%- comment %} 保管方法 {%- endcomment %}
-    <div class="bg-stone-50">
-      <button
-        type="button"
-        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
-        @click="openItem = openItem === 3 ? null : 3"
-        :aria-expanded="openItem === 3"
-      >
-        <span class="text-base font-medium text-stone-900 leading-tight">保管方法</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 3 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-      <div
-        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 3 ? '1fr' : '0fr' }"
-        role="region"
-        :aria-hidden="openItem !== 3"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="pb-6 px-6 transition duration-300"
-            :class="openItem === 3 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-            {%- if how_to_store != blank -%}
-              <div class="text-sm text-stone-900 leading-relaxed">{{ how_to_store | newline_to_br }}</div>
-            {%- else -%}
-              <p class="text-stone-400 text-sm">保管方法は現在準備中です。</p>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    </div>
+    {%- capture _acc_body -%}
+      {%- if how_to_store != blank -%}
+        <div class="text-sm text-stone-900 leading-relaxed">{{ how_to_store | newline_to_br }}</div>
+      {%- else -%}
+        <p class="text-stone-400 text-sm">保管方法は現在準備中です。</p>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'accordion-item', title: '保管方法', body: _acc_body, index: 3 -%}
 
-    {%- comment %} 注意事項 {%- endcomment %}
-    <div class="bg-stone-50">
-      <button
-        type="button"
-        class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
-        @click="openItem = openItem === 4 ? null : 4"
-        :aria-expanded="openItem === 4"
-      >
-        <span class="text-base font-medium text-stone-900 leading-tight">注意事項</span>
-        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 flex-shrink-0 transition-transform duration-200" :class="openItem === 4 ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-          <path d="m6 9 6 6 6-6"/>
-        </svg>
-      </button>
-      <div
-        :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === 4 ? '1fr' : '0fr' }"
-        role="region"
-        :aria-hidden="openItem !== 4"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="pb-6 px-6 transition duration-300"
-            :class="openItem === 4 ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-            {%- if precautions != blank -%}
-              <div class="text-sm text-stone-900 leading-relaxed">{{ precautions | newline_to_br }}</div>
-            {%- else -%}
-              <p class="text-stone-400 text-sm">注意事項は現在準備中です。</p>
-            {%- endif -%}
-          </div>
-        </div>
-      </div>
-    </div>
+    {%- capture _acc_body -%}
+      {%- if precautions != blank -%}
+        <div class="text-sm text-stone-900 leading-relaxed">{{ precautions | newline_to_br }}</div>
+      {%- else -%}
+        <p class="text-stone-400 text-sm">注意事項は現在準備中です。</p>
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- render 'accordion-item', title: '注意事項', body: _acc_body, index: 4 -%}
 
   </div>
 </section>
@@ -825,16 +709,6 @@
 {%- comment %}======================================================
   フローティングカートバー（スクロール追従）
 ======================================================{%- endcomment %}
-<style>
-  #floating-cart-bar {
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-  }
-  #floating-cart-bar.is-visible {
-    transform: translateY(0);
-  }
-</style>
-
 <div
   id="floating-cart-bar"
   class="fixed bottom-0 left-0 right-0 z-50 bg-stone-50 border-t border-stone-200 px-10 py-4"

@@ -1,0 +1,35 @@
+{% comment %}
+  Accordion アイテム
+
+  Parameters:
+    title  {String}  見出しテキスト
+    body   {String}  本文 HTML（capture 済み）
+    index  {Number}  Alpine openItem 識別用インデックス
+{% endcomment %}
+<div class="bg-stone-50">
+  <button
+    type="button"
+    class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
+    @click="openItem = openItem === {{ index }} ? null : {{ index }}"
+    :aria-expanded="openItem === {{ index }}"
+  >
+    <span class="text-base font-medium text-stone-900 leading-tight">{{ title }}</span>
+    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 shrink-0 transition-transform duration-200" :class="openItem === {{ index }} ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="m6 9 6 6 6-6"/>
+    </svg>
+  </button>
+  <div
+    :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === {{ index }} ? '1fr' : '0fr' }"
+    role="region"
+    :aria-hidden="openItem !== {{ index }}"
+  >
+    <div class="overflow-hidden">
+      <div
+        class="pb-6 px-6 transition duration-300"
+        :class="openItem === {{ index }} ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+      >
+        {{ body }}
+      </div>
+    </div>
+  </div>
+</div>
