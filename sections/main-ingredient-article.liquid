@@ -33,7 +33,7 @@
 
 {%- comment %} パンくずリスト {%- endcomment %}
 <nav
-  class="w-full max-w-[896px] mx-auto px-10 pt-10 flex items-center gap-2 text-sm"
+  class="w-full max-w-4xl mx-auto px-10 pt-10 flex items-center gap-2 text-sm"
   aria-label="パンくずリスト"
 >
   <a href="{{ routes.root_url }}" class="text-stone-500">ホーム</a>
@@ -54,17 +54,14 @@
       class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
       {{ block.shopify_attributes }}
     >
-      <div class="w-full max-w-[896px] flex flex-col gap-6">
+      <div class="w-full max-w-4xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight tracking-wider text-stone-900">
             {{ block.settings.heading }}
           </h2>
         {%- endif -%}
-        {%- if block.settings.content1 != blank -%}
-          <div class="text-base leading-7 text-stone-900">{{ block.settings.content1 }}</div>
-        {%- endif -%}
-        {%- if block.settings.content2 != blank -%}
-          <div class="text-base leading-7 text-stone-900">{{ block.settings.content2 }}</div>
+        {%- if block.settings.content != blank -%}
+          <div class="text-base leading-7 text-stone-900">{{ block.settings.content }}</div>
         {%- endif -%}
       </div>
     </div>
@@ -75,7 +72,7 @@
       class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
       {{ block.shopify_attributes }}
     >
-      <div class="w-full max-w-[896px] flex flex-col gap-6">
+      <div class="w-full max-w-4xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight tracking-wider text-stone-900">
             {{ block.settings.heading }}
@@ -115,7 +112,7 @@
       class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
       {{ block.shopify_attributes }}
     >
-      <div class="w-full max-w-[896px]">
+      <div class="w-full max-w-4xl">
         <div class="bg-stone-100 rounded-2xl p-4 flex gap-2 items-start">
           <div class="shrink-0 pt-1">
             {%- render 'icon', icon: 'info', class: 'w-5 h-5 text-stone-900' -%}
@@ -134,7 +131,7 @@
 {%- assign ref_blocks = section.blocks | where: 'type', 'reference_entry' -%}
 {%- if ref_blocks.size > 0 -%}
   <div class="w-full bg-stone-100 flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]">
-    <div class="w-full max-w-[896px] flex flex-col gap-5">
+    <div class="w-full max-w-4xl flex flex-col gap-5">
       {%- if section.settings.references_heading != blank -%}
         <p class="text-base font-medium text-stone-900">{{ section.settings.references_heading }}</p>
       {%- endif -%}
@@ -239,13 +236,8 @@
         },
         {
           "type": "richtext",
-          "id": "content1",
-          "label": "本文1"
-        },
-        {
-          "type": "richtext",
-          "id": "content2",
-          "label": "本文2（省略可）"
+          "id": "content",
+          "label": "本文"
         }
       ]
     },
