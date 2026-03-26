@@ -162,7 +162,7 @@
           <p class="text-sm text-stone-500 leading-tight">{{ product.vendor }}</p>
         {%- endif -%}
 
-        {%- assign _s = '<sup class="text-xs font-normal text-stone-400 tracking-normal align-super">' -%}
+        {%- assign _s = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
         {%- assign _sup1 = _s | append: '※1</sup>' -%}
         {%- assign _sup2 = _s | append: '※2</sup>' -%}
         {%- assign _sup3 = _s | append: '※3</sup>' -%}
@@ -185,10 +185,10 @@
           {%- if title_notes != blank -%}
             <span class="inline-flex gap-1 align-middle">
               {%- if title_notes.size == 1 -%}
-                <span class="text-xs text-stone-400 font-normal">※{{ title_notes.first }}</span>
+                <span class="text-xs text-stone-400 font-normal tracking-normal">※{{ title_notes.first }}</span>
               {%- else -%}
                 {%- for note in title_notes -%}
-                  <span class="text-xs text-stone-400 font-normal ">※{{ forloop.index }}{{ note }}</span>
+                  <span class="text-xs text-stone-400 font-normal tracking-normal">※{{ forloop.index }}{{ note }}</span>
                 {%- endfor -%}
               {%- endif -%}
             </span>
