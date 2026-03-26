@@ -10,7 +10,7 @@
 
 /* ── スター ─────────────────────────────────────────── */
 .jdgm-star,
-.jdgm__star { color: var(--color-premium); } /* amber-700 */
+.jdgm__star { color: var(--color-premium); } /* amber-500 */
 
 .jdgm-star--empty,
 .jdgm__star--empty { color: #e7e5e4; } /* stone-200 */
