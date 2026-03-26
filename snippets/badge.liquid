@@ -2,7 +2,7 @@
   Badge コンポーネント
   Parameters:
     label      {String}  バッジのテキスト（必須）
-    variant    {String}  default | secondary | ghost | accent | premium | sale | stone（省略時: default）
+    variant    {String}  default | secondary | ghost | accent | premium | sale | teal | stone（省略時: default）
     size       {String}  sm | md（省略時: sm)
     icon_left  {String}  左側アイコン名（例: 'arrow-left'）
     icon_right {String}  右側アイコン名（例: 'arrow-right'）
@@ -50,6 +50,9 @@
     when 'stone'
       assign badge_bg   = 'bg-stone-200'
       assign badge_text = 'text-stone-900'
+    when 'teal'
+      assign badge_bg   = 'bg-teal-50'
+      assign badge_text = 'bg-teal-700'
     else
       assign badge_bg   = 'bg-stone-900'
       assign badge_text = 'text-white'
