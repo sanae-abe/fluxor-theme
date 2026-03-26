@@ -7,7 +7,7 @@
 
   <div class="flex {% if img_left %}flex-row{% else %}flex-row-reverse{% endif %} items-center gap-10">
 
-    <!-- 画像 -->
+    {%- comment %} 画像 {%- endcomment %}
     <div class="w-1/2 flex-shrink-0">
       {%- if section.settings.image != blank -%}
         <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
@@ -29,10 +29,10 @@
       {%- endif -%}
     </div>
 
-    <!-- テキスト -->
+    {%- comment %} テキスト {%- endcomment %}
     <div class="w-1/2 flex flex-col gap-10 px-10 max-w-[640px]">
 
-      <!-- バッジ + 見出し -->
+      {%- comment %} バッジ + 見出し {%- endcomment %}
       <div class="flex flex-col items-start gap-4">
         {%- if section.settings.badge_label != blank -%}
           {% render 'badge',
@@ -49,7 +49,7 @@
           </h2>
         {%- endif -%}
 
-        <!-- 本文（リスト含む） -->
+        {%- comment %} 本文（リスト含む） {%- endcomment %}
         {%- if section.settings.paragraph != blank -%}
           <div class="text-base leading-relaxed text-stone-900 [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mb-1 [&_li:last-child]:mb-0">
             {{ section.settings.paragraph }}
@@ -57,7 +57,7 @@
         {%- endif -%}
       </div>
 
-      <!-- ボタン -->
+      {%- comment %} ボタン {%- endcomment %}
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
         {%- render 'button',
           label: section.settings.button_label,
