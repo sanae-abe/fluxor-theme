@@ -12,8 +12,6 @@
   {%- assign on_sale = true -%}
 {%- endif -%}
 
-{%- assign rating_value = product.metafields.reviews.rating.value -%}
-{%- assign rating_count = product.metafields.reviews.rating_count.value -%}
 
 <article
   class="group bg-stone-50 overflow-hidden [transform:translateZ(0)]"
@@ -90,19 +88,7 @@
 
     <div class="flex justify-between gap-3 mt-4">
       {%- comment %} 評価 {%- endcomment %}
-      {%- if rating_value != blank -%}
-        <div class="flex items-center gap-2">
-          <div class="flex items-center gap-1">
-            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-stone-900" viewBox="0 0 16 16" aria-hidden="true">
-              <path d="M8 1.5 9.796 5.14l4.018.583-2.907 2.833.686 4L8 10.666l-3.593 1.89.686-4L2.186 5.723l4.018-.583z"/>
-            </svg>
-            <span class="text-sm font-medium leading-5 text-stone-900">{{ rating_value | round: 1 }}</span>
-          </div>
-          {%- if rating_count != blank -%}
-            <span class="text-sm leading-5 text-stone-500">({{ rating_count }}+ レビュー)</span>
-          {%- endif -%}
-        </div>
-      {%- endif -%}
+      <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.badge }}</div>
       {%- comment %} 価格 {%- endcomment %}
       <div class="flex items-center gap-2">
         {%- if on_sale -%}
