@@ -1,0 +1,33 @@
+{%- comment %} filter-checkbox.liquid — フィルター用チェックボックス行
+  Parameters:
+    - url      : クリック先 URL（必須）
+    - active   : 選択中かどうか（boolean）
+    - label    : 表示ラベル（必須）
+    - count    : 件数（省略時は非表示）
+{%- endcomment -%}
+{%- assign _disabled = false -%}
+{%- if active == false and count == 0 -%}
+  {%- assign _disabled = true -%}
+{%- endif -%}
+<a
+  href="{{ url }}"
+  class="flex items-center gap-2.5 group"
+  {%- if _disabled %} tabindex="-1" aria-disabled="true"{% endif %}
+>
+  <span class="w-4 h-4 border rounded flex-shrink-0 flex items-center justify-center transition-colors
+    {%- if active %} bg-stone-900 border-stone-900
+    {%- elsif _disabled %} border-stone-200
+    {%- else %} border-stone-300 group-hover:border-stone-900
+    {%- endif -%}"
+  >
+    {%- if active -%}
+      {%- render 'icon', icon: 'check', width: 12, height: 12, stroke: 'white', stroke_width: 3 -%}
+    {%- endif -%}
+  </span>
+  <span class="text-sm leading-tight{%- if _disabled %} text-stone-300{%- endif -%}">
+    {{ label }}
+  </span>
+  {%- if count != blank -%}
+    <span class="text-xs text-stone-400 ml-auto">{{ count }}</span>
+  {%- endif -%}
+</a>

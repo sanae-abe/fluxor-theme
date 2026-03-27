@@ -67,20 +67,11 @@
                 </div>
 
                 {%- comment %} プライバシーポリシー同意 {%- endcomment %}
-                <label class="flex items-center gap-1.5 mt-4 cursor-pointer">
-                  <input
-                    type="checkbox"
-                    x-model="agreed"
-                    class="w-3 h-3 flex-shrink-0 border border-stone-200 bg-stone-50 cursor-pointer"
-                  >
-                  <span class="text-xs text-stone-200 leading-tight">
-                    {%- if section.settings.privacy_url != blank -%}
-                      <a href="{{ section.settings.privacy_url }}" class="underline hover:opacity-70 transition-opacity duration-200">プライバシーポリシー</a>に同意します
-                    {%- else -%}
-                      プライバシーポリシーに同意します
-                    {%- endif -%}
-                  </span>
-                </label>
+                {%- render 'checkbox-consent',
+                  privacy_url: section.settings.privacy_url,
+                  x_model: 'agreed',
+                  variant: 'dark'
+                -%}
 
               {%- endif -%}
             {%- endform -%}

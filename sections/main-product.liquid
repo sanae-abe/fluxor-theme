@@ -251,9 +251,7 @@
               | replace: '※', _sup
             -%}
             <div class="flex items-start gap-2">
-              <svg class="shrink-0 mt-1" width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M2 8.55556L6.8 13L14 3" stroke="#0f766e" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
-              </svg>
+              {%- render 'icon', icon: 'check', width: 16, height: 16, stroke: '#0f766e', class: 'shrink-0 mt-1' -%}
               <p class="text-stone-900 leading-relaxed">
                 {{- benefit_main -}}
                 {%- for i in (1..5) -%}

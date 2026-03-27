@@ -2,6 +2,9 @@
 .price--on-sale .price__compare s { color: theme('colors.stone.400'); }
 .price--on-sale .price__sale { color: theme('colors.stone.900'); }
 
+/* テキスト選択色 */
+::selection { background-color: #0f766e; color: #ffffff; }
+
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 

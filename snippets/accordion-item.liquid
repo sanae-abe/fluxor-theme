@@ -14,9 +14,8 @@
     :aria-expanded="openItem === {{ index }}"
   >
     <span class="text-base font-medium text-stone-900 leading-tight">{{ title }}</span>
-    <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-stone-900 shrink-0 transition-transform duration-200" :class="openItem === {{ index }} ? 'rotate-180' : ''" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-      <path d="m6 9 6 6 6-6"/>
-    </svg>
+    {%- capture _chevron_class -%}openItem === {{ index }} ? 'rotate-180' : ''{%- endcapture -%}
+    {%- render 'icon', icon: 'chevron-down', class: 'w-5 h-5 text-stone-900 shrink-0 transition-transform duration-200', x_class: _chevron_class, stroke_width: 2 -%}
   </button>
   <div
     :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === {{ index }} ? '1fr' : '0fr' }"

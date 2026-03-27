@@ -1,0 +1,68 @@
+{%- comment %} checkbox-consent.liquid — プライバシーポリシー同意チェックボックス
+  Parameters:
+    - privacy_url : プライバシーポリシー URL（省略時はリンクなしテキスト）
+    - id          : input の id（light variant で label の for 属性と対応）
+    - required    : required 属性（boolean）
+    - x_model     : Alpine.js x-model の値（例: 'agreed'）
+    - variant     : 'light'（デフォルト）| 'dark'
+{%- endcomment -%}
+{%- assign _variant = variant | default: 'light' -%}
+
+{%- if _variant == 'dark' -%}
+
+  <label class="flex items-center gap-1.5 mt-4 cursor-pointer group">
+    <input
+      type="checkbox"
+      {%- if x_model != blank %} x-model="{{ x_model }}"{% endif %}
+      class="sr-only peer"
+    >
+    <span
+      class="w-3 h-3 border rounded flex-shrink-0 flex items-center justify-center transition-colors
+        border-stone-500
+        peer-checked:bg-white peer-checked:border-white
+        peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-stone-400 peer-focus-visible:outline-offset-1"
+      aria-hidden="true"
+    >
+      {%- render 'icon', icon: 'check', width: 8, height: 8, stroke: '#1c1917', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+    </span>
+    <span class="text-xs text-stone-200 leading-tight">
+      {%- if privacy_url != blank -%}
+        <a href="{{ privacy_url }}" class="underline hover:opacity-70 transition-opacity duration-200" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
+      {%- else -%}
+        プライバシーポリシーに同意します
+      {%- endif -%}
+    </span>
+  </label>
+
+{%- else -%}
+
+  <div class="flex items-start gap-3 group">
+    <input
+      type="checkbox"
+      {%- if id != blank %} id="{{ id }}"{% endif %}
+      {%- if required %} required{% endif %}
+      {%- if x_model != blank %} x-model="{{ x_model }}"{% endif %}
+      class="sr-only peer"
+    >
+    <span
+      class="mt-0.5 w-4 h-4 border rounded flex-shrink-0 flex items-center justify-center transition-colors cursor-pointer
+        border-stone-300 bg-white
+        peer-checked:bg-stone-900 peer-checked:border-stone-900
+        peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-stone-900 peer-focus-visible:outline-offset-1"
+      aria-hidden="true"
+    >
+      {%- render 'icon', icon: 'check', width: 10, height: 10, stroke: 'white', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+    </span>
+    <label
+      {%- if id != blank %} for="{{ id }}"{% endif %}
+      class="text-sm text-stone-600 leading-relaxed cursor-pointer"
+    >
+      {%- if privacy_url != blank -%}
+        <a href="{{ privacy_url }}" class="underline hover:text-stone-900 transition-colors" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
+      {%- else -%}
+        プライバシーポリシーに同意します
+      {%- endif -%}
+    </label>
+  </div>
+
+{%- endif -%}

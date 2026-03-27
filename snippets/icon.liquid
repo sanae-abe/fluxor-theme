@@ -1,26 +1,35 @@
 {% comment %}
   Icon snippet — Lucide アイコン集
   Parameters:
-    icon  {String}  アイコン名（必須）
-    class {String}  SVGに追加するCSSクラス
+    icon         {String}  アイコン名（必須）
+    class        {String}  SVGに追加するCSSクラス
+    x_class      {String}  Alpine.js :class バインディング（省略時: なし）
+    stroke       {String}  stroke色（省略時: currentColor）
+    stroke_width {Number}  stroke太さ（省略時: 1.5）
+    width        {Number}  width属性px（省略時: CSS任せ）
+    height       {Number}  height属性px（省略時: CSS任せ）
 
   利用可能なアイコン:
     arrow-left, arrow-right, hash, search, user, star, cart,
     trending-up, flask-conical, gem, notebook-pen, x, instagram, tiktok,
-    minus, plus, info,
+    minus, plus, info, check, chevron-down,
     layout-grid, droplet, sparkle, citrus, sun, leaf,
     waves, shield-check, arrow-big-up-dash, smile, rose
 {% endcomment %}
-
+{%- assign _stroke = stroke | default: 'currentColor' -%}
+{%- assign _stroke_width = stroke_width | default: 1.5 -%}
 <svg
   xmlns="http://www.w3.org/2000/svg"
-  class="{{ class }}"
+  {%- if class != blank %} class="{{ class }}"{% endif %}
+  {%- if x_class != blank %} :class="{{ x_class }}"{% endif %}
   fill="none"
   viewBox="0 0 24 24"
-  stroke="currentColor"
-  stroke-width="1.5"
+  stroke="{{ _stroke }}"
+  stroke-width="{{ _stroke_width }}"
   stroke-linecap="round"
   stroke-linejoin="round"
+  {%- if width %} width="{{ width }}"{% endif %}
+  {%- if height %} height="{{ height }}"{% endif %}
   aria-hidden="true"
 >
   {%- case icon -%}
@@ -74,6 +83,10 @@
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
     {%- when 'tiktok' -%}
       <path d="M21 7.917v4.034A9.948 9.948 0 0 1 16 10v4.5a6.5 6.5 0 1 1-5-6.327V12.5a2.5 2.5 0 1 0 2 2.45V2h3.917A5.006 5.006 0 0 0 21 7.917z"/>
+    {%- when 'check' -%}
+      <path d="M20 6 9 17 4 12"/>
+    {%- when 'chevron-down' -%}
+      <path d="M19 9l-7 7-7-7"/>
     {%- when 'minus' -%}
       <path d="M5 12h14"/>
     {%- when 'plus' -%}
