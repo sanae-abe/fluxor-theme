@@ -26,4 +26,7 @@
   .palt {
     font-feature-settings: "palt" on;
   }
+  .hide-if-empty:empty {
+    display: none;
+  }
 }
