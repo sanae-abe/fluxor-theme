@@ -71,9 +71,24 @@
       {%- endif -%}
     </div>
 
-    {%- comment %} カートに追加ボタン（hover時に表示） {%- endcomment %}
     {%- if product.available -%}
-      <div class="absolute inset-0 flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      {%- comment %} カートに追加ボタン（モバイル: 画像右下アイコン） {%- endcomment %}
+      <button
+        type="button"
+        class="md:hidden absolute bottom-2 right-2 z-10 w-9 h-9 rounded-full bg-stone-900 shadow-md flex items-center justify-center text-white"
+        :class="adding ? 'opacity-50 cursor-wait' : ''"
+        @click.stop="addToCart()"
+        :disabled="adding"
+        aria-label="カートに追加"
+      >
+        {%- render 'icon', icon: 'cart', class: 'w-4 h-4', x_class: "adding ? 'hidden' : ''" -%}
+        <svg x-show="adding" x-cloak class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
+        </svg>
+      </button>
+      {%- comment %} カートに追加ボタン（デスクトップ: hover時に中央表示） {%- endcomment %}
+      <div class="absolute inset-0 hidden md:flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
           type="button"
           class="btn-card-add bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2"
@@ -89,7 +104,7 @@
   </div>
 
   {%- comment %} 商品情報（クリックで商品ページへ） {%- endcomment %}
-  <a href="{{ product.url }}" class="flex flex-col gap-2 mt-4">
+  <a href="{{ product.url }}" class="flex flex-col gap-1 md:gap-2 mt-2 md:mt-4">
 
     {%- comment %} ベンダー {%- endcomment %}
     {%- if product.vendor != blank -%}
@@ -98,7 +113,7 @@
 
     {%- comment %} タイトル {%- endcomment %}
     {%- assign card_title = product.title | replace: '※1', '' | replace: '※2', '' | replace: '※3', '' | replace: '※4', '' | replace: '※5', '' | replace: '※', '' -%}
-    <h3 class="text-base md:text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
+    <h3 class="text-sm md:text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
 
     {%- comment %} 評価 {%- endcomment %}
     <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.badge }}</div>

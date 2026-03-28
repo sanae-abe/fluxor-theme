@@ -11,7 +11,7 @@
 }
 </script>
 
-<div class="px-4 md:px-10 pt-6 md:pt-10 md:pb-[60px]">
+<div class="px-4 md:px-10 pt-6 pb-10 md:pt-10 md:pb-[60px]">
   <section
     class="max-w-screen-xl mx-auto"
     x-data="{ filtersOpen: false }"
@@ -112,16 +112,65 @@
       {%- endif -%}
 
       {%- comment %} 商品グリッド {%- endcomment %}
-      <div class="flex-1 min-w-0">
+      <div
+        class="flex-1 min-w-0"
+        x-data="{
+          nextUrl: '{{ paginate.next.url | escape }}',
+          loading: false,
+          done: '{{ paginate.next.url | escape }}' === '',
+          init() {
+            if (!window.matchMedia('(max-width: 767px)').matches) return;
+            if (this.done) return;
+            const obs = new IntersectionObserver(entries => {
+              if (entries[0].isIntersecting) this.loadMore();
+            }, { rootMargin: '400px' });
+            obs.observe(this.$refs.sentinel);
+          },
+          async loadMore() {
+            if (this.loading || this.done || !this.nextUrl) return;
+            this.loading = true;
+            try {
+              const res = await fetch(this.nextUrl);
+              const html = await res.text();
+              const doc = new DOMParser().parseFromString(html, 'text/html');
+              const grid = doc.querySelector('[data-product-grid]');
+              if (grid) [...grid.children].forEach(el => this.$refs.grid.appendChild(el));
+              const marker = doc.getElementById('js-next-url');
+              this.nextUrl = marker ? marker.dataset.url : null;
+              this.done = !this.nextUrl;
+            } catch(e) {
+              this.done = true;
+            }
+            this.loading = false;
+          }
+        }"
+      >
         {%- if collection.products.size > 0 -%}
-          <div class="grid grid-cols-2 {%- if collection.filters.size > 0 %} lg:grid-cols-3{%- else %} md:grid-cols-3 lg:grid-cols-4{%- endif %} gap-6 md:gap-8">
+
+          {%- comment %} 次ページURLマーカー（JSが取得するため） {%- endcomment %}
+          {%- if paginate.next -%}
+            <span id="js-next-url" data-url="{{ paginate.next.url | escape }}" hidden></span>
+          {%- endif -%}
+
+          <div
+            x-ref="grid"
+            data-product-grid
+            class="product-grid-masonry md:gap-8 {%- if collection.filters.size > 0 %} md:grid-cols-2 lg:grid-cols-3{%- else %} md:grid-cols-3 lg:grid-cols-4{%- endif %}"
+          >
             {%- for product in collection.products -%}
               {%- render 'card-product-4col', product: product -%}
             {%- endfor -%}
           </div>
 
+          {%- comment %} モバイル: 監視用センチネル + ローディング {%- endcomment %}
+          <div x-ref="sentinel" class="md:hidden h-px" aria-hidden="true"></div>
+          <div x-show="loading" x-cloak class="md:hidden flex justify-center py-8">
+            <span class="text-sm text-stone-400">読み込み中…</span>
+          </div>
+
+          {%- comment %} デスクトップ: ページネーション {%- endcomment %}
           {%- if paginate.pages > 1 -%}
-            <nav class="flex justify-center gap-2 mt-16" aria-label="ページネーション">
+            <nav class="hidden md:flex justify-center gap-2 mt-16" aria-label="ページネーション">
               {%- if paginate.previous -%}
                 <a href="{{ paginate.previous.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">前へ</a>
               {%- endif -%}
@@ -139,6 +188,7 @@
               {%- endif -%}
             </nav>
           {%- endif -%}
+
         {%- else -%}
           <p class="text-sm text-stone-400 py-20 text-center">条件に一致する商品がありません。</p>
         {%- endif -%}

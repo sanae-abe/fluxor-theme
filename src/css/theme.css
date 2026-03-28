@@ -12,6 +12,26 @@
 .ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }
 .ingredient-track::-webkit-scrollbar { display: none; }
 
+/* 商品グリッド：スマホはメイソンリー、デスクトップは通常グリッド */
+.product-grid-masonry {
+  columns: 2;
+  column-gap: 1rem;
+}
+.product-grid-masonry > article {
+  break-inside: avoid;
+  margin-bottom: 1rem;
+}
+@media (min-width: 768px) {
+  .product-grid-masonry {
+    display: grid;
+    columns: unset;
+    column-gap: unset;
+  }
+  .product-grid-masonry > article {
+    margin-bottom: 0;
+  }
+}
+
 /* 商品カード：カートに追加ボタン */
 .btn-card-add {
   transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
