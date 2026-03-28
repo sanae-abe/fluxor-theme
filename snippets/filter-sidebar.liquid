@@ -28,11 +28,11 @@
             <div class="flex items-center gap-1.5">
               {%- assign _min_val = filter.min_value.value | money_without_currency | replace: ',', '' -%}
               {%- assign _min_ph  = filter.range_min | money_without_currency | replace: ',', '' -%}
-              {%- render 'form-input', type: 'number', name: filter.min_value.param_name, value: _min_val, placeholder: _min_ph, min: 0, variant: 'bordered' -%}
+              {%- render 'form-input', type: 'number', name: filter.min_value.param_name, value: _min_val, placeholder: _min_ph, min: 0, variant: 'bordered', size: 'sm' -%}
               <span class="text-stone-400 text-xs flex-shrink-0">〜</span>
               {%- assign _max_val = filter.max_value.value | money_without_currency | replace: ',', '' -%}
               {%- assign _max_ph  = filter.range_max | money_without_currency | replace: ',', '' -%}
-              {%- render 'form-input', type: 'number', name: filter.max_value.param_name, value: _max_val, placeholder: _max_ph, min: 0, variant: 'bordered' -%}
+              {%- render 'form-input', type: 'number', name: filter.max_value.param_name, value: _max_val, placeholder: _max_ph, min: 0, variant: 'bordered', size: 'sm' -%}
             </div>
             {%- render 'button', label: '適用', type: 'submit', variant: 'outline', size: 'sm', full_width: true -%}
           </form>

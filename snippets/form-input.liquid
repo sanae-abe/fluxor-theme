@@ -3,6 +3,7 @@
 
   Parameters:
     type        {String}   'text' | 'email' | 'number' | 'tel' | 'password' | 'textarea'（デフォルト: 'text'）
+    size        {String}   'sm' | 'md'（デフォルト: 'md'）
     id          {String}   id 属性
     name        {String}   name 属性
     value       {String}   初期値（blank の場合は value 属性を出力しない）
@@ -23,7 +24,16 @@
   assign _type    = type    | default: 'text'
   assign _rows    = rows    | default: 6
   assign _variant = variant | default: 'underline'
-  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 px-2.5 py-1.5 text-sm focus:outline-none focus:border-stone-500 transition-colors'
+  assign _size    = size    | default: 'md'
+
+  case _size
+  when 'sm'
+    assign _size_cls = 'min-h-8 px-2.5 py-1.5 text-sm'
+  else
+    assign _size_cls = 'min-h-10 px-3 py-2 text-base'
+  endcase
+
+  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 focus:outline-none focus:border-stone-500 transition-colors' | append: ' ' | append: _size_cls
 -%}
 
 {%- if label != blank -%}
