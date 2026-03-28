@@ -23,7 +23,7 @@
         peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-stone-400 peer-focus-visible:outline-offset-1"
       aria-hidden="true"
     >
-      {%- render 'icon', icon: 'check', width: 8, height: 8, stroke: '#1c1917', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+      {%- render 'icon', icon: 'check', width: 10, height: 10, stroke: '#1c1917', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
     </span>
     <span class="text-xs text-stone-200 leading-tight">
       {%- if privacy_url != blank -%}
@@ -45,13 +45,13 @@
       class="sr-only peer"
     >
     <span
-      class="mt-0.5 w-4 h-4 border rounded flex-shrink-0 flex items-center justify-center transition-colors cursor-pointer
+      class="mt-0.5 w-4 h-4 border flex-shrink-0 flex items-center justify-center transition-colors cursor-pointer
         border-stone-300 bg-white
         peer-checked:bg-stone-900 peer-checked:border-stone-900
         peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-stone-900 peer-focus-visible:outline-offset-1"
       aria-hidden="true"
     >
-      {%- render 'icon', icon: 'check', width: 10, height: 10, stroke: 'white', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+      {%- render 'icon', icon: 'check', width: 12, height: 12, stroke: 'white', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
     </span>
     <label
       {%- if id != blank %} for="{{ id }}"{% endif %}

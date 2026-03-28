@@ -10,10 +10,11 @@
   - icon_left:  {String}  左側アイコン名（例: 'arrow-left'）
   - icon_right: {String}  右側アイコン名（例: 'arrow-right'）
   - type:       {String}  button の type 属性  （デフォルト: 'button'）
-  - disabled:   {Boolean} 非活性状態
-  - full_width: {Boolean} 横幅100%
-  - attr:       {String}  追加 HTML 属性（Alpine.js @click など）
-  - class:      {String}  追加 CSS クラス
+  - disabled:    {Boolean} 非活性状態
+  - full_width:  {Boolean} 横幅100%
+  - size_mobile: {String}  モバイル時のサイズ（md未満）。省略時は size と同じ
+  - attr:        {String}  追加 HTML 属性（Alpine.js @click など）
+  - class:       {String}  追加 CSS クラス
 
   利用可能なアイコン:
   arrow-left, arrow-right, hash, search, user, star, cart,
@@ -59,6 +60,40 @@
     assign size_cls = 'h-12 px-4 text-base gap-2 border-2 font-medium'
     assign icon_cls = 'w-[18px] h-[18px]'
   endcase
+
+  # ── レスポンシブサイズ（size_mobile が指定された場合） ──────────
+  if size_mobile != blank and size_mobile != btn_size
+    case size_mobile
+    when 'lg'
+      assign mob_size_cls = 'h-[60px] px-[18px] text-lg gap-3 border-2 font-medium'
+      assign mob_icon_cls = 'w-5 h-5'
+    when 'sm'
+      assign mob_size_cls = 'h-8 px-[14px] text-sm gap-1'
+      assign mob_icon_cls = 'w-4 h-4'
+    when 'xs'
+      assign mob_size_cls = 'h-7 px-[6px] text-xs gap-1'
+      assign mob_icon_cls = 'w-[14px] h-[14px]'
+    else
+      assign mob_size_cls = 'h-12 px-4 text-base gap-2 border-2 font-medium'
+      assign mob_icon_cls = 'w-[18px] h-[18px]'
+    endcase
+    case btn_size
+    when 'lg'
+      assign desk_size_cls = 'md:h-[60px] md:px-[18px] md:text-lg md:gap-3'
+      assign desk_icon_cls = 'md:w-5 md:h-5'
+    when 'sm'
+      assign desk_size_cls = 'md:h-8 md:px-[14px] md:text-sm md:gap-1'
+      assign desk_icon_cls = 'md:w-4 md:h-4'
+    when 'xs'
+      assign desk_size_cls = 'md:h-7 md:px-[6px] md:text-xs md:gap-1'
+      assign desk_icon_cls = 'md:w-[14px] md:h-[14px]'
+    else
+      assign desk_size_cls = 'md:h-12 md:px-4 md:text-base md:gap-2'
+      assign desk_icon_cls = 'md:w-[18px] md:h-[18px]'
+    endcase
+    assign size_cls = mob_size_cls | append: ' ' | append: desk_size_cls
+    assign icon_cls = mob_icon_cls | append: ' ' | append: desk_icon_cls
+  endif
 
   # ── カラー × バリアント ─────────────────────────────────────────
   case btn_color
