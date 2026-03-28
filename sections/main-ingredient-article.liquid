@@ -1,7 +1,7 @@
 {%- comment %} ============================================================
   Hero — 全幅背景画像 + 成分名テキスト
   ============================================================ {%- endcomment %}
-<div class="relative w-full min-h-[500px] flex flex-col items-center justify-center gap-4 overflow-hidden px-10 py-[60px]">
+<div class="relative w-full min-h-[500px] flex flex-col items-center justify-center gap-4 overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
   {%- if article.image -%}
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
       <img
@@ -51,7 +51,7 @@
   {%- comment %} テキストセクション {%- endcomment %}
   {%- if block.type == 'text_section' -%}
     <div
-      class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
+      class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
       {{ block.shopify_attributes }}
     >
       <div class="w-full max-w-4xl flex flex-col gap-10">
@@ -69,7 +69,7 @@
   {%- comment %} ベネフィットカードグループ {%- endcomment %}
   {%- elsif block.type == 'benefits_group' -%}
     <div
-      class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
+      class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
       {{ block.shopify_attributes }}
     >
       <div class="w-full max-w-4xl flex flex-col gap-10">
@@ -109,7 +109,7 @@
   {%- comment %} 免責事項ノート {%- endcomment %}
   {%- elsif block.type == 'disclaimer' -%}
     <div
-      class="w-full flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]"
+      class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
       {{ block.shopify_attributes }}
     >
       <div class="w-full max-w-4xl">
@@ -130,7 +130,7 @@
   ============================================================ {%- endcomment %}
 {%- assign ref_blocks = section.blocks | where: 'type', 'reference_entry' -%}
 {%- if ref_blocks.size > 0 -%}
-  <div class="w-full bg-stone-100 flex flex-col items-center justify-center overflow-hidden px-10 py-[60px]">
+  <div class="w-full bg-stone-100 flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
     <div class="w-full max-w-4xl flex flex-col gap-5">
       {%- if section.settings.references_heading != blank -%}
         <p class="text-base font-medium text-stone-900">{{ section.settings.references_heading }}</p>
@@ -186,7 +186,7 @@
   ============================================================ {%- endcomment %}
 {%- assign ingredient_col = collections[section.settings.collection] -%}
 {%- if section.settings.collection != blank -%}
-  <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-10 py-[60px]">
+  <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
     <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
       {%- if section.settings.products_heading != blank -%}
         <h2 class="text-3xl font-semibold tracking-wider text-stone-900">

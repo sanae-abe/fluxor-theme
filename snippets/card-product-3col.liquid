@@ -34,7 +34,7 @@
 
     {%- comment %} ランクバッジ {%- endcomment %}
     {%- if rank != blank -%}
-      <div class="absolute top-4 left-4 z-10 w-12 h-12 rounded-full bg-amber-900 flex items-center justify-center gap-0.5">
+      <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10 w-12 h-12 rounded-full bg-amber-900 flex items-center justify-center gap-0.5">
         {%- render 'icon', icon: 'hash', class: 'w-3.5 h-3.5 text-white flex-shrink-0' -%}
         <span class="text-white font-medium text-base leading-tight">{{ rank }}</span>
       </div>

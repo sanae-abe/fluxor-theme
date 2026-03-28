@@ -1,0 +1,31 @@
+{%- comment %}
+  form-select — ドロップダウン選択
+
+  Parameters:
+    id           {String}  id 属性
+    name         {String}  name 属性
+    options_html {String}  <option> タグの HTML（capture で生成して渡す）
+    attr         {String}  追加 HTML 属性（onchange など）
+    class        {String}  追加 CSS クラス
+
+  Usage:
+    {%- capture _opts -%}
+      {%- for option in collection.sort_options -%}
+        <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+      {%- endfor -%}
+    {%- endcapture -%}
+    {%- capture _onchange -%}onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"{%- endcapture -%}
+    {%- render 'form-select', id: 'SortBy', options_html: _opts, attr: _onchange -%}
+{%- endcomment %}
+
+<div class="relative">
+  <select
+    {%- if id != blank %} id="{{ id }}"{%- endif %}
+    {%- if name != blank %} name="{{ name }}"{%- endif %}
+    class="appearance-none text-sm border border-stone-200 pl-2 pr-7 py-1.5 bg-white focus:outline-none focus:border-stone-400{% if class != blank %} {{ class }}{% endif %}"
+    {{ attr }}
+  >
+    {{ options_html }}
+  </select>
+  {%- render 'icon', icon: 'chevron-down', class: 'pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-500', stroke_width: 2 -%}
+</div>

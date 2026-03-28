@@ -3,13 +3,14 @@
   Parameters:
     url   {String}  リンク先URL（必須）
     label {String}  リンクテキスト（省略時: "すべて見る"）
+    class {String}  追加CSSクラス（省略可）
 {% endcomment %}
 
 {%- assign view_all_label = label | default: 'すべて見る' -%}
 
 <a
   href="{{ url }}"
-  class="group flex-shrink-0 flex items-center gap-2 text-base leading-6 text-stone-900 transition-opacity duration-200"
+  class="group flex-shrink-0 flex items-center gap-2 text-base leading-6 text-stone-900 whitespace-nowrap transition-opacity duration-200 {{ class }}"
 >
   <span>{{ view_all_label }}</span>
   {%- render 'icon', icon: 'arrow-right', class: 'w-6 h-6 flex-shrink-0 stroke-2 transition-transform duration-200 group-hover:translate-x-1' -%}

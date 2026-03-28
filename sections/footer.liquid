@@ -1,8 +1,8 @@
-<footer id="site-footer" class="bg-stone-900 px-10 py-[60px]">
-  <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
+<footer id="site-footer" class="bg-stone-900 px-4 md:px-10 py-10 md:py-[60px]">
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
     {%- comment %} 3カラム：Quick Links / Information / メルマガ＋SNS {%- endcomment %}
-    <div class="flex gap-10 items-start">
+    <div class="flex flex-col md:flex-row gap-10 items-start">
 
       {%- for n in (1..2) -%}
         {%- assign menu_key    = 'menu_' | append: n -%}

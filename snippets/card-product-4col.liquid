@@ -62,7 +62,7 @@
     {%- endif -%}
 
     {%- comment %} バッジ {%- endcomment %}
-    <div class="absolute top-4 left-4 z-10">
+    <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10">
       {%- if product.available == false -%}
         {% render 'badge', label: '売り切れ', variant: 'secondary' %}
       {%- elsif on_sale -%}
@@ -98,7 +98,7 @@
 
     {%- comment %} タイトル {%- endcomment %}
     {%- assign card_title = product.title | replace: '※1', '' | replace: '※2', '' | replace: '※3', '' | replace: '※4', '' | replace: '※5', '' | replace: '※', '' -%}
-    <h3 class="text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
+    <h3 class="text-base md:text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
 
     {%- comment %} 評価 {%- endcomment %}
     <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.badge }}</div>

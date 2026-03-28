@@ -1,0 +1,64 @@
+{%- comment %}
+  form-input — テキスト系入力フィールド
+
+  Parameters:
+    type        {String}   'text' | 'email' | 'number' | 'tel' | 'password' | 'textarea'（デフォルト: 'text'）
+    id          {String}   id 属性
+    name        {String}   name 属性
+    value       {String}   初期値（blank の場合は value 属性を出力しない）
+    label       {String}   ラベルテキスト（省略でラベル非表示）
+    placeholder {String}   placeholder 属性
+    required    {Boolean}  必須入力
+    rows        {Number}   textarea の行数（デフォルト: 6）
+    min         {Number}   number の min 属性
+    variant     {String}   'underline' | 'bordered'（デフォルト: 'underline'）
+    attr        {String}   追加 HTML 属性
+    class       {String}   追加 CSS クラス
+
+  Usage:
+    {%- render 'form-input', type: 'email', id: 'ContactForm-email', name: 'contact[email]', label: 'メールアドレス', value: form.email, required: true -%}
+    {%- render 'form-input', type: 'number', name: filter.min_value.param_name, placeholder: '0', min: 0, variant: 'bordered' -%}
+{%- endcomment %}
+
+{%- liquid
+  assign _type    = type    | default: 'text'
+  assign _rows    = rows    | default: 6
+  assign _variant = variant | default: 'underline'
+
+  if _variant == 'bordered'
+    assign _input_cls = 'w-full border border-stone-200 rounded px-2.5 py-1.5 text-sm bg-white focus:outline-none focus:border-stone-400 transition-colors'
+  else
+    assign _input_cls = 'w-full border-b border-stone-200 bg-transparent py-2.5 text-sm focus:outline-none focus:border-stone-900 transition-colors'
+  endif
+-%}
+
+{%- if label != blank -%}
+  <label
+    {%- if id != blank %} for="{{ id }}"{%- endif %}
+    class="block text-xs tracking-widest uppercase text-stone-500 mb-2"
+  >{{ label }}</label>
+{%- endif -%}
+
+{%- if _type == 'textarea' -%}
+  <textarea
+    {%- if id != blank %} id="{{ id }}"{%- endif %}
+    {%- if name != blank %} name="{{ name }}"{%- endif %}
+    rows="{{ _rows }}"
+    class="{{ _input_cls }} resize-none{% if class != blank %} {{ class }}{% endif %}"
+    {%- if placeholder != blank %} placeholder="{{ placeholder }}"{%- endif %}
+    {%- if required %} required{%- endif %}
+    {{ attr }}
+  >{{ value }}</textarea>
+{%- else -%}
+  <input
+    type="{{ _type }}"
+    {%- if id != blank %} id="{{ id }}"{%- endif %}
+    {%- if name != blank %} name="{{ name }}"{%- endif %}
+    {%- if value != blank %} value="{{ value }}"{%- endif %}
+    {%- if placeholder != blank %} placeholder="{{ placeholder }}"{%- endif %}
+    {%- if min != blank %} min="{{ min }}"{%- endif %}
+    class="{{ _input_cls }}{% if class != blank %} {{ class }}{% endif %}"
+    {%- if required %} required{%- endif %}
+    {{ attr }}
+  >
+{%- endif -%}

@@ -1,13 +1,13 @@
 {%- paginate collection.products by section.settings.products_per_page -%}
 
-<div class="py-[60px] px-10">
+<div class="px-4 md:px-10 py-8 md:py-[60px]">
   <section
     class="max-w-screen-xl mx-auto"
     x-data="{ filtersOpen: false }"
   >
     {%- comment %} コレクションヘッダー {%- endcomment %}
-    <div class="mb-10">
-      <h1 class="text-4xl font-semibold">{{ collection.title }}</h1>
+    <div class="mb-8 md:mb-10">
+      <h1 class="text-2xl md:text-4xl font-semibold">{{ collection.title }}</h1>
       {%- if collection.description != blank -%}
         <p class="mt-6 text-sm text-stone-500 max-w-xl leading-relaxed">{{ collection.description }}</p>
       {%- endif -%}
@@ -33,9 +33,7 @@
           @click="filtersOpen = true"
           class="flex items-center gap-2 text-sm font-medium md:hidden"
         >
-          <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-            <path stroke-linecap="round" stroke-linejoin="round" d="M3 4h18M6 8h12M9 12h6" />
-          </svg>
+          {%- render 'icon', icon: 'list-filter', class: 'w-4 h-4' -%}
           絞り込み
           {%- if active_filter_count > 0 -%}
             <span class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none">{{ active_filter_count }}</span>
@@ -49,15 +47,13 @@
       {%- comment %} ソート {%- endcomment %}
       <div class="ml-auto flex items-center gap-2">
         <label for="SortBy" class="text-sm text-stone-500 whitespace-nowrap hidden sm:block">並び順:</label>
-        <select
-          id="SortBy"
-          class="text-sm border border-stone-200 rounded px-2 py-1.5 bg-white focus:outline-none focus:border-stone-400"
-          onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"
-        >
+        {%- capture _sort_options -%}
           {%- for option in collection.sort_options -%}
             <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
           {%- endfor -%}
-        </select>
+        {%- endcapture -%}
+        {%- capture _sort_onchange -%}onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"{%- endcapture -%}
+        {%- render 'form-select', id: 'SortBy', options_html: _sort_options, attr: _sort_onchange -%}
       </div>
     </div>
 
@@ -72,14 +68,14 @@
                 {%- if filter.min_value.value != blank -%}¥{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{%- else -%}¥0{%- endif -%}
                 〜
                 {%- if filter.max_value.value != blank -%}¥{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{%- endif -%}
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                {%- render 'icon', icon: 'x', class: 'w-3 h-3 flex-shrink-0', stroke_width: 2 -%}
               </a>
             {%- endif -%}
           {%- else -%}
             {%- for value in filter.active_values -%}
               <a href="{{ value.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
                 {{ value.label }}
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 flex-shrink-0" viewBox="0 0 24 24" stroke="currentColor" fill="none" stroke-width="2"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12"/></svg>
+                {%- render 'icon', icon: 'x', class: 'w-3 h-3 flex-shrink-0', stroke_width: 2 -%}
               </a>
             {%- endfor -%}
           {%- endif -%}
@@ -132,22 +128,51 @@
 
     {%- comment %} モバイルフィルタードロワー {%- endcomment %}
     {%- if collection.filters.size > 0 -%}
-      <div x-show="filtersOpen" x-cloak class="fixed inset-0 z-50 md:hidden">
-        <div class="absolute inset-0 bg-black/40" @click="filtersOpen = false" aria-hidden="true"></div>
-        <div class="absolute inset-y-0 left-0 w-80 max-w-full bg-white overflow-y-auto">
-          <div class="p-5">
-            <div class="flex items-center justify-between mb-6">
-              <h2 class="font-medium text-sm">絞り込み</h2>
-              <button @click="filtersOpen = false" class="text-stone-400 hover:text-stone-900 transition-colors" aria-label="閉じる">
-                <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.5">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </button>
-            </div>
-            {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
-          </div>
+      {%- comment %} パネル {%- endcomment %}
+      <div
+        x-show="filtersOpen"
+        x-transition:enter="transition-transform duration-300 ease-out"
+        x-transition:enter-start="-translate-x-full"
+        x-transition:enter-end="translate-x-0"
+        x-transition:leave="transition-transform duration-200 ease-in"
+        x-transition:leave-start="translate-x-0"
+        x-transition:leave-end="-translate-x-full"
+        class="fixed inset-y-0 left-0 z-50 w-80 max-w-full bg-stone-50 shadow-2xl flex flex-col md:hidden"
+        role="dialog"
+        aria-modal="true"
+        aria-label="絞り込み"
+        @keydown.escape.window="filtersOpen = false"
+        style="display: none;"
+      >
+        <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
+          <h2 class="text-sm tracking-widest uppercase">絞り込み</h2>
+          <button
+            type="button"
+            @click="filtersOpen = false"
+            class="text-stone-500 hover:text-stone-900 transition-colors"
+            aria-label="閉じる"
+          >
+            {%- render 'icon', icon: 'x', class: 'w-5 h-5' -%}
+          </button>
+        </div>
+        <div class="flex-1 overflow-y-auto p-5">
+          {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
         </div>
       </div>
+      {%- comment %} オーバーレイ {%- endcomment %}
+      <div
+        x-show="filtersOpen"
+        x-transition:enter="transition-opacity duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="transition-opacity duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        class="fixed inset-0 z-40 bg-stone-950/40 backdrop-blur-sm md:hidden"
+        @click="filtersOpen = false"
+        aria-hidden="true"
+        style="display: none;"
+      ></div>
     {%- endif -%}
   </section>
 </div> 

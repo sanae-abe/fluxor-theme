@@ -100,7 +100,7 @@
 <div x-data="productPageData()">
 <section
   id="product-info"
-  class="bg-stone-50 px-10 py-[60px]"
+  class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-10 items-start">
 
@@ -532,7 +532,7 @@
   アコーディオンセクション
 ======================================================{%- endcomment %}
 <section
-  class="px-10 py-[60px] bg-stone-100"
+  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100"
   x-data="{ openItem: 0 }"
 >
   <div class="max-w-4xl mx-auto flex flex-col gap-6">
@@ -594,7 +594,7 @@
 {%- comment %}======================================================
   Judge.me レビューウィジェット
 ======================================================{%- endcomment %}
-<section class="bg-stone-50 px-10 py-[60px]">
+<section class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]">
   <div class="max-w-4xl mx-auto">
     <h2 class="text-3xl font-semibold text-stone-900 tracking-wide palt">カスタマーレビュー</h2>
     <!-- Start of Judge.me code -->
@@ -630,8 +630,8 @@
 ======================================================{%- endcomment %}
 {%- assign related_col = collections[section.settings.related_collection] -%}
 {%- if related_col != blank -%}
-  <section class="bg-stone-50 px-10 py-[60px]">
-    <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
+  <section class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]">
+    <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
       {%- render 'section-header', heading: section.settings.related_heading -%}
 
@@ -655,7 +655,7 @@
   個人輸入代行に関する注意事項
 ======================================================{%- endcomment %}
 {%- if section.settings.show_import_notice -%}
-<section class="px-10 py-[60px] bg-stone-100">
+<section class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100">
   <div class="max-w-4xl mx-auto">
     <div class="flex flex-col gap-5">
       <div class="flex items-center gap-1">

@@ -2,8 +2,8 @@
 {%- assign products_limit = section.settings.products_to_show | default: 3 -%}
 {%- assign link_url = section.settings.link_url | default: col.url -%}
 
-<section class="bg-stone-100 px-10 py-[60px]">
-  <div class="max-w-screen-xl mx-auto flex flex-col gap-10">
+<section class="bg-stone-100 px-4 md:px-10 py-10 md:py-[60px]">
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
     {%- comment %} ヘッダー {%- endcomment %}
     {%- assign header_align = 'center' -%}

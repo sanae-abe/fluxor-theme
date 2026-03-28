@@ -3,12 +3,12 @@
   {%- assign img_left = false -%}
 {%- endif -%}
 
-<section class="{{ section.settings.color_scheme }} py-[60px]">
+<section class="{{ section.settings.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
 
-  <div class="flex {% if img_left %}flex-row{% else %}flex-row-reverse{% endif %} items-center gap-10">
+  <div class="flex flex-col {% if img_left %}md:flex-row{% else %}md:flex-row-reverse{% endif %} items-center gap-10">
 
     {%- comment %} 画像 {%- endcomment %}
-    <div class="w-1/2 flex-shrink-0">
+    <div class="md:w-1/2 flex-shrink-0">
       {%- if section.settings.image != blank -%}
         <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
           <img
@@ -30,10 +30,10 @@
     </div>
 
     {%- comment %} テキスト {%- endcomment %}
-    <div class="w-1/2 flex flex-col gap-10 px-10 max-w-[640px]">
+    <div class="md:w-1/2 flex flex-col gap-10 px-4 md:px-10 max-w-[640px]">
 
       {%- comment %} バッジ + 見出し {%- endcomment %}
-      <div class="flex flex-col items-start gap-6">
+      <div class="flex flex-col items-start gap-4">
         {%- if section.settings.badge_label != blank -%}
           {% render 'badge',
             label: section.settings.badge_label,
@@ -44,7 +44,7 @@
           %}
         {%- endif -%}
         {%- if section.settings.heading != blank -%}
-          <h2 class="text-4xl font-semibold leading-tight text-stone-900 palt tracking-wider">
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 palt tracking-wider">
             {{ section.settings.heading }}
           </h2>
         {%- endif -%}
@@ -59,15 +59,17 @@
 
       {%- comment %} ボタン {%- endcomment %}
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
-        {%- render 'button',
-          label: section.settings.button_label,
-          url: section.settings.button_url,
-          variant: 'outline',
-          color: 'dark',
-          icon_left: section.settings.button_icon_left,
-          icon_right: section.settings.button_icon_right,
-          class: 'self-start'
-        -%}
+        <div class="flex justify-center md:justify-flex-start">
+          {%- render 'button',
+            label: section.settings.button_label,
+            url: section.settings.button_url,
+            variant: 'outline',
+            color: 'dark',
+            icon_left: section.settings.button_icon_left,
+            icon_right: section.settings.button_icon_right,
+            class: 'self-start'
+          -%}
+        </div>
       {%- endif -%}
 
     </div>

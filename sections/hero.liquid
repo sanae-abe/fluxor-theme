@@ -52,26 +52,26 @@
   {%- comment %} コンテンツレイヤー {%- endcomment %}
   {%- for block in section.blocks -%}
     <div
-      class="absolute inset-0 flex items-center transition-opacity duration-700 px-10"
+      class="absolute inset-0 flex items-center transition-opacity duration-700 px-4 md:px-10"
       :class="current === {{ forloop.index0 }} ? 'opacity-100' : 'opacity-0 pointer-events-none'"
     >
-      <div class="max-w-screen-xl mx-auto py-[60px] w-full">
+      <div class="max-w-screen-xl mx-auto py-10 md:py-[60px] w-full">
         <div class="max-w-[640px] flex flex-col gap-8 items-start">
 
           {%- comment %} テキストグループ {%- endcomment %}
           <div class="flex flex-col gap-5">
             {%- if block.settings.eyebrow != blank -%}
-              <p class="text-stone-50 text-base tracking-[1px]">{{ block.settings.eyebrow }}</p>
+              <p class="text-stone-50 text-sm md:text-base tracking-[1px]">{{ block.settings.eyebrow }}</p>
             {%- endif -%}
 
             {%- if block.settings.heading != blank -%}
-              <h2 class="text-stone-50 text-7xl font-semibold leading-tight palt tracking-wider">
+              <h2 class="text-stone-50 text-4xl md:text-7xl font-semibold leading-tight palt tracking-wider">
                 {{ block.settings.heading }}
               </h2>
             {%- endif -%}
 
             {%- if block.settings.subheading != blank -%}
-              <p class="text-stone-200 text-2xl leading-tight">
+              <p class="text-stone-200 text-lg md:text-2xl leading-tight">
                 {{ block.settings.subheading }}
               </p>
             {%- endif -%}
