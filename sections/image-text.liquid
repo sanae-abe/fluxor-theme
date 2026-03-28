@@ -59,7 +59,7 @@
 
       {%- comment %} ボタン {%- endcomment %}
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
-        <div class="flex justify-center md:justify-flex-start">
+        <div class="flex justify-center md:justify-start">
           {%- render 'button',
             label: section.settings.button_label,
             url: section.settings.button_url,
