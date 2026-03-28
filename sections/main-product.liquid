@@ -47,7 +47,7 @@
   assign how_to_store       = product.metafields.custom.how_to_store
   assign precautions        = product.metafields.custom.precautions
   assign product_name_en    = product.metafields.custom.product_name_en
--%}　
+-%}
 
 {%- comment %}======================================================
   商品情報セクション
@@ -97,10 +97,56 @@
   }
 </script>
 
+{%- comment %} パンくずリスト {%- endcomment %}
+{%- liquid
+  if collection != blank
+    assign _bc2_name = collection.title
+    assign _bc2_url  = shop.url | append: collection.url
+    assign _bc3_name = product.title
+    assign _bc3_url  = shop.url | append: product.url
+  else
+    assign _bc2_name = product.title
+    assign _bc2_url  = shop.url | append: product.url
+  endif
+-%}
+<div class="px-4 md:px-10 pt-5 md:pt-10">
+  {%- if collection != blank -%}
+    {%- render 'breadcrumb',
+      item1_label: 'ホーム',
+      item1_url: routes.root_url,
+      item2_label: collection.title,
+      item2_url: collection.url,
+      item3_label: product.title,
+      max_w: 'max-w-screen-xl'
+    -%}
+  {%- else -%}
+    {%- render 'breadcrumb',
+      item1_label: 'ホーム',
+      item1_url: routes.root_url,
+      item2_label: product.title,
+      max_w: 'max-w-screen-xl'
+    -%}
+  {%- endif -%}
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
+    {"@type": "ListItem", "position": 2, "name": {{ _bc2_name | json }}, "item": {{ _bc2_url | json }}}
+    {%- if collection != blank -%}
+    ,{"@type": "ListItem", "position": 3, "name": {{ _bc3_name | json }}, "item": {{ _bc3_url | json }}}
+    {%- endif -%}
+  ]
+}
+</script>
+
 <div x-data="productPageData()">
 <section
   id="product-info"
-  class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
+  class="bg-stone-50 px-4 md:px-10 pt-5 pb-10 md:pt-5 md:pb-[60px]"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-10 items-start">
 
@@ -635,7 +681,7 @@
 
       {%- render 'section-header', heading: section.settings.related_heading -%}
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-6">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-6">
         {%- assign shown = 0 -%}
         {%- for p in related_col.products -%}
           {%- unless p.id == product.id -%}

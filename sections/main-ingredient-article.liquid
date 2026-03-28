@@ -19,9 +19,9 @@
     <div class="absolute inset-0 bg-stone-800" aria-hidden="true"></div>
   {%- endif -%}
 
-  <p class="relative text-sm font-medium tracking-[1.12px] text-white uppercase">INGREDIENTS</p>
+  <p class="relative text-sm font-medium tracking-[1.12px] text-white uppercase">Ingredients</p>
 
-  <h1 class="relative text-5xl md:text-[60px] font-semibold leading-tight tracking-wider text-white text-center max-w-3xl">
+  <h1 class="relative text-3xl md:text-5xl md:text-[60px] font-semibold leading-tight tracking-wider text-white text-center max-w-3xl">
     {{ article.title }}
   </h1>
 
@@ -31,17 +31,29 @@
   {%- endif -%}
 </div>
 
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
+    {"@type": "ListItem", "position": 2, "name": "成分ガイド", "item": {{ shop.url | append: blog.url | json }}},
+    {"@type": "ListItem", "position": 3, "name": {{ name_ja | default: article.title | json }}, "item": {{ shop.url | append: article.url | json }}}
+  ]
+}
+</script>
+
 {%- comment %} パンくずリスト {%- endcomment %}
-<nav
-  class="w-full max-w-4xl mx-auto px-10 pt-10 flex items-center gap-2 text-sm"
-  aria-label="パンくずリスト"
->
-  <a href="{{ routes.root_url }}" class="text-stone-500">ホーム</a>
-  <span class="text-stone-500" aria-hidden="true">/</span>
-  <a href="{{ blog.url }}" class="text-stone-500">成分ガイド</a>
-  <span class="text-stone-500" aria-hidden="true">/</span>
-  <span class="text-stone-900">{{ name_ja | default: article.title }}</span>
-</nav>
+<div class="px-4 md:px-10 pt-10">
+  {%- assign _bc_current = name_ja | default: article.title -%}
+  {%- render 'breadcrumb',
+    item1_label: 'ホーム',
+    item1_url: routes.root_url,
+    item2_label: '成分ガイド',
+    item2_url: blog.url,
+    item3_label: _bc_current
+  -%}
+</div>
 
 {%- comment %} ============================================================
   ブロックレンダリング
@@ -56,7 +68,7 @@
     >
       <div class="w-full max-w-4xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight tracking-wider text-stone-900">
+          <h2 class="text-2xl md:text-3xl font-semibold leading-tight tracking-wider text-stone-900">
             {{ block.settings.heading }}
           </h2>
         {%- endif -%}
@@ -74,7 +86,7 @@
     >
       <div class="w-full max-w-4xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight tracking-wider text-stone-900">
+          <h2 class="text-2xl md:text-3xl font-semibold leading-tight tracking-wider text-stone-900">
             {{ block.settings.heading }}
           </h2>
         {%- endif -%}
@@ -198,7 +210,7 @@
       {%- endif -%}
     </div>
 
-    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-6">
+    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-6">
       {%- if ingredient_col != blank -%}
         {%- for product in ingredient_col.products limit: section.settings.products_to_show -%}
           {%- render 'card-product-4col', product: product -%}
