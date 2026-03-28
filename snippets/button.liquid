@@ -168,7 +168,7 @@
 
 {%- assign all_cls = base_cls | append: ' ' | append: size_cls | append: ' ' | append: color_cls | append: ' ' | append: width_cls | append: ' ' | append: disabled_cls | append: ' ' | append: class -%}
 
-{%- if url and disabled == false -%}
+{%- if url and disabled != true -%}
   <a href="{{ url }}" class="{{ all_cls }}" style="--hover-bg: {{ hover_bg }}; --hover-text: {{ hover_text }};" {{ attr }}>
     {{ btn_inner }}
   </a>

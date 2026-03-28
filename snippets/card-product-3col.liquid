@@ -92,7 +92,7 @@
       {%- comment %} 価格 {%- endcomment %}
       <div class="flex items-center gap-2">
         {%- if on_sale -%}
-          <s class="text-base leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
+          <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
         {%- endif -%}
         <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
       </div>

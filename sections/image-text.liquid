@@ -5,7 +5,7 @@
 
 <section class="{{ section.settings.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
 
-  <div class="flex flex-col {% if img_left %}md:flex-row{% else %}md:flex-row-reverse{% endif %} items-center gap-10">
+  <div class="flex flex-col {% if img_left %}md:flex-row{% else %}md:flex-row-reverse{% endif %} items-center gap-6 md:gap-10">
 
     {%- comment %} 画像 {%- endcomment %}
     <div class="md:w-1/2 flex-shrink-0">
@@ -33,7 +33,7 @@
     <div class="md:w-1/2 flex flex-col gap-10 px-4 md:px-10 max-w-[640px]">
 
       {%- comment %} バッジ + 見出し {%- endcomment %}
-      <div class="flex flex-col items-start gap-4">
+      <div class="flex flex-col items-center md:items-start gap-4">
         {%- if section.settings.badge_label != blank -%}
           {% render 'badge',
             label: section.settings.badge_label,
@@ -59,7 +59,7 @@
 
       {%- comment %} ボタン {%- endcomment %}
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
-        <div class="flex justify-center md:justify-start">
+        <div class="flex w-full md:justify-start">
           {%- render 'button',
             label: section.settings.button_label,
             url: section.settings.button_url,
@@ -67,7 +67,7 @@
             color: 'dark',
             icon_left: section.settings.button_icon_left,
             icon_right: section.settings.button_icon_right,
-            class: 'self-start'
+            class: 'self-start w-full md:w-auto'
           -%}
         </div>
       {%- endif -%}
