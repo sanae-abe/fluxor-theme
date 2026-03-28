@@ -11,7 +11,6 @@
     required    {Boolean}  必須入力
     rows        {Number}   textarea の行数（デフォルト: 6）
     min         {Number}   number の min 属性
-    variant     {String}   'underline' | 'bordered'（デフォルト: 'underline'）
     attr        {String}   追加 HTML 属性
     class       {String}   追加 CSS クラス
 
@@ -24,18 +23,13 @@
   assign _type    = type    | default: 'text'
   assign _rows    = rows    | default: 6
   assign _variant = variant | default: 'underline'
-
-  if _variant == 'bordered'
-    assign _input_cls = 'w-full border border-stone-200 rounded px-2.5 py-1.5 text-sm bg-white focus:outline-none focus:border-stone-400 transition-colors'
-  else
-    assign _input_cls = 'w-full border border-stone-200 bg-transparent py-2.5 text-sm focus:outline-none focus:border-stone-900 transition-colors'
-  endif
+  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 px-2.5 py-1.5 text-sm focus:outline-none focus:border-stone-500 transition-colors'
 -%}
 
 {%- if label != blank -%}
   <label
     {%- if id != blank %} for="{{ id }}"{%- endif %}
-    class="block text-xs tracking-widest uppercase text-stone-500 mb-2"
+    class="block text-sm tracking-widest uppercase text-stone-900 mb-2"
   >{{ label }}</label>
 {%- endif -%}
 

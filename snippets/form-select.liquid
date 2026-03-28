@@ -22,10 +22,10 @@
   <select
     {%- if id != blank %} id="{{ id }}"{%- endif %}
     {%- if name != blank %} name="{{ name }}"{%- endif %}
-    class="appearance-none text-sm border border-stone-200 pl-2 pr-7 py-1.5 bg-white focus:outline-none focus:border-stone-400{% if class != blank %} {{ class }}{% endif %}"
+    class="appearance-none text-sm border border-stone-200 pl-2 pr-7 py-1.5 bg-white focus:outline-none focus:border-stone-500{% if class != blank %} {{ class }}{% endif %}"
     {{ attr }}
   >
     {{ options_html }}
   </select>
-  {%- render 'icon', icon: 'chevron-down', class: 'pointer-events-none absolute right-1 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-500', stroke_width: 2 -%}
+  {%- render 'icon', icon: 'chevron-down', class: 'pointer-events-none absolute right-2 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-stone-500', stroke_width: 2 -%}
 </div>
