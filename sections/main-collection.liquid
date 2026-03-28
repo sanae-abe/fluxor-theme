@@ -68,7 +68,18 @@
         <label for="SortBy" class="text-sm text-stone-500 whitespace-nowrap hidden sm:block">並び順:</label>
         {%- capture _sort_options -%}
           {%- for option in collection.sort_options -%}
-            <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ option.name }}</option>
+            {%- case option.value -%}
+              {%- when 'manual' -%}{%- assign _sort_label = 'おすすめ順' -%}
+              {%- when 'best-selling' -%}{%- assign _sort_label = '売れ筋順' -%}
+              {%- when 'title-ascending' -%}{%- assign _sort_label = 'タイトル: A〜Z' -%}
+              {%- when 'title-descending' -%}{%- assign _sort_label = 'タイトル: Z〜A' -%}
+              {%- when 'price-ascending' -%}{%- assign _sort_label = '価格: 安い順' -%}
+              {%- when 'price-descending' -%}{%- assign _sort_label = '価格: 高い順' -%}
+              {%- when 'created-ascending' -%}{%- assign _sort_label = '古い順' -%}
+              {%- when 'created-descending' -%}{%- assign _sort_label = '新しい順' -%}
+              {%- else -%}{%- assign _sort_label = option.name -%}
+            {%- endcase -%}
+            <option value="{{ option.value }}"{% if option.value == collection.sort_by %} selected{% endif %}>{{ _sort_label }}</option>
           {%- endfor -%}
         {%- endcapture -%}
         {%- capture _sort_onchange -%}onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"{%- endcapture -%}

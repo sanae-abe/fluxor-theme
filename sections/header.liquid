@@ -2,9 +2,37 @@
   class="sticky top-0 z-50 bg-stone-100 border-b border-stone-900/10 pl-4 pr-1 md:pl-10 md:pr-10"
   x-data="{ mobileMenuOpen: false }"
 >
-  <div class="max-w-screen-xl mx-auto flex items-center justify-between h-14 md:h-20">
+  <div class="max-w-screen-xl mx-auto grid grid-cols-3 items-center h-14 md:h-20">
 
-    {%- comment %} ロゴ {%- endcomment %}
+    {%- comment %} 左カラム：ハンバーガー（モバイル） / ナビゲーション（デスクトップ） {%- endcomment %}
+    <div class="flex items-center">
+      <button
+        type="button"
+        class="md:hidden flex flex-col gap-1.5 p-3 text-stone-900"
+        @click="mobileMenuOpen = !mobileMenuOpen"
+        :aria-expanded="mobileMenuOpen"
+        aria-label="メニューを開く"
+      >
+        <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'rotate-45 translate-y-2' : ''"></span>
+        <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
+        <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''"></span>
+      </button>
+      <nav class="hidden md:flex items-center gap-10" aria-label="Main">
+        {%- if section.settings.menu != blank -%}
+          {%- for link in linklists[section.settings.menu].links -%}
+            <a
+              href="{{ link.url }}"
+              class="text-md text-stone-900 palt tracking-wider hover:underline underline-offset-[8px] decoration-stone-900 transition-all duration-200"
+              {% if link.active %}aria-current="page"{% endif %}
+            >
+              {{ link.title | upcase }}
+            </a>
+          {%- endfor -%}
+        {%- endif -%}
+      </nav>
+    </div>
+
+    {%- comment %} 中央カラム：ロゴ {%- endcomment %}
     {%- capture logo_inner -%}
       {%- if settings.logo -%}
         <img
@@ -31,35 +59,22 @@
         </svg>
       {%- endif -%}
     {%- endcapture -%}
-    {%- if template.name == 'index' -%}
-      <h1 class="flex-shrink-0 leading-none m-0">
+    <div class="col-start-2 flex justify-center">
+      {%- if template.name == 'index' -%}
+        <h1 class="leading-none m-0">
+          <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
+            {{ logo_inner }}
+          </a>
+        </h1>
+      {%- else -%}
         <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
           {{ logo_inner }}
         </a>
-      </h1>
-    {%- else -%}
-      <a href="{{ routes.root_url }}" class="flex-shrink-0" aria-label="{{ shop.name | escape }}">
-        {{ logo_inner }}
-      </a>
-    {%- endif -%}
-
-    {%- comment %} ナビゲーション（デスクトップ） {%- endcomment %}
-    <nav class="hidden md:flex items-center gap-10" aria-label="Main">
-      {%- if section.settings.menu != blank -%}
-        {%- for link in linklists[section.settings.menu].links -%}
-          <a
-            href="{{ link.url }}"
-            class="text-md text-stone-900 palt tracking-wider hover:underline underline-offset-[8px] decoration-stone-900 transition-all duration-200"
-            {% if link.active %}aria-current="page"{% endif %}
-          >
-            {{ link.title | upcase }}
-          </a>
-        {%- endfor -%}
       {%- endif -%}
-    </nav>
+    </div>
 
-    {%- comment %} 右アイコン群 {%- endcomment %}
-    <div class="flex items-center">
+    {%- comment %} 右カラム：アイコン群 {%- endcomment %}
+    <div class="col-start-3 flex items-center justify-end md:gap-2">
 
       {%- comment %} 検索・アカウント {%- endcomment %}
       {%- assign _nav_urls   = routes.search_url | append: '|' | append: routes.account_url | split: '|' -%}
@@ -91,18 +106,6 @@
         ></span>
       </button>
 
-      {%- comment %} ハンバーガー（モバイル） {%- endcomment %}
-      <button
-        type="button"
-        class="md:hidden flex flex-col gap-1.5 p-3 text-stone-900"
-        @click="mobileMenuOpen = !mobileMenuOpen"
-        :aria-expanded="mobileMenuOpen"
-        aria-label="メニューを開く"
-      >
-        <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'rotate-45 translate-y-2' : ''"></span>
-        <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
-        <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''"></span>
-      </button>
 
     </div>
 
