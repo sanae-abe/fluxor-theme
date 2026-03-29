@@ -10,6 +10,7 @@
 {%- assign on_sale = false -%}
 {%- if variant.compare_at_price > variant.price -%}
   {%- assign on_sale = true -%}
+  {%- assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
 {%- endif -%}
 
 
@@ -37,6 +38,18 @@
       <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10 w-12 h-12 rounded-full bg-amber-900 flex items-center justify-center gap-0.5">
         {%- render 'icon', icon: 'hash', class: 'w-3.5 h-3.5 text-white flex-shrink-0' -%}
         <span class="text-white font-medium text-base leading-tight">{{ rank }}</span>
+      </div>
+    {%- endif -%}
+
+    {%- comment %} セール・売り切れバッジ {%- endcomment %}
+    {%- if product.available == false or on_sale -%}
+      <div class="absolute top-2 md:top-4 right-2 md:right-4 z-10">
+        {%- if product.available == false -%}
+          {%- render 'badge', label: '売り切れ', variant: 'secondary' -%}
+        {%- elsif on_sale -%}
+          {%- assign badge_label = discount | append: '% OFF' -%}
+          {%- render 'badge', label: badge_label, variant: 'sale' -%}
+        {%- endif -%}
       </div>
     {%- endif -%}
 

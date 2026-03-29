@@ -1,6 +1,26 @@
 <header
-  class="sticky top-0 z-50 bg-stone-100 border-b border-stone-900/10 pl-4 pr-1 md:pl-10 md:pr-10"
-  x-data="{ mobileMenuOpen: false }"
+  class="fixed top-0 w-full z-50 bg-stone-100 border-b border-stone-900/10 pl-4 pr-1 md:pl-10 md:pr-10 transition-transform duration-300 ease-in-out"
+  x-data="{
+    mobileMenuOpen: false,
+    headerHidden: false,
+    lastScrollY: 0,
+    init() {
+      this.lastScrollY = window.scrollY;
+      window.addEventListener('scroll', () => {
+        const currentScrollY = window.scrollY;
+        if (currentScrollY < 80) {
+          this.headerHidden = false;
+        } else if (currentScrollY > this.lastScrollY + 10) {
+          this.headerHidden = true;
+          this.mobileMenuOpen = false;
+        } else if (currentScrollY < this.lastScrollY - 5) {
+          this.headerHidden = false;
+        }
+        this.lastScrollY = currentScrollY;
+      }, { passive: true });
+    }
+  }"
+  :class="{ '-translate-y-full': headerHidden }"
 >
   <div class="max-w-screen-xl mx-auto grid grid-cols-3 items-center h-14 md:h-20">
 
@@ -8,7 +28,7 @@
     <div class="flex items-center">
       <button
         type="button"
-        class="md:hidden flex flex-col gap-1.5 p-3 text-stone-900"
+        class="lg:hidden flex flex-col gap-1.5 p-3 text-stone-900"
         @click="mobileMenuOpen = !mobileMenuOpen"
         :aria-expanded="mobileMenuOpen"
         aria-label="メニューを開く"
@@ -17,7 +37,7 @@
         <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
         <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? '-rotate-45 -translate-y-2' : ''"></span>
       </button>
-      <nav class="hidden md:flex items-center gap-10" aria-label="Main">
+      <nav class="hidden lg:flex items-center gap-8" aria-label="Main">
         {%- if section.settings.menu != blank -%}
           {%- for link in linklists[section.settings.menu].links -%}
             <a
@@ -127,8 +147,7 @@
     @keydown.escape.window="mobileMenuOpen = false"
     style="display: none;"
   >
-    <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
-      <span class="text-sm tracking-widest uppercase">Menu</span>
+    <div class="flex items-center justify-between px-6 pt-6 pb-4">
       <button
         type="button"
         @click="mobileMenuOpen = false"
@@ -138,14 +157,14 @@
         {%- render 'icon', icon: 'x', class: 'w-5 h-5' -%}
       </button>
     </div>
-    <nav class="flex-1 overflow-y-auto p-6" aria-label="モバイルナビゲーション">
+    <nav class="flex-1 overflow-y-auto px-6 p-4" aria-label="モバイルナビゲーション">
       {%- if section.settings.menu != blank -%}
-        <ul class="flex flex-col gap-6">
+        <ul class="flex flex-col gap-4">
           {%- for link in linklists[section.settings.menu].links -%}
             <li>
               <a
                 href="{{ link.url }}"
-                class="text-sm text-stone-900 palt tracking-wider uppercase hover:underline underline-offset-[8px]"
+                class="text-lg text-stone-900 leading-loose palt tracking-wider uppercase hover:underline underline-offset-[8px]"
                 {% if link.active %}aria-current="page"{% endif %}
                 @click="mobileMenuOpen = false"
               >
@@ -173,6 +192,7 @@
   ></div>
 
 </header>
+<div class="h-14 md:h-20" aria-hidden="true"></div>
 
 {% schema %}
 {
