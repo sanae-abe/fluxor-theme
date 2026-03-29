@@ -1,10 +1,16 @@
 <header
-  class="fixed top-0 w-full z-50 bg-stone-100 border-b border-stone-900/10 pl-4 pr-1 md:pl-10 md:pr-10 transition-transform duration-300 ease-in-out"
+  class="fixed w-full z-50 bg-stone-100 border-b border-stone-900/10 pl-4 pr-1 md:pl-10 md:pr-10 transition-transform duration-300 ease-in-out"
   x-data="{
     mobileMenuOpen: false,
     headerHidden: false,
     lastScrollY: 0,
+    announcementHeight: 0,
+    get effectiveTop() {
+      return Math.max(0, this.announcementHeight - this.lastScrollY);
+    },
     init() {
+      const bar = document.getElementById('AnnouncementBar');
+      this.announcementHeight = bar ? bar.offsetHeight : 0;
       this.lastScrollY = window.scrollY;
       window.addEventListener('scroll', () => {
         const currentScrollY = window.scrollY;
@@ -21,6 +27,7 @@
     }
   }"
   :class="{ '-translate-y-full': headerHidden }"
+  :style="{ top: effectiveTop + 'px' }"
 >
   <div class="max-w-screen-xl mx-auto grid grid-cols-3 items-center h-14 md:h-20">
 
