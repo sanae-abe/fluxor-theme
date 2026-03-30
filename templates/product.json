@@ -1,30 +1,45 @@
-/*
- * ------------------------------------------------------------
- * IMPORTANT: The contents of this file are auto-generated.
- *
- * This file may be updated by the Shopify admin theme editor
- * or related systems. Please exercise caution as any changes
- * made to this file may be overwritten.
- * ------------------------------------------------------------
- */
 {
   "sections": {
     "main": {
       "type": "main-product",
+      "settings": {
+        "related_heading": "あわせてお試しください",
+        "related_collection": "",
+        "related_products_count": 4
+      }
+    },
+    "accordion": {
+      "type": "product-accordion",
+      "settings": {
+        "show_ingredients": true,
+        "show_usage_timing": true,
+        "show_usage_method": true,
+        "show_how_to_store": true,
+        "show_precautions": true
+      }
+    },
+    "reviews": {
+      "type": "product-reviews",
+      "settings": {
+        "heading": "カスタマーレビュー"
+      }
+    },
+    "import_notice": {
+      "type": "product-import-notice",
       "settings": {
         "show_import_notice": true,
         "import_notice_declaration": "当店「Fluxor」で提供しているサービスは、お客様ご自身が海外の事業者から商品を直接購入するための「個人輸入代行」となります。当店は商品の販売者ではなく、購入の手続きと発送手配を代行するサービスを提供しております。",
         "import_notice_liability": "海外コスメは日本の薬機法に基づく承認を受けた商品ではございません。ご使用についてはお客様の完全な自己責任となります。万が一、肌に合わない場合やトラブルが発生した場合、当店では一切の責任（製造物責任等）を負いかねます。事前に成分等をご確認の上、ご自身の判断でご使用ください。",
         "import_notice_resale": "個人輸入された商品は、輸入したご本人のみが使用することを前提としています。第三者への譲渡・転売（メルカリ等での販売を含む）は日本の法律により固く禁じられています。",
         "import_notice_customs": "化粧品の個人輸入には数量制限がございます（標準サイズで1品目につき24個まで）。制限を超えるご注文があった場合、分割発送のご相談をさせていただく場合がございます。また、ご購入金額（商品代金）が日本円で約16,666円を超える場合、日本の税関で関税・消費税等が発生する場合がございます。その際に発生した税金等につきましては、お客様（輸入者様）のご負担となりますので予めご了承ください。",
-        "import_notice_returns": "個人輸入代行というサービスの性質上、海外事業者への発注が完了した後のキャンセル、返品、交換は原則としてお受けできません。ただし、商品到着時に明らかな破損・液漏れ、またはご注文と異なる商品が届いた場合に限り、到着後3日以内にご連絡いただければ、海外事業者への返金・再送の交渉をサポートいたします。",
-        "related_heading": "あわせてお試しください",
-        "related_collection": "",
-        "related_products_count": 4
+        "import_notice_returns": "個人輸入代行というサービスの性質上、海外事業者への発注が完了した後のキャンセル、返品、交換は原則としてお受けできません。ただし、商品到着時に明らかな破損・液漏れ、またはご注文と異なる商品が届いた場合に限り、到着後3日以内にご連絡いただければ、海外事業者への返金・再送の交渉をサポートいたします。"
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "accordion",
+    "reviews",
+    "import_notice"
   ]
 }
