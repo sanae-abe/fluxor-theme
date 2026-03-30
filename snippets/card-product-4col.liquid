@@ -112,8 +112,8 @@
           @click.stop="addToCart()"
           :disabled="adding"
         >
-          <span x-show="!adding" class="text-[15px] font-medium leading-[22.5px]">カートに追加</span>
-          <span x-show="adding" x-cloak class="text-[15px] font-medium leading-[22.5px]">追加中…</span>
+          <span :class="adding ? 'hidden' : ''" class="text-[15px] font-medium leading-[22.5px]">カートに追加</span>
+          <span :class="adding ? '' : 'hidden'" class="text-[15px] font-medium leading-[22.5px] hidden">追加中…</span>
         </button>
       </div>
     {%- endif -%}
