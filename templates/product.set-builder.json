@@ -1,0 +1,21 @@
+{
+  "sections": {
+    "main": {
+      "type": "set-builder-page",
+      "settings": {
+        "fixed_product": "oil-free-moisturizer",
+        "product_1": "0-1-retinal-reset-serum-pro",
+        "product_2": "acne-defence-daily-serum",
+        "product_3": "golden-glow-serum",
+        "product_4": "double-shot-radiance-lift-serum",
+        "product_5": "copper-peptide-cocktail-serum",
+        "product_6": "",
+        "product_7": "",
+        "product_8": ""
+      }
+    }
+  },
+  "order": [
+    "main"
+  ]
+}

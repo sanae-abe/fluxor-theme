@@ -1,16 +1,23 @@
 {%- comment %}
-  sections/bundle-page.liquid
+  sections/set-builder-page.liquid
 
-  バンドルビルダー専用商品ページセクション
-  使用: templates/product.bundle.json
+  セットビルダー専用商品ページセクション
+  使用: templates/product.set-builder.json
 
-  左カラム: 商品画像ギャラリー（バンドル商品のメディア）
+  価格: 管理画面の商品価格をそのまま使用（compare_at_price でセール表示対応）
+  左カラム: 商品画像ギャラリー
   右カラム: タイトル・価格・固定商品・候補選択・カートボタン
 {%- endcomment %}
 
 {%- liquid
+  assign variant = product.selected_or_first_available_variant
+  assign on_sale = false
+  if variant.compare_at_price > variant.price
+    assign on_sale = true
+    assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
+  endif
+
   assign fp = section.settings.fixed_product | default: product
-  assign has_fixed = fp != blank
   assign fp_variant = fp.selected_or_first_available_variant
 
   assign has_candidates = false
@@ -31,23 +38,15 @@
   {%- if p != blank -%}
     {%- assign pv = p.selected_or_first_available_variant -%}
     {%- if json_parts != '' -%}{%- assign json_parts = json_parts | append: ',' -%}{%- endif -%}
-    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"price":{{ pv.price }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400 | json }}}{%- endcapture -%}
+    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"price":{{ pv.price }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400 | json }},"available":{{ pv.available }}}{%- endcapture -%}
     {%- assign json_parts = json_parts | append: entry -%}
   {%- endif -%}
 {%- endfor -%}
 
 <script type="application/json" id="bundle-page-data-{{ section.id }}">
 {
-  "fixed": {
-    "id": {{ fp.id | default: 0 }},
-    "title": {{ fp.title | default: '' | json }},
-    "price": {{ fp_variant.price | default: 0 }},
-    "variantId": {{ fp_variant.id | default: 0 }},
-    "image": {{ fp.featured_image | image_url: width: 400 | json }}
-  },
-  "candidates": [{{ json_parts }}],
-  "discountType": {{ section.settings.discount_type | default: 'percentage' | json }},
-  "discountValue": {{ section.settings.discount_value | default: 10 }}
+  "fixedVariantId": {{ fp_variant.id | default: 0 }},
+  "candidates": [{{ json_parts }}]
 }
 </script>
 
@@ -55,10 +54,8 @@
   function bundlePage(dataId) {
     const raw = JSON.parse(document.getElementById(dataId).textContent)
     return {
-      fixedProduct: raw.fixed,
+      fixedVariantId: raw.fixedVariantId,
       candidates: raw.candidates,
-      discountType: raw.discountType,
-      discountValue: raw.discountValue,
       selected: [],
       adding: false,
       added: false,
@@ -68,27 +65,12 @@
       },
 
       toggleSelect(product) {
+        if (!product.available) return
         if (this.isSelected(product)) {
           this.selected = this.selected.filter(s => s.id !== product.id)
         } else if (this.selected.length < 2) {
           this.selected = [...this.selected, product]
         }
-      },
-
-      get bundleTotal() {
-        return this.fixedProduct.price + this.selected.reduce((sum, p) => sum + p.price, 0)
-      },
-
-      get discountAmount() {
-        if (this.selected.length < 2) return 0
-        if (this.discountType === 'percentage') {
-          return Math.round(this.bundleTotal * this.discountValue / 100)
-        }
-        return this.discountValue
-      },
-
-      get finalPrice() {
-        return this.bundleTotal - this.discountAmount
       },
 
       formatMoney(price) {
@@ -104,7 +86,7 @@
         this.adding = true
         try {
           const items = [
-            { id: this.fixedProduct.variantId, quantity: 1 },
+            { id: this.fixedVariantId, quantity: 1 },
             { id: this.selected[0].variantId, quantity: 1 },
             { id: this.selected[1].variantId, quantity: 1 },
           ]
@@ -212,20 +194,17 @@
         {%- endif -%}
       </div>
 
-      {%- comment %} 価格（動的） {%- endcomment %}
+      {%- comment %} 価格（管理画面設定値） {%- endcomment %}
       <div class="flex items-end gap-2 flex-wrap">
-        <span class="text-3xl font-semibold text-stone-900 leading-none" x-text="selected.length === 2 ? formatMoney(finalPrice) : formatMoney(fixedProduct.price + candidates.reduce((s,p) => s, 0))">
-          {{- fp_variant.price | money -}}
-        </span>
+        <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
+        {%- if on_sale -%}
+          <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
+        {%- endif -%}
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
-        <span
-          class="text-sm font-medium bundle-discount-text"
-          x-show="selected.length === 2 && discountAmount > 0"
-          x-cloak
-        >
-          <span x-show="discountType === 'percentage'" x-text="discountValue + '%オフ'"></span>
-          <span x-show="discountType !== 'percentage'" x-text="'¥' + discountValue + '引き'"></span>
-        </span>
+        {%- if on_sale -%}
+          {%- assign discount_label = discount | append: '% OFF' -%}
+          {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+        {%- endif -%}
       </div>
 
       <hr class="border-stone-200">
@@ -270,9 +249,10 @@
               class="bundle-candidate relative rounded-xl border p-2.5 text-left"
               :class="{
                 'is-selected': isSelected(product),
-                'is-disabled': !isSelected(product) && selected.length >= 2
+                'is-disabled': !isSelected(product) && selected.length >= 2,
+                'is-soldout': !product.available
               }"
-              :disabled="!isSelected(product) && selected.length >= 2"
+              :disabled="!product.available || (!isSelected(product) && selected.length >= 2)"
               @click="toggleSelect(product)"
             >
               <img
@@ -288,6 +268,9 @@
                   <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/>
                 </svg>
               </div>
+              <div x-show="!product.available" class="bundle-soldout-badge absolute inset-0 rounded-xl flex items-center justify-center">
+                <span class="text-xs font-semibold tracking-wide">在庫なし</span>
+              </div>
             </button>
           </template>
         </div>
@@ -295,22 +278,15 @@
 
       {%- comment %} 価格サマリー（2点選択後） {%- endcomment %}
       <div x-show="selected.length === 2" x-cloak class="bg-stone-100 rounded-xl p-4 space-y-1.5 text-sm">
-        <div class="flex justify-between text-stone-500">
-          <span>通常価格合計</span>
-          <span x-text="formatMoney(bundleTotal)"></span>
-        </div>
-        <template x-if="discountAmount > 0">
-          <div class="flex justify-between font-medium bundle-discount-text">
-            <span>
-              <span x-show="discountType === 'percentage'">セット割引（<span x-text="discountValue"></span>%オフ）</span>
-              <span x-show="discountType !== 'percentage'">セット割引</span>
-            </span>
-            <span>－<span x-text="formatMoney(discountAmount)"></span></span>
+        {%- if on_sale -%}
+          <div class="flex justify-between text-stone-500">
+            <span>通常価格</span>
+            <s>{{ variant.compare_at_price | money }}</s>
           </div>
-        </template>
-        <div class="flex justify-between font-semibold text-stone-900 text-base pt-1.5 border-t border-stone-200">
+        {%- endif -%}
+        <div class="flex justify-between font-semibold text-stone-900 text-base {%- if on_sale %} pt-1.5 border-t border-stone-200{%- endif %}">
           <span>セット価格</span>
-          <span x-text="formatMoney(finalPrice)"></span>
+          <span>{{ variant.price | money }}</span>
         </div>
       </div>
 
@@ -363,28 +339,7 @@
     { "type": "product", "id": "product_5", "label": "候補商品 5" },
     { "type": "product", "id": "product_6", "label": "候補商品 6" },
     { "type": "product", "id": "product_7", "label": "候補商品 7" },
-    { "type": "product", "id": "product_8", "label": "候補商品 8" },
-    {
-      "type": "header",
-      "content": "割引設定"
-    },
-    {
-      "type": "select",
-      "id": "discount_type",
-      "label": "割引タイプ",
-      "options": [
-        { "value": "percentage", "label": "% 割引" },
-        { "value": "fixed", "label": "固定額割引（円）" }
-      ],
-      "default": "percentage"
-    },
-    {
-      "type": "number",
-      "id": "discount_value",
-      "label": "割引値",
-      "default": 10,
-      "info": "%割引なら「10」= 10%オフ。固定額なら「500」= ¥500引き"
-    }
+    { "type": "product", "id": "product_8", "label": "候補商品 8" }
   ],
   "presets": [
     {

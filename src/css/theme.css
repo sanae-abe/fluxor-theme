@@ -60,6 +60,17 @@
   cursor: not-allowed;
 }
 
+.bundle-candidate.is-soldout {
+  opacity: 0.55;
+  cursor: not-allowed;
+}
+
+.bundle-soldout-badge {
+  background-color: rgba(255, 255, 255, 0.72);
+  backdrop-filter: blur(2px);
+  color: theme('colors.stone.500');
+}
+
 @media (any-hover: hover) {
   .bundle-candidate:not(.is-disabled):not(.is-selected):hover {
     border-color: theme('colors.stone.400');
