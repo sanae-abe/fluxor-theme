@@ -13,7 +13,7 @@
     "color_text": "#1c1917",
     "color_accent": "#0f766e",
     "logo_width": 120,
-    "sale_enabled": false,
+    "sale_enabled": true,
     "sale_start": "2026-03-01 00:00",
     "sale_end": "2026-04-30 23:59",
     "sale_exclude_handles": "im-my-defence",
