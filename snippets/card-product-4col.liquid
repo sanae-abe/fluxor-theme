@@ -141,15 +141,17 @@
         <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
         <span class="text-lg font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
       {%- elsif sale_eligible -%}
-        {%- comment %} スケジュールセール: セール中は計算価格を表示 {%- endcomment %}
-        <s
-          class="text-sm leading-tight text-stone-500"
-          x-show="saleEligible && $store.sale.isActive()"
-          x-cloak
+        {%- comment %} スケジュールセール: Liquidでセール価格を事前計算 {%- endcomment %}
+        {%- assign _disc = 100 | minus: sale_discount -%}
+        {%- assign _sale_price_cents = variant.price | times: _disc | divided_by: 100 -%}
+        <s class="text-sm leading-tight text-stone-500" x-cloak
+          :class="(saleEligible && $store.sale.isActive()) ? '' : 'hidden'"
         >{{ variant.price | money }}</s>
-        <span
-          class="text-lg font-semibold leading-tight text-stone-900"
-          x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney($store.sale.calcSalePrice({{ variant.price }}, saleDiscount)) : '{{ variant.price | money }}'"
+        <span class="text-lg font-semibold leading-tight text-stone-900" x-cloak
+          :class="(saleEligible && $store.sale.isActive()) ? '' : 'hidden'"
+        >{{ _sale_price_cents | money }}</span>
+        <span class="text-lg font-semibold leading-tight text-stone-900"
+          :class="(saleEligible && $store.sale.isActive()) ? 'hidden' : ''"
         >{{ variant.price | money }}</span>
       {%- else -%}
         <span class="text-lg font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
