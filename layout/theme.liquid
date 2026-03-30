@@ -41,6 +41,18 @@
         -webkit-font-smoothing: antialiased;
       }
     </style>
+
+    {%- comment %} セールスケジュール設定をグローバル JS 変数として公開 {%- endcomment %}
+    <script>
+      window.fluxorSale = {
+        enabled:    {{ settings.sale_enabled | json }},
+        start:      {{ settings.sale_start | default: '' | json }},
+        end:        {{ settings.sale_end | default: '' | json }},
+        discount:   {{ settings.sale_discount_percent | default: 20 | json }},
+        bannerShow: {{ settings.sale_banner_show | json }},
+        bannerText: {{ settings.sale_banner_text | default: 'セール開催中！' | json }}
+      };
+    </script>
   </head>
 
   <body class="bg-stone-50 text-stone-900">
@@ -49,6 +61,7 @@
     </a>
 
     {%- section 'announcement-bar' -%}
+    {%- section 'sale-announcement' -%}
     {%- section 'header' -%}
     {%- section 'cart-drawer' -%}
 

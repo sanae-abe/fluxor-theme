@@ -55,6 +55,71 @@ Alpine.store('cart', {
 })
 
 // ------------------------------------
+// Sale Schedule Store
+// ------------------------------------
+Alpine.store('sale', {
+  config: window.fluxorSale || { enabled: false },
+
+  isActive() {
+    if (!this.config.enabled) return false
+    const now = Date.now()
+    if (this.config.start) {
+      const start = new Date(this.config.start).getTime()
+      if (!isNaN(start) && now < start) return false
+    }
+    if (this.config.end) {
+      const end = new Date(this.config.end).getTime()
+      if (!isNaN(end) && now > end) return false
+    }
+    return true
+  },
+
+  calcSalePrice(originalPrice, discountPercent) {
+    return Math.floor(originalPrice * (100 - discountPercent) / 100)
+  },
+
+  formatMoney(yen) {
+    return '¥' + Math.round(yen).toLocaleString('ja-JP')
+  },
+})
+
+// ------------------------------------
+// Sale Countdown Data
+// ------------------------------------
+Alpine.data('saleCountdown', (endDateStr) => ({
+  days: 0,
+  hours: 0,
+  minutes: 0,
+  seconds: 0,
+  expired: false,
+  _timer: null,
+
+  init() {
+    this.update()
+    this._timer = setInterval(() => this.update(), 1000)
+  },
+
+  destroy() {
+    if (this._timer) clearInterval(this._timer)
+  },
+
+  update() {
+    const end = new Date(endDateStr).getTime()
+    const diff = end - Date.now()
+    if (diff <= 0) {
+      this.expired = true
+      this.days = this.hours = this.minutes = this.seconds = 0
+      if (this._timer) clearInterval(this._timer)
+      return
+    }
+    this.days    = Math.floor(diff / 86400000)
+    this.hours   = Math.floor((diff % 86400000) / 3600000)
+    this.minutes = Math.floor((diff % 3600000) / 60000)
+    this.seconds = Math.floor((diff % 60000) / 1000)
+  },
+}))
+
+// ------------------------------------
 // Init
 // ------------------------------------
 document.addEventListener('alpine:init', () => {

@@ -1,0 +1,90 @@
+{% comment %}
+  セールエンジン: 商品がスケジュールセールの対象かどうかをサーバーサイドで判定する。
+  スケジュールの時間チェックはクライアントサイド（Alpine.js $store.sale.isActive()）で行う。
+
+  Parameters:
+    product {Object} Shopify product オブジェクト（必須）
+
+  Output variables:
+    sale_eligible {Boolean} - この商品がセール対象条件を満たすか（時間チェック除く）
+    sale_discount {Number}  - ディスカウント率（整数 %）
+{% endcomment %}
+
+{%- liquid
+  assign sale_eligible = false
+  assign sale_discount = 0
+
+  if settings.sale_enabled
+
+    # 除外判定: ハンドルで除外
+    assign _excluded = false
+    if settings.sale_exclude_handles != blank
+      assign _exc_handles = settings.sale_exclude_handles | split: ','
+      for _h in _exc_handles
+        if _h | strip | downcase == product.handle
+          assign _excluded = true
+          break
+        endif
+      endfor
+    endif
+
+    # 除外判定: タグで除外
+    if _excluded == false and settings.sale_exclude_tags != blank
+      assign _exc_tags = settings.sale_exclude_tags | split: ','
+      for _etag in _exc_tags
+        assign _etag_low = _etag | strip | downcase
+        for _ptag in product.tags
+          if _ptag | downcase == _etag_low
+            assign _excluded = true
+            break
+          endif
+        endfor
+        if _excluded
+          break
+        endif
+      endfor
+    endif
+
+    # 対象判定
+    unless _excluded
+      if settings.sale_target == 'all'
+        assign sale_eligible = true
+
+      elsif settings.sale_target == 'tag' and settings.sale_target_tags != blank
+        assign _tgt_tags = settings.sale_target_tags | split: ','
+        for _ttag in _tgt_tags
+          assign _ttag_low = _ttag | strip | downcase
+          for _ptag in product.tags
+            if _ptag | downcase == _ttag_low
+              assign sale_eligible = true
+              break
+            endif
+          endfor
+          if sale_eligible
+            break
+          endif
+        endfor
+
+      elsif settings.sale_target == 'collection' and settings.sale_target_collections != blank
+        assign _tgt_cols = settings.sale_target_collections | split: ','
+        for _col_h in _tgt_cols
+          assign _col_low = _col_h | strip | downcase
+          for _col in product.collections
+            if _col.handle == _col_low
+              assign sale_eligible = true
+              break
+            endif
+          endfor
+          if sale_eligible
+            break
+          endif
+        endfor
+      endif
+
+      if sale_eligible
+        assign sale_discount = settings.sale_discount_percent | plus: 0
+      endif
+    endunless
+
+  endif
+-%}

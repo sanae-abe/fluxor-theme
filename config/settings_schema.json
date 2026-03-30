@@ -50,6 +50,94 @@
     ]
   },
   {
+    "name": "セールスケジュール",
+    "settings": [
+      {
+        "type": "checkbox",
+        "id": "sale_enabled",
+        "label": "スケジュールセールを有効にする",
+        "default": false
+      },
+      {
+        "type": "text",
+        "id": "sale_start",
+        "label": "開始日時（日本時間）",
+        "info": "例: 2024-04-01 00:00（YYYY-MM-DD HH:MM 形式）"
+      },
+      {
+        "type": "text",
+        "id": "sale_end",
+        "label": "終了日時（日本時間）",
+        "info": "例: 2024-04-30 23:59（YYYY-MM-DD HH:MM 形式）"
+      },
+      {
+        "type": "range",
+        "id": "sale_discount_percent",
+        "label": "ディスカウント率",
+        "min": 1,
+        "max": 90,
+        "step": 1,
+        "default": 20,
+        "unit": "%"
+      },
+      {
+        "type": "select",
+        "id": "sale_target",
+        "label": "対象商品",
+        "options": [
+          { "value": "all", "label": "全商品" },
+          { "value": "tag", "label": "特定タグ" },
+          { "value": "collection", "label": "特定コレクション" }
+        ],
+        "default": "all"
+      },
+      {
+        "type": "text",
+        "id": "sale_target_tags",
+        "label": "対象タグ",
+        "info": "カンマ区切りで複数指定（例: sale-item,new-arrival）。対象を「特定タグ」にした場合のみ有効。"
+      },
+      {
+        "type": "text",
+        "id": "sale_target_collections",
+        "label": "対象コレクション（ハンドル）",
+        "info": "カンマ区切りで複数指定（例: skincare,hair-care）。対象を「特定コレクション」にした場合のみ有効。"
+      },
+      {
+        "type": "header",
+        "content": "除外設定"
+      },
+      {
+        "type": "text",
+        "id": "sale_exclude_handles",
+        "label": "除外商品（ハンドル）",
+        "info": "カンマ区切りで複数指定（例: product-a,limited-item）"
+      },
+      {
+        "type": "text",
+        "id": "sale_exclude_tags",
+        "label": "除外タグ",
+        "info": "カンマ区切りで複数指定（例: sale-excluded,no-discount）"
+      },
+      {
+        "type": "header",
+        "content": "バナー"
+      },
+      {
+        "type": "checkbox",
+        "id": "sale_banner_show",
+        "label": "セールバナーを表示する",
+        "default": true
+      },
+      {
+        "type": "text",
+        "id": "sale_banner_text",
+        "label": "バナーテキスト",
+        "default": "セール開催中！"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
