@@ -113,49 +113,53 @@
       <h3 class="text-xl font-medium leading-tight text-stone-900">{{ card_title }}</h3>
     </a>
 
-    <div class="flex justify-between gap-3 mt-4">
+    <div class="mt-4 flex flex-col gap-3">
       {%- comment %} 評価 {%- endcomment %}
       <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.badge }}</div>
 
-      {%- comment %} 価格 {%- endcomment %}
-      <div class="flex items-center gap-2">
-        {%- if on_sale -%}
-          {%- comment %} Shopify ネイティブセール {%- endcomment %}
-          <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
-          <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
-        {%- elsif sale_eligible -%}
-          {%- comment %} スケジュールセール: セール中は計算価格を表示 {%- endcomment %}
-          <s
-            class="text-sm leading-tight text-stone-500"
-            x-show="saleEligible && $store.sale.isActive()"
-            x-cloak
-          >{{ variant.price | money }}</s>
-          <span
-            class="text-xl font-semibold leading-tight text-stone-900"
-            x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney($store.sale.calcSalePrice({{ variant.price }}, saleDiscount)) : '{{ variant.price | money }}'"
-          >{{ variant.price | money }}</span>
+      {%- comment %} 価格 + カートに追加ボタン {%- endcomment %}
+      <div class="flex items-center justify-between gap-3">
+
+        {%- comment %} 価格 {%- endcomment %}
+        <div class="flex items-center gap-2">
+          {%- if on_sale -%}
+            {%- comment %} Shopify ネイティブセール {%- endcomment %}
+            <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
+            <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
+          {%- elsif sale_eligible -%}
+            {%- comment %} スケジュールセール: セール中は計算価格を表示 {%- endcomment %}
+            <s
+              class="text-sm leading-tight text-stone-500"
+              x-show="saleEligible && $store.sale.isActive()"
+              x-cloak
+            >{{ variant.price | money }}</s>
+            <span
+              class="text-xl font-semibold leading-tight text-stone-900"
+              x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney($store.sale.calcSalePrice({{ variant.price }}, saleDiscount)) : '{{ variant.price | money }}'"
+            >{{ variant.price | money }}</span>
+          {%- else -%}
+            <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
+          {%- endif -%}
+        </div>
+
+        {%- comment %} 右：カートに追加ボタン {%- endcomment %}
+        {%- if product.available -%}
+          <button
+            type="button"
+            class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2"
+            :class="adding ? 'opacity-70 cursor-wait' : ''"
+            @click.stop="addToCart()"
+            :disabled="adding"
+          >
+            <span class="font-medium leading-tight" x-text="adding ? '追加中…' : 'カートに追加'">カートに追加</span>
+          </button>
         {%- else -%}
-          <span class="text-xl font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
+          <span class="flex-shrink-0 border-2 bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 font-medium leading-tight">
+            売り切れ
+          </span>
         {%- endif -%}
+
       </div>
-
-      {%- comment %} 右：カートに追加ボタン {%- endcomment %}
-      {%- if product.available -%}
-        <button
-          type="button"
-          class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2"
-          :class="adding ? 'opacity-70 cursor-wait' : ''"
-          @click.stop="addToCart()"
-          :disabled="adding"
-        >
-          <span class="font-medium leading-tight" x-text="adding ? '追加中…' : 'カートに追加'">カートに追加</span>
-        </button>
-      {%- else -%}
-        <span class="flex-shrink-0 border-2 bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 font-medium leading-tight">
-          売り切れ
-        </span>
-      {%- endif -%}
-
     </div>
   </div>
 </article>
