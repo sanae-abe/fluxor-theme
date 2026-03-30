@@ -22,9 +22,29 @@
         "related_collection": "",
         "related_products_count": 4
       }
+    },
+    "bundle_builder_kak4G8": {
+      "type": "bundle-builder",
+      "name": "バンドルビルダー",
+      "settings": {
+        "heading": "お得な3点セットを作ろう",
+        "subheading": "好きな美容液を2本選んで、セットでお得に",
+        "fixed_product": "oil-free-moisturizer",
+        "product_1": "0-1-retinal-reset-serum-pro",
+        "product_2": "acne-defence-daily-serum",
+        "product_3": "double-shot-radiance-lift-serum",
+        "product_4": "ハリ-ツヤ-エイジングケア-セット-コピー",
+        "product_5": "",
+        "product_6": "",
+        "product_7": "",
+        "product_8": "",
+        "discount_type": "fixed",
+        "discount_value": 13800
+      }
     }
   },
   "order": [
-    "main"
+    "main",
+    "bundle_builder_kak4G8"
   ]
 }
