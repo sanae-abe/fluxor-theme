@@ -10,13 +10,30 @@
     },
     "accordion": {
       "type": "product-accordion",
-      "settings": {
-        "show_ingredients": true,
-        "show_usage_timing": true,
-        "show_usage_method": true,
-        "show_how_to_store": true,
-        "show_precautions": true
-      }
+      "settings": {},
+      "blocks": {
+        "ingredients": {
+          "type": "accordion_item",
+          "settings": { "title": "全成分", "metafield_key": "all_ingredients_ja" }
+        },
+        "timing": {
+          "type": "accordion_item",
+          "settings": { "title": "使用タイミング", "metafield_key": "usage_timing" }
+        },
+        "method": {
+          "type": "accordion_item",
+          "settings": { "title": "使用方法", "metafield_key": "usage_method" }
+        },
+        "storage": {
+          "type": "accordion_item",
+          "settings": { "title": "保管方法", "metafield_key": "how_to_store" }
+        },
+        "precautions": {
+          "type": "accordion_item",
+          "settings": { "title": "注意事項", "metafield_key": "precautions" }
+        }
+      },
+      "block_order": ["ingredients", "timing", "method", "storage", "precautions"]
     },
     "reviews": {
       "type": "product-reviews",

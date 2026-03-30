@@ -1,18 +1,10 @@
 {%- comment %}
   sections/product-accordion.liquid
 
-  商品詳細アコーディオン（全成分・使用タイミング・使用方法・保管方法・注意事項）
+  商品詳細アコーディオン
   使用: templates/product.json に追加して使用
+  項目はテーマエディタのブロックで追加・削除・並び替え可能
 {%- endcomment %}
-
-{%- liquid
-  assign all_ingredients    = product.metafields.custom.all_ingredients
-  assign all_ingredients_ja = product.metafields.custom.all_ingredients_ja | default: all_ingredients
-  assign usage_timing       = product.metafields.custom.usage_timing
-  assign usage_method       = product.metafields.custom.usage_method
-  assign how_to_store       = product.metafields.custom.how_to_store
-  assign precautions        = product.metafields.custom.precautions
--%}
 
 <section
   class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100"
@@ -20,71 +12,43 @@
 >
   <div class="max-w-4xl mx-auto flex flex-col gap-6">
 
-    {%- assign acc_index = 0 -%}
+    {%- for block in section.blocks -%}
+      {%- assign mf_key = block.settings.metafield_key -%}
 
-    {%- if section.settings.show_ingredients -%}
       {%- capture _acc_body -%}
-        {%- if all_ingredients_ja != blank -%}
-          <p class="text-sm text-stone-900 leading-relaxed">{{ all_ingredients_ja | newline_to_br }}</p>
-          {%- if all_ingredients != blank -%}
-            <p class="text-xs text-stone-400 leading-relaxed mt-4">{{ all_ingredients | newline_to_br }}</p>
+        {%- if mf_key == 'custom' -%}
+          {%- if block.settings.content != blank -%}
+            <div class="text-sm text-stone-900 leading-relaxed">{{ block.settings.content }}</div>
+          {%- else -%}
+            <p class="text-stone-400 text-sm">テキストを入力してください。</p>
           {%- endif -%}
-        {%- elsif all_ingredients != blank -%}
-          <p class="text-sm text-stone-900 leading-relaxed">{{ all_ingredients | newline_to_br }}</p>
-        {%- else -%}
-          <p class="text-stone-400 text-sm">成分情報は現在準備中です。</p>
-        {%- endif -%}
-      {%- endcapture -%}
-      {%- render 'accordion-item', title: '全成分', body: _acc_body, index: acc_index -%}
-      {%- assign acc_index = acc_index | plus: 1 -%}
-    {%- endif -%}
 
-    {%- if section.settings.show_usage_timing -%}
-      {%- capture _acc_body -%}
-        {%- if usage_timing != blank -%}
-          <div class="text-sm text-stone-900 leading-relaxed">{{ usage_timing | newline_to_br }}</div>
-        {%- else -%}
-          <p class="text-stone-400 text-sm">使用タイミングは現在準備中です。</p>
-        {%- endif -%}
-      {%- endcapture -%}
-      {%- render 'accordion-item', title: '使用タイミング', body: _acc_body, index: acc_index -%}
-      {%- assign acc_index = acc_index | plus: 1 -%}
-    {%- endif -%}
+        {%- elsif mf_key == 'all_ingredients_ja' -%}
+          {%- assign mf_ja = product.metafields.custom.all_ingredients_ja -%}
+          {%- assign mf_en = product.metafields.custom.all_ingredients -%}
+          {%- if mf_ja != blank -%}
+            <p class="text-sm text-stone-900 leading-relaxed">{{ mf_ja | newline_to_br }}</p>
+            {%- if mf_en != blank -%}
+              <p class="text-xs text-stone-400 leading-relaxed mt-4">{{ mf_en | newline_to_br }}</p>
+            {%- endif -%}
+          {%- elsif mf_en != blank -%}
+            <p class="text-sm text-stone-900 leading-relaxed">{{ mf_en | newline_to_br }}</p>
+          {%- else -%}
+            <p class="text-stone-400 text-sm">成分情報は現在準備中です。</p>
+          {%- endif -%}
 
-    {%- if section.settings.show_usage_method -%}
-      {%- capture _acc_body -%}
-        {%- if usage_method != blank -%}
-          <div class="text-sm text-stone-900 leading-relaxed">{{ usage_method | newline_to_br }}</div>
         {%- else -%}
-          <p class="text-stone-400 text-sm">使用方法は現在準備中です。</p>
+          {%- assign mf_val = product.metafields.custom[mf_key] -%}
+          {%- if mf_val != blank -%}
+            <div class="text-sm text-stone-900 leading-relaxed">{{ mf_val | newline_to_br }}</div>
+          {%- else -%}
+            <p class="text-stone-400 text-sm">{{ block.settings.title }}は現在準備中です。</p>
+          {%- endif -%}
         {%- endif -%}
       {%- endcapture -%}
-      {%- render 'accordion-item', title: '使用方法', body: _acc_body, index: acc_index -%}
-      {%- assign acc_index = acc_index | plus: 1 -%}
-    {%- endif -%}
 
-    {%- if section.settings.show_how_to_store -%}
-      {%- capture _acc_body -%}
-        {%- if how_to_store != blank -%}
-          <div class="text-sm text-stone-900 leading-relaxed">{{ how_to_store | newline_to_br }}</div>
-        {%- else -%}
-          <p class="text-stone-400 text-sm">保管方法は現在準備中です。</p>
-        {%- endif -%}
-      {%- endcapture -%}
-      {%- render 'accordion-item', title: '保管方法', body: _acc_body, index: acc_index -%}
-      {%- assign acc_index = acc_index | plus: 1 -%}
-    {%- endif -%}
-
-    {%- if section.settings.show_precautions -%}
-      {%- capture _acc_body -%}
-        {%- if precautions != blank -%}
-          <div class="text-sm text-stone-900 leading-relaxed">{{ precautions | newline_to_br }}</div>
-        {%- else -%}
-          <p class="text-stone-400 text-sm">注意事項は現在準備中です。</p>
-        {%- endif -%}
-      {%- endcapture -%}
-      {%- render 'accordion-item', title: '注意事項', body: _acc_body, index: acc_index -%}
-    {%- endif -%}
+      {%- render 'accordion-item', title: block.settings.title, body: _acc_body, index: forloop.index0 -%}
+    {%- endfor -%}
 
   </div>
 </section>
@@ -92,41 +56,51 @@
 {% schema %}
 {
   "name": "商品アコーディオン",
-  "settings": [
+  "max_blocks": 10,
+  "blocks": [
     {
-      "type": "checkbox",
-      "id": "show_ingredients",
-      "label": "全成分を表示",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_usage_timing",
-      "label": "使用タイミングを表示",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_usage_method",
-      "label": "使用方法を表示",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_how_to_store",
-      "label": "保管方法を表示",
-      "default": true
-    },
-    {
-      "type": "checkbox",
-      "id": "show_precautions",
-      "label": "注意事項を表示",
-      "default": true
+      "type": "accordion_item",
+      "name": "アコーディオン項目",
+      "settings": [
+        {
+          "type": "text",
+          "id": "title",
+          "label": "見出し",
+          "default": "項目名"
+        },
+        {
+          "type": "select",
+          "id": "metafield_key",
+          "label": "表示内容",
+          "default": "usage_method",
+          "options": [
+            { "value": "all_ingredients_ja", "label": "全成分（メタフィールド）" },
+            { "value": "usage_timing",       "label": "使用タイミング（メタフィールド）" },
+            { "value": "usage_method",       "label": "使用方法（メタフィールド）" },
+            { "value": "how_to_store",       "label": "保管方法（メタフィールド）" },
+            { "value": "precautions",        "label": "注意事項（メタフィールド）" },
+            { "value": "custom",             "label": "カスタムテキスト" }
+          ]
+        },
+        {
+          "type": "richtext",
+          "id": "content",
+          "label": "カスタムテキスト",
+          "info": "「表示内容」で「カスタムテキスト」を選択した場合に表示されます"
+        }
+      ]
     }
   ],
   "presets": [
     {
-      "name": "商品アコーディオン"
+      "name": "商品アコーディオン",
+      "blocks": [
+        { "type": "accordion_item", "settings": { "title": "全成分",       "metafield_key": "all_ingredients_ja" } },
+        { "type": "accordion_item", "settings": { "title": "使用タイミング", "metafield_key": "usage_timing" } },
+        { "type": "accordion_item", "settings": { "title": "使用方法",     "metafield_key": "usage_method" } },
+        { "type": "accordion_item", "settings": { "title": "保管方法",     "metafield_key": "how_to_store" } },
+        { "type": "accordion_item", "settings": { "title": "注意事項",     "metafield_key": "precautions" } }
+      ]
     }
   ]
 }
