@@ -2,7 +2,7 @@
   <div
     id="AnnouncementBar"
     class="bg-stone-950 text-stone-50 min-h-9 flex items-center justify-center py-2 px-4 md:px-10"
-    {%- if settings.sale_enabled %}x-show="$store.sale.isActive()" x-cloak{%- endif %}
+    {%- if settings.sale_enabled %}x-data x-show="$store.sale.isActive()" x-cloak{%- endif %}
   >
     <p class="text-xs md:text-sm tracking-wide text-center">{{ section.settings.text }}</p>
   </div>
