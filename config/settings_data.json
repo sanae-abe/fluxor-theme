@@ -19,14 +19,14 @@
     "sale_exclude_handles": "in-my-defence",
     "sale_exclude_tags": "",
     "sale_banner_show": true,
-    "sale_banner_text": "Sale",
+    "sale_banner_text": "オープン記念セール開催中🎉4月30日まで全商品20%オフ！（一部商品を除く）",
     "social_instagram_link": "https://www.instagram.com/fluxor_jp/",
     "social_twitter_link": "https://x.com/fluxor_jp",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
         "settings": {
-          "text": ""
+          "text": "海外の最新のスキンケア製品をピックアップしています"
         }
       },
       "header": {
