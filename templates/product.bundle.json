@@ -11,8 +11,24 @@
   "sections": {
     "main": {
       "type": "bundle-page",
-      "settings": {}
+      "settings": {
+        "heading": "自分だけのルーティンを作ろう",
+        "subheading": "好きな美容液を2本選んで、3点セットでお得にゲット",
+        "fixed_product": "oil-free-moisturizer",
+        "product_1": "0-1-retinal-reset-serum-pro",
+        "product_2": "acne-defence-daily-serum",
+        "product_3": "golden-glow-serum",
+        "product_4": "double-shot-radiance-lift-serum",
+        "product_5": "copper-peptide-cocktail-serum",
+        "product_6": "",
+        "product_7": "",
+        "product_8": "",
+        "discount_type": "fixed",
+        "discount_value": 10
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
