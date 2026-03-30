@@ -1,0 +1,329 @@
+{%- comment %}
+  sections/bundle-builder.liquid
+
+  商品ページに追加するバンドルビルダーセクション
+  - 固定商品: このページの商品（空欄時）or 設定で指定した商品
+  - 候補商品から2点をユーザーが選択
+  - セット割引額をUI上で計算・表示
+
+  ⚠️ 実際の割引はShopify管理画面の「ディスカウント」→
+     「自動ディスカウント」で設定してください。
+{%- endcomment %}
+
+{%- liquid
+  assign fp = section.settings.fixed_product | default: product
+  assign fp_variant = fp.selected_or_first_available_variant
+
+  assign has_candidates = false
+  for i in (1..8)
+    assign key = 'product_' | append: i
+    if section.settings[key] != blank
+      assign has_candidates = true
+      break
+    endif
+  endfor
+-%}
+
+{%- unless has_candidates -%}
+  {%- comment %} 候補商品が未設定のため非表示 {%- endcomment %}
+{%- else -%}
+
+{%- comment %} 候補商品 JSON 配列を構築 {%- endcomment %}
+{%- assign json_parts = '' -%}
+{%- for i in (1..8) -%}
+  {%- assign key = 'product_' | append: i -%}
+  {%- assign p = section.settings[key] -%}
+  {%- if p != blank -%}
+    {%- assign pv = p.selected_or_first_available_variant -%}
+    {%- if json_parts != '' -%}{%- assign json_parts = json_parts | append: ',' -%}{%- endif -%}
+    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"price":{{ pv.price }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400 | json }}}{%- endcapture -%}
+    {%- assign json_parts = json_parts | append: entry -%}
+  {%- endif -%}
+{%- endfor -%}
+
+<script type="application/json" id="bundle-data-{{ section.id }}">
+{
+  "fixed": {
+    "id": {{ fp.id }},
+    "title": {{ fp.title | json }},
+    "price": {{ fp_variant.price }},
+    "variantId": {{ fp_variant.id }},
+    "image": {{ fp.featured_image | image_url: width: 400 | json }}
+  },
+  "candidates": [{{ json_parts }}],
+  "discountType": {{ section.settings.discount_type | default: 'percentage' | json }},
+  "discountValue": {{ section.settings.discount_value | default: 10 }}
+}
+</script>
+
+<script>
+  function bundleBuilder(dataId) {
+    const raw = JSON.parse(document.getElementById(dataId).textContent)
+    return {
+      fixedProduct: raw.fixed,
+      candidates: raw.candidates,
+      discountType: raw.discountType,
+      discountValue: raw.discountValue,
+      selected: [],
+      adding: false,
+      added: false,
+
+      isSelected(product) {
+        return this.selected.some(s => s.id === product.id)
+      },
+
+      toggleSelect(product) {
+        if (this.isSelected(product)) {
+          this.selected = this.selected.filter(s => s.id !== product.id)
+        } else if (this.selected.length < 2) {
+          this.selected = [...this.selected, product]
+        }
+      },
+
+      get bundleTotal() {
+        return this.fixedProduct.price + this.selected.reduce((sum, p) => sum + p.price, 0)
+      },
+
+      get discountAmount() {
+        if (this.selected.length < 2) return 0
+        if (this.discountType === 'percentage') {
+          return Math.round(this.bundleTotal * this.discountValue / 100)
+        }
+        return this.discountValue
+      },
+
+      get finalPrice() {
+        return this.bundleTotal - this.discountAmount
+      },
+
+      get buttonLabel() {
+        if (this.adding) return '追加中...'
+        if (this.added) return '✓ カートに追加しました'
+        if (this.selected.length < 2) return `あと${2 - this.selected.length}点選んでください`
+        return '3点セットをカートに追加'
+      },
+
+      formatMoney(price) {
+        return new Intl.NumberFormat('ja-JP', {
+          style: 'currency',
+          currency: 'JPY',
+          maximumFractionDigits: 0,
+        }).format(price)
+      },
+
+      async addBundle() {
+        if (this.selected.length < 2 || this.adding) return
+        this.adding = true
+        try {
+          const items = [
+            { id: this.fixedProduct.variantId, quantity: 1 },
+            { id: this.selected[0].variantId, quantity: 1 },
+            { id: this.selected[1].variantId, quantity: 1 },
+          ]
+          const res = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ items }),
+          })
+          if (!res.ok) throw new Error('Cart add failed')
+          await this.$store.cart.fetch()
+          this.$store.cart.open = true
+          this.added = true
+          setTimeout(() => { this.added = false }, 3000)
+        } catch (err) {
+          console.error('[bundleBuilder.addBundle]', err)
+        } finally {
+          this.adding = false
+        }
+      },
+    }
+  }
+</script>
+
+<section
+  class="bundle-builder py-10 px-6 border-t border-stone-200"
+  x-data="bundleBuilder('bundle-data-{{ section.id }}')"
+>
+  {%- if section.settings.heading != blank -%}
+    <h2 class="text-xl font-semibold text-stone-900 mb-1">{{ section.settings.heading | escape }}</h2>
+  {%- endif -%}
+  {%- if section.settings.subheading != blank -%}
+    <p class="text-sm text-stone-500 mb-6">{{ section.settings.subheading | escape }}</p>
+  {%- endif -%}
+
+  {%- comment %} 固定商品 {%- endcomment %}
+  <p class="text-xs font-medium text-stone-400 uppercase tracking-wider mb-2">固定商品</p>
+  <div class="flex items-center gap-3 p-3 rounded-xl border border-stone-200 bg-stone-50 mb-6">
+    {%- if fp.featured_image -%}
+      <img
+        src="{{ fp.featured_image | image_url: width: 96 }}"
+        alt="{{ fp.featured_image.alt | escape }}"
+        width="64" height="64"
+        class="w-16 h-16 object-cover rounded-lg flex-shrink-0"
+        loading="lazy"
+      >
+    {%- endif -%}
+    <div class="flex-1 min-w-0">
+      <p class="text-sm font-medium text-stone-900 line-clamp-2">{{ fp.title | escape }}</p>
+      <p class="text-sm text-stone-500 mt-0.5">{{ fp_variant.price | money_without_trailing_zeros }}</p>
+    </div>
+    <div class="bundle-fixed-check flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center">
+      <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
+      </svg>
+    </div>
+  </div>
+
+  {%- comment %} 区切り {%- endcomment %}
+  <div class="bundle-divider flex items-center gap-3 mb-6">
+    <div class="flex-1 border-t border-stone-200"></div>
+    <span class="text-stone-300 text-lg font-light select-none">＋</span>
+    <div class="flex-1 border-t border-stone-200"></div>
+  </div>
+
+  {%- comment %} 候補商品グリッド {%- endcomment %}
+  <div class="flex items-center justify-between mb-3">
+    <p class="text-xs font-medium text-stone-400 uppercase tracking-wider">好きな2点を選んでください</p>
+    <span class="text-xs font-semibold bundle-count" :class="selected.length === 2 ? 'is-complete' : ''">
+      <span x-text="selected.length"></span>/2
+    </span>
+  </div>
+
+  <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 mb-6">
+    <template x-for="product in candidates" :key="product.id">
+      <button
+        type="button"
+        class="bundle-candidate relative rounded-xl border p-2.5 text-left"
+        :class="{
+          'is-selected': isSelected(product),
+          'is-disabled': !isSelected(product) && selected.length >= 2
+        }"
+        :disabled="!isSelected(product) && selected.length >= 2"
+        @click="toggleSelect(product)"
+      >
+        <img
+          :src="product.image"
+          :alt="product.title"
+          class="w-full aspect-square object-cover rounded-lg mb-2"
+        >
+        <p class="text-xs font-medium text-stone-900 line-clamp-2 leading-tight mb-1" x-text="product.title"></p>
+        <p class="text-xs text-stone-500" x-text="formatMoney(product.price)"></p>
+        <div class="bundle-check-dot absolute top-2 right-2 w-5 h-5 rounded-full border-2 flex items-center justify-center">
+          <svg x-show="isSelected(product)" class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/>
+          </svg>
+        </div>
+      </button>
+    </template>
+  </div>
+
+  {%- comment %} 価格サマリー & CTA {%- endcomment %}
+  <div x-show="selected.length > 0" x-cloak>
+    <div class="bundle-divider flex items-center gap-3 mb-5">
+      <div class="flex-1 border-t border-stone-200"></div>
+      <span class="text-stone-300 text-lg font-light select-none">＋</span>
+      <div class="flex-1 border-t border-stone-200"></div>
+    </div>
+
+    <div class="bg-stone-50 rounded-xl p-4 mb-4 space-y-2 text-sm">
+      <div class="flex justify-between text-stone-500">
+        <span>通常価格合計</span>
+        <span x-text="formatMoney(bundleTotal)"></span>
+      </div>
+      <template x-if="selected.length === 2 && discountAmount > 0">
+        <div class="flex justify-between font-medium bundle-discount-text">
+          <span>
+            <span x-show="discountType === 'percentage'">セット割引（<span x-text="discountValue"></span>%オフ）</span>
+            <span x-show="discountType !== 'percentage'">セット割引</span>
+          </span>
+          <span>－<span x-text="formatMoney(discountAmount)"></span></span>
+        </div>
+      </template>
+      <template x-if="selected.length === 2">
+        <div class="flex justify-between font-semibold text-stone-900 text-base pt-2 border-t border-stone-200">
+          <span>セット価格</span>
+          <span x-text="formatMoney(finalPrice)"></span>
+        </div>
+      </template>
+    </div>
+
+    <button
+      type="button"
+      class="bundle-cta w-full py-3.5 rounded-xl font-semibold text-sm transition-colors duration-150"
+      :class="{
+        'is-ready': selected.length === 2 && !adding && !added,
+        'is-added': added
+      }"
+      :disabled="selected.length < 2 || adding"
+      @click="addBundle"
+      x-text="buttonLabel"
+    ></button>
+  </div>
+</section>
+
+{%- endunless -%}
+
+{% schema %}
+{
+  "name": "バンドルビルダー",
+  "tag": "div",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "お得な3点セットを作ろう"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "サブ見出し",
+      "default": "好きな美容液を2本選んで、セットでお得に"
+    },
+    {
+      "type": "product",
+      "id": "fixed_product",
+      "label": "固定商品",
+      "info": "空欄の場合、このページの商品が固定商品になります"
+    },
+    {
+      "type": "header",
+      "content": "候補商品（最大8商品）"
+    },
+    { "type": "product", "id": "product_1", "label": "候補商品 1" },
+    { "type": "product", "id": "product_2", "label": "候補商品 2" },
+    { "type": "product", "id": "product_3", "label": "候補商品 3" },
+    { "type": "product", "id": "product_4", "label": "候補商品 4" },
+    { "type": "product", "id": "product_5", "label": "候補商品 5" },
+    { "type": "product", "id": "product_6", "label": "候補商品 6" },
+    { "type": "product", "id": "product_7", "label": "候補商品 7" },
+    { "type": "product", "id": "product_8", "label": "候補商品 8" },
+    {
+      "type": "header",
+      "content": "割引設定"
+    },
+    {
+      "type": "select",
+      "id": "discount_type",
+      "label": "割引タイプ",
+      "options": [
+        { "value": "percentage", "label": "% 割引" },
+        { "value": "fixed", "label": "固定額割引（円）" }
+      ],
+      "default": "percentage"
+    },
+    {
+      "type": "number",
+      "id": "discount_value",
+      "label": "割引値",
+      "default": 10,
+      "info": "%割引なら「10」= 10%オフ。固定額なら「500」= ¥500引き"
+    }
+  ],
+  "presets": [
+    {
+      "name": "バンドルビルダー"
+    }
+  ]
+}
+{% endschema %}

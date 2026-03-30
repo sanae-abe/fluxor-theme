@@ -32,6 +32,71 @@
   }
 }
 
+/* バンドルビルダー */
+.bundle-fixed-check {
+  background-color: var(--color-accent);
+}
+
+.bundle-count.is-complete {
+  color: var(--color-accent);
+}
+
+.bundle-discount-text {
+  color: var(--color-accent);
+}
+
+.bundle-candidate {
+  border-color: theme('colors.stone.200');
+  transition: border-color 0.15s ease, opacity 0.15s ease;
+}
+
+.bundle-candidate.is-selected {
+  border-color: var(--color-accent);
+  background-color: theme('colors.teal.50');
+}
+
+.bundle-candidate.is-disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
+
+@media (any-hover: hover) {
+  .bundle-candidate:not(.is-disabled):not(.is-selected):hover {
+    border-color: theme('colors.stone.400');
+  }
+}
+
+.bundle-check-dot {
+  border-color: theme('colors.stone.300');
+  background-color: white;
+}
+
+.bundle-candidate.is-selected .bundle-check-dot {
+  border-color: var(--color-accent);
+  background-color: var(--color-accent);
+}
+
+.bundle-cta {
+  background-color: theme('colors.stone.200');
+  color: theme('colors.stone.400');
+}
+
+.bundle-cta.is-ready {
+  background-color: theme('colors.stone.900');
+  color: white;
+}
+
+.bundle-cta.is-added {
+  background-color: var(--color-accent);
+  color: white;
+}
+
+@media (any-hover: hover) {
+  .bundle-cta.is-ready:hover {
+    background-color: theme('colors.stone.700');
+  }
+}
+
 /* 商品カード：カートに追加ボタン */
 .btn-card-add {
   transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
