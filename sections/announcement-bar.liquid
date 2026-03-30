@@ -10,7 +10,7 @@
   endif
 -%}
 
-{%- if carousel_count > 0 -%}
+{%- if settings.sale_enabled and settings.sale_banner_show or carousel_count > 0 -%}
   <div
     id="AnnouncementBar"
     class="bg-stone-950 text-stone-50 overflow-hidden py-2"
@@ -73,7 +73,7 @@
         {
           "type": "text",
           "settings": {
-            "text": "オープン記念セール開催中🎉4月30日まで全商品20%オフ！（一部商品を除く）"
+            "text": "海外で人気のスキンケア製品をピックアップ！"
           }
         }
       ]
