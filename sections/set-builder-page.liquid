@@ -270,20 +270,6 @@
         </div>
       </div>
 
-      {%- comment %} 価格サマリー（2点選択後） {%- endcomment %}
-      <div x-show="selected.length === 2" x-cloak class="bg-stone-100 rounded-xl p-4 space-y-1.5 text-sm">
-        {%- if on_sale -%}
-          <div class="flex justify-between text-stone-500">
-            <span>通常価格</span>
-            <s>{{ variant.compare_at_price | money }}</s>
-          </div>
-        {%- endif -%}
-        <div class="flex justify-between font-semibold text-stone-900 text-base {%- if on_sale %} pt-1.5 border-t border-stone-200{%- endif %}">
-          <span>セット価格</span>
-          <span>{{ variant.price | money }}</span>
-        </div>
-      </div>
-
       {%- comment %} カートに追加ボタン {%- endcomment %}
       <div class="flex flex-col gap-3">
         <button
