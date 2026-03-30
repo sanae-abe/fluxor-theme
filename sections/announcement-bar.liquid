@@ -8,6 +8,7 @@
       {{ section.settings.text }}
       {%- if settings.sale_enabled and settings.sale_banner_show -%}
         <span class="ml-2 opacity-80">{{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF</span>
+        {%- render 'sale-countdown' -%}
       {%- endif -%}
     </p>
   </div>
