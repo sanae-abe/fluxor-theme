@@ -13,6 +13,11 @@
     "color_text": "#1c1917",
     "color_accent": "#0f766e",
     "logo_width": 120,
+    "sale_enabled": true,
+    "sale_start": "2026-03-01 00:00",
+    "sale_end": "2026-04-30 23:59",
+    "sale_exclude_tags": "im-my-defence",
+    "sale_banner_text": "Sale",
     "social_instagram_link": "https://www.instagram.com/fluxor_jp/",
     "social_twitter_link": "https://x.com/fluxor_jp",
     "sections": {
@@ -45,6 +50,12 @@
           "social_tiktok_url": "https://www.tiktok.com/@fluxor_jp",
           "import_notice_footer": "当店「Fluxor」は商品の販売者ではなく、お客様ご自身が海外の事業者から商品を直接購入するための手続きと発送手配を代行する「個人輸入代行」サービスを提供しております。海外コスメは日本の薬機法に基づく承認を受けておらず、ご使用はお客様の完全な自己責任となります。個人輸入品の第三者への譲渡・転売は法律により固く禁じられています。商品代金が約16,666円を超える場合、関税・消費税等が別途発生する場合があります（お客様負担）。発注完了後のキャンセル・返品は原則お受けできません。",
           "disclaimer": "浸透：角質層まで。エイジングケア：年齢に応じた潤いによるお手入れのこと。ニキビケア：洗浄により肌を清浄にし、ニキビを防ぐこと。毛穴ケア：潤いを与え、キメを整えることで毛穴を目立たなくすること。美白、透明感：うるおいを与え乾燥によるくすみを防ぐこと、またはキメが整うことによる肌印象のこと。配合成分（ペプチド、アゼライン酸等）の表記は、すべて整肌・保湿成分としての目的。"
+        }
+      },
+      "sale-announcement": {
+        "type": "sale-announcement",
+        "settings": {
+          "text": ""
         }
       }
     },
