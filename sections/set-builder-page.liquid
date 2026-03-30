@@ -38,7 +38,7 @@
   {%- if p != blank -%}
     {%- assign pv = p.selected_or_first_available_variant -%}
     {%- if json_parts != '' -%}{%- assign json_parts = json_parts | append: ',' -%}{%- endif -%}
-    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"price":{{ pv.price }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400 | json }},"available":{{ pv.available }}}{%- endcapture -%}
+    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"priceFormatted":{{ pv.price | money_without_trailing_zeros | json }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400 | json }},"available":{{ pv.available }}}{%- endcapture -%}
     {%- assign json_parts = json_parts | append: entry -%}
   {%- endif -%}
 {%- endfor -%}
@@ -71,14 +71,6 @@
         } else if (this.selected.length < 2) {
           this.selected = [...this.selected, product]
         }
-      },
-
-      formatMoney(price) {
-        return new Intl.NumberFormat('ja-JP', {
-          style: 'currency',
-          currency: 'JPY',
-          maximumFractionDigits: 0,
-        }).format(price)
       },
 
       async addBundle() {
@@ -263,7 +255,7 @@
               >
               <div class="flex-1 min-w-0">
                 <p class="text-sm font-medium text-stone-900 line-clamp-2 leading-tight" x-text="product.title"></p>
-                <p class="text-sm text-stone-500 mt-0.5" x-text="formatMoney(product.price)"></p>
+                <p class="text-sm text-stone-500 mt-0.5" x-text="product.priceFormatted"></p>
               </div>
               <div class="bundle-check-dot flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center">
                 <svg x-show="isSelected(product)" class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
