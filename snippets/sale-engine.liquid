@@ -21,7 +21,8 @@
     if settings.sale_exclude_handles != blank
       assign _exc_handles = settings.sale_exclude_handles | split: ','
       for _h in _exc_handles
-        if _h | strip | downcase == product.handle
+        assign _h_clean = _h | strip | downcase
+        if _h_clean == product.handle
           assign _excluded = true
           break
         endif
@@ -34,7 +35,8 @@
       for _etag in _exc_tags
         assign _etag_low = _etag | strip | downcase
         for _ptag in product.tags
-          if _ptag | downcase == _etag_low
+          assign _ptag_low = _ptag | downcase
+          if _ptag_low == _etag_low
             assign _excluded = true
             break
           endif
@@ -55,7 +57,8 @@
         for _ttag in _tgt_tags
           assign _ttag_low = _ttag | strip | downcase
           for _ptag in product.tags
-            if _ptag | downcase == _ttag_low
+            assign _ptag_low = _ptag | downcase
+            if _ptag_low == _ttag_low
               assign sale_eligible = true
               break
             endif
