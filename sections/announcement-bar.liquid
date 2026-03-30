@@ -1,28 +1,60 @@
 {%- liquid
-  assign has_content = false
-  if section.blocks.size > 0
-    assign has_content = true
-  endif
+  assign carousel_count = 0
+  for block in section.blocks
+    if block.settings.text != blank
+      assign carousel_count = carousel_count | plus: 1
+    endif
+  endfor
   if settings.sale_enabled and settings.sale_banner_show
-    assign has_content = true
+    assign carousel_count = carousel_count | plus: 1
   endif
 -%}
 
-{%- if has_content -%}
+{%- if carousel_count > 0 -%}
   <div
     id="AnnouncementBar"
-    class="bg-stone-950 text-stone-50 min-h-9 flex items-center justify-center py-2 px-4 md:px-10"
-    {%- if settings.sale_enabled %}x-data x-show="$store.sale.isActive()"{%- endif %}
+    class="bg-stone-950 text-stone-50 flex items-center justify-center py-2 px-4 md:px-10"
+    x-data="{
+      current: 0,
+      total: {{ carousel_count }},
+      init() {
+        if (this.total > 1) {
+          setInterval(() => { this.current = (this.current + 1) % this.total; }, 4000);
+        }
+      }
+    }"
+    {%- if settings.sale_enabled %}x-show="$store.sale.isActive()"{%- endif %}
   >
-    <div class="flex flex-wrap items-center justify-center gap-x-6 gap-y-1 text-xs md:text-sm tracking-wide">
+    <div class="relative w-full min-h-5 text-xs md:text-sm tracking-wide">
+      {%- assign carousel_idx = 0 -%}
       {%- for block in section.blocks -%}
         {%- if block.settings.text != blank -%}
-          <p {{ block.shopify_attributes }}>{{ block.settings.text }}</p>
+          <p
+            class="absolute inset-x-0 text-center"
+            x-show="current === {{ carousel_idx }}"
+            x-transition:enter="transition-opacity duration-500"
+            x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100"
+            x-transition:leave="transition-opacity duration-500"
+            x-transition:leave-start="opacity-100"
+            x-transition:leave-end="opacity-0"
+            {{ block.shopify_attributes }}
+          >{{ block.settings.text }}</p>
+          {%- assign carousel_idx = carousel_idx | plus: 1 -%}
         {%- endif -%}
       {%- endfor -%}
       {%- if settings.sale_enabled and settings.sale_banner_show -%}
-        <div class="flex items-center gap-2">
-          {{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF
+        <div
+          class="absolute inset-x-0 flex items-center justify-center gap-2"
+          x-show="current === {{ carousel_idx }}"
+          x-transition:enter="transition-opacity duration-500"
+          x-transition:enter-start="opacity-0"
+          x-transition:enter-end="opacity-100"
+          x-transition:leave="transition-opacity duration-500"
+          x-transition:leave-start="opacity-100"
+          x-transition:leave-end="opacity-0"
+        >
+          <span>{{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF</span>
           {%- render 'sale-countdown' -%}
         </div>
       {%- endif -%}
