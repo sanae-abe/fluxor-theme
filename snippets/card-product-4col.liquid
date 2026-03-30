@@ -13,7 +13,7 @@
 {%- endif -%}
 
 {%- comment %} スケジュールセール対象判定 {%- endcomment %}
-{%- render 'sale-engine', product: product -%}
+{%- include 'sale-engine' -%}
 
 {%- comment %} スケジュールセールバッジの HTML をプリレンダリング {%- endcomment %}
 {%- if sale_eligible and on_sale == false -%}
