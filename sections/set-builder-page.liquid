@@ -242,11 +242,11 @@
             <span x-text="selected.length"></span>/2
           </span>
         </div>
-        <div class="grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-2 xl:grid-cols-3">
+        <div class="flex flex-col gap-2">
           <template x-for="product in candidates" :key="product.id">
             <button
               type="button"
-              class="bundle-candidate relative rounded-xl border p-2.5 text-left"
+              class="bundle-candidate relative flex items-center gap-3 p-3 rounded-xl border text-left w-full"
               :class="{
                 'is-selected': isSelected(product),
                 'is-disabled': !isSelected(product) && selected.length >= 2,
@@ -258,14 +258,16 @@
               <img
                 :src="product.image"
                 :alt="product.title"
-                width="200" height="200"
-                class="w-full aspect-square object-cover rounded-lg mb-2"
+                width="64" height="64"
+                class="w-16 h-16 object-cover rounded-lg flex-shrink-0"
               >
-              <p class="text-xs font-medium text-stone-900 line-clamp-2 leading-tight mb-1" x-text="product.title"></p>
-              <p class="text-xs text-stone-500" x-text="formatMoney(product.price)"></p>
-              <div class="bundle-check-dot absolute top-2 right-2 w-5 h-5 rounded-full border-2 flex items-center justify-center">
-                <svg x-show="isSelected(product)" class="w-2.5 h-2.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3.5" d="M5 13l4 4L19 7"/>
+              <div class="flex-1 min-w-0">
+                <p class="text-sm font-medium text-stone-900 line-clamp-2 leading-tight" x-text="product.title"></p>
+                <p class="text-sm text-stone-500 mt-0.5" x-text="formatMoney(product.price)"></p>
+              </div>
+              <div class="bundle-check-dot flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center">
+                <svg x-show="isSelected(product)" class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
                 </svg>
               </div>
               <div x-show="!product.available" class="bundle-soldout-badge absolute inset-0 rounded-xl flex items-center justify-center">

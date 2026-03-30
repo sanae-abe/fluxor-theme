@@ -47,6 +47,7 @@
 
 .bundle-candidate {
   border-color: theme('colors.stone.200');
+  background-color: white;
   transition: border-color 0.15s ease, opacity 0.15s ease;
 }
 
@@ -72,7 +73,7 @@
 }
 
 @media (any-hover: hover) {
-  .bundle-candidate:not(.is-disabled):not(.is-selected):hover {
+  .bundle-candidate:not(.is-disabled):not(.is-selected):not(.is-soldout):hover {
     border-color: theme('colors.stone.400');
   }
 }
