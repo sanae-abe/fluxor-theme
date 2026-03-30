@@ -360,9 +360,7 @@
               @click="$refs.track.scrollLeft -= 198; $nextTick(() => updateNav())"
               aria-label="前へ"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#79716B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="#ffffff"/><path d="m14 8-4 4 4 4"/>
-              </svg>
+              {%- render 'icon', icon: 'circle-chevron-left', class: 'w-6 h-6', stroke: '#79716B', fill: '#ffffff' -%}
             </button>
 
             {%- comment %} トラック {%- endcomment %}
@@ -421,9 +419,7 @@
               @click="$refs.track.scrollLeft += 198; $nextTick(() => updateNav())"
               aria-label="次へ"
             >
-              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#79716B" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-                <circle cx="12" cy="12" r="10" fill="#ffffff"/><path d="m10 8 4 4-4 4"/>
-              </svg>
+              {%- render 'icon', icon: 'circle-chevron-right', class: 'w-6 h-6', stroke: '#79716B', fill: '#ffffff' -%}
             </button>
           </div>
           </div>

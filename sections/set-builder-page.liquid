@@ -219,9 +219,7 @@
             <p class="text-sm text-stone-500 mt-0.5">{{ fp_variant.price | money_without_trailing_zeros }}</p>
           </div>
           <div class="bundle-fixed-check flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center">
-            <svg class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-            </svg>
+            {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white',  stroke_width: 3 -%}
           </div>
         </div>
       </div>
@@ -258,9 +256,7 @@
                 <p class="text-sm text-stone-500 mt-0.5" x-text="product.priceFormatted"></p>
               </div>
               <div class="bundle-check-dot flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center">
-                <svg x-show="isSelected(product)" class="w-3.5 h-3.5 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M5 13l4 4L19 7"/>
-                </svg>
+                {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white', x_show: 'isSelected(product)', stroke_width: 3 -%}
               </div>
               <div x-show="!product.available" class="bundle-soldout-badge absolute inset-0 rounded-xl flex items-center justify-center">
                 <span class="text-xs font-semibold tracking-wide">在庫なし</span>
