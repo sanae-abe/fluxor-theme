@@ -25,9 +25,16 @@
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
-        "settings": {
-          "text": "海外で人気のスキンケア製品をピックアップ！"
-        }
+        "settings": {},
+        "blocks": {
+          "announcement-1": {
+            "type": "text",
+            "settings": {
+              "text": "海外で人気のスキンケア製品をピックアップ！"
+            }
+          }
+        },
+        "block_order": ["announcement-1"]
       },
       "header": {
         "type": "header",
