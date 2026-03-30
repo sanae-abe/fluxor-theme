@@ -13,6 +13,8 @@
     "color_text": "#1c1917",
     "color_accent": "#0f766e",
     "logo_width": 120,
+    "social_instagram_link": "https://www.instagram.com/fluxor_jp/",
+    "social_twitter_link": "https://x.com/fluxor_jp",
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
