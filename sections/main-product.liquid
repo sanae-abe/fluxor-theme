@@ -28,6 +28,75 @@
     assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
   endif
 
+  assign sale_eligible = false
+  assign sale_discount = 0
+  if settings.sale_enabled
+    assign _excluded = false
+    if settings.sale_exclude_handles != blank
+      assign _exc_handles = settings.sale_exclude_handles | split: ','
+      for _h in _exc_handles
+        assign _h_clean = _h | strip | downcase
+        if _h_clean == product.handle
+          assign _excluded = true
+          break
+        endif
+      endfor
+    endif
+    if _excluded == false and settings.sale_exclude_tags != blank
+      assign _exc_tags = settings.sale_exclude_tags | split: ','
+      for _etag in _exc_tags
+        assign _etag_low = _etag | strip | downcase
+        for _ptag in product.tags
+          assign _ptag_low = _ptag | downcase
+          if _ptag_low == _etag_low
+            assign _excluded = true
+            break
+          endif
+        endfor
+        if _excluded
+          break
+        endif
+      endfor
+    endif
+    unless _excluded
+      if settings.sale_target == 'all'
+        assign sale_eligible = true
+      elsif settings.sale_target == 'tag' and settings.sale_target_tags != blank
+        assign _tgt_tags = settings.sale_target_tags | split: ','
+        for _ttag in _tgt_tags
+          assign _ttag_low = _ttag | strip | downcase
+          for _ptag in product.tags
+            assign _ptag_low = _ptag | downcase
+            if _ptag_low == _ttag_low
+              assign sale_eligible = true
+              break
+            endif
+          endfor
+          if sale_eligible
+            break
+          endif
+        endfor
+      elsif settings.sale_target == 'collection' and settings.sale_target_collections != blank
+        assign _tgt_cols = settings.sale_target_collections | split: ','
+        for _col_h in _tgt_cols
+          assign _col_low = _col_h | strip | downcase
+          for _col in product.collections
+            if _col.handle == _col_low
+              assign sale_eligible = true
+              break
+            endif
+          endfor
+          if sale_eligible
+            break
+          endif
+        endfor
+      endif
+      if sale_eligible
+        assign sale_discount = settings.sale_discount_percent | plus: 0
+      endif
+    endunless
+  endif
+
   assign rating_value = product.metafields.judgeme.avg_rating
   assign rating_count = product.metafields.judgeme.review_count
 
@@ -85,6 +154,11 @@
         return this.variants.find(v =>
           v.options.every((opt, i) => opt === this.selectedOptions[i])
         ) || this.variants[0];
+      },
+      saleEligible: {{ sale_eligible | json }},
+      saleDiscount: {{ sale_discount | default: 0 }},
+      get salePrice() {
+        return Math.floor(this.selectedVariant.price * (100 - this.saleDiscount) / 100);
       },
       get variantAvailable() { return this.selectedVariant.available; },
       async addToCart() {
@@ -270,14 +344,32 @@
 
       {%- comment %} 価格 {%- endcomment %}
       <div class="flex items-end gap-2 flex-wrap">
-        <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- if on_sale -%}
+          {%- comment %} Shopify ネイティブセール {%- endcomment %}
+          <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
           <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
+        {%- elsif sale_eligible -%}
+          {%- comment %} スケジュールセール: Alpine でバリアント連動の動的表示 {%- endcomment %}
+          <span class="text-3xl font-semibold text-stone-900 leading-none"
+            x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney(salePrice) : $store.sale.formatMoney(selectedVariant.price)"
+          >{{ variant.price | money }}</span>
+          <s class="text-base text-stone-500 leading-tight"
+            x-show="saleEligible && $store.sale.isActive()"
+            x-text="$store.sale.formatMoney(selectedVariant.price)"
+            x-cloak
+          >{{ variant.price | money }}</s>
+        {%- else -%}
+          <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- endif -%}
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
           {%- assign discount_label = discount | append: '% OFF' -%}
           {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+        {%- elsif sale_eligible -%}
+          {%- assign _sched_discount_label = sale_discount | append: '% OFF' -%}
+          <template x-if="saleEligible && $store.sale.isActive()">
+            <div>{%- render 'badge', label: _sched_discount_label, variant: 'sale', size: 'sm' -%}</div>
+          </template>
         {%- endif -%}
       </div>
 
@@ -629,9 +721,20 @@
 
     <div class="flex items-center gap-4 shrink-0">
       <div class="flex items-end gap-2 whitespace-nowrap">
-        <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- if on_sale -%}
+          <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
           <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
+        {%- elsif sale_eligible -%}
+          <span class="text-3xl font-medium text-stone-900 leading-none"
+            x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney(salePrice) : $store.sale.formatMoney(selectedVariant.price)"
+          >{{ variant.price | money }}</span>
+          <s class="text-base text-stone-500 leading-tight"
+            x-show="saleEligible && $store.sale.isActive()"
+            x-text="$store.sale.formatMoney(selectedVariant.price)"
+            x-cloak
+          >{{ variant.price | money }}</s>
+        {%- else -%}
+          <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- endif -%}
       </div>
 
