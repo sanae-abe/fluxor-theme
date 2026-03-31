@@ -1,0 +1,67 @@
+{%- comment %}
+  Search & Discovery おすすめ商品ローダーセクション
+  product-recommendations.liquid を Ajax で呼び出すラッパー。
+  templates/product.json に追加して使用する。
+  直接コンテンツを持たず、Ajax で product-recommendations.liquid の出力を挿入する。
+{%- endcomment -%}
+
+{%- if section.settings.enabled -%}
+  <div
+    id="product-recommendations"
+    data-product-id="{{ product.id }}"
+    data-limit="{{ section.settings.count }}"
+    data-section-id="product-recommendations"
+  ></div>
+
+  <script>
+    (function () {
+      var container = document.getElementById('product-recommendations');
+      if (!container) return;
+      var productId = container.dataset.productId;
+      var limit = container.dataset.limit || 4;
+      var sectionId = container.dataset.sectionId;
+      fetch(
+        '/recommendations/products?section_id=' + sectionId +
+        '&product_id=' + productId +
+        '&limit=' + limit
+      )
+        .then(function (r) { return r.text(); })
+        .then(function (html) {
+          var doc = new DOMParser().parseFromString(html, 'text/html');
+          var content = doc.querySelector('.shopify-section');
+          if (content && content.innerHTML.trim()) {
+            container.innerHTML = content.innerHTML;
+          }
+        })
+        .catch(function () {});
+    })();
+  </script>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "あなたへのおすすめ",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enabled",
+      "label": "おすすめ商品を表示する",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "count",
+      "label": "表示件数",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    }
+  ],
+  "presets": [
+    {
+      "name": "あなたへのおすすめ"
+    }
+  ]
+}
+{% endschema %}

@@ -17,6 +17,13 @@
         "related_products_count": 4
       }
     },
+    "recommendations": {
+      "type": "product-recommendations-loader",
+      "settings": {
+        "enabled": true,
+        "count": 4
+      }
+    },
     "accordion": {
       "type": "product-accordion",
       "blocks": {
@@ -90,6 +97,7 @@
   },
   "order": [
     "main",
+    "recommendations",
     "accordion",
     "reviews",
     "import_notice"
