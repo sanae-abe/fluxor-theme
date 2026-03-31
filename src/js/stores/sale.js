@@ -1,15 +1,22 @@
 import { formatJPY } from '../utils/money.js'
 
-const cfg     = window.fluxorSale || { enabled: false }
-const startMs = cfg.start ? new Date(cfg.start).getTime() : null
-const endMs   = cfg.end   ? new Date(cfg.end).getTime()   : null
+const cfg = window.fluxorSale || { enabled: false }
+
+const parseDate = (str) => {
+  if (!str) return null
+  const ms = new Date(str).getTime()
+  return isNaN(ms) ? null : ms
+}
+
+const startMs = parseDate(cfg.start)
+const endMs = parseDate(cfg.end)
 
 export const saleStore = {
   isActive() {
     if (!cfg.enabled) return false
     const now = Date.now()
-    if (startMs !== null && !isNaN(startMs) && now < startMs) return false
-    if (endMs   !== null && !isNaN(endMs)   && now > endMs)   return false
+    if (startMs !== null && now < startMs) return false
+    if (endMs !== null && now > endMs) return false
     return true
   },
 
