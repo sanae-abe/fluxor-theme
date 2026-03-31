@@ -79,13 +79,13 @@
         </div>
 
         {%- comment %} SNSアイコン {%- endcomment -%}
-        {%- assign social_platforms = 'instagram,x,tiktok' | split: ',' -%}
+        {%- assign social_platforms = 'instagram,twitter,tiktok' | split: ',' -%}
         {%- assign social_icons     = 'instagram,x-twitter,tiktok' | split: ',' -%}
         {%- assign social_labels    = 'Instagram,X (Twitter),TikTok' | split: ',' -%}
         <div class="flex items-center gap-4">
           {%- for platform in social_platforms -%}
-            {%- assign url_key   = 'social_' | append: platform | append: '_url' -%}
-            {%- assign sns_url   = section.settings[url_key] -%}
+            {%- assign url_key   = 'social_' | append: platform | append: '_link' -%}
+            {%- assign sns_url   = settings[url_key] -%}
             {%- if sns_url != blank -%}
               {%- assign i         = forloop.index0 -%}
               {%- assign sns_icon  = social_icons[i] -%}
@@ -185,25 +185,6 @@
       "type": "url",
       "id": "privacy_url",
       "label": "プライバシーポリシーのリンク先"
-    },
-    {
-      "type": "header",
-      "content": "SNSリンク"
-    },
-    {
-      "type": "url",
-      "id": "social_instagram_url",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "social_x_url",
-      "label": "X (Twitter) URL"
-    },
-    {
-      "type": "url",
-      "id": "social_tiktok_url",
-      "label": "TikTok URL"
     },
     {
       "type": "header",
