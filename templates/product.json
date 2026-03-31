@@ -17,13 +17,6 @@
         "related_products_count": 4
       }
     },
-    "recommendations": {
-      "type": "product-recommendations-loader",
-      "settings": {
-        "enabled": true,
-        "count": 4
-      }
-    },
     "accordion": {
       "type": "product-accordion",
       "blocks": {
@@ -83,6 +76,13 @@
         "heading": "カスタマーレビュー"
       }
     },
+    "recommendations": {
+      "type": "product-recommendations-loader",
+      "settings": {
+        "enabled": true,
+        "count": 4
+      }
+    },
     "import_notice": {
       "type": "product-import-notice",
       "settings": {
@@ -97,9 +97,9 @@
   },
   "order": [
     "main",
-    "recommendations",
     "accordion",
     "reviews",
+    "recommendations",
     "import_notice"
   ]
 }
