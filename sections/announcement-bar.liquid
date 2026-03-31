@@ -39,7 +39,7 @@
             class="inline-flex items-center gap-2"
             :class="{{ item_index }} === current ? '' : 'hidden'"
           >
-            <span>{{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF</span>
+            <span>{{ settings.sale_banner_text }}</span>
             {%- render 'sale-countdown' -%}
           </span>
           {%- assign item_index = item_index | plus: 1 -%}
