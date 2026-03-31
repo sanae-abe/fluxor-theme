@@ -1,5 +1,16 @@
 import { formatJPY, centsToYen } from '../utils/money.js'
 
+const JSON_HEADERS = { 'Content-Type': 'application/json' }
+
+const postJSON = async (url, body) => {
+  const res = await fetch(url, {
+    method: 'POST',
+    headers: JSON_HEADERS,
+    body: JSON.stringify(body),
+  })
+  if (!res.ok) throw new Error(`POST ${url} failed: ${res.status}`)
+}
+
 export const cartStore = {
   open: false,
   items: [],
@@ -19,12 +30,7 @@ export const cartStore = {
 
   async add(variantId, quantity = 1) {
     try {
-      const res = await fetch('/cart/add.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: variantId, quantity }),
-      })
-      if (!res.ok) throw new Error('Cart add failed')
+      await postJSON('/cart/add.js', { id: variantId, quantity })
       await this.fetch()
       this.open = true
     } catch (err) {
@@ -34,12 +40,7 @@ export const cartStore = {
 
   async remove(lineItemKey) {
     try {
-      const res = await fetch('/cart/change.js', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: lineItemKey, quantity: 0 }),
-      })
-      if (!res.ok) throw new Error('Cart remove failed')
+      await postJSON('/cart/change.js', { id: lineItemKey, quantity: 0 })
       await this.fetch()
     } catch (err) {
       console.error('[cart.remove]', err)
@@ -49,7 +50,7 @@ export const cartStore = {
   async fetch() {
     try {
       const res = await fetch('/cart.js')
-      if (!res.ok) throw new Error('Cart fetch failed')
+      if (!res.ok) throw new Error(`GET /cart.js failed: ${res.status}`)
       const data = await res.json()
       this.items = data.items
       this.itemCount = data.item_count

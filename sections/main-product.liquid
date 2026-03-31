@@ -47,6 +47,84 @@
   assign how_to_store       = product.metafields.custom.how_to_store
   assign precautions        = product.metafields.custom.precautions
   assign product_name_en    = product.metafields.custom.product_name_en
+
+  assign sale_eligible = false
+  assign sale_discount = 0
+
+  if settings.sale_enabled
+    assign _excluded = false
+    if settings.sale_exclude_handles != blank
+      assign _exclude_handle_list = settings.sale_exclude_handles | split: ','
+      for _handle in _exclude_handle_list
+        assign _handle_normalized = _handle | strip | downcase
+        if _handle_normalized == product.handle
+          assign _excluded = true
+          break
+        endif
+      endfor
+    endif
+
+    unless _excluded or settings.sale_exclude_tags == blank
+      assign _exclude_tag_list = settings.sale_exclude_tags | split: ','
+      for _exclude_tag in _exclude_tag_list
+        assign _exclude_tag_normalized = _exclude_tag | strip | downcase
+        for _product_tag in product.tags
+          assign _product_tag_normalized = _product_tag | downcase
+          if _product_tag_normalized == _exclude_tag_normalized
+            assign _excluded = true
+            break
+          endif
+        endfor
+        if _excluded
+          break
+        endif
+      endfor
+    endunless
+
+    unless _excluded
+      case settings.sale_target
+      when 'all'
+        assign sale_eligible = true
+      when 'tag'
+        if settings.sale_target_tags != blank
+          assign _target_tag_list = settings.sale_target_tags | split: ','
+          for _target_tag in _target_tag_list
+            assign _target_tag_normalized = _target_tag | strip | downcase
+            for _product_tag in product.tags
+              assign _product_tag_normalized = _product_tag | downcase
+              if _product_tag_normalized == _target_tag_normalized
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
+              break
+            endif
+          endfor
+        endif
+      when 'collection'
+        if settings.sale_target_collections != blank
+          assign _target_col_list = settings.sale_target_collections | split: ','
+          for _target_col_handle in _target_col_list
+            assign _target_col_normalized = _target_col_handle | strip | downcase
+            for _product_col in product.collections
+              if _product_col.handle == _target_col_normalized
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
+              break
+            endif
+          endfor
+        endif
+      endcase
+
+      if sale_eligible
+        assign sale_discount = settings.sale_discount_percent | plus: 0
+      endif
+    endunless
+  endif
 -%}
 
 {%- comment %} ※ 上付き文字変換用共通変数 {%- endcomment %}
@@ -89,8 +167,6 @@
     </template>
   {%- endif -%}
 {%- endcapture -%}
-
-{%- render 'sale-engine', product: product -%}
 
 <div class="px-4 md:px-10 pt-5 md:pt-10">
   {%- if collection != blank -%}
@@ -483,6 +559,18 @@
 </section>
 
 {%- comment %}====================================================
+  Search & Discovery おすすめ商品セクション（Ajax ロード）
+===================================================={%- endcomment %}
+{%- if section.settings.recommendations_enabled -%}
+  <div
+    id="product-recommendations"
+    data-product-id="{{ product.id }}"
+    data-limit="{{ section.settings.recommendations_count }}"
+    data-section-id="product-recommendations"
+  ></div>
+{%- endif -%}
+
+{%- comment %}====================================================
   関連商品セクション
 ===================================================={%- endcomment %}
 {%- assign related_col = collections[section.settings.related_collection] -%}
@@ -614,6 +702,30 @@
       ).observe(footer);
     }
   });
+
+  {%- if section.settings.recommendations_enabled -%}
+  (function () {
+    var container = document.getElementById('product-recommendations');
+    if (!container) return;
+    var productId = container.dataset.productId;
+    var limit = container.dataset.limit || 4;
+    var sectionId = container.dataset.sectionId;
+    fetch(
+      '/recommendations/products?section_id=' + sectionId +
+      '&product_id=' + productId +
+      '&limit=' + limit
+    )
+      .then(function (r) { return r.text(); })
+      .then(function (html) {
+        var doc = new DOMParser().parseFromString(html, 'text/html');
+        var content = doc.querySelector('.shopify-section');
+        if (content && content.innerHTML.trim()) {
+          container.innerHTML = content.innerHTML;
+        }
+      })
+      .catch(function () {});
+  })();
+  {%- endif -%}
 </script>
 
 {% schema %}
@@ -622,7 +734,26 @@
   "settings": [
     {
       "type": "header",
-      "content": "関連商品"
+      "content": "おすすめ商品（Search & Discovery）"
+    },
+    {
+      "type": "checkbox",
+      "id": "recommendations_enabled",
+      "label": "おすすめ商品を表示する",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "recommendations_count",
+      "label": "表示件数",
+      "min": 2,
+      "max": 8,
+      "step": 1,
+      "default": 4
+    },
+    {
+      "type": "header",
+      "content": "関連商品（コレクション指定）"
     },
     {
       "type": "text",

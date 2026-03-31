@@ -9,6 +9,7 @@ import { announcementBar } from './components/announcementBar.js'
 
 Alpine.store('cart', cartStore)
 Alpine.store('sale', saleStore)
+Alpine.store('ui', { announcementHeight: 0 })
 Alpine.data('siteHeader', siteHeader)
 Alpine.data('saleCountdown', saleCountdown)
 Alpine.data('announcementBar', announcementBar)

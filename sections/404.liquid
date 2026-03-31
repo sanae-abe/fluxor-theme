@@ -1,9 +1,9 @@
 <section class="flex flex-col items-center justify-center min-h-[60vh] text-center px-5">
   <p class="text-8xl font-light text-stone-200 mb-6">404</p>
-  <h1 class="text-2xl font-light mb-4">ページが見つかりません</h1>
-  <p class="text-sm text-stone-400 mb-10">お探しのページは存在しないか、移動した可能性があります。</p>
+  <h1 class="text-2xl font-light mb-4">{{ section.settings.heading }}</h1>
+  <p class="text-sm text-stone-400 mb-10">{{ section.settings.subheading }}</p>
   {%- render 'button',
-    label: 'トップへ戻る',
+    label: section.settings.button_label,
     url: routes.root_url,
     variant: 'outline'
   -%}
@@ -11,6 +11,31 @@
 
 {% schema %}
 {
-  "name": "404"
+  "name": "404",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "ページが見つかりません"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "サブテキスト",
+      "default": "お探しのページは存在しないか、移動した可能性があります。"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンラベル",
+      "default": "トップへ戻る"
+    }
+  ],
+  "presets": [
+    {
+      "name": "404"
+    }
+  ]
 }
 {% endschema %}

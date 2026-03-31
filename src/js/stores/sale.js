@@ -1,19 +1,15 @@
 import { formatJPY } from '../utils/money.js'
 
-export const saleStore = {
-  config: window.fluxorSale || { enabled: false },
+const cfg     = window.fluxorSale || { enabled: false }
+const startMs = cfg.start ? new Date(cfg.start).getTime() : null
+const endMs   = cfg.end   ? new Date(cfg.end).getTime()   : null
 
+export const saleStore = {
   isActive() {
-    if (!this.config.enabled) return false
+    if (!cfg.enabled) return false
     const now = Date.now()
-    if (this.config.start) {
-      const start = new Date(this.config.start).getTime()
-      if (!isNaN(start) && now < start) return false
-    }
-    if (this.config.end) {
-      const end = new Date(this.config.end).getTime()
-      if (!isNaN(end) && now > end) return false
-    }
+    if (startMs !== null && !isNaN(startMs) && now < startMs) return false
+    if (endMs   !== null && !isNaN(endMs)   && now > endMs)   return false
     return true
   },
 
@@ -21,7 +17,5 @@ export const saleStore = {
     return Math.floor(originalPrice * (100 - discountPercent) / 100)
   },
 
-  formatMoney(yen) {
-    return formatJPY(yen)
-  },
+  formatMoney: formatJPY,
 }
