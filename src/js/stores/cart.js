@@ -9,6 +9,7 @@ const postJSON = async (url, body) => {
     body: JSON.stringify(body),
   })
   if (!res.ok) throw new Error(`POST ${url} failed: ${res.status}`)
+  return res.json()
 }
 
 export const cartStore = {
@@ -28,6 +29,11 @@ export const cartStore = {
     return this.items.reduce((sum, item) => sum + item.final_line_price, 0)
   },
 
+  _apply(data) {
+    this.items = data.items
+    this.itemCount = data.item_count
+  },
+
   async add(variantId, quantity = 1) {
     try {
       await postJSON('/cart/add.js', { id: variantId, quantity })
@@ -40,8 +46,8 @@ export const cartStore = {
 
   async remove(lineItemKey) {
     try {
-      await postJSON('/cart/change.js', { id: lineItemKey, quantity: 0 })
-      await this.fetch()
+      const data = await postJSON('/cart/change.js', { id: lineItemKey, quantity: 0 })
+      this._apply(data)
     } catch (err) {
       console.error('[cart.remove]', err)
     }
@@ -51,9 +57,7 @@ export const cartStore = {
     try {
       const res = await fetch('/cart.js')
       if (!res.ok) throw new Error(`GET /cart.js failed: ${res.status}`)
-      const data = await res.json()
-      this.items = data.items
-      this.itemCount = data.item_count
+      this._apply(await res.json())
     } catch (err) {
       console.error('[cart.fetch]', err)
     }
