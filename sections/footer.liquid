@@ -1,7 +1,7 @@
 <footer id="site-footer" class="bg-stone-900 px-4 md:px-10 py-10 md:py-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
-    {%- comment %} 3カラム：Quick Links / Information / メルマガ＋SNS {%- endcomment %}
+    {%- comment %} 3カラム：Quick Links / Information / メルマガ＋SNS {%- endcomment -%}
     <div class="flex flex-col md:flex-row gap-10 items-start">
 
       {%- for n in (1..2) -%}
@@ -27,10 +27,10 @@
         {%- endif -%}
       {%- endfor -%}
 
-      {%- comment %} メルマガ登録 + SNS {%- endcomment %}
+      {%- comment %} メルマガ登録 + SNS {%- endcomment -%}
       <div class="flex-1 flex flex-col gap-8">
 
-        {%- comment %} メルマガ {%- endcomment %}
+        {%- comment %} メルマガ {%- endcomment -%}
         <div class="flex flex-col gap-4">
           <p class="text-sm font-medium text-stone-500 uppercase leading-tight">メルマガ登録</p>
           <p class="text-sm text-stone-200 leading-tight">
@@ -45,7 +45,7 @@
                 <p class="text-sm text-stone-200 py-3">ご登録ありがとうございます。</p>
               {%- else -%}
 
-                {%- comment %} メールアドレス入力 + 送信ボタン {%- endcomment %}
+                {%- comment %} メールアドレス入力 + 送信ボタン {%- endcomment -%}
                 <div class="flex items-center border border-stone-500 gap-3 h-10 focus-within:border-stone-200">
                   <input
                     type="email"
@@ -66,7 +66,7 @@
                   </button>
                 </div>
 
-                {%- comment %} プライバシーポリシー同意 {%- endcomment %}
+                {%- comment %} プライバシーポリシー同意 {%- endcomment -%}
                 {%- render 'checkbox-consent',
                   privacy_url: section.settings.privacy_url,
                   x_model: 'agreed',
@@ -78,51 +78,39 @@
           </div>
         </div>
 
-        {%- comment %} SNSアイコン {%- endcomment %}
+        {%- comment %} SNSアイコン {%- endcomment -%}
+        {%- assign social_platforms = 'instagram,x,tiktok' | split: ',' -%}
+        {%- assign social_icons     = 'instagram,x-twitter,tiktok' | split: ',' -%}
+        {%- assign social_labels    = 'Instagram,X (Twitter),TikTok' | split: ',' -%}
         <div class="flex items-center gap-4">
-          {%- if section.settings.social_instagram_url != blank -%}
-            <a
-              href="{{ section.settings.social_instagram_url }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
-              aria-label="Instagram"
-            >
-              {%- render 'icon', icon: 'instagram', class: 'w-5 h-5 text-white' -%}
-            </a>
-          {%- endif -%}
-
-          {%- if section.settings.social_x_url != blank -%}
-            <a
-              href="{{ section.settings.social_x_url }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
-              aria-label="X (Twitter)"
-            >
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-              </svg>
-            </a>
-          {%- endif -%}
-
-          {%- if section.settings.social_tiktok_url != blank -%}
-            <a
-              href="{{ section.settings.social_tiktok_url }}"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
-              aria-label="TikTok"
-            >
-              {%- render 'icon', icon: 'tiktok', class: 'w-5 h-5 text-white' -%}
-            </a>
-          {%- endif -%}
+          {%- for platform in social_platforms -%}
+            {%- assign url_key   = 'social_' | append: platform | append: '_url' -%}
+            {%- assign sns_url   = section.settings[url_key] -%}
+            {%- if sns_url != blank -%}
+              {%- assign i         = forloop.index0 -%}
+              {%- assign sns_icon  = social_icons[i] -%}
+              {%- assign sns_label = social_labels[i] -%}
+              <a
+                href="{{ sns_url }}"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center hover:bg-white/20 transition-colors duration-200"
+                aria-label="{{ sns_label }}"
+              >
+                {%- if sns_icon == 'x-twitter' -%}
+                  {%- render 'icon', icon: 'x-twitter', class: 'w-5 h-5 text-white', fill: 'currentColor', stroke: 'none' -%}
+                {%- else -%}
+                  {%- render 'icon', icon: sns_icon, class: 'w-5 h-5 text-white' -%}
+                {%- endif -%}
+              </a>
+            {%- endif -%}
+          {%- endfor -%}
         </div>
 
       </div>
     </div>
 
-    {%- comment %} 決済アイコン {%- endcomment %}
+    {%- comment %} 決済アイコン {%- endcomment -%}
     {%- unless shop.enabled_payment_types == empty -%}
       <div class="flex items-center gap-4 flex-wrap">
         {%- for type in shop.enabled_payment_types -%}
@@ -131,25 +119,25 @@
       </div>
     {%- endunless -%}
 
-    {%- comment %} 個人輸入・薬機法 注意事項 {%- endcomment %}
+    {%- comment %} 個人輸入・薬機法 注意事項 {%- endcomment -%}
     {%- if section.settings.import_notice_footer != blank or section.settings.disclaimer != blank -%}
       <div class="border-t border-[rgba(246,244,240,0.1)] pt-8 flex flex-col gap-8">
-        <div class="flex flex-col gap-1">
-          <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
-          {%- if section.settings.import_notice_footer != blank -%}
+        {%- if section.settings.import_notice_footer != blank -%}
+          <div class="flex flex-col gap-1">
+            <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
             <p class="text-xs text-stone-500 leading-relaxed">{{ section.settings.import_notice_footer }}</p>
-          {%- endif -%}
-        </div>
-        <div class="flex flex-col gap-1">
-          <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">本サイトにおける各用語の定義</p>
-          {%- if section.settings.disclaimer != blank -%}
+          </div>
+        {%- endif -%}
+        {%- if section.settings.disclaimer != blank -%}
+          <div class="flex flex-col gap-1">
+            <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">本サイトにおける各用語の定義</p>
             <p class="text-xs text-stone-500 leading-relaxed">{{ section.settings.disclaimer }}</p>
-          {%- endif -%}
-        </div>
+          </div>
+        {%- endif -%}
       </div>
     {%- endif -%}
 
-    {%- comment %} ボトムバー（コピーライト） {%- endcomment %}
+    {%- comment %} ボトムバー（コピーライト） {%- endcomment -%}
     <div class="border-t border-[rgba(246,244,240,0.1)] pt-10 flex items-center justify-center">
       <p class="text-sm text-stone-500 leading-5">
         &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}
@@ -159,7 +147,7 @@
   </div>
 </footer>
 
-{% schema %}
+{%- schema %}
 {
   "name": "Footer",
   "settings": [
@@ -239,4 +227,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

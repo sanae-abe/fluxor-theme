@@ -1,15 +1,16 @@
-{% comment %}
+{%- comment %}
   Accordion アイテム
 
   Parameters:
-    title  {String}  見出しテキスト
-    body   {String}  本文 HTML（capture 済み）
-    index  {Number}  Alpine openItem 識別用インデックス
-{% endcomment %}
-<div class="bg-stone-50">
+    title              {String}  見出しテキスト
+    body               {String}  本文 HTML（capture 済み）
+    index              {Number}  Alpine openItem 識別用インデックス
+    shopify_attributes {String}  テーマエディタ用属性（block.shopify_attributes）
+{%- endcomment -%}
+<div {{ shopify_attributes }} class="bg-stone-50">
   <button
     type="button"
-    class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline-none"
+    class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
     @click="openItem = openItem === {{ index }} ? null : {{ index }}"
     :aria-expanded="openItem === {{ index }}"
   >
@@ -18,7 +19,9 @@
     {%- render 'icon', icon: 'chevron-down', class: 'w-5 h-5 text-stone-900 shrink-0 transition-transform duration-200', x_class: _chevron_class, stroke_width: 2 -%}
   </button>
   <div
-    :style="{ display: 'grid', transition: 'grid-template-rows 0.3s ease', 'grid-template-rows': openItem === {{ index }} ? '1fr' : '0fr' }"
+    class="grid"
+    style="transition: grid-template-rows 0.3s ease;"
+    :style="{ 'grid-template-rows': openItem === {{ index }} ? '1fr' : '0fr' }"
     role="region"
     :aria-hidden="openItem !== {{ index }}"
   >

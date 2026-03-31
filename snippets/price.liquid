@@ -1,4 +1,4 @@
-{% comment %}
+{%- comment -%}
   Renders product price.
 
   Accepts:
@@ -9,7 +9,7 @@
   Usage:
   {% render 'price', product: product %}
   {% render 'price', variant: product.selected_or_first_available_variant %}
-{% endcomment %}
+{%- endcomment -%}
 {%- liquid
   if variant
     assign target = variant
@@ -17,16 +17,28 @@
     assign target = product.selected_or_first_available_variant
   endif
 
-  assign price = target.price
+  assign price        = target.price
   assign compare_price = target.compare_at_price
-  assign available = target.available
+  assign available    = target.available
+
   assign on_sale = false
   if compare_price > price
     assign on_sale = true
   endif
+
+  assign price_classes = 'price'
+  if class != blank
+    assign price_classes = price_classes | append: ' ' | append: class
+  endif
+  if on_sale
+    assign price_classes = price_classes | append: ' price--on-sale'
+  endif
+  unless available
+    assign price_classes = price_classes | append: ' price--sold-out'
+  endunless
 -%}
 
-<div class="price {{ class }}{% if on_sale %} price--on-sale{% endif %}{% unless available %} price--sold-out{% endunless %}">
+<div class="{{ price_classes }}">
   {%- if on_sale -%}
     <span class="price__sale">
       <span class="sr-only">セール価格</span>

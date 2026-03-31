@@ -7,7 +7,7 @@
           class="group flex flex-col items-center gap-4"
           {{ block.shopify_attributes }}
         >
-          <!-- 丸画像 -->
+          {%- comment %} 丸画像 {%- endcomment -%}
           <div class="w-full aspect-square rounded-full bg-stone-50 overflow-hidden [transform:translateZ(0)]">
             {%- if block.settings.image -%}
               <img
@@ -25,7 +25,7 @@
             {%- endif -%}
           </div>
 
-          <!-- ラベル -->
+          {%- comment %} ラベル {%- endcomment -%}
           {%- if block.settings.label != blank -%}
             <p class="text-base font-medium {% if section.settings.background == 'bg-stone-950' %}text-stone-50{% else %}text-stone-900{% endif %} text-center leading-6">
               {{ block.settings.label }}
@@ -37,7 +37,7 @@
   </div>
 </section>
 
-{% schema %}
+{%- schema %}
 {
   "name": "カテゴリナビゲーション",
   "settings": [
@@ -91,4 +91,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

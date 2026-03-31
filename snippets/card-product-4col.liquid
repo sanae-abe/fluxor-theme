@@ -1,10 +1,10 @@
-{% comment %}
+{%- comment %}
   4カラムレイアウト用 製品カード（Featured Products）
   Parameters:
     product {Object} Shopify product オブジェクト（必須）
-{% endcomment %}
+{%- endcomment -%}
 
-{%- comment %} Shopify ネイティブセール判定 {%- endcomment %}
+{%- comment %} Shopify ネイティブセール判定 {%- endcomment -%}
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign on_sale = false -%}
 {%- if variant.compare_at_price > variant.price -%}
@@ -12,7 +12,7 @@
   {%- assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price -%}
 {%- endif -%}
 
-{%- comment %} スケジュールセール対象判定（render スコープ分離のためインライン） {%- endcomment %}
+{%- comment %} スケジュールセール対象判定（render スコープ分離のためインライン） {%- endcomment -%}
 {%- liquid
   assign sale_eligible = false
   assign sale_discount = 0
@@ -89,7 +89,7 @@
   endif
 -%}
 
-{%- comment %} スケジュールセールバッジの HTML をプリレンダリング {%- endcomment %}
+{%- comment %} スケジュールセールバッジの HTML をプリレンダリング {%- endcomment -%}
 {%- if sale_eligible and on_sale == false -%}
   {%- capture _sched_badge_html -%}
     {%- assign _sched_badge_label = sale_discount | append: '% OFF' -%}
@@ -104,6 +104,7 @@
     adding: false,
     saleEligible: {{ sale_eligible | json }},
     saleDiscount: {{ sale_discount | default: 0 }},
+    isSaleActive() { return this.saleEligible && this.$store.sale.isActive(); },
     async addToCart() {
       if (this.adding) return;
       this.adding = true;
@@ -113,12 +114,12 @@
   }"
 >
 
-  {%- comment %} 画像エリア（クリックで商品ページへ） {%- endcomment %}
+  {%- comment %} 画像エリア（クリックで商品ページへ） {%- endcomment -%}
   <div
     class="relative w-full aspect-square bg-stone-50 overflow-hidden [transform:translateZ(0)] cursor-pointer"
     @click="window.location.href='{{ product.url }}'"
   >
-    {%- comment %} 1枚目 {%- endcomment %}
+    {%- comment %} 1枚目 {%- endcomment -%}
     {%- if product.featured_image -%}
       <img
         src="{{ product.featured_image | image_url: width: 600 }}"
@@ -134,7 +135,7 @@
       </div>
     {%- endif -%}
 
-    {%- comment %} 2枚目（hover時） {%- endcomment %}
+    {%- comment %} 2枚目（hover時） {%- endcomment -%}
     {%- if product.images.size > 1 -%}
       <img
         src="{{ product.images[1] | image_url: width: 600 }}"
@@ -146,23 +147,22 @@
       >
     {%- endif -%}
 
-    {%- comment %} バッジ {%- endcomment %}
+    {%- comment %} バッジ {%- endcomment -%}
     <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10">
       {%- if product.available == false -%}
-        {% render 'badge', label: '売り切れ', variant: 'secondary' %}
+        {%- render 'badge', label: '売り切れ', variant: 'secondary' -%}
       {%- elsif on_sale -%}
         {%- assign badge_label = discount | append: '% OFF' -%}
-        {% render 'badge', label: badge_label, variant: 'sale' %}
+        {%- render 'badge', label: badge_label, variant: 'sale' -%}
       {%- elsif sale_eligible -%}
-        {%- comment %} スケジュールセールバッジ {%- endcomment %}
-        <template x-if="saleEligible && $store.sale.isActive()">
+        <template x-if="isSaleActive()">
           <div>{{ _sched_badge_html }}</div>
         </template>
       {%- endif -%}
     </div>
 
     {%- if product.available -%}
-      {%- comment %} カートに追加ボタン（モバイル: 画像右下アイコン） {%- endcomment %}
+      {%- comment %} カートに追加ボタン（モバイル: 画像右下アイコン） {%- endcomment -%}
       <button
         type="button"
         class="md:hidden absolute bottom-2 right-2 z-10 w-9 h-9 rounded-full bg-stone-900 shadow-md flex items-center justify-center text-white"
@@ -172,12 +172,12 @@
         aria-label="カートに追加"
       >
         {%- render 'icon', icon: 'cart', class: 'w-4 h-4', x_class: "adding ? 'hidden' : ''" -%}
-        <svg x-show="adding" x-cloak class="w-4 h-4 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
+        <svg :class="adding ? '' : 'hidden'" class="w-4 h-4 animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
           <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
           <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
         </svg>
       </button>
-      {%- comment %} カートに追加ボタン（デスクトップ: hover時に中央表示） {%- endcomment %}
+      {%- comment %} カートに追加ボタン（デスクトップ: hover時に中央表示） {%- endcomment -%}
       <div class="absolute inset-0 hidden md:flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
           type="button"
@@ -193,39 +193,34 @@
     {%- endif -%}
   </div>
 
-  {%- comment %} 商品情報（クリックで商品ページへ） {%- endcomment %}
+  {%- comment %} 商品情報（クリックで商品ページへ） {%- endcomment -%}
   <a href="{{ product.url }}" class="flex flex-col gap-1 md:gap-2 mt-2 md:mt-4">
 
-    {%- comment %} ベンダー {%- endcomment %}
     {%- if product.vendor != blank -%}
       <p class="text-sm leading-tight text-stone-500">{{ product.vendor }}</p>
     {%- endif -%}
 
-    {%- comment %} タイトル {%- endcomment %}
     {%- assign card_title = product.title | replace: '※1', '' | replace: '※2', '' | replace: '※3', '' | replace: '※4', '' | replace: '※5', '' | replace: '※', '' -%}
     <h3 class="text-sm md:text-lg font-medium leading-tight text-stone-900">{{ card_title }}</h3>
 
-    {%- comment %} 評価 {%- endcomment %}
     <div class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>{{ product.metafields.judgeme.badge }}</div>
 
-    {%- comment %} 価格 {%- endcomment %}
+    {%- comment %} 価格 {%- endcomment -%}
     <div class="flex items-center gap-2">
       {%- if on_sale -%}
-        {%- comment %} Shopify ネイティブセール {%- endcomment %}
         <s class="text-sm leading-tight text-stone-500">{{ variant.compare_at_price | money }}</s>
         <span class="text-lg font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>
       {%- elsif sale_eligible -%}
-        {%- comment %} スケジュールセール: Liquidでセール価格を事前計算 {%- endcomment %}
         {%- assign _disc = 100 | minus: sale_discount -%}
         {%- assign _sale_price_cents = variant.price | times: _disc | divided_by: 100 -%}
-        <s class="text-sm leading-tight text-stone-500" x-cloak
-          :class="(saleEligible && $store.sale.isActive()) ? '' : 'hidden'"
+        <s class="text-sm leading-tight text-stone-500 hidden"
+          :class="{ 'hidden': !isSaleActive() }"
         >{{ variant.price | money }}</s>
-        <span class="text-lg font-semibold leading-tight text-stone-900" x-cloak
-          :class="(saleEligible && $store.sale.isActive()) ? '' : 'hidden'"
+        <span class="text-lg font-semibold leading-tight text-stone-900 hidden"
+          :class="{ 'hidden': !isSaleActive() }"
         >{{ _sale_price_cents | money }}</span>
         <span class="text-lg font-semibold leading-tight text-stone-900"
-          :class="(saleEligible && $store.sale.isActive()) ? 'hidden' : ''"
+          :class="{ 'hidden': isSaleActive() }"
         >{{ variant.price | money }}</span>
       {%- else -%}
         <span class="text-lg font-semibold leading-tight text-stone-900">{{ variant.price | money }}</span>

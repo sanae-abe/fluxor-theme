@@ -20,21 +20,20 @@
           {%- if block.settings.content != blank -%}
             <div class="text-sm text-stone-900 leading-relaxed">{{ block.settings.content }}</div>
           {%- else -%}
-            <p class="text-stone-400 text-sm">テキストを入力してください。</p>
+            <p class="text-sm text-stone-400">テキストを入力してください。</p>
           {%- endif -%}
 
         {%- elsif mf_key == 'all_ingredients_ja' -%}
           {%- assign mf_ja = product.metafields.custom.all_ingredients_ja -%}
           {%- assign mf_en = product.metafields.custom.all_ingredients -%}
-          {%- if mf_ja != blank -%}
-            <p class="text-sm text-stone-900 leading-relaxed">{{ mf_ja | newline_to_br }}</p>
-            {%- if mf_en != blank -%}
+          {%- assign _primary = mf_ja | default: mf_en -%}
+          {%- if _primary != blank -%}
+            <p class="text-sm text-stone-900 leading-relaxed">{{ _primary | newline_to_br }}</p>
+            {%- if mf_ja != blank and mf_en != blank -%}
               <p class="text-xs text-stone-400 leading-relaxed mt-4">{{ mf_en | newline_to_br }}</p>
             {%- endif -%}
-          {%- elsif mf_en != blank -%}
-            <p class="text-sm text-stone-900 leading-relaxed">{{ mf_en | newline_to_br }}</p>
           {%- else -%}
-            <p class="text-stone-400 text-sm">成分情報は現在準備中です。</p>
+            <p class="text-sm text-stone-400">成分情報は現在準備中です。</p>
           {%- endif -%}
 
         {%- else -%}
@@ -42,12 +41,17 @@
           {%- if mf_val != blank -%}
             <div class="text-sm text-stone-900 leading-relaxed">{{ mf_val | newline_to_br }}</div>
           {%- else -%}
-            <p class="text-stone-400 text-sm">{{ block.settings.title }}は現在準備中です。</p>
+            <p class="text-sm text-stone-400">{{ block.settings.title }}は現在準備中です。</p>
           {%- endif -%}
         {%- endif -%}
       {%- endcapture -%}
 
-      {%- render 'accordion-item', title: block.settings.title, body: _acc_body, index: forloop.index0 -%}
+      {%- render 'accordion-item',
+        title: block.settings.title,
+        body: _acc_body,
+        index: forloop.index0,
+        shopify_attributes: block.shopify_attributes
+      -%}
     {%- endfor -%}
 
   </div>
@@ -56,6 +60,9 @@
 {% schema %}
 {
   "name": "商品アコーディオン",
+  "enabled_on": {
+    "templates": ["product"]
+  },
   "max_blocks": 10,
   "blocks": [
     {

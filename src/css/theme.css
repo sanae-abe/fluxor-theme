@@ -1,16 +1,52 @@
-/* 価格：セール時の打ち消し線 */
-.price--on-sale .price__compare s { color: theme('colors.stone.400'); }
-.price--on-sale .price__sale { color: theme('colors.stone.900'); }
+/* ===== 記事カード ===== */
 
-/* テキスト選択色 */
+.card-article__img {
+  transition: transform 0.5s;
+}
+
+.card-article__title {
+  transition: color 0.15s ease;
+}
+
+@media (any-hover: hover) {
+  .card-article:hover .card-article__img {
+    transform: scale(1.05);
+  }
+  .card-article:hover .card-article__title {
+    color: theme('colors.stone.500');
+  }
+}
+
+/* ===== すべて見るリンク ===== */
+
+.link-view-all__icon {
+  transition: transform 0.2s;
+}
+
+@media (any-hover: hover) {
+  .link-view-all:hover .link-view-all__icon {
+    transform: translateX(0.25rem);
+  }
+}
+
+/* ===== ベース ===== */
+
+body {
+  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
 ::selection { background-color: #0f766e; color: #ffffff; }
 
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 
-/* 成分カルーセル：スクロールバー非表示 */
-.ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }
-.ingredient-track::-webkit-scrollbar { display: none; }
+/* ===== 価格 ===== */
+
+.price--on-sale .price__compare s { color: theme('colors.stone.400'); }
+.price--on-sale .price__sale { color: theme('colors.stone.900'); }
+
+/* ===== レイアウト ===== */
 
 /* 商品グリッド：スマホはメイソンリー、デスクトップは通常グリッド */
 .product-grid-masonry {
@@ -24,7 +60,8 @@
 @media (min-width: 768px) {
   .product-grid-masonry {
     display: grid;
-    columns: unset;
+    column-count: unset;
+    column-width: unset;
     column-gap: unset;
   }
   .product-grid-masonry > article {
@@ -32,15 +69,91 @@
   }
 }
 
-/* バンドルビルダー */
+/* ===== 成分カルーセル ===== */
+
+.ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }
+.ingredient-track::-webkit-scrollbar { display: none; }
+
+/* ===== アナウンスメントバー ===== */
+
+.sale-announcement-bar {
+  background-color: var(--color-accent);
+}
+
+.announcement-nav-btn {
+  color: theme('colors.stone.400');
+  transition: color 0.15s ease;
+}
+@media (any-hover: hover) {
+  .announcement-nav-btn:hover {
+    color: theme('colors.stone.50');
+  }
+}
+
+/* ===== ボタン ===== */
+
+/* 共通：ホバートランジション */
+.btn-slide {
+  transition: background-color 0.15s ease, color 0.15s ease;
+}
+@media (any-hover: hover) {
+  .btn-slide:not(:disabled):hover {
+    background-color: var(--hover-bg);
+    color: var(--hover-text);
+  }
+}
+
+/* カートに追加ボタン（商品カード・商品詳細共通） */
+.btn-card-add,
+.btn-add-to-cart {
+  transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+@media (any-hover: hover) {
+  .btn-card-add:not(:disabled):hover,
+  .btn-add-to-cart:not(:disabled):hover {
+    background-color: #ffffff;
+    color: theme('colors.stone.950');
+  }
+}
+
+/* ===== 商品詳細 ===== */
+
+/* フローティングカートバー */
+#floating-cart-bar {
+  transform: translateY(100%);
+  transition: transform 0.3s ease;
+}
+#floating-cart-bar.is-visible {
+  transform: translateY(0);
+}
+
+/* ===== カートページ ===== */
+
+.cart-qty-btn {
+  transition: color 0.15s ease;
+}
+@media (any-hover: hover) {
+  .cart-qty-btn:hover {
+    color: theme('colors.stone.900');
+  }
+}
+
+.cart-text-link {
+  transition: color 0.15s ease;
+}
+@media (any-hover: hover) {
+  .cart-text-link:hover {
+    color: theme('colors.stone.900');
+  }
+}
+
+/* ===== バンドルビルダー ===== */
+
 .bundle-fixed-check {
   background-color: var(--color-accent);
 }
 
-.bundle-count.is-complete {
-  color: var(--color-accent);
-}
-
+.bundle-count.is-complete,
 .bundle-discount-text {
   color: var(--color-accent);
 }
@@ -50,20 +163,22 @@
   background-color: white;
   transition: border-color 0.15s ease, opacity 0.15s ease;
 }
-
 .bundle-candidate.is-selected {
   border-color: var(--color-accent);
   background-color: theme('colors.teal.50');
 }
-
 .bundle-candidate.is-disabled {
   opacity: 0.4;
   cursor: not-allowed;
 }
-
 .bundle-candidate.is-soldout {
   opacity: 0.55;
   cursor: not-allowed;
+}
+@media (any-hover: hover) {
+  .bundle-candidate:not(.is-disabled):not(.is-selected):not(.is-soldout):hover {
+    border-color: theme('colors.stone.400');
+  }
 }
 
 .bundle-soldout-badge {
@@ -72,17 +187,10 @@
   color: theme('colors.stone.500');
 }
 
-@media (any-hover: hover) {
-  .bundle-candidate:not(.is-disabled):not(.is-selected):not(.is-soldout):hover {
-    border-color: theme('colors.stone.400');
-  }
-}
-
 .bundle-check-dot {
   border-color: theme('colors.stone.300');
   background-color: white;
 }
-
 .bundle-candidate.is-selected .bundle-check-dot {
   border-color: var(--color-accent);
   background-color: var(--color-accent);
@@ -92,50 +200,27 @@
   background-color: theme('colors.stone.200');
   color: theme('colors.stone.400');
 }
-
 .bundle-cta.is-ready {
   background-color: theme('colors.stone.900');
   color: white;
 }
-
 .bundle-cta.is-added {
   background-color: var(--color-accent);
   color: white;
 }
-
 @media (any-hover: hover) {
   .bundle-cta.is-ready:hover {
     background-color: theme('colors.stone.700');
   }
 }
 
-/* セールアナウンスメントバナー */
-.sale-announcement-bar {
-  background-color: var(--color-accent);
-}
+/* ===== フォーム ===== */
 
-/* アナウンスバー：マーキー */
-@keyframes announcement-marquee {
-  from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+.form-select:focus:not(:focus-visible) {
+  outline: none;
 }
-.announcement-marquee {
-  animation: announcement-marquee 30s linear infinite;
-}
-@media (prefers-reduced-motion: reduce) {
-  .announcement-marquee {
-    animation: none;
-    justify-content: center;
-  }
-}
-
-/* 商品カード：カートに追加ボタン */
-.btn-card-add {
-  transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-}
-@media (any-hover: hover) {
-  .btn-card-add:not(:disabled):hover {
-    background-color: #ffffff;
-    color: #0c0a09;
-  }
+.form-select:focus-visible {
+  outline: 2px solid theme('colors.stone.500');
+  outline-offset: -1px;
+  border-color: theme('colors.stone.500');
 }

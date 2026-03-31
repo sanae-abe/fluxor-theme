@@ -4,16 +4,16 @@
 
 /* ── ベース ─────────────────────────────────────────── */
 .jdgm-widget {
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
-  color: #1c1917;
+  font-family: inherit;
+  color: var(--color-text);
 }
 
 /* ── スター ─────────────────────────────────────────── */
 .jdgm-star,
-.jdgm__star { color: var(--color-premium); } /* amber-500 */
+.jdgm__star { color: var(--color-premium); }
 
 .jdgm-star--empty,
-.jdgm__star--empty { color: #e7e5e4; } /* stone-200 */
+.jdgm__star--empty { color: var(--color-muted); }
 
 /* ── プレビューバッジ（商品タイトル横） ────────────── */
 .jdgm-preview-badge,
@@ -21,18 +21,18 @@
   display: inline-flex;
   align-items: center;
   gap: 0.375rem;
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-family: inherit;
   font-size: 0.875rem;
   letter-spacing: 0.04em;
-  color: #1c1917;
+  color: var(--color-text);
   text-decoration: none !important;
 }
 .jdgm-prev-badge__rating {
   font-weight: 600;
-  color: #1c1917;
+  color: var(--color-text);
 }
 .jdgm-prev-badge__count {
-  color: #78716c; /* stone-500 */
+  color: var(--color-text-muted);
 }
 .jdgm-prev-badge[data-average-rating="0"] { display: none; }
 
@@ -43,7 +43,7 @@
   align-items: flex-start;
   gap: 2rem;
   padding-bottom: 2.5rem;
-  border-bottom: 1px solid #e7e5e4;
+  border-bottom: 1px solid var(--color-muted);
   margin-bottom: 2.5rem;
 }
 
@@ -53,20 +53,20 @@
   font-weight: 600;
   line-height: 1;
   letter-spacing: -0.02em;
-  color: #1c1917;
+  color: var(--color-text);
 }
 
 /* "X件のレビュー" テキスト */
 .jdgm-rev-widg-header__summary-text {
   font-size: 0.8125rem;
-  color: #78716c;
+  color: var(--color-text-muted);
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
 
 /* ヒストグラム（星ごとの棒グラフ） */
 .jdgm-histogram__bar {
-  background-color: #e7e5e4;
+  background-color: var(--color-muted);
   border-radius: 0 !important;
   height: 5px;
 }
@@ -77,29 +77,35 @@
 .jdgm-histogram__bar-count,
 .jdgm-histogram__bar-label {
   font-size: 0.75rem;
-  color: #78716c;
+  color: var(--color-text-muted);
 }
 
-/* ── レビューを書くボタン ────────────────────────────── */
+/* ── ボタン（共通ベース） ────────────────────────────── */
 .jdgm-write-rev-link,
-.jdgm-write-rev-link:visited {
+.jdgm-write-rev-link:visited,
+.jdgm-form__submit,
+.jdgm-rev-add__submit {
   display: inline-flex !important;
   align-items: center;
   justify-content: center;
   height: 3rem;
-  padding: 0 1.25rem;
-  background-color: #1c1917 !important;
-  color: #fafaf9 !important;
-  border: 2px solid #1c1917 !important;
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  background-color: var(--color-text) !important;
+  color: var(--color-background) !important;
+  border: 2px solid var(--color-text) !important;
+  font-family: inherit;
   font-size: 0.9375rem;
   font-weight: 500;
   letter-spacing: 0.06em;
   text-decoration: none !important;
-  transition: background-color 0.15s ease, color 0.15s ease;
+  transition: background-color 0.15s ease, color 0.15s ease, border-color 0.15s ease;
   border-radius: 0 !important;
   cursor: pointer;
 }
+
+/* レビューを書くボタン */
+.jdgm-write-rev-link,
+.jdgm-write-rev-link:visited { padding: 0 1.25rem; }
+
 @media (any-hover: hover) {
   .jdgm-write-rev-link:hover {
     background-color: #ffffff !important;
@@ -107,14 +113,26 @@
   }
 }
 
+/* フォーム送信ボタン */
+.jdgm-form__submit,
+.jdgm-rev-add__submit { padding: 0 1.5rem; }
+
+@media (any-hover: hover) {
+  .jdgm-form__submit:hover,
+  .jdgm-rev-add__submit:hover {
+    background-color: #44403c !important;
+    border-color: #44403c !important;
+  }
+}
+
 /* ── ソート・フィルタードロップダウン ──────────────── */
 .jdgm-rev-sort select,
 .jdgm-form select {
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-family: inherit;
   font-size: 0.875rem;
-  color: #1c1917;
-  background-color: #fafaf9;
-  border: 1px solid #e7e5e4;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-muted);
   border-radius: 0 !important;
   padding: 0.5rem 2rem 0.5rem 0.75rem;
   appearance: none;
@@ -125,7 +143,7 @@
 /* ── 個別レビューカード ──────────────────────────────── */
 .jdgm-rev {
   padding: 2rem 0 !important;
-  border-bottom: 1px solid #e7e5e4 !important;
+  border-bottom: 1px solid var(--color-muted) !important;
   border-top: none !important;
   border-left: none !important;
   border-right: none !important;
@@ -134,14 +152,14 @@
   box-shadow: none !important;
 }
 .jdgm-rev:first-child {
-  border-top: 1px solid #e7e5e4 !important;
+  border-top: 1px solid var(--color-muted) !important;
 }
 
 /* レビュータイトル */
 .jdgm-rev__title {
   font-size: 1rem;
   font-weight: 600;
-  color: #1c1917;
+  color: var(--color-text);
   letter-spacing: 0.03em;
   margin-bottom: 0.5rem;
 }
@@ -149,7 +167,7 @@
 /* レビュー本文 */
 .jdgm-rev__body {
   font-size: 0.9375rem;
-  color: #44403c; /* stone-700 */
+  color: #44403c; /* stone-700（変数なし） */
   line-height: 1.75;
   letter-spacing: 0.02em;
 }
@@ -158,14 +176,14 @@
 .jdgm-rev__author {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #1c1917;
+  color: var(--color-text);
   letter-spacing: 0.05em;
 }
 
 /* 日付 */
 .jdgm-rev__timestamp {
   font-size: 0.75rem;
-  color: #a8a29e; /* stone-400 */
+  color: var(--color-text-subtle);
   letter-spacing: 0.05em;
 }
 
@@ -174,7 +192,7 @@
 .jdgm-badge-icon--verified-buyer,
 .jdgm-verified-info {
   font-size: 0.75rem;
-  color: #2a3b35 !important; /* accent */
+  color: #2a3b35 !important; /* accent dark（変数なし） */
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -185,7 +203,7 @@
   width: 80px !important;
   height: 80px !important;
   object-fit: cover;
-  border: 1px solid #e7e5e4 !important;
+  border: 1px solid var(--color-muted) !important;
 }
 
 /* ── ページネーション ────────────────────────────────── */
@@ -202,10 +220,10 @@
   min-width: 2.5rem;
   height: 2.5rem;
   padding: 0 0.5rem;
-  border: 1px solid #e7e5e4;
+  border: 1px solid var(--color-muted);
   background-color: transparent;
-  color: #1c1917;
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  color: var(--color-text);
+  font-family: inherit;
   font-size: 0.875rem;
   letter-spacing: 0.04em;
   border-radius: 0 !important;
@@ -214,15 +232,15 @@
   text-decoration: none !important;
 }
 .jdgm-paginate__page.jdgm-paginate__page--active {
-  background-color: #1c1917;
-  color: #fafaf9;
-  border-color: #1c1917;
+  background-color: var(--color-text);
+  color: var(--color-background);
+  border-color: var(--color-text);
 }
 @media (any-hover: hover) {
   .jdgm-paginate__page:hover {
-    background-color: #1c1917;
-    color: #fafaf9;
-    border-color: #1c1917;
+    background-color: var(--color-text);
+    color: var(--color-background);
+    border-color: var(--color-text);
   }
 }
 
@@ -231,11 +249,11 @@
 .jdgm-rev-add__body-input,
 .jdgm-rev-add__name-input,
 .jdgm-rev-add__email-input {
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
+  font-family: inherit;
   font-size: 0.9375rem;
-  color: #1c1917;
-  background-color: #fafaf9;
-  border: 1px solid #e7e5e4 !important;
+  color: var(--color-text);
+  background-color: var(--color-background);
+  border: 1px solid var(--color-muted) !important;
   border-radius: 0 !important;
   padding: 0.75rem 1rem;
   letter-spacing: 0.02em;
@@ -244,34 +262,9 @@
 .jdgm-rev-add__body-input:focus,
 .jdgm-rev-add__name-input:focus,
 .jdgm-rev-add__email-input:focus {
-  outline: 2px solid #1c1917;
+  outline: 2px solid var(--color-text);
   outline-offset: 0;
-  border-color: #1c1917 !important;
-}
-.jdgm-form__submit,
-.jdgm-rev-add__submit {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  height: 3rem;
-  padding: 0 1.5rem;
-  background-color: #1c1917 !important;
-  color: #fafaf9 !important;
-  border: 2px solid #1c1917 !important;
-  font-family: 'Outfit', 'Noto Sans JP', sans-serif;
-  font-size: 0.9375rem;
-  font-weight: 500;
-  letter-spacing: 0.06em;
-  cursor: pointer;
-  transition: background-color 0.15s ease;
-  border-radius: 0 !important;
-}
-@media (any-hover: hover) {
-  .jdgm-form__submit:hover,
-  .jdgm-rev-add__submit:hover {
-    background-color: #44403c !important;
-    border-color: #44403c !important;
-  }
+  border-color: var(--color-text) !important;
 }
 
 /* ── JM 拡張スタイル ─────────────────────────────────── */
@@ -288,7 +281,7 @@ select.jdgm-sort-dropdown.jm-sort-filter__select {
 select.jdgm-sort-dropdown.jm-sort-filter__select:hover,
 button.jm-custom-answer-filter:hover,
 button.jm-custom-answer-filter--active {
-  background: #1C1917 !important;
+  background: var(--color-text) !important;
   color: #fff !important;
 }
 
@@ -302,7 +295,7 @@ button.jm-custom-answer-filter--active {
 
 .jm-review-item {
   position: relative !important;
-  margin-top:  0 !important;
+  margin-top: 0 !important;
 }
 
 .jm-reviewer-info,
@@ -337,7 +330,7 @@ button.jm-custom-answer-filter--active {
 
 .jm-box {
   padding: 1rem !important;
-  border: 1px solid #E7E5E4 !important;
+  border: 1px solid var(--color-muted) !important;
 }
 
 .jm-reviewer-avatar {
@@ -365,5 +358,5 @@ button.jm-custom-answer-filter--active {
 
 .jdgm-prev-badge__text {
   font-size: 0.875rem !important;
-  color: #79716B !important;
+  color: var(--color-text-muted) !important;
 }

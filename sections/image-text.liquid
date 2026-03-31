@@ -1,19 +1,21 @@
-{%- assign img_left = true -%}
-{%- if section.settings.image_position == 'right' -%}
-  {%- assign img_left = false -%}
-{%- endif -%}
+{%- liquid
+  assign s        = section.settings
+  assign flex_dir = 'md:flex-row'
+  if s.image_position == 'right'
+    assign flex_dir = 'md:flex-row-reverse'
+  endif
+-%}
 
-<section class="{{ section.settings.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
+<section class="{{ s.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
 
-  <div class="flex flex-col {% if img_left %}md:flex-row{% else %}md:flex-row-reverse{% endif %} items-center gap-6 md:gap-10">
+  <div class="flex flex-col {{ flex_dir }} items-center gap-6 md:gap-10">
 
-    {%- comment %} 画像 {%- endcomment %}
     <div class="md:w-1/2 flex-shrink-0">
-      {%- if section.settings.image != blank -%}
+      {%- if s.image != blank -%}
         <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
           <img
-            src="{{ section.settings.image | image_url: width: 800 }}"
-            alt="{{ section.settings.image.alt | escape | default: section.settings.heading | escape }}"
+            src="{{ s.image | image_url: width: 800 }}"
+            alt="{{ s.image.alt | escape | default: s.heading | escape }}"
             class="w-full h-full object-cover"
             loading="lazy"
             width="800"
@@ -27,44 +29,39 @@
       {%- endif -%}
     </div>
 
-    {%- comment %} テキスト {%- endcomment %}
     <div class="md:w-1/2 flex flex-col gap-10 px-4 md:px-10 max-w-[640px]">
 
-      {%- comment %} バッジ + 見出し {%- endcomment %}
       <div class="flex flex-col items-center md:items-start gap-4">
-        {%- if section.settings.badge_label != blank -%}
-          {% render 'badge',
-            label: section.settings.badge_label,
-            variant: section.settings.badge_variant,
+        {%- if s.badge_label != blank -%}
+          {%- render 'badge',
+            label: s.badge_label,
+            variant: s.badge_variant,
             size: 'md',
-            icon_left: section.settings.badge_icon_left,
-            icon_right: section.settings.badge_icon_right
-          %}
+            icon_left: s.badge_icon_left,
+            icon_right: s.badge_icon_right
+          -%}
         {%- endif -%}
-        {%- if section.settings.heading != blank -%}
+        {%- if s.heading != blank -%}
           <h2 class="text-2xl md:text-4xl font-semibold leading-tight text-stone-900 palt tracking-wider">
-            {{ section.settings.heading }}
+            {{ s.heading }}
           </h2>
         {%- endif -%}
-
-        {%- comment %} 本文（リスト含む） {%- endcomment %}
-        {%- if section.settings.paragraph != blank -%}
+        {%- if s.paragraph != blank -%}
           <div class="text-base leading-relaxed text-stone-900 [&_p]:mb-0 [&_ul]:list-disc [&_ul]:pl-6 [&_li]:mb-1 [&_li:last-child]:mb-0">
-            {{ section.settings.paragraph }}
+            {{ s.paragraph }}
           </div>
         {%- endif -%}
       </div>
 
-      {%- comment %} ボタン {%- endcomment %}
-      {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
+      {%- if s.button_label != blank and s.button_url != blank -%}
         <div class="flex w-full md:justify-start">
           {%- render 'button',
-            label: section.settings.button_label,
-            url: section.settings.button_url,
+            label: s.button_label,
+            url: s.button_url,
             variant: 'outline',
             color: 'dark',
-            icon_left: section.settings.button_icon_left,
-            icon_right: section.settings.button_icon_right,
+            icon_left: s.button_icon_left,
+            icon_right: s.button_icon_right,
             class: 'self-start w-full md:w-auto'
           -%}
         </div>
@@ -75,7 +72,7 @@
   </div>
 </section>
 
-{% schema %}
+{%- schema %}
 {
   "name": "Ingredient",
   "settings": [
@@ -270,4 +267,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

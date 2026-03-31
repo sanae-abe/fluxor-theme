@@ -25,8 +25,10 @@
     -%}
 {%- endcomment %}
 
-{%- comment %} 親ページを特定（モバイル用バックリンク） {%- endcomment %}
 {%- liquid
+  assign _max_w = max_w | default: 'max-w-4xl'
+  assign _sep   = '|||'
+
   if item4_label != blank
     assign _parent_label = item3_label
     assign _parent_url   = item3_url
@@ -37,13 +39,16 @@
     assign _parent_label = item1_label
     assign _parent_url   = item1_url
   endif
+
+  assign _labels = item1_label | append: _sep | append: item2_label | append: _sep | append: item3_label | append: _sep | append: item4_label | split: _sep
+  assign _urls   = item1_url   | append: _sep | append: item2_url   | append: _sep | append: item3_url   | append: _sep | split: _sep
 -%}
 
 {%- comment %} モバイル: 親ページへ戻るリンク {%- endcomment %}
 {%- if _parent_url != blank -%}
   <a
     href="{{ _parent_url }}"
-    class="md:hidden w-full {{ max_w | default: 'max-w-4xl' }} mx-auto flex items-center gap-1 text-sm text-stone-500 hover:text-stone-900 transition-colors"
+    class="md:hidden w-full {{ _max_w }} mx-auto flex items-center gap-1 text-sm text-stone-500 hover:text-stone-900 transition-colors"
   >
     {%- render 'icon', icon: 'arrow-left', class: 'w-3.5 h-3.5 flex-shrink-0', stroke_width: 2 -%}
     <span>{{ _parent_label }} に戻る</span>
@@ -52,40 +57,21 @@
 
 {%- comment %} デスクトップ: フルパンくず {%- endcomment %}
 <nav
-  class="hidden md:flex w-full {{ max_w | default: 'max-w-4xl' }} mx-auto items-center gap-2 text-sm flex-wrap"
+  class="hidden md:flex w-full {{ _max_w }} mx-auto items-center gap-2 text-sm flex-wrap"
   aria-label="パンくずリスト"
 >
-  {%- if item1_label != blank -%}
-
-    {%- if item1_url != blank -%}
-      <a href="{{ item1_url }}" class="text-stone-500 hover:text-stone-900 transition-colors">{{ item1_label }}</a>
-    {%- else -%}
-      <span class="text-stone-900" aria-current="page">{{ item1_label }}</span>
-    {%- endif -%}
-
-    {%- if item2_label != blank -%}
+  {%- assign _is_first = true -%}
+  {%- for _label in _labels -%}
+    {%- if _label == blank -%}{%- continue -%}{%- endif -%}
+    {%- assign _url = _urls[forloop.index0] -%}
+    {%- unless _is_first -%}
       {%- render 'icon', icon: 'chevron-right', class: 'w-3.5 h-3.5 text-stone-300 flex-shrink-0', stroke_width: 2 -%}
-      {%- if item2_url != blank -%}
-        <a href="{{ item2_url }}" class="text-stone-500 hover:text-stone-900 transition-colors">{{ item2_label }}</a>
-      {%- else -%}
-        <span class="text-stone-900" aria-current="page">{{ item2_label }}</span>
-      {%- endif -%}
-
-      {%- if item3_label != blank -%}
-        {%- render 'icon', icon: 'chevron-right', class: 'w-3.5 h-3.5 text-stone-300 flex-shrink-0', stroke_width: 2 -%}
-        {%- if item3_url != blank -%}
-          <a href="{{ item3_url }}" class="text-stone-500 hover:text-stone-900 transition-colors">{{ item3_label }}</a>
-        {%- else -%}
-          <span class="text-stone-900" aria-current="page">{{ item3_label }}</span>
-        {%- endif -%}
-
-        {%- if item4_label != blank -%}
-          {%- render 'icon', icon: 'chevron-right', class: 'w-3.5 h-3.5 text-stone-300 flex-shrink-0', stroke_width: 2 -%}
-          <span class="text-stone-900" aria-current="page">{{ item4_label }}</span>
-        {%- endif -%}
-
-      {%- endif -%}
+    {%- endunless -%}
+    {%- if _url != blank -%}
+      <a href="{{ _url }}" class="text-stone-500 hover:text-stone-900 transition-colors">{{ _label }}</a>
+    {%- else -%}
+      <span class="text-stone-900" aria-current="page">{{ _label }}</span>
     {%- endif -%}
-
-  {%- endif -%}
+    {%- assign _is_first = false -%}
+  {%- endfor -%}
 </nav>

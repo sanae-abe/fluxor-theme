@@ -1,4 +1,4 @@
-{% comment %}
+{%- comment %}
   商品詳細ページセクション (main-product.liquid)
   使用: templates/product.json に追加して使用
 
@@ -18,83 +18,14 @@
     usage_method        {multi_line_text_field}          使用方法テキスト
     how_to_store        {multi_line_text_field}          保管方法テキスト
     precautions         {multi_line_text_field}          注意事項テキスト
-{% endcomment %}
+{%- endcomment %}
 
 {%- liquid
-  assign variant      = product.selected_or_first_available_variant
-  assign on_sale      = false
+  assign variant = product.selected_or_first_available_variant
+  assign on_sale = false
   if variant.compare_at_price > variant.price
     assign on_sale  = true
     assign discount = variant.compare_at_price | minus: variant.price | times: 100 | divided_by: variant.compare_at_price
-  endif
-
-  assign sale_eligible = false
-  assign sale_discount = 0
-  if settings.sale_enabled
-    assign _excluded = false
-    if settings.sale_exclude_handles != blank
-      assign _exc_handles = settings.sale_exclude_handles | split: ','
-      for _h in _exc_handles
-        assign _h_clean = _h | strip | downcase
-        if _h_clean == product.handle
-          assign _excluded = true
-          break
-        endif
-      endfor
-    endif
-    if _excluded == false and settings.sale_exclude_tags != blank
-      assign _exc_tags = settings.sale_exclude_tags | split: ','
-      for _etag in _exc_tags
-        assign _etag_low = _etag | strip | downcase
-        for _ptag in product.tags
-          assign _ptag_low = _ptag | downcase
-          if _ptag_low == _etag_low
-            assign _excluded = true
-            break
-          endif
-        endfor
-        if _excluded
-          break
-        endif
-      endfor
-    endif
-    unless _excluded
-      if settings.sale_target == 'all'
-        assign sale_eligible = true
-      elsif settings.sale_target == 'tag' and settings.sale_target_tags != blank
-        assign _tgt_tags = settings.sale_target_tags | split: ','
-        for _ttag in _tgt_tags
-          assign _ttag_low = _ttag | strip | downcase
-          for _ptag in product.tags
-            assign _ptag_low = _ptag | downcase
-            if _ptag_low == _ttag_low
-              assign sale_eligible = true
-              break
-            endif
-          endfor
-          if sale_eligible
-            break
-          endif
-        endfor
-      elsif settings.sale_target == 'collection' and settings.sale_target_collections != blank
-        assign _tgt_cols = settings.sale_target_collections | split: ','
-        for _col_h in _tgt_cols
-          assign _col_low = _col_h | strip | downcase
-          for _col in product.collections
-            if _col.handle == _col_low
-              assign sale_eligible = true
-              break
-            endif
-          endfor
-          if sale_eligible
-            break
-          endif
-        endfor
-      endif
-      if sale_eligible
-        assign sale_discount = settings.sale_discount_percent | plus: 0
-      endif
-    endunless
   endif
 
   assign rating_value = product.metafields.judgeme.avg_rating
@@ -118,71 +49,49 @@
   assign product_name_en    = product.metafields.custom.product_name_en
 -%}
 
-{%- comment %}======================================================
-  商品情報セクション
-======================================================{%- endcomment %}
-<style>
-  .btn-add-to-cart {
-    transition: background-color 0.15s ease, color 0.15s ease, opacity 150ms cubic-bezier(0.4, 0, 0.2, 1);
-  }
+{%- comment %} ※ 上付き文字変換用共通変数 {%- endcomment %}
+{%- assign _s    = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
+{%- assign _sup1 = _s | append: '※1</sup>' -%}
+{%- assign _sup2 = _s | append: '※2</sup>' -%}
+{%- assign _sup3 = _s | append: '※3</sup>' -%}
+{%- assign _sup4 = _s | append: '※4</sup>' -%}
+{%- assign _sup5 = _s | append: '※5</sup>' -%}
+{%- assign _sup  = _s | append: '※</sup>' -%}
 
-  @media (any-hover: hover) {
-    .btn-add-to-cart:not(:disabled):hover {
-      background-color: #ffffff;
-      color: #0c0a09;
-    }
-  }
+{%- comment %} 価格表示（メイン商品情報とフローティングバーで共有） {%- endcomment %}
+{%- capture price_html -%}
+  {%- if on_sale -%}
+    <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
+    <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
+  {%- elsif sale_eligible -%}
+    <span class="text-3xl font-semibold text-stone-900 leading-none"
+      x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney(salePrice) : $store.sale.formatMoney(selectedVariant.price / 100)"
+    >{{ variant.price | money }}</span>
+    <s class="text-base text-stone-500 leading-tight"
+      x-show="saleEligible && $store.sale.isActive()"
+      x-text="$store.sale.formatMoney(selectedVariant.price / 100)"
+      x-cloak
+    >{{ variant.price | money }}</s>
+  {%- else -%}
+    <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
+  {%- endif -%}
+{%- endcapture -%}
 
-  #floating-cart-bar {
-    transform: translateY(100%);
-    transition: transform 0.3s ease;
-  }
-  #floating-cart-bar.is-visible {
-    transform: translateY(0);
-  }
-</style>
+{%- comment %} 割引バッジ（メイン商品情報とフローティングバーで共有） {%- endcomment %}
+{%- capture discount_badge_html -%}
+  {%- if on_sale -%}
+    {%- assign discount_label = discount | append: '% OFF' -%}
+    {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+  {%- elsif sale_eligible -%}
+    {%- assign _sched_discount_label = sale_discount | append: '% OFF' -%}
+    <template x-if="saleEligible && $store.sale.isActive()">
+      <div>{%- render 'badge', label: _sched_discount_label, variant: 'sale', size: 'sm' -%}</div>
+    </template>
+  {%- endif -%}
+{%- endcapture -%}
 
-<script>
-  function productPageData() {
-    return {
-      variants: {{ product.variants | json }},
-      selectedOptions: {{ variant.options | json }},
-      activeImage: "{{ product.featured_image | image_url: width: 800 }}",
-      qty: 1,
-      adding: false,
-      get selectedVariant() {
-        return this.variants.find(v =>
-          v.options.every((opt, i) => opt === this.selectedOptions[i])
-        ) || this.variants[0];
-      },
-      saleEligible: {{ sale_eligible | json }},
-      saleDiscount: {{ sale_discount | default: 0 }},
-      get salePrice() {
-        return Math.floor(this.selectedVariant.price / 100 * (100 - this.saleDiscount) / 100);
-      },
-      get variantAvailable() { return this.selectedVariant.available; },
-      async addToCart() {
-        if (this.adding || !this.variantAvailable) return;
-        this.adding = true;
-        await $store.cart.add(this.selectedVariant.id, this.qty);
-        this.adding = false;
-      }
-    };
-  }
-</script>
+{%- render 'sale-engine', product: product -%}
 
-{%- comment %} パンくずリスト {%- endcomment %}
-{%- liquid
-  if collection != blank
-    assign _bc2_name = collection.title
-    assign _bc2_url  = shop.url | append: collection.url
-    assign _bc3_name = product.title
-    assign _bc3_url  = shop.url | append: product.url
-  else
-    assign _bc2_name = product.title
-    assign _bc2_url  = shop.url | append: product.url
-  endif
--%}
 <div class="px-4 md:px-10 pt-5 md:pt-10">
   {%- if collection != blank -%}
     {%- render 'breadcrumb',
@@ -208,26 +117,31 @@
   "@context": "https://schema.org",
   "@type": "BreadcrumbList",
   "itemListElement": [
-    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
-    {"@type": "ListItem", "position": 2, "name": {{ _bc2_name | json }}, "item": {{ _bc2_url | json }}}
+    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}}
     {%- if collection != blank -%}
-    ,{"@type": "ListItem", "position": 3, "name": {{ _bc3_name | json }}, "item": {{ _bc3_url | json }}}
+    ,{"@type": "ListItem", "position": 2, "name": {{ collection.title | json }}, "item": {{ collection.url | prepend: shop.url | json }}}
+    ,{"@type": "ListItem", "position": 3, "name": {{ product.title | json }}, "item": {{ product.url | prepend: shop.url | json }}}
+    {%- else -%}
+    ,{"@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ product.url | prepend: shop.url | json }}}
     {%- endif -%}
   ]
 }
 </script>
 
 <div x-data="productPageData()">
+
+{%- comment %}====================================================
+  商品情報セクション
+===================================================={%- endcomment %}
 <section
   id="product-info"
   class="bg-stone-50 px-4 md:px-10 pt-5 pb-10 md:pt-5 md:pb-[60px]"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-10 items-start">
 
-    {%- comment %}--- 左カラム: 画像ギャラリー ---{%- endcomment %}
+    {%- comment %} 左カラム: 画像ギャラリー {%- endcomment %}
     <div class="w-full lg:flex-1 flex flex-col gap-4">
 
-      {%- comment %} メイン画像 {%- endcomment %}
       <div class="aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
         {%- if product.featured_image -%}
           <img
@@ -245,7 +159,6 @@
         {%- endif -%}
       </div>
 
-      {%- comment %} サムネイル {%- endcomment %}
       {%- if product.images.size > 1 -%}
         <div class="grid grid-cols-4 gap-3">
           {%- for image in product.images limit: 12 -%}
@@ -271,22 +184,14 @@
       {%- endif -%}
     </div>
 
-    {%- comment %}--- 右カラム: 商品情報 ---{%- endcomment %}
+    {%- comment %} 右カラム: 商品情報 {%- endcomment %}
     <div class="w-full lg:flex-1 flex flex-col gap-6 lg:sticky lg:top-20 min-w-0">
 
-      {%- comment %} ブランド・タイトル・容量・評価 {%- endcomment %}
       <div class="flex flex-col gap-3">
         {%- if product.vendor != blank -%}
           <p class="text-sm text-stone-500 leading-tight">{{ product.vendor }}</p>
         {%- endif -%}
 
-        {%- assign _s = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
-        {%- assign _sup1 = _s | append: '※1</sup>' -%}
-        {%- assign _sup2 = _s | append: '※2</sup>' -%}
-        {%- assign _sup3 = _s | append: '※3</sup>' -%}
-        {%- assign _sup4 = _s | append: '※4</sup>' -%}
-        {%- assign _sup5 = _s | append: '※5</sup>' -%}
-        {%- assign _sup  = _s | append: '※</sup>' -%}
         {%- assign display_title = product.title
           | replace: '※1', _sup1
           | replace: '※2', _sup2
@@ -321,11 +226,9 @@
           <p class="text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
         {%- endif -%}
 
-        <!-- Start of Judge.me code -->
         <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
           {{ product.metafields.judgeme.badge }}
         </div>
-        <!-- End of Judge.me code --> 
 
         {%- if rating_value != blank -%}
           <div class="flex items-center gap-2">
@@ -342,38 +245,12 @@
         {%- endif -%}
       </div>
 
-      {%- comment %} 価格 {%- endcomment %}
       <div class="flex items-end gap-2 flex-wrap">
-        {%- if on_sale -%}
-          {%- comment %} Shopify ネイティブセール {%- endcomment %}
-          <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
-          <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
-        {%- elsif sale_eligible -%}
-          {%- comment %} スケジュールセール: Alpine でバリアント連動の動的表示 {%- endcomment %}
-          <span class="text-3xl font-semibold text-stone-900 leading-none"
-            x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney(salePrice) : $store.sale.formatMoney(selectedVariant.price / 100)"
-          >{{ variant.price | money }}</span>
-          <s class="text-base text-stone-500 leading-tight"
-            x-show="saleEligible && $store.sale.isActive()"
-            x-text="$store.sale.formatMoney(selectedVariant.price / 100)"
-            x-cloak
-          >{{ variant.price | money }}</s>
-        {%- else -%}
-          <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
-        {%- endif -%}
+        {{ price_html }}
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
-        {%- if on_sale -%}
-          {%- assign discount_label = discount | append: '% OFF' -%}
-          {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
-        {%- elsif sale_eligible -%}
-          {%- assign _sched_discount_label = sale_discount | append: '% OFF' -%}
-          <template x-if="saleEligible && $store.sale.isActive()">
-            <div>{%- render 'badge', label: _sched_discount_label, variant: 'sale', size: 'sm' -%}</div>
-          </template>
-        {%- endif -%}
+        {{ discount_badge_html }}
       </div>
 
-      {%- comment %} 効能・効果 {%- endcomment %}
       {%- if product_benefits != blank -%}
         <div class="flex flex-col gap-2">
           {%- for product_benefit in product_benefits -%}
@@ -401,7 +278,7 @@
         </div>
       {%- endif -%}
 
-      {%- comment %} 注目の成分 — カルーセル {%- endcomment %}
+      {%- comment %} 注目の成分カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
         {%- assign _desc_idx = '' -%}
         {%- for _ki in key_ingredients -%}
@@ -416,6 +293,7 @@
             active: null,
             atStart: true,
             atEnd: false,
+            cardW: 198,
             descIdx: [{{ _desc_idx }}],
             updateNav() {
               const t = this.$refs.track;
@@ -424,14 +302,13 @@
             },
             tooltipLeft() {
               if (this.active === null || !this.$refs.track) return 0;
-              const cardLeft = this.active * 198 - this.$refs.track.scrollLeft;
+              const cardLeft = this.active * this.cardW - this.$refs.track.scrollLeft;
               return Math.min(Math.max(cardLeft, 0), this.$refs.track.offsetWidth - 288);
             }
           }"
           x-init="$nextTick(() => updateNav())"
         >
 
-          {%- comment %} ヘッダー {%- endcomment %}
           <div class="flex items-center justify-between gap-1 mb-3">
             <div class="flex items-center gap-1">
               {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900 shrink-0' -%}
@@ -440,75 +317,65 @@
             <div class="text-xs text-stone-400 text-right">※すべて整肌・保湿成分として</div>
           </div>
 
-          {%- comment %} カルーセル {%- endcomment %}
           <div class="overflow-x-hidden min-w-0">
           <div class="relative" x-ref="carouselRow">
 
-            {%- comment %} 左矢印 {%- endcomment %}
             <button
               type="button"
               class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-6 h-full transition-opacity focus-visible:outline-none"
               :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
-              @click="$refs.track.scrollLeft -= 198; $nextTick(() => updateNav())"
+              @click="$refs.track.scrollLeft -= cardW; $nextTick(() => updateNav())"
               aria-label="前へ"
             >
               {%- render 'icon', icon: 'circle-chevron-left', class: 'w-6 h-6', stroke: '#79716B', fill: '#ffffff' -%}
             </button>
 
-            {%- comment %} トラック {%- endcomment %}
             <div
               x-ref="track"
               class="ingredient-track flex gap-2 overflow-x-auto scroll-smooth"
               @scroll="updateNav()"
             >
-                {%- for key_ingredient in key_ingredients -%}
-                  {%- assign amount  = key_ingredient.amount -%}
-                  {%- assign ing_idx = forloop.index0 -%}
+              {%- for key_ingredient in key_ingredients -%}
+                {%- assign amount  = key_ingredient.amount -%}
+                {%- assign ing_idx = forloop.index0 -%}
+                <div
+                  class="shrink-0 w-[190px] cursor-default select-none"
+                  @mouseenter="active = {{ ing_idx }}"
+                  @mouseleave="active = null"
+                  @click.stop="active = active === {{ ing_idx }} ? null : {{ ing_idx }}"
+                >
                   <div
-                    class="shrink-0 w-[190px] cursor-default select-none"
-                    @mouseenter="active = {{ ing_idx }}"
-                    @mouseleave="active = null"
-                    @click.stop="active = active === {{ ing_idx }} ? null : {{ ing_idx }}"
+                    class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[64px]"
+                    :class="active === {{ ing_idx }} ? 'border-stone-500' : 'border-stone-200'"
                   >
-                    {%- comment %} カード {%- endcomment %}
-                    <div
-                      class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[64px]"
-                      :class="active === {{ ing_idx }} ? 'border-stone-500' : 'border-stone-200'"
-                    >
-
-                      {%- comment %} サムネイル {%- endcomment %}
-                      {%- if key_ingredient.thumbnail != blank -%}
-                        <img
-                          src="{{ key_ingredient.thumbnail | image_url: width: 96, height: 96, crop: 'center' }}"
-                          alt="{{ key_ingredient.ingredient }}"
-                          class="w-12 h-12 rounded-full object-cover shrink-0"
-                          width="48" height="48" loading="lazy"
-                        >
-                      {%- else -%}
-                        <div class="w-12 h-12 rounded-full bg-stone-100 border border-stone-200 shrink-0 flex items-center justify-center">
-                          {%- render 'icon', icon: 'flask-conical', class: 'w-5 h-5 text-stone-300' -%}
-                        </div>
-                      {%- endif -%}
-
-                      {%- comment %} 成分名・配合量 {%- endcomment %}
-                      <div class="text-sm text-stone-900 leading-snug palt min-w-0">
-                        <p class="line-clamp-2 break-words">{{ key_ingredient.ingredient }}
-                        {%- if amount != blank -%}
-                          ({{ amount }})
-                        {%- endif -%}
-                        </p>
+                    {%- if key_ingredient.thumbnail != blank -%}
+                      <img
+                        src="{{ key_ingredient.thumbnail | image_url: width: 96, height: 96, crop: 'center' }}"
+                        alt="{{ key_ingredient.ingredient }}"
+                        class="w-12 h-12 rounded-full object-cover shrink-0"
+                        width="48" height="48" loading="lazy"
+                      >
+                    {%- else -%}
+                      <div class="w-12 h-12 rounded-full bg-stone-100 border border-stone-200 shrink-0 flex items-center justify-center">
+                        {%- render 'icon', icon: 'flask-conical', class: 'w-5 h-5 text-stone-300' -%}
                       </div>
+                    {%- endif -%}
+
+                    <div class="text-sm text-stone-900 leading-snug palt min-w-0">
+                      <p class="line-clamp-2 break-words">{{ key_ingredient.ingredient }}
+                      {%- if amount != blank -%}({{ amount }}){%- endif -%}
+                      </p>
                     </div>
                   </div>
-                {%- endfor -%}
+                </div>
+              {%- endfor -%}
             </div>
 
-            {%- comment %} 右矢印 {%- endcomment %}
             <button
               type="button"
               class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-6 h-full transition-opacity focus-visible:outline-none"
               :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
-              @click="$refs.track.scrollLeft += 198; $nextTick(() => updateNav())"
+              @click="$refs.track.scrollLeft += cardW; $nextTick(() => updateNav())"
               aria-label="次へ"
             >
               {%- render 'icon', icon: 'circle-chevron-right', class: 'w-6 h-6', stroke: '#79716B', fill: '#ffffff' -%}
@@ -516,7 +383,6 @@
           </div>
           </div>
 
-          {%- comment %} 吹き出し詳細エリア {%- endcomment %}
           {%- if _desc_idx != '' -%}
             <div
               class="absolute z-20 w-80"
@@ -530,9 +396,7 @@
               x-transition:leave-start="opacity-100"
               x-transition:leave-end="opacity-0"
             >
-              {%- comment %} 上向き矢印 {%- endcomment %}
               <div class="absolute -top-[7px] left-[calc(50%-7px)] w-3 h-3 bg-white border-l border-t border-stone-200 rotate-45"></div>
-              {%- comment %} 吹き出し本体 {%- endcomment %}
               <div class="bg-white border border-stone-200 rounded-lg shadow-sm p-3 text-sm text-stone-700 leading-[1.625]">
                 {%- for key_ingredient in key_ingredients -%}
                   {%- if key_ingredient.description != blank -%}
@@ -548,7 +412,6 @@
         </div>
       {%- endif -%}
 
-      {%- comment %} ラベル {%- endcomment %}
       {%- if certifications != blank -%}
         <div class="flex flex-wrap gap-2">
           {%- for certification in certifications -%}
@@ -557,7 +420,6 @@
         </div>
       {%- endif -%}
 
-      {%- comment %} バリアント選択 {%- endcomment %}
       {%- unless product.has_only_default_variant -%}
         <div class="flex flex-col gap-4">
           {%- for option in product.options_with_values -%}
@@ -585,8 +447,7 @@
         </div>
       {%- endunless -%}
 
-      {%- comment %} 商品メタ情報 {%- endcomment %}
-      {%- if skin_types != blank or ph_level != blank or origin != blank or texture != blank or usage_timing != blank -%}
+      {%- if skin_types != blank or ph_level != blank or origin != blank or texture != blank -%}
         <div class="flex flex-wrap gap-x-8 gap-y-2">
           {%- if skin_types != blank -%}
             <p class="text-sm text-stone-900 leading-relaxed">
@@ -611,58 +472,19 @@
         </div>
       {%- endif -%}
 
-      {%- comment %} 区切り線 {%- endcomment %}
       <hr class="border-stone-200">
 
-      {%- comment %} 数量カウンター + カートに追加 {%- endcomment %}
       <div class="flex flex-col gap-4">
-        <div class="flex items-center gap-4">
-          <div class="flex items-center border border-stone-200 flex-shrink-0 bg-white">
-            <button
-              type="button"
-              class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
-              @click="qty = Math.max(1, qty - 1)"
-              aria-label="数量を減らす"
-            >
-              {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
-            </button>
-            <div
-              class="flex items-center justify-center w-12 h-12 text-base text-stone-900 select-none"
-              x-text="qty"
-              aria-live="polite"
-              aria-label="数量"
-            >1</div>
-            <button
-              type="button"
-              class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
-              @click="qty++"
-              aria-label="数量を増やす"
-            >
-              {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
-            </button>
-          </div>
-
-          <button
-            type="button"
-            class="btn-add-to-cart flex-1  border-2 flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
-            :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
-            @click="addToCart()"
-            :disabled="adding || !variantAvailable"
-          >
-            <span class="text-base font-bold leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
-            <span class="text-base font-bold leading-tight" x-show="adding" x-cloak>追加中…</span>
-          </button>
-        </div>
-
+        {%- render 'product-qty-add' -%}
         <p class="flex gap-2 text-sm justify-end">{%- render 'icon', icon: 'van', class: 'w-5 h-5 flex-shrink-0 stroke-1.5' -%}国際配送のため、通常ご注文から約14〜21営業日でお届けいたします。</p>
       </div>
     </div>
   </div>
 </section>
 
-{%- comment %}======================================================
+{%- comment %}====================================================
   関連商品セクション
-======================================================{%- endcomment %}
+===================================================={%- endcomment %}
 {%- assign related_col = collections[section.settings.related_collection] -%}
 {%- if related_col != blank -%}
   <section class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]">
@@ -685,10 +507,9 @@
   </section>
 {%- endif -%}
 
-
-{%- comment %}======================================================
+{%- comment %}====================================================
   フローティングカートバー（スクロール追従）
-======================================================{%- endcomment %}
+===================================================={%- endcomment %}
 <div
   id="floating-cart-bar"
   class="fixed bottom-0 left-0 right-0 z-50 bg-stone-50 border-t border-stone-200 px-10 py-4"
@@ -721,66 +542,45 @@
 
     <div class="flex items-center gap-4 shrink-0">
       <div class="flex items-end gap-2 whitespace-nowrap">
-        {%- if on_sale -%}
-          <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
-          <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
-        {%- elsif sale_eligible -%}
-          <span class="text-3xl font-medium text-stone-900 leading-none"
-            x-text="(saleEligible && $store.sale.isActive()) ? $store.sale.formatMoney(salePrice) : $store.sale.formatMoney(selectedVariant.price / 100)"
-          >{{ variant.price | money }}</span>
-          <s class="text-base text-stone-500 leading-tight"
-            x-show="saleEligible && $store.sale.isActive()"
-            x-text="$store.sale.formatMoney(selectedVariant.price / 100)"
-            x-cloak
-          >{{ variant.price | money }}</s>
-        {%- else -%}
-          <span class="text-3xl font-medium text-stone-900 leading-none">{{ variant.price | money }}</span>
-        {%- endif -%}
+        {{ price_html }}
       </div>
 
-      <div class="flex items-center border border-stone-200 w-[144px]">
-        <button
-          type="button"
-          class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
-          @click="qty = Math.max(1, qty - 1)"
-          aria-label="数量を減らす"
-        >
-          {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
-        </button>
-        <div
-          class="flex items-center justify-center flex-1 h-12 text-base text-stone-900 select-none"
-          x-text="qty"
-          aria-live="polite"
-          aria-label="数量"
-        >1</div>
-        <button
-          type="button"
-          class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
-          @click="qty++"
-          aria-label="数量を増やす"
-        >
-          {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
-        </button>
-      </div>
-
-      <button
-        type="button"
-        class="btn-add-to-cart border-2 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
-        :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
-        @click="addToCart()"
-        :disabled="adding || !variantAvailable"
-      >
-        <span class="text-base font-medium leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
-        <span class="text-base font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
-      </button>
+      {%- render 'product-qty-add', compact: true -%}
     </div>
 
   </div>
 </div>
 
-</div>{{- '' -}}{%- comment -%}x-data wrapper close{%- endcomment -%}
+</div>{%- comment %} x-data wrapper close {%- endcomment %}
 
 <script>
+  function productPageData() {
+    return {
+      variants: {{ product.variants | json }},
+      selectedOptions: {{ variant.options | json }},
+      activeImage: "{{ product.featured_image | image_url: width: 800 }}",
+      qty: 1,
+      adding: false,
+      get selectedVariant() {
+        return this.variants.find(v =>
+          v.options.every((opt, i) => opt === this.selectedOptions[i])
+        ) || this.variants[0];
+      },
+      saleEligible: {{ sale_eligible | json }},
+      saleDiscount: {{ sale_discount | default: 0 }},
+      get salePrice() {
+        return Math.floor(this.selectedVariant.price / 100 * (100 - this.saleDiscount) / 100);
+      },
+      get variantAvailable() { return this.selectedVariant.available; },
+      async addToCart() {
+        if (this.adding || !this.variantAvailable) return;
+        this.adding = true;
+        await $store.cart.add(this.selectedVariant.id, this.qty);
+        this.adding = false;
+      }
+    };
+  }
+
   document.addEventListener('DOMContentLoaded', function () {
     const bar = document.getElementById('floating-cart-bar');
     const productSection = document.getElementById('product-info');

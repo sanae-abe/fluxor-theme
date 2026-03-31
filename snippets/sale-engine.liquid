@@ -16,27 +16,27 @@
 
   if settings.sale_enabled
 
-    # 除外判定: ハンドルで除外
+    # ハンドルによる除外チェック
     assign _excluded = false
     if settings.sale_exclude_handles != blank
-      assign _exc_handles = settings.sale_exclude_handles | split: ','
-      for _h in _exc_handles
-        assign _h_clean = _h | strip | downcase
-        if _h_clean == product.handle
+      assign _exclude_handle_list = settings.sale_exclude_handles | split: ','
+      for _handle in _exclude_handle_list
+        assign _handle_normalized = _handle | strip | downcase
+        if _handle_normalized == product.handle
           assign _excluded = true
           break
         endif
       endfor
     endif
 
-    # 除外判定: タグで除外
-    if _excluded == false and settings.sale_exclude_tags != blank
-      assign _exc_tags = settings.sale_exclude_tags | split: ','
-      for _etag in _exc_tags
-        assign _etag_low = _etag | strip | downcase
-        for _ptag in product.tags
-          assign _ptag_low = _ptag | downcase
-          if _ptag_low == _etag_low
+    # タグによる除外チェック
+    unless _excluded or settings.sale_exclude_tags == blank
+      assign _exclude_tag_list = settings.sale_exclude_tags | split: ','
+      for _exclude_tag in _exclude_tag_list
+        assign _exclude_tag_normalized = _exclude_tag | strip | downcase
+        for _product_tag in product.tags
+          assign _product_tag_normalized = _product_tag | downcase
+          if _product_tag_normalized == _exclude_tag_normalized
             assign _excluded = true
             break
           endif
@@ -45,44 +45,49 @@
           break
         endif
       endfor
-    endif
+    endunless
 
     # 対象判定
     unless _excluded
-      if settings.sale_target == 'all'
+      case settings.sale_target
+      when 'all'
         assign sale_eligible = true
 
-      elsif settings.sale_target == 'tag' and settings.sale_target_tags != blank
-        assign _tgt_tags = settings.sale_target_tags | split: ','
-        for _ttag in _tgt_tags
-          assign _ttag_low = _ttag | strip | downcase
-          for _ptag in product.tags
-            assign _ptag_low = _ptag | downcase
-            if _ptag_low == _ttag_low
-              assign sale_eligible = true
+      when 'tag'
+        if settings.sale_target_tags != blank
+          assign _target_tag_list = settings.sale_target_tags | split: ','
+          for _target_tag in _target_tag_list
+            assign _target_tag_normalized = _target_tag | strip | downcase
+            for _product_tag in product.tags
+              assign _product_tag_normalized = _product_tag | downcase
+              if _product_tag_normalized == _target_tag_normalized
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
               break
             endif
           endfor
-          if sale_eligible
-            break
-          endif
-        endfor
+        endif
 
-      elsif settings.sale_target == 'collection' and settings.sale_target_collections != blank
-        assign _tgt_cols = settings.sale_target_collections | split: ','
-        for _col_h in _tgt_cols
-          assign _col_low = _col_h | strip | downcase
-          for _col in product.collections
-            if _col.handle == _col_low
-              assign sale_eligible = true
+      when 'collection'
+        if settings.sale_target_collections != blank
+          assign _target_col_list = settings.sale_target_collections | split: ','
+          for _target_col_handle in _target_col_list
+            assign _target_col_normalized = _target_col_handle | strip | downcase
+            for _product_col in product.collections
+              if _product_col.handle == _target_col_normalized
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
               break
             endif
           endfor
-          if sale_eligible
-            break
-          endif
-        endfor
-      endif
+        endif
+      endcase
 
       if sale_eligible
         assign sale_discount = settings.sale_discount_percent | plus: 0

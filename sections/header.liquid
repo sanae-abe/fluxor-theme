@@ -1,31 +1,6 @@
 <header
   class="fixed w-full z-50 bg-stone-100 border-b border-stone-900/10 pl-4 pr-1 md:pl-10 md:pr-10 transition-transform duration-300 ease-in-out"
-  x-data="{
-    mobileMenuOpen: false,
-    headerHidden: false,
-    lastScrollY: 0,
-    announcementHeight: 0,
-    get effectiveTop() {
-      return Math.max(0, this.announcementHeight - this.lastScrollY);
-    },
-    init() {
-      const bar = document.getElementById('AnnouncementBar');
-      this.announcementHeight = bar ? bar.offsetHeight : 0;
-      this.lastScrollY = window.scrollY;
-      window.addEventListener('scroll', () => {
-        const currentScrollY = window.scrollY;
-        if (currentScrollY < 80) {
-          this.headerHidden = false;
-        } else if (currentScrollY > this.lastScrollY + 10) {
-          this.headerHidden = true;
-          this.mobileMenuOpen = false;
-        } else if (currentScrollY < this.lastScrollY - 5) {
-          this.headerHidden = false;
-        }
-        this.lastScrollY = currentScrollY;
-      }, { passive: true });
-    }
-  }"
+  x-data="siteHeader"
   :class="{ '-translate-y-full': headerHidden }"
   :style="{ top: effectiveTop + 'px' }"
 >
@@ -52,7 +27,7 @@
               class="text-md text-stone-900 palt tracking-wider hover:underline underline-offset-[8px] decoration-stone-900 transition-all duration-200"
               {% if link.active %}aria-current="page"{% endif %}
             >
-              {{ link.title | upcase }}
+              {{- link.title | upcase -}}
             </a>
           {%- endfor -%}
         {%- endif -%}
@@ -89,35 +64,29 @@
     <div class="col-start-2 flex justify-center">
       {%- if template.name == 'index' -%}
         <h1 class="leading-none m-0">
-          <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-            {{ logo_inner }}
-          </a>
+          <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">{{ logo_inner }}</a>
         </h1>
       {%- else -%}
-        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">
-          {{ logo_inner }}
-        </a>
+        <a href="{{ routes.root_url }}" aria-label="{{ shop.name | escape }}">{{ logo_inner }}</a>
       {%- endif -%}
     </div>
 
     {%- comment %} 右カラム：アイコン群 {%- endcomment %}
     <div class="col-start-3 flex items-center justify-end md:gap-2">
-
-      {%- comment %} 検索・アカウント {%- endcomment %}
-      {%- assign _nav_urls   = routes.search_url | append: '|' | append: routes.account_url | split: '|' -%}
-      {%- assign _nav_icons  = 'search,user' | split: ',' -%}
-      {%- assign _nav_labels = '検索,アカウント' | split: ',' -%}
-      {%- for _icon in _nav_icons -%}
-        <a
-          href="{{ _nav_urls[forloop.index0] }}"
-          class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
-          aria-label="{{ _nav_labels[forloop.index0] }}"
-        >
-          {%- render 'icon', icon: _icon, class: 'w-6 h-6' -%}
-        </a>
-      {%- endfor -%}
-
-      {%- comment %} カート {%- endcomment %}
+      <a
+        href="{{ routes.search_url }}"
+        class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
+        aria-label="検索"
+      >
+        {%- render 'icon', icon: 'search', class: 'w-6 h-6' -%}
+      </a>
+      <a
+        href="{{ routes.account_url }}"
+        class="flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
+        aria-label="アカウント"
+      >
+        {%- render 'icon', icon: 'user', class: 'w-6 h-6' -%}
+      </a>
       <button
         type="button"
         class="relative flex items-center justify-center w-11 h-11 rounded-full text-stone-900 hover:bg-stone-900/10 transition-colors duration-200"
@@ -132,8 +101,6 @@
           aria-hidden="true"
         ></span>
       </button>
-
-
     </div>
 
   </div>
@@ -175,7 +142,7 @@
                 {% if link.active %}aria-current="page"{% endif %}
                 @click="mobileMenuOpen = false"
               >
-                {{ link.title | upcase }}
+                {{- link.title | upcase -}}
               </a>
             </li>
           {%- endfor -%}
@@ -183,6 +150,7 @@
       {%- endif -%}
     </nav>
   </div>
+
   {%- comment %} オーバーレイ {%- endcomment %}
   <div
     x-show="mobileMenuOpen"

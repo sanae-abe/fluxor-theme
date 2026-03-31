@@ -1,0 +1,94 @@
+{%- comment %}
+  数量カウンター + カートに追加ボタン
+
+  Accepts:
+  - compact: {Boolean} コンパクト表示（フローティングカートバー用）
+
+  Alpine.js データ（親の x-data から継承）:
+  - qty               数量
+  - adding            追加処理中フラグ
+  - variantAvailable  バリアント在庫フラグ
+  - addToCart()       カートに追加メソッド
+{%- endcomment %}
+
+{%- if compact -%}
+
+  {%- comment %} フローティングバー用コンパクト表示 {%- endcomment %}
+  <div class="flex items-center border border-stone-200 w-[144px]">
+    <button
+      type="button"
+      class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+      @click="qty = Math.max(1, qty - 1)"
+      aria-label="数量を減らす"
+    >
+      {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
+    </button>
+    <div
+      class="flex items-center justify-center flex-1 h-12 text-base text-stone-900 select-none"
+      x-text="qty"
+      aria-live="polite"
+      aria-label="数量"
+    >1</div>
+    <button
+      type="button"
+      class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+      @click="qty++"
+      aria-label="数量を増やす"
+    >
+      {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
+    </button>
+  </div>
+
+  <button
+    type="button"
+    class="btn-add-to-cart border-2 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+    :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
+    @click="addToCart()"
+    :disabled="adding || !variantAvailable"
+  >
+    <span class="text-base font-medium leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+    <span class="text-base font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
+  </button>
+
+{%- else -%}
+
+  {%- comment %} 通常表示（商品情報セクション用） {%- endcomment %}
+  <div class="flex items-center gap-4">
+    <div class="flex items-center border border-stone-200 flex-shrink-0 bg-white">
+      <button
+        type="button"
+        class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+        @click="qty = Math.max(1, qty - 1)"
+        aria-label="数量を減らす"
+      >
+        {%- render 'icon', icon: 'minus', class: 'w-5 h-5' -%}
+      </button>
+      <div
+        class="flex items-center justify-center w-12 h-12 text-base text-stone-900 select-none"
+        x-text="qty"
+        aria-live="polite"
+        aria-label="数量"
+      >1</div>
+      <button
+        type="button"
+        class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+        @click="qty++"
+        aria-label="数量を増やす"
+      >
+        {%- render 'icon', icon: 'plus', class: 'w-5 h-5' -%}
+      </button>
+    </div>
+
+    <button
+      type="button"
+      class="btn-add-to-cart flex-1 border-2 flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+      :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
+      @click="addToCart()"
+      :disabled="adding || !variantAvailable"
+    >
+      <span class="text-base font-bold leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+      <span class="text-base font-bold leading-tight" x-show="adding" x-cloak>追加中…</span>
+    </button>
+  </div>
+
+{%- endif -%}

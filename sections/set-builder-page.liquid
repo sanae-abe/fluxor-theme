@@ -19,15 +19,6 @@
 
   assign fp = section.settings.fixed_product | default: product
   assign fp_variant = fp.selected_or_first_available_variant
-
-  assign has_candidates = false
-  for i in (1..8)
-    assign key = 'product_' | append: i
-    if section.settings[key] != blank
-      assign has_candidates = true
-      break
-    endif
-  endfor
 -%}
 
 {%- comment %} 候補商品 JSON 配列 {%- endcomment %}
@@ -74,13 +65,12 @@
       },
 
       async addBundle() {
-        if (this.selected.length < 2 || this.adding) return
+        if (this.selected.length < 2 || this.adding || !this.fixedVariantId) return
         this.adding = true
         try {
           const items = [
             { id: this.fixedVariantId, quantity: 1 },
-            { id: this.selected[0].variantId, quantity: 1 },
-            { id: this.selected[1].variantId, quantity: 1 },
+            ...this.selected.map(s => ({ id: s.variantId, quantity: 1 })),
           ]
           const res = await fetch('/cart/add.js', {
             method: 'POST',
@@ -103,17 +93,6 @@
 </script>
 
 {%- comment %} パンくずリスト {%- endcomment %}
-{%- liquid
-  if collection != blank
-    assign _bc2_name = collection.title
-    assign _bc2_url  = shop.url | append: collection.url
-    assign _bc3_name = product.title
-    assign _bc3_url  = shop.url | append: product.url
-  else
-    assign _bc2_name = product.title
-    assign _bc2_url  = shop.url | append: product.url
-  endif
--%}
 <div class="px-4 md:px-10 pt-5 md:pt-10">
   {%- if collection != blank -%}
     {%- render 'breadcrumb',
@@ -194,8 +173,7 @@
         {%- endif -%}
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
-          {%- assign discount_label = discount | append: '% OFF' -%}
-          {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+          {%- render 'badge', label: discount | append: '% OFF', variant: 'sale', size: 'sm' -%}
         {%- endif -%}
       </div>
 
@@ -219,7 +197,7 @@
             <p class="text-sm text-stone-500 mt-0.5">{{ fp_variant.price | money_without_trailing_zeros }}</p>
           </div>
           <div class="bundle-fixed-check flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center">
-            {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white',  stroke_width: 3 -%}
+            {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white', stroke_width: 3 -%}
           </div>
         </div>
       </div>
@@ -256,9 +234,9 @@
                 <p class="text-sm text-stone-500 mt-0.5" x-text="product.priceFormatted"></p>
               </div>
               <div class="bundle-check-dot flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center">
-                {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white', x_show: 'isSelected(product)', stroke_width: 3 -%}
+                {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white hidden', x_class: "isSelected(product) ? '' : 'hidden'", stroke_width: 3 -%}
               </div>
-              <div x-show="!product.available" class="bundle-soldout-badge absolute inset-0 rounded-xl flex items-center justify-center">
+              <div class="bundle-soldout-badge hidden absolute inset-0 rounded-xl flex items-center justify-center" :class="product.available ? 'hidden' : ''">
                 <span class="text-xs font-semibold tracking-wide">在庫なし</span>
               </div>
             </button>
@@ -275,12 +253,12 @@
           :disabled="selected.length < 2 || adding"
           @click="addBundle"
         >
-          <span class="text-base font-bold leading-tight" x-show="!adding && !added">
-            <span x-show="selected.length < 2">あと<span x-text="2 - selected.length"></span>点選んでください</span>
-            <span x-show="selected.length === 2" x-cloak>3点セットをカートに追加</span>
+          <span class="text-base font-bold leading-tight" :class="(adding || added) ? 'hidden' : ''">
+            <span :class="selected.length < 2 ? '' : 'hidden'">あと<span x-text="2 - selected.length"></span>点選んでください</span>
+            <span class="hidden" :class="selected.length === 2 ? '' : 'hidden'">3点セットをカートに追加</span>
           </span>
-          <span class="text-base font-bold leading-tight" x-show="adding" x-cloak>追加中…</span>
-          <span class="text-base font-bold leading-tight" x-show="added" x-cloak>✓ カートに追加しました</span>
+          <span class="text-base font-bold leading-tight hidden" :class="adding ? '' : 'hidden'">追加中…</span>
+          <span class="text-base font-bold leading-tight hidden" :class="added ? '' : 'hidden'">✓ カートに追加しました</span>
         </button>
 
         <p class="flex gap-2 text-sm justify-end">

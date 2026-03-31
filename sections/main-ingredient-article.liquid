@@ -1,6 +1,6 @@
 {%- comment %} ============================================================
   Hero — 全幅背景画像 + 成分名テキスト
-  ============================================================ {%- endcomment %}
+  ============================================================ {%- endcomment -%}
 <div class="relative w-full min-h-[500px] flex flex-col items-center justify-center gap-4 overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
   {%- if article.image -%}
     <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
@@ -21,7 +21,7 @@
 
   <p class="relative text-sm font-medium tracking-[1.12px] text-white uppercase">Ingredients</p>
 
-  <h1 class="relative text-3xl md:text-5xl md:text-[60px] font-semibold leading-tight tracking-wider text-white text-center max-w-3xl">
+  <h1 class="relative text-3xl md:text-[60px] font-semibold leading-tight tracking-wider text-white text-center max-w-3xl">
     {{ article.title }}
   </h1>
 
@@ -43,7 +43,7 @@
 }
 </script>
 
-{%- comment %} パンくずリスト {%- endcomment %}
+{%- comment %} パンくずリスト {%- endcomment -%}
 <div class="px-4 md:px-10 pt-10">
   {%- assign _bc_current = name_ja | default: article.title -%}
   {%- render 'breadcrumb',
@@ -57,10 +57,10 @@
 
 {%- comment %} ============================================================
   ブロックレンダリング
-  ============================================================ {%- endcomment %}
+  ============================================================ {%- endcomment -%}
 {%- for block in section.blocks -%}
 
-  {%- comment %} テキストセクション {%- endcomment %}
+  {%- comment %} テキストセクション {%- endcomment -%}
   {%- if block.type == 'text_section' -%}
     <div
       class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
@@ -78,7 +78,7 @@
       </div>
     </div>
 
-  {%- comment %} ベネフィットカードグループ {%- endcomment %}
+  {%- comment %} ベネフィットカードグループ {%- endcomment -%}
   {%- elsif block.type == 'benefits_group' -%}
     <div
       class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
@@ -118,7 +118,7 @@
       </div>
     </div>
 
-  {%- comment %} 免責事項ノート {%- endcomment %}
+  {%- comment %} 免責事項ノート {%- endcomment -%}
   {%- elsif block.type == 'disclaimer' -%}
     <div
       class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
@@ -139,7 +139,7 @@
 
 {%- comment %} ============================================================
   参考文献
-  ============================================================ {%- endcomment %}
+  ============================================================ {%- endcomment -%}
 {%- assign ref_blocks = section.blocks | where: 'type', 'reference_entry' -%}
 {%- if ref_blocks.size > 0 -%}
   <div class="w-full bg-stone-100 flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
@@ -195,7 +195,7 @@
 
 {%- comment %} ============================================================
   この成分を配合した製品
-  ============================================================ {%- endcomment %}
+  ============================================================ {%- endcomment -%}
 {%- assign ingredient_col = collections[section.settings.collection] -%}
 {%- if section.settings.collection != blank -%}
   <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
@@ -233,7 +233,7 @@
   </section>
 {%- endif -%}
 
-{% schema %}
+{%- schema %}
 {
   "name": "成分ガイド記事",
   "blocks": [
@@ -530,4 +530,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

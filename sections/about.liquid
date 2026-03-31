@@ -1,26 +1,22 @@
-{%- assign has_bg_image = false -%}
-{%- if section.settings.background_image != blank -%}
-  {%- assign has_bg_image = true -%}
+{%- assign is_dark = false -%}
+{%- if section.settings.color_scheme == 'bg-stone-950' or section.settings.background_image != blank -%}
+  {%- assign is_dark = true -%}
 {%- endif -%}
 
-{%- assign show_particles = true -%}
-{%- if section.settings.enable_particles == false -%}
-  {%- assign show_particles = false -%}
-{%- endif -%}
-
-{%- if section.settings.color_scheme == 'bg-stone-950' or has_bg_image -%}
+{%- if is_dark -%}
   {%- assign text_color = 'text-stone-50' -%}
   {%- assign btn_color = 'light' -%}
+  {%- assign particle_color = '#f0ede8' -%}
 {%- else -%}
   {%- assign text_color = 'text-stone-900' -%}
   {%- assign btn_color = 'dark' -%}
+  {%- assign particle_color = '#2a3b35' -%}
 {%- endif -%}
-
 
 <section class="relative {{ section.settings.color_scheme }} px-4 md:px-10 py-10 md:py-[60px] overflow-hidden">
 
   {%- comment %} 背景画像 {%- endcomment %}
-  {%- if has_bg_image -%}
+  {%- if section.settings.background_image != blank -%}
     <div class="absolute inset-0">
       <img
         src="{{ section.settings.background_image | image_url: width: 2400 }}"
@@ -36,13 +32,7 @@
   {%- endif -%}
 
   {%- comment %} パーティクル（分子ネットワーク） {%- endcomment %}
-  {%- if show_particles -%}
-    {%- if has_bg_image or section.settings.color_scheme == 'bg-stone-950' -%}
-      {%- assign particle_color = '#f0ede8' -%}
-    {%- else -%}
-      {%- assign particle_color = '#2a3b35' -%}
-    {%- endif -%}
-
+  {%- if section.settings.enable_particles -%}
     <div
       id="about-ptcl-{{ section.id }}"
       class="absolute inset-0 pointer-events-none"
@@ -204,11 +194,6 @@
       "id": "button_label",
       "label": "ボタンテキスト",
       "default": "Fluxorについて"
-    },
-    {
-      "type": "image_picker",
-      "id": "button_icon",
-      "label": "ボタンアイコン画像（省略時は矢印）"
     }
   ],
   "presets": [

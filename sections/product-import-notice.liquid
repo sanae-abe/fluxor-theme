@@ -5,13 +5,12 @@
   使用: templates/product.json に追加して使用
 {%- endcomment %}
 
-{%- unless section.settings.show_import_notice -%}
-  {%- comment %} 非表示設定の場合は何も出力しない {%- endcomment %}
-{%- else -%}
+{%- if section.settings.show_import_notice -%}
 
 <section class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100">
   <div class="max-w-4xl mx-auto">
     <div class="flex flex-col gap-5">
+
       <div class="flex items-center gap-1">
         {%- render 'icon', icon: 'triangle-alert', class: 'w-5 h-5 shrink-0', stroke: '#1c1917', stroke_width: '2' -%}
         <p class="font-medium text-stone-900 text-base">個人輸入代行に関する重要なご注意</p>
@@ -49,11 +48,12 @@
           <p class="text-stone-900 text-sm leading-relaxed">{{ section.settings.import_notice_returns }}</p>
         </div>
       {%- endif -%}
+
     </div>
   </div>
 </section>
 
-{%- endunless -%}
+{%- endif -%}
 
 {% schema %}
 {

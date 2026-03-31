@@ -16,7 +16,7 @@
     class="max-w-screen-xl mx-auto"
     x-data="{ filtersOpen: false }"
   >
-    {%- comment %} コレクションヘッダー {%- endcomment %}
+    {%- comment %} コレクションヘッダー {%- endcomment -%}
     <div class="mb-6">
       {%- render 'breadcrumb',
         item1_label: 'ホーム',
@@ -32,7 +32,7 @@
       {%- endif -%}
     </div>
 
-    {%- comment %} アクティブフィルター数の計算 {%- endcomment %}
+    {%- comment %} アクティブフィルター数の計算 {%- endcomment -%}
     {%- assign active_filter_count = 0 -%}
     {%- for filter in collection.filters -%}
       {%- assign active_filter_count = active_filter_count | plus: filter.active_values.size -%}
@@ -43,10 +43,10 @@
       {%- endif -%}
     {%- endfor -%}
 
-    {%- comment %} ツールバー {%- endcomment %}
+    {%- comment %} ツールバー {%- endcomment -%}
     <div class="flex items-center gap-4 mb-6 pb-4 border-b border-stone-200">
       {%- if collection.filters.size > 0 -%}
-        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment %}
+        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
         <button
           type="button"
           @click="filtersOpen = true"
@@ -60,10 +60,10 @@
         </button>
       {%- endif -%}
 
-      {%- comment %} 件数表示 {%- endcomment %}
+      {%- comment %} 件数表示 {%- endcomment -%}
       <p class="text-sm text-stone-500{% if collection.filters.size > 0 %} hidden md:block{% endif %}">{{ paginate.items }}点の製品　</p>
 
-      {%- comment %} ソート {%- endcomment %}
+      {%- comment %} ソート {%- endcomment -%}
       <div class="ml-auto flex items-center gap-2">
         <label for="SortBy" class="text-sm text-stone-500 whitespace-nowrap hidden sm:block">並び順:</label>
         {%- capture _sort_options -%}
@@ -87,7 +87,7 @@
       </div>
     </div>
 
-    {%- comment %} アクティブフィルター chips {%- endcomment %}
+    {%- comment %} アクティブフィルター chips {%- endcomment -%}
     {%- if active_filter_count > 0 -%}
       <div class="flex flex-wrap gap-2 mb-6">
         {%- for filter in collection.filters -%}
@@ -115,14 +115,14 @@
     {%- endif -%}
 
     <div class="flex gap-8">
-      {%- comment %} デスクトップサイドバー {%- endcomment %}
+      {%- comment %} デスクトップサイドバー {%- endcomment -%}
       {%- if collection.filters.size > 0 -%}
         <aside class="hidden md:block w-[calc(25%-2rem)] flex-shrink-0">
           {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
         </aside>
       {%- endif -%}
 
-      {%- comment %} 商品グリッド {%- endcomment %}
+      {%- comment %} 商品グリッド {%- endcomment -%}
       <div
         class="flex-1 min-w-0"
         x-data="{
@@ -158,7 +158,7 @@
       >
         {%- if collection.products.size > 0 -%}
 
-          {%- comment %} 次ページURLマーカー（JSが取得するため） {%- endcomment %}
+          {%- comment %} 次ページURLマーカー（JSが取得するため） {%- endcomment -%}
           {%- if paginate.next -%}
             <span id="js-next-url" data-url="{{ paginate.next.url | escape }}" hidden></span>
           {%- endif -%}
@@ -173,13 +173,13 @@
             {%- endfor -%}
           </div>
 
-          {%- comment %} モバイル: 監視用センチネル + ローディング {%- endcomment %}
+          {%- comment %} モバイル: 監視用センチネル + ローディング {%- endcomment -%}
           <div x-ref="sentinel" class="md:hidden h-px" aria-hidden="true"></div>
-          <div x-show="loading" x-cloak class="md:hidden flex justify-center py-8">
+          <div :class="loading ? '' : 'hidden'" class="md:hidden flex justify-center py-8 hidden">
             <span class="text-sm text-stone-400">読み込み中…</span>
           </div>
 
-          {%- comment %} デスクトップ: ページネーション {%- endcomment %}
+          {%- comment %} デスクトップ: ページネーション {%- endcomment -%}
           {%- if paginate.pages > 1 -%}
             <nav class="hidden md:flex justify-center gap-2 mt-16" aria-label="ページネーション">
               {%- if paginate.previous -%}
@@ -206,9 +206,9 @@
       </div>
     </div>
 
-    {%- comment %} モバイルフィルタードロワー {%- endcomment %}
+    {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
     {%- if collection.filters.size > 0 -%}
-      {%- comment %} パネル {%- endcomment %}
+      {%- comment %} パネル {%- endcomment -%}
       <div
         x-show="filtersOpen"
         x-transition:enter="transition-transform duration-300 ease-out"
@@ -239,7 +239,7 @@
           {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
         </div>
       </div>
-      {%- comment %} オーバーレイ {%- endcomment %}
+      {%- comment %} オーバーレイ {%- endcomment -%}
       <div
         x-show="filtersOpen"
         x-transition:enter="transition-opacity duration-300"
@@ -255,11 +255,11 @@
       ></div>
     {%- endif -%}
   </section>
-</div> 
+</div>
 
 {%- endpaginate -%}
 
-{% schema %}
+{%- schema %}
 {
   "name": "Collection",
   "settings": [
@@ -279,4 +279,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

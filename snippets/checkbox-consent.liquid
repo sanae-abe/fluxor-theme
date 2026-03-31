@@ -7,6 +7,19 @@
     - variant     : 'light'（デフォルト）| 'dark'
 {%- endcomment -%}
 {%- assign _variant = variant | default: 'light' -%}
+{%- if _variant == 'dark' -%}
+  {%- assign _link_class = 'underline hover:opacity-70 transition-opacity duration-200' -%}
+{%- else -%}
+  {%- assign _link_class = 'underline hover:text-stone-900 transition-colors' -%}
+{%- endif -%}
+{%- assign _icon_class = 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+{%- capture _privacy_text -%}
+  {%- if privacy_url != blank -%}
+    <a href="{{ privacy_url }}" class="{{ _link_class }}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
+  {%- else -%}
+    プライバシーポリシーに同意します
+  {%- endif -%}
+{%- endcapture -%}
 
 {%- if _variant == 'dark' -%}
 
@@ -23,15 +36,9 @@
         peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-stone-400 peer-focus-visible:outline-offset-1"
       aria-hidden="true"
     >
-      {%- render 'icon', icon: 'check', width: 10, height: 10, stroke: '#1c1917', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+      {%- render 'icon', icon: 'check', width: 10, height: 10, stroke: '#1c1917', stroke_width: 3, class: _icon_class -%}
     </span>
-    <span class="text-xs text-stone-200 leading-tight">
-      {%- if privacy_url != blank -%}
-        <a href="{{ privacy_url }}" class="underline hover:opacity-70 transition-opacity duration-200" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
-      {%- else -%}
-        プライバシーポリシーに同意します
-      {%- endif -%}
-    </span>
+    <span class="text-xs text-stone-200 leading-tight">{{ _privacy_text }}</span>
   </label>
 
 {%- else -%}
@@ -51,18 +58,12 @@
         peer-focus-visible:outline peer-focus-visible:outline-2 peer-focus-visible:outline-stone-900 peer-focus-visible:outline-offset-1"
       aria-hidden="true"
     >
-      {%- render 'icon', icon: 'check', width: 12, height: 12, stroke: 'white', stroke_width: 3, class: 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
+      {%- render 'icon', icon: 'check', width: 12, height: 12, stroke: 'white', stroke_width: 3, class: _icon_class -%}
     </span>
     <label
       {%- if id != blank %} for="{{ id }}"{% endif %}
       class="text-sm text-stone-900 leading-relaxed cursor-pointer"
-    >
-      {%- if privacy_url != blank -%}
-        <a href="{{ privacy_url }}" class="underline hover:text-stone-900 transition-colors" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
-      {%- else -%}
-        プライバシーポリシーに同意します
-      {%- endif -%}
-    </label>
+    >{{ _privacy_text }}</label>
   </div>
 
 {%- endif -%}

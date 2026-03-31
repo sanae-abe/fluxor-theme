@@ -1,4 +1,4 @@
-{%- comment %} 引数: filters, sort_by {%- endcomment %}
+{%- comment %} 引数: filters, sort_by {%- endcomment -%}
 <div class="space-y-6">
   {%- for filter in filters -%}
     <div x-data="{ open: true }">
@@ -11,10 +11,10 @@
         {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 transition-transform duration-200', x_class: "open ? '' : '-rotate-180'" -%}
       </button>
 
-      <div x-show="open" class="mt-3">
+      <div :class="open ? '' : 'hidden'" class="mt-3">
         {%- if filter.type == 'price_range' -%}
           <form action="{{ collection.url }}" method="get" class="space-y-3">
-            {%- comment %} 他のアクティブフィルターを保持 {%- endcomment %}
+            {%- comment %} 他のアクティブフィルターを保持 {%- endcomment -%}
             {%- for f in filters -%}
               {%- if f.type != 'price_range' -%}
                 {%- for v in f.active_values -%}

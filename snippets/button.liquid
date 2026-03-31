@@ -27,19 +27,6 @@
   {% render 'button', label: '詳しく見る', variant: 'outline', color: 'teal', icon_left: 'arrow-left', icon_right: 'arrow-right' %}
 {% endcomment %}
 
-<style>
-  .btn-slide {
-    transition: background-color 0.15s ease, color 0.15s ease;
-  }
-
-  @media (any-hover: hover) {
-    .btn-slide:not(:disabled):hover {
-      background-color: var(--hover-bg);
-      color: var(--hover-text);
-    }
-  }
-</style>
-
 {%- liquid
   assign btn_variant  = variant  | default: 'solid'
   assign btn_color    = color    | default: 'dark'
@@ -150,7 +137,7 @@
     assign disabled_cls = 'opacity-40 cursor-not-allowed pointer-events-none'
   endif
 
-  assign base_cls = 'btn-slide inline-flex items-center justify-center border font-sans tracking-wide select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt tracking-wider'
+  assign base_cls = 'btn-slide inline-flex items-center justify-center border font-sans tracking-wider select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt'
   assign icon_svg_cls = icon_cls | append: ' flex-shrink-0 stroke-2'
 -%}
 

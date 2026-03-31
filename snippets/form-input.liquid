@@ -17,30 +17,31 @@
 
   Usage:
     {%- render 'form-input', type: 'email', id: 'ContactForm-email', name: 'contact[email]', label: 'メールアドレス', value: form.email, required: true -%}
-    {%- render 'form-input', type: 'number', name: filter.min_value.param_name, placeholder: '0', min: 0, variant: 'bordered' -%}
+    {%- render 'form-input', type: 'number', name: filter.min_value.param_name, placeholder: '0', min: 0 -%}
 {%- endcomment %}
 
 {%- liquid
-  assign _type    = type    | default: 'text'
-  assign _rows    = rows    | default: 6
-  assign _variant = variant | default: 'underline'
-  assign _size    = size    | default: 'md'
+  assign _type = type | default: 'text'
+  assign _rows = rows | default: 6
 
-  case _size
+  case size
   when 'sm'
     assign _size_cls = 'min-h-8 px-2.5 py-1.5 text-sm'
   else
     assign _size_cls = 'min-h-10 px-3 py-2 text-base'
   endcase
 
-  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 focus:outline-none focus:border-stone-500 transition-colors' | append: ' ' | append: _size_cls
+  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 focus:outline-none focus:border-stone-500 transition-colors ' | append: _size_cls
+  if class != blank
+    assign _input_cls = _input_cls | append: ' ' | append: class
+  endif
 -%}
 
 {%- if label != blank -%}
   <label
     {%- if id != blank %} for="{{ id }}"{%- endif %}
     class="block text-sm tracking-widest uppercase text-stone-900 mb-2"
-  >{{ label }}</label>
+  >{{ label | escape }}</label>
 {%- endif -%}
 
 {%- if _type == 'textarea' -%}
@@ -48,21 +49,21 @@
     {%- if id != blank %} id="{{ id }}"{%- endif %}
     {%- if name != blank %} name="{{ name }}"{%- endif %}
     rows="{{ _rows }}"
-    class="{{ _input_cls }} resize-none{% if class != blank %} {{ class }}{% endif %}"
+    class="{{ _input_cls }} resize-none"
     {%- if placeholder != blank %} placeholder="{{ placeholder }}"{%- endif %}
     {%- if required %} required{%- endif %}
-    {{ attr }}
-  >{{ value }}</textarea>
+    {{- attr }}
+  >{{ value | escape }}</textarea>
 {%- else -%}
   <input
     type="{{ _type }}"
     {%- if id != blank %} id="{{ id }}"{%- endif %}
     {%- if name != blank %} name="{{ name }}"{%- endif %}
-    {%- if value != blank %} value="{{ value }}"{%- endif %}
+    {%- if value != blank %} value="{{ value | escape }}"{%- endif %}
     {%- if placeholder != blank %} placeholder="{{ placeholder }}"{%- endif %}
     {%- if min != blank %} min="{{ min }}"{%- endif %}
-    class="{{ _input_cls }}{% if class != blank %} {{ class }}{% endif %}"
+    class="{{ _input_cls }}"
     {%- if required %} required{%- endif %}
-    {{ attr }}
+    {{- attr }}
   >
 {%- endif -%}

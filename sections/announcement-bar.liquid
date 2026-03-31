@@ -13,43 +13,62 @@
 {%- if settings.sale_enabled and settings.sale_banner_show or carousel_count > 0 -%}
   <div
     id="AnnouncementBar"
-    class="bg-stone-950 text-stone-50 overflow-hidden py-2"
-    {%- if settings.sale_enabled %} x-data x-show="$store.sale.isActive()"{%- endif %}
+    class="bg-stone-950 text-stone-50 py-2{%- if settings.sale_enabled %} hidden{%- endif %}"
+    x-data="announcementBar({{ carousel_count }})"
+    {%- if settings.sale_enabled %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
   >
-    <div class="announcement-marquee flex whitespace-nowrap text-xs md:text-sm tracking-wide">
-      {%- comment %} 1セット目 {%- endcomment %}
-      {%- for block in section.blocks -%}
-        {%- if block.settings.text != blank -%}
-          <span class="inline-flex items-center px-10" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-          <span class="opacity-30 select-none" aria-hidden="true">·</span>
-        {%- endif -%}
-      {%- endfor -%}
-      {%- if settings.sale_enabled and settings.sale_banner_show -%}
-        <span class="inline-flex items-center gap-2 px-10">
-          <span>{{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF</span>
-          {%- render 'sale-countdown' -%}
-        </span>
-        <span class="opacity-30 select-none" aria-hidden="true">·</span>
+    <div class="relative flex items-center justify-center min-h-[28px] px-10 md:px-16 text-xs md:text-sm tracking-wide">
+
+      {%- if carousel_count > 1 -%}
+        <button
+          type="button"
+          @click="prev()"
+          class="announcement-nav-btn absolute left-2 md:left-4 p-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-50 rounded"
+          aria-label="前のメッセージ"
+        >
+          {%- render 'icon', icon: 'arrow-left', class: 'w-3.5 h-3.5' -%}
+        </button>
       {%- endif -%}
 
-      {%- comment %} 2セット目（シームレスループ用） {%- endcomment %}
-      {%- for block in section.blocks -%}
-        {%- if block.settings.text != blank -%}
-          <span class="inline-flex items-center px-10" aria-hidden="true">{{ block.settings.text }}</span>
-          <span class="opacity-30 select-none" aria-hidden="true">·</span>
+      <div class="text-center">
+        {%- assign item_index = 0 -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.text != blank -%}
+            <span
+              class="inline-flex items-center{% unless item_index == 0 %} hidden{% endunless %}"
+              :class="{{ item_index }} === current ? '' : 'hidden'"
+              {{ block.shopify_attributes }}
+            >{{ block.settings.text }}</span>
+            {%- assign item_index = item_index | plus: 1 -%}
+          {%- endif -%}
+        {%- endfor -%}
+        {%- if settings.sale_enabled and settings.sale_banner_show -%}
+          <span
+            class="inline-flex items-center gap-2 hidden"
+            :class="{{ item_index }} === current ? '' : 'hidden'"
+          >
+            <span>{{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF</span>
+            {%- render 'sale-countdown' -%}
+          </span>
         {%- endif -%}
-      {%- endfor -%}
-      {%- if settings.sale_enabled and settings.sale_banner_show -%}
-        <span class="inline-flex items-center gap-2 px-10" aria-hidden="true">
-          <span>{{ settings.sale_banner_text }} {{ settings.sale_discount_percent }}% OFF</span>
-        </span>
-        <span class="opacity-30 select-none" aria-hidden="true">·</span>
+      </div>
+
+      {%- if carousel_count > 1 -%}
+        <button
+          type="button"
+          @click="next()"
+          class="announcement-nav-btn absolute right-2 md:right-4 p-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-50 rounded"
+          aria-label="次のメッセージ"
+        >
+          {%- render 'icon', icon: 'arrow-right', class: 'w-3.5 h-3.5' -%}
+        </button>
       {%- endif -%}
+
     </div>
   </div>
 {%- endif -%}
 
-{% schema %}
+{%- schema %}
 {
   "name": "Announcement Bar",
   "max_blocks": 5,
@@ -80,4 +99,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

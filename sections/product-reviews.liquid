@@ -5,33 +5,33 @@
   使用: templates/product.json に追加して使用
 {%- endcomment %}
 
-<section class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]">
+<section class="bg-[var(--color-background)] px-4 md:px-10 py-10 md:py-[60px]">
   <div class="max-w-4xl mx-auto">
-    <h2 class="text-2xl md:text-3xl font-semibold text-stone-900 tracking-wide palt">{{ section.settings.heading }}</h2>
-    <!-- Start of Judge.me code -->
+    <h2 class="text-2xl md:text-3xl font-semibold text-[var(--color-text)] tracking-wide palt">{{ section.settings.heading }}</h2>
+    {%- comment %} Judge.me レビューウィジェット 開始 {%- endcomment %}
     {%- assign has_legacy = false -%}
     {%- if product.metafields.judgeme.widget.size > 20 -%}{%- assign has_legacy = true -%}{%- endif -%}
-    <div style='clear:both'></div>
+    <div class="clear-both"></div>
     <div
-      id='judgeme_product_reviews'
-      class='jdgm-widget jdgm-review-widget'
-      data-product-title='{{ product.title | escape }}'
-      data-id='{{ product.id }}'
-      data-product-id='{{ product.id }}'
-      data-widget='review'
-      data-auto-install='false'
-      data-shop-reviews-count='{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}'
-      data-entry-point='review_widget.js'
-      data-entry-key='review-widget/main.js'
+      id="judgeme_product_reviews"
+      class="jdgm-widget jdgm-review-widget"
+      data-product-title="{{ product.title | escape }}"
+      data-id="{{ product.id }}"
+      data-product-id="{{ product.id }}"
+      data-widget="review"
+      data-auto-install="false"
+      data-shop-reviews-count="{{ shop.metafields.judgeme.shop_reviews_count | default: 0 | escape }}"
+      data-entry-point="review_widget.js"
+      data-entry-key="review-widget/main.js"
     >
       {%- if has_legacy -%}
-        <div class='jdgm-legacy-widget-content' style='display: none;'>{{ product.metafields.judgeme.widget }}</div>
+        <div class="jdgm-legacy-widget-content hidden">{{ product.metafields.judgeme.widget }}</div>
       {%- endif -%}
     </div>
     {%- if product.metafields.judgeme.review_widget_data -%}
       <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
     {%- endif -%}
-    <!-- End of Judge.me code -->
+    {%- comment %} Judge.me レビューウィジェット 終了 {%- endcomment %}
   </div>
 </section>
 
