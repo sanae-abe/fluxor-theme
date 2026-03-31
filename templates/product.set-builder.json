@@ -95,12 +95,21 @@
         "import_notice_customs": "化粧品の個人輸入には数量制限がございます（標準サイズで1品目につき24個まで）。制限を超えるご注文があった場合、分割発送のご相談をさせていただく場合がございます。また、ご購入金額（商品代金）が日本円で約16,666円を超える場合、日本の税関で関税・消費税等が発生する場合がございます。その際に発生した税金等につきましては、お客様（輸入者様）のご負担となりますので予めご了承ください。",
         "import_notice_returns": "個人輸入代行というサービスの性質上、海外事業者への発注が完了した後のキャンセル、返品、交換は原則としてお受けできません。ただし、商品到着時に明らかな破損・液漏れ、またはご注文と異なる商品が届いた場合に限り、到着後3日以内にご連絡いただければ、海外事業者への返金・再送の交渉をサポートいたします。"
       }
+    },
+    "product_recommendations_loader_Uh9P47": {
+      "type": "product-recommendations-loader",
+      "name": "あなたへのおすすめ",
+      "settings": {
+        "enabled": true,
+        "count": 4
+      }
     }
   },
   "order": [
     "main",
     "product_accordion_xJ64VX",
     "product_reviews_ExzzzF",
+    "product_recommendations_loader_Uh9P47",
     "product_import_notice_KPfehc"
   ]
 }
