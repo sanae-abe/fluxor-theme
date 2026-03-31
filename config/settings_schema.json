@@ -138,6 +138,50 @@
     ]
   },
   {
+    "name": "個人輸入代行・免責事項",
+    "settings": [
+      {
+        "type": "textarea",
+        "id": "import_notice_declaration",
+        "label": "①本サービスについて（個人輸入代行の宣言）"
+      },
+      {
+        "type": "textarea",
+        "id": "import_notice_liability",
+        "label": "②免責事項（薬機法・自己責任）"
+      },
+      {
+        "type": "textarea",
+        "id": "import_notice_resale",
+        "label": "③転売禁止"
+      },
+      {
+        "type": "textarea",
+        "id": "import_notice_customs",
+        "label": "④関税・輸入数量制限"
+      },
+      {
+        "type": "textarea",
+        "id": "import_notice_returns",
+        "label": "⑤キャンセル・返品・交換"
+      },
+      {
+        "type": "header",
+        "content": "フッター表示用"
+      },
+      {
+        "type": "textarea",
+        "id": "import_notice_footer",
+        "label": "フッター用注意事項（要約版）"
+      },
+      {
+        "type": "textarea",
+        "id": "disclaimer",
+        "label": "各用語の定義（薬機法等）"
+      }
+    ]
+  },
+  {
     "name": "Social media",
     "settings": [
       {
