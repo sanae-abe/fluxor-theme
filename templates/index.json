@@ -38,7 +38,7 @@
       "name": "注目のアイテム",
       "settings": {
         "heading": "注目のアイテム",
-        "subheading": "エディターが厳選した、今注目のスキンケア製品",
+        "subheading": "",
         "collection": "featured-collection",
         "show_view_all": true,
         "products_to_show": 4,
@@ -69,7 +69,7 @@
       "name": "新着商品",
       "settings": {
         "heading": "新着商品",
-        "subheading": "最新のスキンケア製品が入荷しました",
+        "subheading": "",
         "collection": "new-arrivals",
         "show_view_all": true,
         "products_to_show": 4,
@@ -100,7 +100,7 @@
       "type": "best-sellers",
       "settings": {
         "heading": "ベストセラー",
-        "subheading": "多くのお客様に選ばれている、実力派スキンケア製品",
+        "subheading": "",
         "collection": "best-sellers",
         "show_view_all": false,
         "link_url": "",
