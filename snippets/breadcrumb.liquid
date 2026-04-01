@@ -9,7 +9,7 @@
     item3_label {String} 3段階目ラベル（省略時はitem2が現在ページ）
     item3_url   {String} 3段階目URL
     item4_label {String} 4段階目ラベル（URLなし = 常に現在ページ）
-    max_w       {String} max-width クラス（デフォルト: 'max-w-4xl'）
+    max_w       {String} max-width クラス（デフォルト: 'max-w-3xl'）
 
   ルール: URLあり = リンク、URLなし = 現在ページ（最後のアイテム）
   モバイル（md未満）: 親ページへの ← リンクのみ表示
@@ -26,7 +26,7 @@
 {%- endcomment %}
 
 {%- liquid
-  assign _max_w = max_w | default: 'max-w-4xl'
+  assign _max_w = max_w | default: 'max-w-3xl'
   assign _sep   = '|||'
 
   if item4_label != blank
