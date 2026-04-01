@@ -95,7 +95,4 @@ HTML コメント `<!-- -->` は**禁止**。ブラウザに送信される。
 | `--color-text-subtle` | ラベル等 | stone-400 |
 | `--color-dark` | フッター背景 | stone-900 |
 | `--color-accent` | ブランドカラー | `#0f766e` (teal-700) |
-| `--color-premium` | レーティングスター | `#f59e0b` (amber-500) |
-| `--color-rank-text` | ランクバッジテキスト | `#78350f` (amber-900) |
-| `--color-info` | info / リンク | `#0284c7` (sky-600) |
 | `--color-sale` | セール・割引バッジ | `#be123c` (rose-700) |

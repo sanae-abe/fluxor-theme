@@ -130,7 +130,7 @@
         height="600"
       >
     {%- else -%}
-      <div class="w-full h-full flex items-center justify-center text-stone-300">
+      <div class="w-full h-full flex items-center justify-center text-stone-300 bg-stone-100 ">
         {%- render 'icon', icon: 'image', class: 'w-12 h-12' -%}
       </div>
     {%- endif -%}
@@ -150,7 +150,7 @@
     {%- comment %} バッジ {%- endcomment -%}
     <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10">
       {%- if product.available == false -%}
-        {%- render 'badge', label: '売り切れ', variant: 'tertiary' -%}
+        {%- render 'badge', label: '売り切れ', variant: 'primary' -%}
       {%- elsif on_sale -%}
         {%- assign badge_label = discount | append: '% OFF' -%}
         {%- render 'badge', label: badge_label, variant: 'premium' -%}

@@ -27,7 +27,7 @@
 
           {%- comment %} ラベル {%- endcomment -%}
           {%- if block.settings.label != blank -%}
-            <p class="text-base font-medium {% if section.settings.background == 'bg-stone-950' %}text-stone-50{% else %}text-stone-900{% endif %} text-center leading-6">
+            <p class="text-base font-medium {% if section.settings.background == 'bg-stone-950' %}text-stone-50{% else %}text-stone-900{% endif %} text-center leading-relaxed">
               {{ block.settings.label }}
             </p>
           {%- endif -%}

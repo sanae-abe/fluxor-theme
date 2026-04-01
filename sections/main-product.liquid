@@ -193,7 +193,7 @@
   id="product-info"
   class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
 >
-  <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-10 items-start">
+  <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-16 items-start">
 
     {%- comment %} 左カラム: 画像ギャラリー {%- endcomment %}
     <div class="w-full lg:flex-1 flex flex-col gap-4">
@@ -289,7 +289,7 @@
         {%- if rating_value != blank -%}
           <div class="flex items-center gap-2">
             <div class="flex items-center gap-1">
-              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-amber-500" viewBox="0 0 16 16" aria-hidden="true">
+              <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 fill-stone-900" viewBox="0 0 16 16" aria-hidden="true">
                 <path d="M8 1.5 9.796 5.14l4.018.583-2.907 2.833.686 4L8 10.666l-3.593 1.89.686-4L2.186 5.723l4.018-.583z"/>
               </svg>
               <span class="text-sm font-medium text-stone-900 leading-tight">{{ rating_value | round: 1 }}</span>
@@ -344,7 +344,7 @@
           {%- endif -%}
         {%- endfor -%}
         <div
-          class="bg-stone-100 p-4 min-w-0 relative"
+          class="bg-stone-100 min-w-0 relative"
           x-data="{
             active: null,
             atStart: true,
@@ -365,25 +365,24 @@
           x-init="$nextTick(() => updateNav())"
         >
 
-          <div class="flex items-center justify-between gap-1 mb-3">
+          <div class="flex items-center justify-between gap-1 pt-4 px-4 pb-3">
             <div class="flex items-center gap-1">
-              {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900 shrink-0' -%}
-              <span class="text-sm font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
+              <span class="text-base font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
             </div>
             <div class="text-xs text-stone-400 text-right">※すべて整肌・保湿成分として</div>
           </div>
 
-          <div class="overflow-x-hidden min-w-0">
-          <div class="relative" x-ref="carouselRow">
+          <div class="relative overflow-x-hidden min-w-0 px-8 pb-4">
+          <div x-ref="carouselRow">
 
             <button
               type="button"
-              class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-6 h-full transition-opacity focus-visible:outline-none"
+              class="absolute left-2 top-0 z-10 w-6 h-[calc(100%-20px)] flex items-center justify-center transition-opacity focus-visible:outline-none"
               :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
               @click="$refs.track.scrollLeft -= cardW; $nextTick(() => updateNav())"
               aria-label="前へ"
             >
-              {%- render 'icon', icon: 'circle-chevron-left', class: 'w-6 h-6', stroke: '#79716B', fill: '#ffffff' -%}
+              {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5', stroke: '#1C1917' -%}
             </button>
 
             <div
@@ -429,12 +428,12 @@
 
             <button
               type="button"
-              class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-6 h-full transition-opacity focus-visible:outline-none"
+              class="absolute right-2 top-0 z-10 w-6 h-[calc(100%-20px)] flex items-center justify-center transition-opacity focus-visible:outline-none"
               :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
               @click="$refs.track.scrollLeft += cardW; $nextTick(() => updateNav())"
               aria-label="次へ"
             >
-              {%- render 'icon', icon: 'circle-chevron-right', class: 'w-6 h-6', stroke: '#79716B', fill: '#ffffff' -%}
+              {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5', stroke: '#1C1917' -%}
             </button>
           </div>
           </div>
@@ -548,7 +547,7 @@
 
       {%- render 'section-header', heading: section.settings.related_heading -%}
 
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-6">
+      <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-10 md:gap-y-6">
         {%- assign shown = 0 -%}
         {%- for p in related_col.products -%}
           {%- unless p.id == product.id -%}

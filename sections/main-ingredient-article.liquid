@@ -1,9 +1,44 @@
+{%- assign name_ja = article.metafields.ingredient.name_ja.value -%}
+
 {%- comment %} ============================================================
-  Hero — 全幅背景画像 + 成分名テキスト
+  Header — ナビゲーション + タイトル + 記事画像
   ============================================================ {%- endcomment -%}
-<div class="relative w-full min-h-[500px] flex flex-col items-center justify-center gap-4 overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
+<div class="w-full flex flex-col items-center px-4 md:px-10">
+
+  {%- comment %} 戻るリンク {%- endcomment -%}
+  <div class="w-full border-b border-stone-400 flex items-center pb-5 pt-10">
+    <a
+      href="{{ blog.url }}"
+      class="link-back inline-flex items-center gap-1 text-sm text-stone-900"
+    >
+      {%- render 'icon', icon: 'arrow-left', class: 'link-back__icon w-5 h-5 flex-shrink-0', stroke_width: 1.5 -%}
+      <span>成分ガイドに戻る</span>
+    </a>
+  </div>
+
+  {%- comment %} タイトルエリア {%- endcomment -%}
+  <div class="w-full flex flex-col gap-10 py-8 pb-10">
+    <div class="flex flex-col gap-4">
+      <h1 class="text-4xl md:text-5xl font-semibold tracking-wider text-stone-900 leading-tight">
+        {{ article.title }}
+      </h1>
+      {%- if name_ja != blank -%}
+        <p class="text-lg font-medium text-stone-900">{{ name_ja }}</p>
+      {%- endif -%}
+    </div>
+    <div class="flex items-center justify-between w-full gap-4 flex-wrap">
+      <div class="flex gap-3 items-center flex-wrap">
+        {%- for tag in article.tags limit: 4 -%}
+          <span class="inline-flex items-center justify-center px-2 py-1 rounded-full border border-stone-900/40 text-xs font-medium tracking-wider uppercase text-stone-900">{{ tag }}</span>
+        {%- endfor -%}
+      </div>
+      <p class="text-sm font-medium text-stone-900 shrink-0">UPDATE: {{ article.updated_at | date: "%Y/%m/%d" }}</p>
+    </div>
+  </div>
+
+  {%- comment %} 記事アイキャッチ画像 {%- endcomment -%}
   {%- if article.image -%}
-    <div class="absolute inset-0 pointer-events-none" aria-hidden="true">
+    <div class="w-full h-[250px] md:h-[400px] relative overflow-hidden">
       <img
         src="{{ article.image | image_url: width: 1920 }}"
         alt="{{ article.image.alt | escape | default: article.title | escape }}"
@@ -13,34 +48,11 @@
         width="1920"
         height="800"
       >
-      <div class="absolute inset-0 bg-gradient-to-b from-transparent to-black/30"></div>
     </div>
   {%- else -%}
-    <div class="absolute inset-0 bg-stone-800" aria-hidden="true"></div>
+    <div class="w-full h-[250px] md:h-[400px] bg-stone-200"></div>
   {%- endif -%}
 
-
-  {%- comment %} 戻るボタン {%- endcomment -%}
-    <div class="absolute top-4 left-4 z-10">
-      <a
-        href="{{ blog.url }}"
-        class="link-back inline-flex items-center gap-2 text-base text-stone-900 transition-colors hover:text-stone-900"
-      >
-        {%- render 'icon', icon: 'arrow-left', class: 'link-back__icon w-5 h-5 flex-shrink-0', stroke_width: 2 -%}
-        <span>成分ガイドへ戻る</span>
-      </a>
-    </div>
-
-  <p class="relative text-sm font-medium tracking-[1.12px] text-white uppercase">Ingredients</p>
-
-  <h1 class="relative text-3xl md:text-[60px] font-semibold leading-tight tracking-wider text-white text-center max-w-3xl">
-    {{ article.title }}
-  </h1>
-
-  {%- assign name_ja = article.metafields.ingredient.name_ja.value -%}
-  {%- if name_ja != blank -%}
-    <p class="relative text-lg font-medium text-white">{{ name_ja }}</p>
-  {%- endif -%}
 </div>
 
 <script type="application/ld+json">
@@ -58,39 +70,37 @@
 {%- comment %} ============================================================
   ブロックレンダリング
   ============================================================ {%- endcomment -%}
-{%- for block in section.blocks -%}
+<div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20 gap-10 md:gap-20">
+  {%- for block in section.blocks -%}
 
-  {%- comment %} テキストセクション {%- endcomment -%}
-  {%- if block.type == 'text_section' -%}
-    <div
-      class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
-      {{ block.shopify_attributes }}
-    >
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+    {%- comment %} テキストセクション {%- endcomment -%}
+    {%- if block.type == 'text_section' -%}
+      <div
+        class="w-full max-w-3xl flex flex-col gap-10"
+        {{ block.shopify_attributes }}
+      >
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl md:text-3xl font-semibold leading-tight tracking-wider text-stone-900">
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
             {{ block.settings.heading }}
           </h2>
         {%- endif -%}
         {%- if block.settings.content != blank -%}
-          <div class="text-base leading-7 text-stone-900">{{ block.settings.content }}</div>
+          <div class="text-base leading-relaxed text-stone-900 space-y-4">{{ block.settings.content }}</div>
         {%- endif -%}
       </div>
-    </div>
 
-  {%- comment %} ベネフィットカードグループ {%- endcomment -%}
-  {%- elsif block.type == 'benefits_group' -%}
-    <div
-      class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
-      {{ block.shopify_attributes }}
-    >
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+    {%- comment %} ベネフィットカードグループ {%- endcomment -%}
+    {%- elsif block.type == 'benefits_group' -%}
+      <div
+        class="w-full max-w-3xl flex flex-col gap-10"
+        {{ block.shopify_attributes }}
+      >
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl md:text-3xl font-semibold leading-tight tracking-wider text-stone-900">
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
             {{ block.settings.heading }}
           </h2>
         {%- endif -%}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
           {%- for n in (1..4) -%}
             {%- liquid
               assign icon_key = 'card' | append: n | append: '_icon'
@@ -101,7 +111,7 @@
               assign card_desc = block.settings[desc_key]
             -%}
             {%- if card_title != blank -%}
-              <div class="bg-stone-100 rounded-2xl p-6 flex flex-col gap-4">
+              <div class="bg-stone-100 p-6 flex flex-col gap-4">
                 <div class="pb-2">
                   {%- render 'icon', icon: card_icon, class: 'w-12 h-12' stroke_width: 1 -%}
                 </div>
@@ -114,38 +124,36 @@
           {%- endfor -%}
         </div>
       </div>
-    </div>
 
-  {%- comment %} 免責事項ノート {%- endcomment -%}
-  {%- elsif block.type == 'disclaimer' -%}
-    <div
-      class="w-full flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]"
-      {{ block.shopify_attributes }}
-    >
-      <div class="w-full max-w-3xl">
-        <div class="bg-stone-100 rounded-2xl p-4 flex gap-2 items-start">
+    {%- comment %} 免責事項ノート {%- endcomment -%}
+    {%- elsif block.type == 'disclaimer' -%}
+      <div
+        class="w-full max-w-3xl"
+        {{ block.shopify_attributes }}
+      >
+        <div class="bg-stone-100 p-4 flex gap-2 items-start">
           <div class="shrink-0 pt-1">
             {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900' -%}
           </div>
-          <div class="flex-1 text-sm leading-7 text-stone-900">{{ block.settings.text }}</div>
+          <div class="flex-1 text-sm leading-relaxed text-stone-900">{{ block.settings.text }}</div>
         </div>
       </div>
-    </div>
 
-  {%- endif -%}
-{%- endfor -%}
+    {%- endif -%}
+  {%- endfor -%}
+</div>
 
 {%- comment %} ============================================================
   参考文献
   ============================================================ {%- endcomment -%}
 {%- assign ref_blocks = section.blocks | where: 'type', 'reference_entry' -%}
 {%- if ref_blocks.size > 0 -%}
-  <div class="w-full bg-stone-100 flex flex-col items-center justify-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
+  <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]">
     <div class="w-full max-w-3xl flex flex-col gap-5">
       {%- if section.settings.references_heading != blank -%}
         <p class="text-base font-medium text-stone-900">{{ section.settings.references_heading }}</p>
       {%- endif -%}
-      <ol class="flex flex-col gap-4 list-none">
+      <ol class="flex flex-col gap-2 list-none">
         {%- for block in ref_blocks -%}
           <li class="flex gap-3" {{ block.shopify_attributes }}>
             <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
@@ -199,7 +207,7 @@
   <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
     <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
       {%- if section.settings.products_heading != blank -%}
-        <h2 class="text-3xl font-semibold tracking-wider text-stone-900">
+        <h2 class="text-4xl font-semibold tracking-wider text-stone-900">
           {{ section.settings.products_heading }}
         </h2>
       {%- endif -%}
@@ -208,7 +216,7 @@
       {%- endif -%}
     </div>
 
-    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-6 md:gap-y-6">
+    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
       {%- if ingredient_col != blank -%}
         {%- for product in ingredient_col.products limit: section.settings.products_to_show -%}
           {%- render 'card-product-4col', product: product -%}

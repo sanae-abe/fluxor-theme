@@ -17,7 +17,7 @@
     -%}
 
     {%- comment %} 製品グリッド（3カラム） {%- endcomment -%}
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
       {%- if section.blocks.size > 0 -%}
         {%- for block in section.blocks -%}
           {%- assign product = all_products[block.settings.product] -%}

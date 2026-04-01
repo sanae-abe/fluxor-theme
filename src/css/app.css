@@ -15,9 +15,6 @@
     --color-text-subtle: theme('colors.stone.400'); /* #a8a29e */
     --color-dark:        theme('colors.stone.900'); /* #1c1917 */
     --color-accent:      #0f766e; /* teal-700 */
-    --color-premium:     #f59e0b; /* amber-500 — レーティングスター */
-    --color-rank-text:   #78350f; /* amber-900 — ランクバッジテキスト */
-    --color-info:        #0284c7; /* sky-600 — info / リンク */
     --color-sale:        #be123c; /* rose-700 — セール・割引バッジ */
   }
 }
