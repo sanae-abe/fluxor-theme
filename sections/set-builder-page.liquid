@@ -19,6 +19,84 @@
 
   assign fp = section.settings.fixed_product | default: product
   assign fp_variant = fp.selected_or_first_available_variant
+
+  assign sale_eligible = false
+  assign sale_discount = 0
+
+  if settings.sale_enabled
+    assign _excluded = false
+    if settings.sale_exclude_handles != blank
+      assign _exclude_handle_list = settings.sale_exclude_handles | split: ','
+      for _handle in _exclude_handle_list
+        assign _handle_normalized = _handle | strip | downcase
+        if _handle_normalized == product.handle
+          assign _excluded = true
+          break
+        endif
+      endfor
+    endif
+
+    unless _excluded or settings.sale_exclude_tags == blank
+      assign _exclude_tag_list = settings.sale_exclude_tags | split: ','
+      for _exclude_tag in _exclude_tag_list
+        assign _exclude_tag_normalized = _exclude_tag | strip | downcase
+        for _product_tag in product.tags
+          assign _product_tag_normalized = _product_tag | downcase
+          if _product_tag_normalized == _exclude_tag_normalized
+            assign _excluded = true
+            break
+          endif
+        endfor
+        if _excluded
+          break
+        endif
+      endfor
+    endunless
+
+    unless _excluded
+      case settings.sale_target
+      when 'all'
+        assign sale_eligible = true
+      when 'tag'
+        if settings.sale_target_tags != blank
+          assign _target_tag_list = settings.sale_target_tags | split: ','
+          for _target_tag in _target_tag_list
+            assign _target_tag_normalized = _target_tag | strip | downcase
+            for _product_tag in product.tags
+              assign _product_tag_normalized = _product_tag | downcase
+              if _product_tag_normalized == _target_tag_normalized
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
+              break
+            endif
+          endfor
+        endif
+      when 'collection'
+        if settings.sale_target_collections != blank
+          assign _target_col_list = settings.sale_target_collections | split: ','
+          for _target_col_handle in _target_col_list
+            assign _target_col_normalized = _target_col_handle | strip | downcase
+            for _product_col in product.collections
+              if _product_col.handle == _target_col_normalized
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
+              break
+            endif
+          endfor
+        endif
+      endcase
+
+      if sale_eligible
+        assign sale_discount = settings.sale_discount_percent | plus: 0
+      endif
+    endunless
+  endif
 -%}
 
 {%- comment %} 候補商品 JSON 配列 {%- endcomment %}
@@ -50,6 +128,11 @@
       selected: [],
       adding: false,
       added: false,
+      saleEligible: {{ sale_eligible | json }},
+      saleDiscount: {{ sale_discount | default: 0 }},
+      get salePrice() {
+        return Math.floor({{ variant.price }} / 100 * (100 - this.saleDiscount) / 100);
+      },
 
       isSelected(product) {
         return this.selected.some(s => s.id === product.id)
@@ -167,13 +250,30 @@
 
       {%- comment %} 価格（管理画面設定値） {%- endcomment %}
       <div class="flex items-end gap-2 flex-wrap">
-        <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- if on_sale -%}
+          <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
           <s class="text-base text-stone-500 leading-tight">{{ variant.compare_at_price | money }}</s>
+        {%- elsif sale_eligible -%}
+          <span class="text-3xl font-semibold text-stone-900 leading-none"
+            x-text="$store.sale.isActive() ? $store.sale.formatMoney(salePrice) : $store.sale.formatMoney({{ variant.price }} / 100)"
+          >{{ variant.price | money }}</span>
+          <s class="text-base text-stone-500 leading-tight"
+            x-show="$store.sale.isActive()"
+            x-text="$store.sale.formatMoney({{ variant.price }} / 100)"
+            x-cloak
+          >{{ variant.price | money }}</s>
+        {%- else -%}
+          <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
         {%- endif -%}
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
-          {%- render 'badge', label: discount | append: '% OFF', variant: 'sale', size: 'sm' -%}
+          {%- assign discount_label = discount | append: '% OFF' -%}
+          {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+        {%- elsif sale_eligible -%}
+          {%- assign _sched_discount_label = sale_discount | append: '% OFF' -%}
+          <template x-if="$store.sale.isActive()">
+            <div>{%- render 'badge', label: _sched_discount_label, variant: 'sale', size: 'sm' -%}</div>
+          </template>
         {%- endif -%}
       </div>
 
