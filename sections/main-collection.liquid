@@ -61,12 +61,11 @@
       {%- endif -%}
 
       {%- comment %} 件数表示 {%- endcomment -%}
-      <p class="text-sm text-stone-500{% if collection.filters.size > 0 %} hidden md:block{% endif %}">{{ paginate.items }}点の製品　</p>
+      <p class="text-sm text-stone-600{% if collection.filters.size > 0 %} hidden md:block{% endif %}">{{ paginate.items }}点の製品</p>
 
       {%- comment %} ソート {%- endcomment -%}
-      <div class="ml-auto flex items-center gap-2">
-        <label for="SortBy" class="text-sm text-stone-500 whitespace-nowrap hidden sm:block">並び順:</label>
-        {%- capture _sort_options -%}
+      <div class="ml-auto flex items-center gap-2"> 
+        <label for="SortBy" class="text-sm text-stone-600 whitespace-nowrap hidden sm:block">並び順:</label>        {%- capture _sort_options -%}
           {%- for option in collection.sort_options -%}
             {%- case option.value -%}
               {%- when 'manual' -%}{%- assign _sort_label = 'おすすめ順' -%}
@@ -93,7 +92,7 @@
         {%- for filter in collection.filters -%}
           {%- if filter.type == 'price_range' -%}
             {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
-              <a href="{{ filter.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
+              <a href="{{ filter.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-200 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
                 価格:
                 {%- if filter.min_value.value != blank -%}¥{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{%- else -%}¥0{%- endif -%}
                 〜
@@ -110,7 +109,7 @@
             {%- endfor -%}
           {%- endif -%}
         {%- endfor -%}
-        <a href="{{ collection.url }}" class="text-xs text-stone-400 underline self-center hover:text-stone-900 transition-colors ml-1">すべてクリア</a>
+        <a href="{{ collection.url }}" class="text-xs text-stone-500 underline self-center hover:text-stone-900 transition-colors ml-1">すべてクリア</a>
       </div>
     {%- endif -%}
 

@@ -103,9 +103,7 @@
             {%- if card_title != blank -%}
               <div class="bg-stone-100 rounded-2xl p-6 flex flex-col gap-4">
                 <div class="pb-2">
-                  <div class="bg-sky-600 rounded-full w-12 h-12 flex items-center justify-center">
-                    {%- render 'icon', icon: card_icon, class: 'w-6 h-6 text-white' -%}
-                  </div>
+                  {%- render 'icon', icon: card_icon, class: 'w-12 h-12' stroke_width: 1 -%}
                 </div>
                 <h3 class="text-2xl font-medium text-stone-900">{{ card_title }}</h3>
                 {%- if card_desc != blank -%}

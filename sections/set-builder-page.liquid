@@ -181,7 +181,7 @@
 
       {%- comment %} 固定商品 {%- endcomment %}
       <div>
-        <p class="text-xs font-medium text-stone-400 uppercase tracking-wider mb-2">固定商品</p>
+        <p class="text-xs font-medium text-stone-500 uppercase tracking-wider mb-2">固定商品</p>
         <div class="flex items-center gap-3 p-3 rounded-xl border border-stone-200 bg-white">
           {%- if fp.featured_image -%}
             <img
@@ -205,7 +205,7 @@
       {%- comment %} 候補商品選択 {%- endcomment %}
       <div>
         <div class="flex items-center justify-between mb-3">
-          <p class="text-xs font-medium text-stone-400 uppercase tracking-wider">好きな2点を選んでください</p>
+          <p class="text-xs font-medium text-stone-500 uppercase tracking-wider">好きな2点を選んでください</p>
           <span class="text-xs font-semibold bundle-count" :class="selected.length === 2 ? 'is-complete' : ''">
             <span x-text="selected.length"></span>/2
           </span>
@@ -234,7 +234,7 @@
                 <p class="text-sm text-stone-500 mt-0.5" x-text="product.priceFormatted"></p>
               </div>
               <div class="bundle-check-dot flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center">
-                {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white hidden', x_class: "isSelected(product) ? '' : 'hidden'", stroke_width: 3 -%}
+                {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white', x_class: "isSelected(product) ? '' : 'hidden'", stroke_width: 3 -%}
               </div>
               <div class="bundle-soldout-badge hidden absolute inset-0 rounded-xl flex items-center justify-center" :class="product.available ? 'hidden' : ''">
                 <span class="text-xs font-semibold tracking-wide">在庫なし</span>
@@ -255,10 +255,10 @@
         >
           <span class="text-base font-bold leading-tight" :class="(adding || added) ? 'hidden' : ''">
             <span :class="selected.length < 2 ? '' : 'hidden'">あと<span x-text="2 - selected.length"></span>点選んでください</span>
-            <span class="hidden" :class="selected.length === 2 ? '' : 'hidden'">3点セットをカートに追加</span>
+            <span :class="selected.length === 2 ? '' : 'hidden'">3点セットをカートに追加</span>
           </span>
-          <span class="text-base font-bold leading-tight hidden" :class="adding ? '' : 'hidden'">追加中…</span>
-          <span class="text-base font-bold leading-tight hidden" :class="added ? '' : 'hidden'">✓ カートに追加しました</span>
+          <span class="text-base font-bold leading-tight" :class="adding ? '' : 'hidden'">追加中…</span>
+          <span class="text-base font-bold leading-tight" :class="added ? '' : 'hidden'">✓ カートに追加しました</span>
         </button>
 
         <p class="flex gap-2 text-sm justify-end">
