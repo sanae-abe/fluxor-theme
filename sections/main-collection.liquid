@@ -18,14 +18,6 @@
   >
     {%- comment %} コレクションヘッダー {%- endcomment -%}
     <div class="mb-6">
-      {%- render 'breadcrumb',
-        item1_label: 'ホーム',
-        item1_url: routes.root_url,
-        item2_label: collection.title,
-        max_w: 'max-w-none'
-      -%}
-    </div>
-    <div class="mb-6">
       <h1 class="text-2xl md:text-4xl font-semibold">{{ collection.title }}</h1>
       {%- if collection.description != blank -%}
         <p class="mt-6 text-sm text-stone-500 max-w-xl leading-relaxed">{{ collection.description }}</p>

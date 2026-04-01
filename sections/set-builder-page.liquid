@@ -175,30 +175,9 @@
   }
 </script>
 
-{%- comment %} パンくずリスト {%- endcomment %}
-<div class="px-4 md:px-10 pt-5 md:pt-10">
-  {%- if collection != blank -%}
-    {%- render 'breadcrumb',
-      item1_label: 'ホーム',
-      item1_url: routes.root_url,
-      item2_label: collection.title,
-      item2_url: collection.url,
-      item3_label: product.title,
-      max_w: 'max-w-screen-xl'
-    -%}
-  {%- else -%}
-    {%- render 'breadcrumb',
-      item1_label: 'ホーム',
-      item1_url: routes.root_url,
-      item2_label: product.title,
-      max_w: 'max-w-screen-xl'
-    -%}
-  {%- endif -%}
-</div>
-
 <div x-data="bundlePage('bundle-page-data-{{ section.id }}')">
 <section
-  class="bg-stone-50 px-4 md:px-10 pt-5 pb-10 md:pt-5 md:pb-[60px]"
+  class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-10 items-start">
 
@@ -268,11 +247,11 @@
         <span class="text-sm text-stone-900 leading-tight">(税込・送料込)</span>
         {%- if on_sale -%}
           {%- assign discount_label = discount | append: '% OFF' -%}
-          {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+          {%- render 'badge', label: discount_label, variant: 'premium', size: 'sm' -%}
         {%- elsif sale_eligible -%}
           {%- assign _sched_discount_label = sale_discount | append: '% OFF' -%}
           <template x-if="$store.sale.isActive()">
-            <div>{%- render 'badge', label: _sched_discount_label, variant: 'sale', size: 'sm' -%}</div>
+            <div>{%- render 'badge', label: _sched_discount_label, variant: 'premium', size: 'sm' -%}</div>
           </template>
         {%- endif -%}
       </div>
@@ -348,7 +327,7 @@
       <div class="flex flex-col gap-3">
         <button
           type="button"
-          class="btn-add-to-cart w-full bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+          class="btn-add-to-cart w-full bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2 palt transition-all duration-300"
           :class="(selected.length < 2 || adding) ? 'opacity-50 cursor-not-allowed' : ''"
           :disabled="selected.length < 2 || adding"
           @click="addBundle"

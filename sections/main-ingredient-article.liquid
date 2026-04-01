@@ -43,16 +43,15 @@
 }
 </script>
 
-{%- comment %} パンくずリスト {%- endcomment -%}
+{%- comment %} 戻るボタン {%- endcomment -%}
 <div class="px-4 md:px-10 pt-10">
-  {%- assign _bc_current = name_ja | default: article.title -%}
-  {%- render 'breadcrumb',
-    item1_label: 'ホーム',
-    item1_url: routes.root_url,
-    item2_label: '成分ガイド',
-    item2_url: blog.url,
-    item3_label: _bc_current
-  -%}
+  <a
+    href="{{ blog.url }}"
+    class="link-back inline-flex items-center gap-2 text-base text-stone-900 transition-colors hover:text-stone-900"
+  >
+    {%- render 'icon', icon: 'arrow-left', class: 'link-back__icon w-5 h-5 flex-shrink-0', stroke_width: 2 -%}
+    <span>成分ガイドへ戻る</span>
+  </a>
 </div>
 
 {%- comment %} ============================================================

@@ -93,7 +93,7 @@
 {%- if sale_eligible and on_sale == false -%}
   {%- capture _sched_badge_html -%}
     {%- assign _sched_badge_label = sale_discount | append: '% OFF' -%}
-    {%- render 'badge', label: _sched_badge_label, variant: 'sale' -%}
+    {%- render 'badge', label: _sched_badge_label, variant: 'premium' -%}
   {%- endcapture -%}
 {%- endif -%}
 
@@ -150,10 +150,10 @@
     {%- comment %} バッジ {%- endcomment -%}
     <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10">
       {%- if product.available == false -%}
-        {%- render 'badge', label: '売り切れ', variant: 'secondary' -%}
+        {%- render 'badge', label: '売り切れ', variant: 'tertiary' -%}
       {%- elsif on_sale -%}
         {%- assign badge_label = discount | append: '% OFF' -%}
-        {%- render 'badge', label: badge_label, variant: 'sale' -%}
+        {%- render 'badge', label: badge_label, variant: 'premium' -%}
       {%- elsif sale_eligible -%}
         <template x-if="isSaleActive()">
           <div>{{ _sched_badge_html }}</div>
@@ -165,7 +165,7 @@
       {%- comment %} カートに追加ボタン（モバイル: 画像右下アイコン） {%- endcomment -%}
       <button
         type="button"
-        class="md:hidden absolute bottom-2 right-2 z-10 w-9 h-9 rounded-full bg-stone-900 shadow-md flex items-center justify-center text-white"
+        class="md:hidden absolute bottom-2 right-2 z-10 w-9 h-9 rounded-full bg-stone-900 shadow-md flex items-center justify-center text-white palt transition-all duration-300"
         :class="adding ? 'opacity-70 cursor-wait' : ''"
         @click.stop="addToCart()"
         :disabled="adding"
@@ -181,7 +181,7 @@
       <div class="absolute inset-0 hidden md:flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
           type="button"
-          class="btn-card-add bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2"
+          class="btn-card-add bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 palt transition-all duration-300"
           :class="adding ? 'opacity-70 cursor-wait' : ''"
           @click.stop="addToCart()"
           :disabled="adding"

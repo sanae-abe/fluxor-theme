@@ -159,34 +159,14 @@
 {%- capture discount_badge_html -%}
   {%- if on_sale -%}
     {%- assign discount_label = discount | append: '% OFF' -%}
-    {%- render 'badge', label: discount_label, variant: 'sale', size: 'sm' -%}
+    {%- render 'badge', label: discount_label, variant: 'premium', size: 'sm' -%}
   {%- elsif sale_eligible -%}
     {%- assign _sched_discount_label = sale_discount | append: '% OFF' -%}
     <template x-if="saleEligible && $store.sale.isActive()">
-      <div>{%- render 'badge', label: _sched_discount_label, variant: 'sale', size: 'sm' -%}</div>
+      <div>{%- render 'badge', label: _sched_discount_label, variant: 'premium', size: 'sm' -%}</div>
     </template>
   {%- endif -%}
 {%- endcapture -%}
-
-<div class="px-4 md:px-10 pt-5 md:pt-10">
-  {%- if collection != blank -%}
-    {%- render 'breadcrumb',
-      item1_label: 'ホーム',
-      item1_url: routes.root_url,
-      item2_label: collection.title,
-      item2_url: collection.url,
-      item3_label: product.title,
-      max_w: 'max-w-screen-xl'
-    -%}
-  {%- else -%}
-    {%- render 'breadcrumb',
-      item1_label: 'ホーム',
-      item1_url: routes.root_url,
-      item2_label: product.title,
-      max_w: 'max-w-screen-xl'
-    -%}
-  {%- endif -%}
-</div>
 
 <script type="application/ld+json">
 {
@@ -211,7 +191,7 @@
 ===================================================={%- endcomment %}
 <section
   id="product-info"
-  class="bg-stone-50 px-4 md:px-10 pt-5 pb-10 md:pt-5 md:pb-[60px]"
+  class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-10 items-start">
 
@@ -651,7 +631,7 @@
       async addToCart() {
         if (this.adding || !this.variantAvailable) return;
         this.adding = true;
-        await $store.cart.add(this.selectedVariant.id, this.qty);
+        await this.$store.cart.add(this.selectedVariant.id, this.qty);
         this.adding = false;
       }
     };

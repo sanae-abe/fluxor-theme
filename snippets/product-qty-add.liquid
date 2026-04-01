@@ -42,7 +42,7 @@
   <button
     type="button"
     class="btn-add-to-cart border-2 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
-    :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
+    :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white transition-colors duration-300'"
     @click="addToCart()"
     :disabled="adding || !variantAvailable"
   >
@@ -81,7 +81,7 @@
 
     <button
       type="button"
-      class="btn-add-to-cart flex-1 border-2 flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
+      class="btn-add-to-cart flex-1 border-2 flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2 palt transition-all duration-300"
       :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
       @click="addToCart()"
       :disabled="adding || !variantAvailable"

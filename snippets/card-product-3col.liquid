@@ -94,7 +94,7 @@
 {%- if sale_eligible and on_sale == false -%}
   {%- capture _sched_badge_html -%}
     {%- assign _sched_badge_label = sale_discount | append: '% OFF' -%}
-    {%- render 'badge', label: _sched_badge_label, variant: 'sale' -%}
+    {%- render 'badge', label: _sched_badge_label, variant: 'premium' -%}
   {%- endcapture -%}
 {%- endif -%}
 
@@ -123,19 +123,19 @@
 
     {%- comment %} ランクバッジ {%- endcomment -%}
     {%- if rank != blank -%}
-      <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10 w-12 h-12 rounded-full bg-amber-900 flex items-center justify-center gap-0.5">
-        {%- render 'icon', icon: 'hash', class: 'w-3.5 h-3.5 text-white flex-shrink-0' -%}
-        <span class="text-white font-medium text-base leading-tight">{{ rank }}</span>
+      <div class="absolute top-2 md:top-4 left-2 md:left-4 z-10 w-12 h-12 rounded-full bg-white border border-stone-900/40 flex items-center justify-center gap-0.5">
+        {%- render 'icon', icon: 'hash', class: 'w-3.5 h-3.5 text-stone-900 flex-shrink-0' -%}
+        <span class="text-stone-900 font-medium text-base leading-tight">{{ rank }}</span>
       </div>
     {%- endif -%}
 
     {%- comment %} セール・売り切れバッジ {%- endcomment -%}
     <div class="absolute top-2 md:top-4 right-2 md:right-4 z-10">
       {%- if product.available == false -%}
-        {%- render 'badge', label: '売り切れ', variant: 'secondary' -%}
+        {%- render 'badge', label: '売り切れ', variant: 'tertiary' -%}
       {%- elsif on_sale -%}
         {%- assign badge_label = discount | append: '% OFF' -%}
-        {%- render 'badge', label: badge_label, variant: 'sale' -%}
+        {%- render 'badge', label: badge_label, variant: 'premium' -%}
       {%- elsif sale_eligible -%}
         <template x-if="isSaleActive()">
           <div>{{ _sched_badge_html }}</div>
@@ -215,7 +215,7 @@
         {%- if product.available -%}
           <button
             type="button"
-            class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2"
+            class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-white font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 palt transition-all duration-300"
             :class="adding ? 'opacity-70 cursor-wait' : ''"
             @click.stop="addToCart()"
             :disabled="adding"

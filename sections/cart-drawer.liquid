@@ -21,7 +21,7 @@
       カート
       <span
         :class="$store.cart.itemCount > 0 ? '' : 'hidden'"
-        class="text-stone-500 hidden"
+        class="text-stone-500"
       >(<span x-text="$store.cart.itemCount"></span>)</span>
     </h2>
     <button
@@ -53,7 +53,7 @@
   {%- comment %} カートアイテム一覧 {%- endcomment %}
   <div
     :class="$store.cart.items.length > 0 ? '' : 'hidden'"
-    class="flex-1 overflow-y-auto px-6 py-4 space-y-6 hidden"
+    class="flex-1 overflow-y-auto px-6 py-4 space-y-6"
   >
     <template x-for="item in $store.cart.items" :key="item.key">
       <div class="flex gap-4">
@@ -71,7 +71,7 @@
           <a :href="item.url" @click="$store.cart.open = false" class="text-sm font-medium leading-snug" x-text="item.product_title"></a>
           <p
             :class="item.variant_title && item.variant_title !== 'Default Title' ? '' : 'hidden'"
-            class="text-xs text-stone-500 mt-0.5 hidden"
+            class="text-xs text-stone-500 mt-0.5"
             x-text="item.variant_title"
           ></p>
 
@@ -96,7 +96,7 @@
   {%- comment %} フッター {%- endcomment %}
   <div
     :class="$store.cart.items.length > 0 ? '' : 'hidden'"
-    class="border-t border-stone-200 px-6 py-5 space-y-4 hidden"
+    class="border-t border-stone-200 px-6 py-5 space-y-4"
   >
     <div class="flex justify-between text-sm">
       <span class="text-stone-500">小計</span>

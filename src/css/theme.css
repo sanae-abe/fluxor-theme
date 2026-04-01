@@ -38,6 +38,18 @@
   }
 }
 
+/* ===== 戻るリンク ===== */
+
+.link-back__icon {
+  transition: transform 0.2s;
+}
+
+@media (any-hover: hover) {
+  .link-back:hover .link-back__icon {
+    transform: translateX(-0.25rem);
+  }
+}
+
 /* ===== ベース ===== */
 
 body {
