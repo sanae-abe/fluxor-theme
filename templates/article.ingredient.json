@@ -12,6 +12,13 @@
     "main": {
       "type": "main-ingredient-article",
       "blocks": {
+        "about": {
+          "type": "text_section",
+          "settings": {
+            "heading": "この成分について",
+            "content": "<p> レチナールの説明</p>"
+          }
+        },
         "benefits_group_9YPPHc": {
           "type": "benefits_group",
           "settings": {
@@ -48,31 +55,6 @@
             "heading": "妊娠・授乳中の方へ"
           }
         },
-        "about": {
-          "type": "text_section",
-          "settings": {
-            "heading": "この成分について",
-            "content": ""
-          }
-        },
-        "benefits": {
-          "type": "benefits_group",
-          "settings": {
-            "heading": "スキンケアにおける役割",
-            "card1_icon": "layout-grid",
-            "card1_title": "肌を整える",
-            "card1_description": "肌のキメを整え、なめらかな肌へと導きます。健やかな肌環境を保ちます。",
-            "card2_icon": "droplet",
-            "card2_title": "うるおいを与える",
-            "card2_description": "肌にうるおいを与え、しっとりとした質感を保ちます。乾燥から肌を守ります。",
-            "card3_icon": "sparkle",
-            "card3_title": "肌を清浄にする",
-            "card3_description": "肌を清浄に保ち、清潔な状態を維持します。肌本来の健やかさをサポートします。",
-            "card4_icon": "sun",
-            "card4_title": "爽やかな香り",
-            "card4_description": "柑橘系の爽やかな香りが、スキンケアタイムをリフレッシュする時間へと変えます。"
-          }
-        },
         "disclaimer": {
           "type": "disclaimer",
           "settings": {
@@ -81,12 +63,11 @@
         }
       },
       "block_order": [
+        "about",
         "benefits_group_9YPPHc",
         "compatible_ingredients_eMcXaz",
         "caution_combinations_p3fPYJ",
         "pregnancy_note_w6jjqx",
-        "about",
-        "benefits",
         "disclaimer"
       ],
       "settings": {
