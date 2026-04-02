@@ -11,7 +11,16 @@
         {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 transition-transform duration-200', x_class: "open ? '' : '-rotate-180'" -%}
       </button>
 
-      <div :class="open ? '' : 'hidden'" class="px-4 pb-4">
+      <div
+        class="grid"
+        style="transition: grid-template-rows 0.3s ease;"
+        :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
+      >
+        <div class="overflow-hidden">
+          <div
+            class="px-4 pb-4 transition duration-300"
+            :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+          >
         {%- if filter.type == 'price_range' -%}
           <form action="{{ collection.url }}" method="get" class="space-y-3">
             {%- comment %} 他のアクティブフィルターを保持 {%- endcomment -%}
@@ -54,6 +63,8 @@
             {%- endfor -%}
           </ul>
         {%- endif -%}
+          </div>
+        </div>
       </div>
     </div>
   {%- endfor -%}
