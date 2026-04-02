@@ -11,15 +11,21 @@
   "sections": {
     "main": {
       "type": "main-ingredients",
+      "settings": {}
+    },
+    "cta_banner_cJV68W": {
+      "type": "cta-banner",
+      "name": "CTAバナー",
       "settings": {
-        "cta_heading": "スキンケア商品をお探しですか？",
-        "cta_body": "お肌のお悩みや目的に合わせて、最適な成分が配合された商品をご提案します。",
-        "cta_button_label": "スキンケア商品を探す",
-        "cta_button_url": "/collections/all"
+        "heading": "スキンケア製品をお探しですか？",
+        "body": "お肌のお悩みや目的に合わせて、最適な成分が配合された製品をご提案します。",
+        "button_label": "スキンケア製品を探す",
+        "button_url": ""
       }
     }
   },
   "order": [
-    "main"
+    "main",
+    "cta_banner_cJV68W"
   ]
 }
