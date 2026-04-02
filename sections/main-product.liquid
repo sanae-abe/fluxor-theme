@@ -336,6 +336,7 @@
 
       {%- comment %} 注目の成分カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
+        <hr class="border-stone-200">
         {%- assign _desc_idx = '' -%}
         {%- for _ki in key_ingredients -%}
           {%- if _ki.description != blank -%}
@@ -344,7 +345,7 @@
           {%- endif -%}
         {%- endfor -%}
         <div
-          class="bg-stone-100 min-w-0 relative"
+          class="min-w-0 relative"
           x-data="{
             active: null,
             atStart: true,
@@ -365,24 +366,24 @@
           x-init="$nextTick(() => updateNav())"
         >
 
-          <div class="flex items-center justify-between gap-1 pt-4 px-4 pb-3">
+          <div class="flex items-center justify-between gap-1 pb-3">
             <div class="flex items-center gap-1">
-              <span class="text-base font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
+              <span class="text-sm font-medium text-stone-900 leading-tight palt tracking-wide">注目の成分</span>
             </div>
             <div class="text-xs text-stone-400 text-right">※すべて整肌・保湿成分として</div>
           </div>
 
-          <div class="relative overflow-x-hidden min-w-0 px-8 pb-4">
+          <div class="relative overflow-x-hidden min-w-0">
           <div x-ref="carouselRow">
 
             <button
               type="button"
-              class="absolute left-2 top-0 z-10 w-6 h-[calc(100%-20px)] flex items-center justify-center transition-opacity focus-visible:outline-none"
-              :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
+              class="absolute left-0 top-0 z-10 w-6 h-full bg-stone-50 flex items-center justify-center transition-opacity focus-visible:outline-none"
+              :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500 hover:text-stone-900'"
               @click="$refs.track.scrollLeft -= cardW; $nextTick(() => updateNav())"
               aria-label="前へ"
             >
-              {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5', stroke: '#1C1917' -%}
+              {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5' -%}
             </button>
 
             <div
@@ -427,13 +428,13 @@
             </div>
 
             <button
-              type="button"
-              class="absolute right-2 top-0 z-10 w-6 h-[calc(100%-20px)] flex items-center justify-center transition-opacity focus-visible:outline-none"
-              :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-600 hover:text-stone-900'"
+              type="button"ご注文から約14〜21営業日でお届けいたし
+              class="absolute top-0 right-0 z-10 w-6 h-full bg-stone-50 flex items-center justify-center transition-opacity focus-visible:outline-none"
+              :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500 hover:text-stone-900'"
               @click="$refs.track.scrollLeft += cardW; $nextTick(() => updateNav())"
               aria-label="次へ"
             >
-              {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5', stroke: '#1C1917' -%}
+              {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5' -%}
             </button>
           </div>
           </div>
@@ -468,6 +469,7 @@
       {%- endif -%}
 
       {%- if certifications != blank -%}
+        <hr class="border-stone-200">
         <div class="flex flex-wrap gap-2">
           {%- for certification in certifications -%}
             <span class="bg-white border border-stone-200 px-1.5 py-[6px] text-xs text-stone-900 leading-tight">{{ certification.name }}</span>
