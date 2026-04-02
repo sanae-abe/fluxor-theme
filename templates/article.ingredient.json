@@ -1,68 +1,65 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-ingredient-article",
-      "settings": {
-        "products_heading": "この成分を配合した商品",
-        "products_to_show": 4
-      },
       "blocks": {
         "about": {
           "type": "text_section",
           "settings": {
-            "heading": "この成分について"
+            "heading": "この成分について",
+            "content": ""
           }
         },
         "benefits": {
           "type": "benefits_group",
           "settings": {
-            "heading": "スキンケアにおける役割"
-          }
-        },
-        "usage": {
-          "type": "text_section",
-          "settings": {
-            "heading": "使用上のポイント"
-          }
-        },
-        "pairing": {
-          "type": "text_section",
-          "settings": {
-            "heading": "相性の良い成分"
-          }
-        },
-        "caution": {
-          "type": "text_section",
-          "settings": {
-            "heading": "注意が必要な組み合わせ"
-          }
-        },
-        "pregnancy": {
-          "type": "text_section",
-          "settings": {
-            "heading": "妊娠・授乳中の方へ"
+            "heading": "スキンケアにおける役割",
+            "card1_icon": "layout-grid",
+            "card1_title": "肌を整える",
+            "card1_description": "肌のキメを整え、なめらかな肌へと導きます。健やかな肌環境を保ちます。",
+            "card2_icon": "droplet",
+            "card2_title": "うるおいを与える",
+            "card2_description": "肌にうるおいを与え、しっとりとした質感を保ちます。乾燥から肌を守ります。",
+            "card3_icon": "sparkle",
+            "card3_title": "肌を清浄にする",
+            "card3_description": "肌を清浄に保ち、清潔な状態を維持します。肌本来の健やかさをサポートします。",
+            "card4_icon": "sun",
+            "card4_title": "爽やかな香り",
+            "card4_description": "柑橘系の爽やかな香りが、スキンケアタイムをリフレッシュする時間へと変えます。"
           }
         },
         "disclaimer": {
           "type": "disclaimer",
-          "settings": {}
-        },
-        "ref1": {
-          "type": "reference_entry",
-          "settings": {}
+          "settings": {
+            "text": "<p>本ページは成分の一般的な情報提供を目的としており、特定の効能・効果を保証するものではありません。肌悩みについては皮膚科専門医へご相談ください。</p>"
+          }
         }
       },
       "block_order": [
         "about",
         "benefits",
-        "usage",
-        "pairing",
-        "caution",
-        "pregnancy",
-        "disclaimer",
-        "ref1"
-      ]
+        "disclaimer"
+      ],
+      "settings": {
+        "compatible_heading": "相性の良い成分",
+        "caution_heading": "注意が必要な組み合わせ",
+        "pregnancy_heading": "妊娠・授乳中の方へ",
+        "references_heading": "参考文献",
+        "products_heading": "この成分を配合した商品",
+        "products_subheading": ""
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }

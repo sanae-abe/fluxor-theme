@@ -1,10 +1,17 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "main": {
       "type": "main-ingredients",
       "settings": {
-        "category_tags": "ビタミン類\n保湿・バリア成分\nペプチド・アミノ酸類\n植物エキス・オイル\n先端・その他の成分",
-        "concern_tags": "くすみ\nハリ・弾力の低下\n乾燥による小じわ\n乾燥・かさつき\n毛穴の開き",
         "cta_heading": "スキンケア商品をお探しですか？",
         "cta_body": "お肌のお悩みや目的に合わせて、最適な成分が配合された商品をご提案します。",
         "cta_button_label": "スキンケア商品を探す",
@@ -12,5 +19,7 @@
       }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main"
+  ]
 }
