@@ -1,0 +1,39 @@
+{%- comment %}
+  フィルターアコーディオン（独立開閉型）
+
+  各アコーディオンが独立した open 状態を持つ。
+  フィルターサイドバー等で複数並べて使う。
+
+  Parameters:
+    title:   {String} 見出しテキスト
+    content: {String} コンテンツ HTML（capture 済み文字列）
+{%- endcomment -%}
+
+<div x-data="{ open: true }" class="bg-white">
+  <button
+    type="button"
+    @click="open = !open"
+    class="flex items-center justify-between w-full text-sm font-medium p-4"
+    :aria-expanded="open"
+  >
+    <span class="text-stone-900">{{ title }}</span>
+    {%- capture _fac -%}open ? 'rotate-180' : ''{%- endcapture -%}
+    {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: _fac, stroke_width: 1.5 -%}
+  </button>
+  <div
+    class="grid"
+    style="transition: grid-template-rows 0.3s ease;"
+    :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
+    role="region"
+    :aria-hidden="!open"
+  >
+    <div class="overflow-hidden">
+      <div
+        class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
+        :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+      >
+        {{ content }}
+      </div>
+    </div>
+  </div>
+</div>

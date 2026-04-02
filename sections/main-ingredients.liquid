@@ -1,0 +1,418 @@
+{%- comment %}
+  成分ガイド一覧 (main-ingredients.liquid)
+
+  対応メタフィールド (名前空間: custom):
+    category_tags       {list.single_line_text_field}   カテゴリタグ一覧
+    concern_tags        {list.single_line_text_field}   肌悩みタグ一覧
+    inci_name             {single_line_text_field}        成分の英語名
+    product_reference   {list.product_reference}        関連商品一覧（商品フィルターに使用）
+{%- endcomment %}
+
+{%- paginate blog.articles by 100 -%}
+
+<div class="bg-[#fafaf9]">
+
+  {%- comment %} Alpine.js 用記事データ（JSON）{%- endcomment -%}
+  <script id="ingredient-data" type="application/json">
+    [
+      {%- for article in blog.articles -%}
+      {
+        "idx": {{ forloop.index0 }},
+        "title": {{ article.title | json }},
+        "inci_name": {{ article.metafields.custom.inci_name | json | default: '""' }},
+        "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
+        "concerns": {{ article.metafields.custom.concern_tags.value | json | default: '[]' }},
+        "products": [{%- assign _prefs = article.metafields.custom.product_reference.value -%}{%- for _p in _prefs -%}{"id":{{ _p.id }},"title":{{ _p.title | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}],
+        "date": {{ article.published_at | date: "%s" | plus: 0 }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+      {%- endfor -%}
+    ]
+  </script>
+
+  <div x-data="ingredientFilters()" x-init="init()">
+
+    {%- comment %} ページヘッダー {%- endcomment -%}
+    <div class="w-full overflow-hidden py-10 px-4 md:px-10">
+      <div class="w-full max-w-screen-xl mx-auto">
+        <h1 class="text-[36px] leading-[45px] font-semibold tracking-[1.44px] uppercase text-stone-900">
+          Ingredients
+        </h1>
+      </div>
+    </div>
+
+    <div class="px-4 md:px-10">
+      <hr class="max-w-screen-xl mx-auto border-stone-200">
+    </div>
+
+    {%- comment %} ツールバー {%- endcomment -%}
+    <div class="px-4 md:px-10">
+      <div class="max-w-screen-xl mx-auto flex items-center justify-between pt-10 pb-6">
+
+        {%- comment %} 左: 件数 + クリア {%- endcomment -%}
+        <div class="flex items-center gap-4 md:min-w-[288px]">
+          <p class="text-sm text-stone-500 uppercase tracking-[0.56px]">
+            <span x-text="filteredCount"></span>件の記事
+          </p>
+          <button
+            x-show="hasActiveFilters"
+            @click="clearAll()"
+            class="text-sm text-stone-500 underline uppercase tracking-[0.56px]"
+            type="button"
+          >
+            すべてクリア
+          </button>
+        </div>
+
+        {%- comment %} 右: ソート {%- endcomment -%}
+        <div class="relative border border-stone-900/40 overflow-hidden">
+          <select
+            x-model="sortBy"
+            class="bg-white h-8 pl-2 pr-6 py-1 text-sm text-stone-900 uppercase tracking-[0.56px] appearance-none cursor-pointer outline-none"
+          >
+            <option value="title-asc">タイトル: A〜Z</option>
+            <option value="title-desc">タイトル: Z〜A</option>
+            <option value="newest">新しい順</option>
+            <option value="oldest">古い順</option>
+          </select>
+          <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
+            {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900', stroke_width: 1.5 -%}
+          </div>
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} コンテンツエリア {%- endcomment -%}
+    <div class="px-4 md:px-10 pb-[60px]">
+      <div class="max-w-screen-xl mx-auto flex gap-16 items-start">
+
+        {%- comment %} フィルターサイドバー（デスクトップ） {%- endcomment -%}
+        <div class="hidden md:flex flex-col gap-8 w-[288px] shrink-0">
+
+          {%- comment %} 商品名アコーディオン（Alpine.js で一意の商品を動的レンダリング） {%- endcomment -%}
+          <div x-show="uniqueProducts.length > 0" x-data="{ open: true }" class="bg-white">
+            <button
+              type="button"
+              @click="open = !open"
+              class="flex items-center justify-between w-full text-sm font-medium p-4"
+              :aria-expanded="open"
+            >
+              <span class="text-stone-900">商品名</span>
+              {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: "open ? 'rotate-180' : ''", stroke_width: 1.5 -%}
+            </button>
+            <div
+              class="grid"
+              style="transition: grid-template-rows 0.3s ease;"
+              :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
+              role="region"
+              :aria-hidden="!open"
+            >
+              <div class="overflow-hidden">
+                <div
+                  class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
+                  :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+                >
+                  <template x-for="product in uniqueProducts" :key="product.id">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        :checked="selectedProducts.includes(product.id)"
+                        @change="toggle('products', product.id)"
+                        class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
+                      >
+                      <span class="text-sm text-stone-900 leading-4" x-text="product.title"></span>
+                    </label>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment %} カテゴリアコーディオン {%- endcomment -%}
+          <div x-show="uniqueCategories.length > 0" x-data="{ open: true }" class="bg-white">
+            <button
+              type="button"
+              @click="open = !open"
+              class="flex items-center justify-between w-full text-sm font-medium p-4"
+              :aria-expanded="open"
+            >
+              <span class="text-stone-900">カテゴリ</span>
+              {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: "open ? 'rotate-180' : ''", stroke_width: 1.5 -%}
+            </button>
+            <div
+              class="grid"
+              style="transition: grid-template-rows 0.3s ease;"
+              :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
+              role="region"
+              :aria-hidden="!open"
+            >
+              <div class="overflow-hidden">
+                <div
+                  class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
+                  :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+                >
+                  <template x-for="tag in uniqueCategories" :key="tag">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        :checked="selectedCategories.includes(tag)"
+                        @change="toggle('categories', tag)"
+                        class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
+                      >
+                      <span class="text-sm text-stone-900 leading-4" x-text="tag"></span>
+                    </label>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          {%- comment %} 肌悩みアコーディオン {%- endcomment -%}
+          <div x-show="uniqueConcerns.length > 0" x-data="{ open: true }" class="bg-white">
+            <button
+              type="button"
+              @click="open = !open"
+              class="flex items-center justify-between w-full text-sm font-medium p-4"
+              :aria-expanded="open"
+            >
+              <span class="text-stone-900">肌悩み</span>
+              {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: "open ? 'rotate-180' : ''", stroke_width: 1.5 -%}
+            </button>
+            <div
+              class="grid"
+              style="transition: grid-template-rows 0.3s ease;"
+              :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
+              role="region"
+              :aria-hidden="!open"
+            >
+              <div class="overflow-hidden">
+                <div
+                  class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
+                  :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+                >
+                  <template x-for="tag in uniqueConcerns" :key="tag">
+                    <label class="flex items-start gap-3 cursor-pointer">
+                      <input
+                        type="checkbox"
+                        :checked="selectedConcerns.includes(tag)"
+                        @change="toggle('concerns', tag)"
+                        class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
+                      >
+                      <span class="text-sm text-stone-900 leading-4" x-text="tag"></span>
+                    </label>
+                  </template>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        {%- comment %} 成分カードグリッド {%- endcomment -%}
+        <div class="flex-1 min-w-0">
+
+          {%- comment %} モバイル: フィルターボタン {%- endcomment -%}
+          <div class="md:hidden flex items-center justify-between mb-6">
+            <p class="text-sm text-stone-500 uppercase tracking-[0.56px]">
+              <span x-text="filteredCount"></span>件の記事
+            </p>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+            {%- for article in blog.articles -%}
+              {%- assign _inci_name = article.metafields.custom.inci_name.value | default: '' -%}
+
+              {%- assign _badge_tag = article.metafields.custom.category_tags.value | first | default: '' -%}
+
+              <div
+                x-show="isVisible({{ forloop.index0 }})"
+                :style="`order: ${getOrder({{ forloop.index0 }})}`"
+              >
+                {%- render 'card-ingredient', article: article, inci_name: _inci_name, badge_tag: _badge_tag -%}
+              </div>
+            {%- endfor -%}
+
+          </div>
+
+          {%- comment %} 空ステート {%- endcomment -%}
+          <p
+            x-show="filteredCount === 0"
+            class="text-sm text-stone-400 py-20 text-center"
+          >
+            条件に一致する成分がありません。
+          </p>
+
+        </div>
+      </div>
+    </div>
+
+    {%- comment %} CTAセクション {%- endcomment -%}
+    {%- if section.settings.cta_heading != blank -%}
+    <div class="w-full bg-stone-100 flex flex-col items-center overflow-hidden px-4 md:px-10 py-[60px]">
+      <div class="w-full max-w-screen-xl flex flex-col gap-10 items-center text-center">
+        <h2 class="text-[36px] leading-[45px] font-semibold tracking-[1.44px] text-stone-900">
+          {{ section.settings.cta_heading }}
+        </h2>
+        {%- if section.settings.cta_body != blank -%}
+          <p class="text-base leading-[26px] text-stone-900/80 max-w-2xl">{{ section.settings.cta_body }}</p>
+        {%- endif -%}
+        {%- if section.settings.cta_button_label != blank -%}
+          <a
+            href="{{ section.settings.cta_button_url | default: '/collections/all' }}"
+            class="inline-flex items-center gap-2 border-2 border-stone-900 px-4 py-2 text-base font-medium text-stone-900 min-h-[48px]"
+          >
+            {{ section.settings.cta_button_label }}
+            {%- render 'icon', icon: 'arrow-right', class: 'w-[18px] h-[18px]', stroke_width: 1.5 -%}
+          </a>
+        {%- endif -%}
+      </div>
+    </div>
+    {%- endif -%}
+
+  </div>{%- comment %} /x-data {%- endcomment -%}
+</div>
+
+{%- endpaginate -%}
+
+<script>
+function ingredientFilters() {
+  return {
+    articles: [],
+    selectedProducts: [],
+    selectedCategories: [],
+    selectedConcerns: [],
+    sortBy: 'title-asc',
+
+    init() {
+      const articleEl = document.getElementById('ingredient-data');
+      if (articleEl) this.articles = JSON.parse(articleEl.textContent);
+    },
+
+    get uniqueCategories() {
+      const seen = new Set();
+      return this.articles.flatMap(a => a.categories || []).filter(c => {
+        if (seen.has(c)) return false;
+        seen.add(c);
+        return true;
+      });
+    },
+
+    get uniqueConcerns() {
+      const seen = new Set();
+      return this.articles.flatMap(a => a.concerns || []).filter(c => {
+        if (seen.has(c)) return false;
+        seen.add(c);
+        return true;
+      });
+    },
+
+    get uniqueProducts() {
+      const seen = new Set();
+      return this.articles
+        .flatMap(a => a.products || [])
+        .filter(p => {
+          if (seen.has(p.id)) return false;
+          seen.add(p.id);
+          return true;
+        });
+    },
+
+    get filteredAndSorted() {
+      let result = this.articles.filter(a => {
+        const productIds = (a.products || []).map(p => p.id);
+        if (this.selectedProducts.length > 0 && !this.selectedProducts.some(p => productIds.includes(p))) return false;
+        if (this.selectedCategories.length > 0 && !this.selectedCategories.some(c => (a.categories || []).includes(c))) return false;
+        if (this.selectedConcerns.length > 0 && !this.selectedConcerns.some(c => (a.concerns || []).includes(c))) return false;
+        return true;
+      });
+
+      result = [...result].sort((a, b) => {
+        if (this.sortBy === 'title-asc') return (a.inci_name || a.title).localeCompare(b.inci_name || b.title);
+        if (this.sortBy === 'title-desc') return (b.inci_name || b.title).localeCompare(a.inci_name || a.title);
+        if (this.sortBy === 'newest') return b.date - a.date;
+        if (this.sortBy === 'oldest') return a.date - b.date;
+        return 0;
+      });
+
+      return result;
+    },
+
+    get filteredCount() {
+      return this.filteredAndSorted.length;
+    },
+
+    get hasActiveFilters() {
+      return this.selectedProducts.length > 0 ||
+             this.selectedCategories.length > 0 ||
+             this.selectedConcerns.length > 0;
+    },
+
+    isVisible(idx) {
+      return this.filteredAndSorted.some(a => a.idx === idx);
+    },
+
+    getOrder(idx) {
+      const pos = this.filteredAndSorted.findIndex(a => a.idx === idx);
+      return pos === -1 ? 9999 : pos;
+    },
+
+    toggle(group, value) {
+      const map = {
+        products: 'selectedProducts',
+        categories: 'selectedCategories',
+        concerns: 'selectedConcerns',
+      };
+      const arr = this[map[group]];
+      const i = arr.indexOf(value);
+      if (i === -1) arr.push(value);
+      else arr.splice(i, 1);
+    },
+
+    clearAll() {
+      this.selectedProducts = [];
+      this.selectedCategories = [];
+      this.selectedConcerns = [];
+    },
+  };
+}
+</script>
+
+{% schema %}
+{
+  "name": "成分ガイド一覧",
+  "settings": [
+    {
+      "type": "header",
+      "content": "CTAセクション"
+    },
+    {
+      "type": "text",
+      "id": "cta_heading",
+      "label": "見出し",
+      "default": "スキンケア製品をお探しですか？"
+    },
+    {
+      "type": "textarea",
+      "id": "cta_body",
+      "label": "本文",
+      "default": "お肌のお悩みや目的に合わせて、最適な成分が配合された製品をご提案します。"
+    },
+    {
+      "type": "text",
+      "id": "cta_button_label",
+      "label": "ボタンラベル",
+      "default": "スキンケア製品を探す"
+    },
+    {
+      "type": "url",
+      "id": "cta_button_url",
+      "label": "ボタンURL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "成分ガイド一覧"
+    }
+  ]
+}
+{% endschema %}

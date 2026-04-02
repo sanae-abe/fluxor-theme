@@ -90,6 +90,25 @@ body {
   }
 }
 
+/* ===== 成分カード（一覧ページ）===== */
+
+.ingredient-card__img {
+  transition: transform 0.5s;
+}
+
+.ingredient-card__icon {
+  transition: transform 0.2s;
+}
+
+@media (any-hover: hover) {
+  .ingredient-card:hover .ingredient-card__img {
+    transform: scale(1.05);
+  }
+  .ingredient-card:hover .ingredient-card__icon {
+    transform: translateX(0.25rem);
+  }
+}
+
 /* ===== 成分カルーセル ===== */
 
 .ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }

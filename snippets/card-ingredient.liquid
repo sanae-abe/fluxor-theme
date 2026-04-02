@@ -1,0 +1,45 @@
+{%- comment %}
+  成分カード
+  Parameters:
+    article:   {Object} Article object
+    name_en:   {String} 英語名（metafieldから）
+    badge_tag: {String} カテゴリバッジ用タグ
+{%- endcomment -%}
+
+{%- assign category_tags = article.metafields.custom.category_tags.value -%}
+{%- assign inci_name = article.metafields.custom.inci_name -%}
+
+<a href="{{ article.url }}" class="ingredient-card flex flex-col gap-4 group">
+  <div class="relative overflow-hidden bg-white aspect-square">
+    {%- if article.image -%}
+      <img
+        src="{{ article.image | image_url: width: 600 }}"
+        alt="{{ article.image.alt | escape | default: article.title | escape }}"
+        class="ingredient-card__img w-full h-full object-cover"
+        loading="lazy"
+        width="600"
+        height="600"
+      >
+    {%- else -%}
+      <div class="w-full h-full bg-stone-200 flex items-center justify-center">
+        {%- render 'icon', icon: 'flask-conical', class: 'w-12 h-12 text-stone-400', stroke_width: 1 -%}
+      </div>
+    {%- endif -%}
+    {%- if category_tags != blank -%}
+      <div class="absolute top-4 left-4 flex flex-col gap-2">
+      {%- for tag in category_tags limit: 4 -%}
+        {%- render 'badge', label: tag, variant: 'tertiary', size: 'sm' -%}
+      {%- endfor -%}
+      </div>
+    {%- endif -%}
+  </div>
+  <div class="flex flex-col gap-2">
+    <div class="flex items-start gap-4">
+      <p class="flex-1 text-[18px] font-medium leading-[22.5px] text-stone-900 ingredient-card__title">{{ inci_name }}</p>
+      {%- render 'icon', icon: 'arrow-right', class: 'ingredient-card__icon w-6 h-6 text-stone-900 shrink-0 mt-0.5', stroke_width: 1.5 -%}
+    </div>
+    {%- if inci_name != blank -%}
+      <p class="text-[14px] font-medium leading-[17.5px] text-stone-500">{{ article.title }}</p>
+    {%- endif -%}
+  </div>
+</a>

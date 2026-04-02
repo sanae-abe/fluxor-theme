@@ -11,18 +11,18 @@
 }
 </script>
 
-<div class="px-4 md:px-10 pt-6 pb-10 md:pt-10 md:pb-[60px]">
+<div class="px-4 md:px-10 pb-10 md:pb-[60px]">
   <section
     class="max-w-screen-xl mx-auto"
     x-data="{ filtersOpen: false }"
   >
     {%- comment %} コレクションヘッダー {%- endcomment -%}
-    <div class="mb-6">
-      <h1 class="text-2xl md:text-4xl font-semibold">{{ collection.title }}</h1>
-      {%- comment %}{%- if collection.description != blank -%}
-        <p class="mt-6 text-sm text-stone-500 max-w-xl leading-relaxed">{{ collection.description }}</p>
-      {%- endif -%}{%- endcomment -%}
+    <div class="py-5 md:py-10 flex flex-col gap-4 items-start justify-center text-center">
+      <h1 class="text-2xl md:text-[36px] md:leading-[45px] font-semibold md:tracking-[1.44px] uppercase">
+        {%- if collection.handle == 'all' -%}Shop All{%- else -%}{{ collection.title }}{%- endif -%}
+      </h1>
     </div>
+    <hr class="border-stone-200">
 
     {%- comment %} アクティブフィルター数の計算 {%- endcomment -%}
     {%- assign active_filter_count = 0 -%}
@@ -36,27 +36,36 @@
     {%- endfor -%}
 
     {%- comment %} ツールバー {%- endcomment -%}
-    <div class="flex items-center gap-4 mb-6 pb-4 border-b border-stone-200">
-      {%- if collection.filters.size > 0 -%}
-        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
-        <button
-          type="button"
-          @click="filtersOpen = true"
-          class="flex items-center gap-2 text-sm font-medium md:hidden"
-        >
-          {%- render 'icon', icon: 'list-filter', class: 'w-4 h-4' -%}
-          絞り込み
+    <div class="flex items-center justify-between pt-10 pb-6">
+      {%- comment %} 左側: 件数 + クリア（デスクトップ）/ 絞り込みボタン（モバイル） {%- endcomment -%}
+      <div class="flex items-center gap-4">
+        {%- if collection.filters.size > 0 -%}
+          {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
+          <button
+            type="button"
+            @click="filtersOpen = true"
+            class="flex items-center gap-2 text-sm font-medium md:hidden"
+          >
+            {%- render 'icon', icon: 'list-filter', class: 'w-4 h-4' -%}
+            絞り込み
+            {%- if active_filter_count > 0 -%}
+              <span class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none">{{ active_filter_count }}</span>
+            {%- endif -%}
+          </button>
+        {%- endif -%}
+        {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
+        <div class="hidden md:flex items-center gap-4{%- if collection.filters.size > 0 %} w-72{%- endif %}">
+          <p class="text-sm text-stone-500 uppercase tracking-[0.56px]">{{ paginate.items }}点の商品</p>
           {%- if active_filter_count > 0 -%}
-            <span class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none">{{ active_filter_count }}</span>
+            <a href="{{ collection.url }}" class="text-sm text-stone-500 underline uppercase tracking-[0.56px]">すべてクリア</a>
           {%- endif -%}
-        </button>
-      {%- endif -%}
-
-      {%- comment %} 件数表示 {%- endcomment -%}
-      <p class="text-sm text-stone-600{% if collection.filters.size > 0 %} hidden md:block{% endif %}">{{ paginate.items }}点の製品</p>
+        </div>
+        {%- comment %} 件数（モバイル） {%- endcomment -%}
+        <p class="md:hidden text-sm text-stone-500">{{ paginate.items }}点の商品</p>
+      </div>
 
       {%- comment %} ソート {%- endcomment -%}
-      <div class="ml-auto flex items-center gap-2"> 
+      <div class="flex items-center">
         {%- capture _sort_options -%}
           {%- for option in collection.sort_options -%}
             {%- case option.value -%}
@@ -77,33 +86,6 @@
         {%- render 'form-select', id: 'SortBy', options_html: _sort_options, attr: _sort_onchange -%}
       </div>
     </div>
-
-    {%- comment %} アクティブフィルター chips {%- endcomment -%}
-    {%- if active_filter_count > 0 -%}
-      <div class="flex flex-wrap gap-4 mb-6">
-        {%- for filter in collection.filters -%}
-          {%- if filter.type == 'price_range' -%}
-            {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
-              <a href="{{ filter.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-200 rounded-full px-3 py-1 text-sm hover:border-stone-900 transition-colors">
-                価格:
-                {%- if filter.min_value.value != blank -%}¥{{ filter.min_value.value | money_without_currency | replace: ',', '' }}{%- else -%}¥0{%- endif -%}
-                〜
-                {%- if filter.max_value.value != blank -%}¥{{ filter.max_value.value | money_without_currency | replace: ',', '' }}{%- endif -%}
-                {%- render 'icon', icon: 'x', class: 'w-3 h-3 flex-shrink-0', stroke_width: 2 -%}
-              </a>
-            {%- endif -%}
-          {%- else -%}
-            {%- for value in filter.active_values -%}
-              <a href="{{ value.url_to_remove }}" class="flex items-center gap-1.5 border border-stone-300 rounded-full px-3 py-1 text-xs hover:border-stone-900 transition-colors">
-                {{ value.label }}
-                {%- render 'icon', icon: 'x', class: 'w-3 h-3 flex-shrink-0', stroke_width: 2 -%}
-              </a>
-            {%- endfor -%}
-          {%- endif -%}
-        {%- endfor -%}
-        <a href="{{ collection.url }}" class="text-xs text-stone-500 underline self-center hover:text-stone-900 transition-colors ml-1">すべてクリア</a>
-      </div>
-    {%- endif -%}
 
     <div class="flex gap-16">
       {%- comment %} デスクトップサイドバー {%- endcomment -%}
@@ -254,6 +236,12 @@
 {
   "name": "Collection",
   "settings": [
+    {
+      "type": "text",
+      "id": "section_label",
+      "label": "セクションラベル",
+      "default": "SHOP"
+    },
     {
       "type": "range",
       "id": "products_per_page",
