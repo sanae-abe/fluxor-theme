@@ -1,0 +1,57 @@
+{%- if section.settings.heading != blank -%}
+<section class="w-full bg-stone-100 overflow-hidden px-4 md:px-10 py-[60px]">
+  <div class="w-full max-w-screen-xl mx-auto flex flex-col gap-10 items-center text-center">
+    <h2 class="text-4xl leading-tight font-semibold tracking-[1.44px] text-stone-900">
+      {{ section.settings.heading }}
+    </h2>
+    {%- if section.settings.body != blank -%}
+      <p class="text-base leading-relaxed text-stone-900/80 max-w-2xl">{{ section.settings.body }}</p>
+    {%- endif -%}
+    {%- if section.settings.button_label != blank -%}
+      {%- assign btn_url = section.settings.button_url | default: '/collections/all' -%}
+      {%- render 'button',
+        label: section.settings.button_label,
+        url: btn_url,
+        variant: 'outline',
+        icon_right: 'arrow-right'
+      -%}
+    {%- endif -%}
+  </div>
+</section>
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "CTAバナー",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "スキンケア製品をお探しですか？"
+    },
+    {
+      "type": "textarea",
+      "id": "body",
+      "label": "本文",
+      "default": "お肌のお悩みや目的に合わせて、最適な成分が配合された製品をご提案します。"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンラベル",
+      "default": "スキンケア製品を探す"
+    },
+    {
+      "type": "url",
+      "id": "button_url",
+      "label": "ボタンURL"
+    }
+  ],
+  "presets": [
+    {
+      "name": "CTAバナー"
+    }
+  ]
+}
+{% endschema %}

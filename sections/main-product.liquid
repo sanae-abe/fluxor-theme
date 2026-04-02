@@ -7,7 +7,7 @@
     volume              {single_line_text_field}         内容量テキスト（例: 30ml（約1〜2ヶ月分））
     product_benefits    {list.single_line_text_field}    効能・効果リスト
     key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient, ingredient.article, amount）
-    certifications      {list.metaobject_reference}      製品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
+    certifications      {list.metaobject_reference}      商品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
     skin_type           {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
     ph_level            {single_line_text_field}         pHレベル
     origin              {single_line_text_field}         原産国
@@ -127,14 +127,14 @@
   endif
 -%}
 
-{%- comment %} ※ 上付き文字変換用共通変数 {%- endcomment %}
-{%- assign _s    = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
-{%- assign _sup1 = _s | append: '※1</sup>' -%}
-{%- assign _sup2 = _s | append: '※2</sup>' -%}
-{%- assign _sup3 = _s | append: '※3</sup>' -%}
-{%- assign _sup4 = _s | append: '※4</sup>' -%}
-{%- assign _sup5 = _s | append: '※5</sup>' -%}
-{%- assign _sup  = _s | append: '※</sup>' -%}
+{%- comment %} ※ 上付き文字変換用共通変数（※1〜※5 と ※ を <sup> タグに置換） {%- endcomment %}
+{%- assign _sup_open = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
+{%- assign _sup1 = _sup_open | append: '※1</sup>' -%}
+{%- assign _sup2 = _sup_open | append: '※2</sup>' -%}
+{%- assign _sup3 = _sup_open | append: '※3</sup>' -%}
+{%- assign _sup4 = _sup_open | append: '※4</sup>' -%}
+{%- assign _sup5 = _sup_open | append: '※5</sup>' -%}
+{%- assign _sup  = _sup_open | append: '※</sup>' -%}
 
 {%- comment %} 価格表示（メイン商品情報とフローティングバーで共有） {%- endcomment %}
 {%- capture price_html -%}
@@ -216,26 +216,54 @@
       </div>
 
       {%- if product.images.size > 1 -%}
-        <div class="grid grid-cols-4 gap-3">
-          {%- for image in product.images limit: 12 -%}
-            {%- assign thumb_url = image | image_url: width: 800 -%}
-            <button
-              type="button"
-              class="aspect-square overflow-hidden bg-stone-100 border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1 [transform:translateZ(0)]"
-              :class="activeImage === '{{ thumb_url }}' ? 'border-stone-900' : 'border-transparent'"
-              @click="activeImage = '{{ thumb_url }}'"
-              aria-label="{{ image.alt | escape | default: product.title | escape }}"
-            >
-              <img
-                src="{{ image | image_url: width: 300 }}"
-                alt="{{ image.alt | escape | default: product.title | escape }}"
-                class="w-full h-full object-cover"
-                loading="lazy"
-                width="300"
-                height="300"
-              >
-            </button>
-          {%- endfor -%}
+        {%- comment %} サムネイル横カルーセル（4枚表示、以降は左右ボタンで切り替え） {%- endcomment %}
+        <div
+          class="relative"
+          x-data="{ thumbOffset: 0, maxOffset: Math.max(0, {{ product.images.size }} - 4) }"
+        >
+          <button
+            type="button"
+            class="absolute left-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
+            :class="thumbOffset === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
+            @click="thumbOffset = Math.max(0, thumbOffset - 1); $refs.thumbTrack.scrollTo({ left: thumbOffset * (($refs.thumbTrack.querySelector('button')?.offsetWidth ?? 0) + 12), behavior: 'smooth' })"
+            aria-label="前へ"
+          >
+            {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5' -%}
+          </button>
+
+          <div class="overflow-hidden" x-ref="thumbTrack">
+            <div class="flex gap-3">
+              {%- for image in product.images limit: 12 -%}
+                {%- assign thumb_url = image | image_url: width: 800 -%}
+                <button
+                  type="button"
+                  class="w-[calc(25%-9px)] shrink-0 aspect-square overflow-hidden bg-stone-100 border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1 [transform:translateZ(0)]"
+                  :class="activeImage === '{{ thumb_url }}' ? 'border-stone-900' : 'border-transparent'"
+                  @click="activeImage = '{{ thumb_url }}'"
+                  aria-label="{{ image.alt | escape | default: product.title | escape }}"
+                >
+                  <img
+                    src="{{ image | image_url: width: 300 }}"
+                    alt="{{ image.alt | escape | default: product.title | escape }}"
+                    class="w-full h-full object-cover"
+                    loading="lazy"
+                    width="300"
+                    height="300"
+                  >
+                </button>
+              {%- endfor -%}
+            </div>
+          </div>
+
+          <button
+            type="button"
+            class="absolute right-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
+            :class="thumbOffset >= maxOffset ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
+            @click="thumbOffset = Math.min(maxOffset, thumbOffset + 1); $refs.thumbTrack.scrollTo({ left: thumbOffset * (($refs.thumbTrack.querySelector('button')?.offsetWidth ?? 0) + 12), behavior: 'smooth' })"
+            aria-label="次へ"
+          >
+            {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5' -%}
+          </button>
         </div>
       {%- endif -%}
     </div>
@@ -337,32 +365,17 @@
       {%- comment %} 注目の成分カルーセル {%- endcomment %}
       {%- if key_ingredients != blank -%}
         <hr class="border-stone-200">
-        {%- assign _desc_idx = '' -%}
+        {%- comment %} description を持つ成分のインデックスをカンマ区切りで収集（tooltip 表示判定に使用） {%- endcomment %}
+        {%- assign _ingredient_desc_indices = '' -%}
         {%- for _ki in key_ingredients -%}
           {%- if _ki.description != blank -%}
-            {%- if _desc_idx != '' -%}{%- assign _desc_idx = _desc_idx | append: ',' -%}{%- endif -%}
-            {%- assign _desc_idx = _desc_idx | append: forloop.index0 -%}
+            {%- if _ingredient_desc_indices != '' -%}{%- assign _ingredient_desc_indices = _ingredient_desc_indices | append: ',' -%}{%- endif -%}
+            {%- assign _ingredient_desc_indices = _ingredient_desc_indices | append: forloop.index0 -%}
           {%- endif -%}
         {%- endfor -%}
         <div
           class="min-w-0 relative"
-          x-data="{
-            active: null,
-            atStart: true,
-            atEnd: false,
-            cardW: 198,
-            descIdx: [{{ _desc_idx }}],
-            updateNav() {
-              const t = this.$refs.track;
-              this.atStart = t.scrollLeft <= 0;
-              this.atEnd   = t.scrollLeft >= t.scrollWidth - t.clientWidth - 1;
-            },
-            tooltipLeft() {
-              if (this.active === null || !this.$refs.track) return 0;
-              const cardLeft = this.active * this.cardW - this.$refs.track.scrollLeft;
-              return Math.min(Math.max(cardLeft, 0), this.$refs.track.offsetWidth - 288);
-            }
-          }"
+          x-data="ingredientCarousel([{{ _ingredient_desc_indices }}])"
           x-init="$nextTick(() => updateNav())"
         >
 
@@ -378,7 +391,7 @@
 
             <button
               type="button"
-              class="absolute left-0 top-0 z-10 w-6 h-full bg-stone-50 flex items-center justify-center transition-opacity focus-visible:outline-none"
+              class="absolute left-0 top-0 z-10 w-6 h-full bg-stone-50/80 flex items-center justify-center transition-opacity focus-visible:outline-none"
               :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500 hover:text-stone-900'"
               @click="$refs.track.scrollLeft -= cardW; $nextTick(() => updateNav())"
               aria-label="前へ"
@@ -428,8 +441,8 @@
             </div>
 
             <button
-              type="button"ご注文から約14〜21営業日でお届けいたし
-              class="absolute top-0 right-0 z-10 w-6 h-full bg-stone-50 flex items-center justify-center transition-opacity focus-visible:outline-none"
+              type="button"
+              class="absolute top-0 right-0 z-10 w-6 h-full bg-stone-50/80 flex items-center justify-center transition-opacity focus-visible:outline-none"
               :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500 hover:text-stone-900'"
               @click="$refs.track.scrollLeft += cardW; $nextTick(() => updateNav())"
               aria-label="次へ"
@@ -439,7 +452,7 @@
           </div>
           </div>
 
-          {%- if _desc_idx != '' -%}
+          {%- if _ingredient_desc_indices != '' -%}
             <div
               class="absolute z-20 w-80"
               x-show="descIdx.includes(active)"
@@ -611,6 +624,26 @@
 </div>{%- comment %} x-data wrapper close {%- endcomment %}
 
 <script>
+  function ingredientCarousel(descIdx) {
+    return {
+      active: null,
+      atStart: true,
+      atEnd: false,
+      cardW: 198,
+      descIdx,
+      updateNav() {
+        const t = this.$refs.track;
+        this.atStart = t.scrollLeft <= 0;
+        this.atEnd   = t.scrollLeft >= t.scrollWidth - t.clientWidth - 1;
+      },
+      tooltipLeft() {
+        if (this.active === null || !this.$refs.track) return 0;
+        const cardLeft = this.active * this.cardW - this.$refs.track.scrollLeft;
+        return Math.min(Math.max(cardLeft, 0), this.$refs.track.offsetWidth - 288);
+      }
+    };
+  }
+
   function productPageData() {
     return {
       variants: {{ product.variants | json }},

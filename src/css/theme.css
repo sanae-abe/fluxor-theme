@@ -109,6 +109,18 @@ body {
   }
 }
 
+/* ===== フィルターアコーディオン ===== */
+
+.filter-accordion__body {
+  transition: grid-template-rows 0.3s ease;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .filter-accordion__body {
+    transition: none;
+  }
+}
+
 /* ===== 成分カルーセル ===== */
 
 .ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }

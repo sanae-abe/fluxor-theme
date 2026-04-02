@@ -2,20 +2,25 @@
   成分ガイド記事 (main-ingredient-article.liquid)
 
   対応メタフィールド (名前空間: custom):
-    category_tags       {list.single_line_text_field}
-    inci_name           {single_line_text_field}
-    product_reference   {list.product_reference}
+    inci_name               {single_line_text_field}
+    category_tags           {list.single_line_text_field}
+    pregnancy_note          {single_line_text_field}
+    compatible_ingredients  {JSON}  [{ "name":"", "reason": "" }, ...]
+    caution_combinations    {JSON}  [{ "name":"", "reason": "" }, ...]
+    reference_entry         {JSON}  [{ "authors": "", "title": "", "journal": "", "details": "" }, ...]
 {%- endcomment %}
 
 {%- assign category_tags = article.metafields.custom.category_tags.value -%}
 {%- assign name_en = article.metafields.custom.inci_name -%}
+{%- assign pregnancy_note = article.metafields.custom.pregnancy_note -%}
+{%- assign compatible_ingredients = article.metafields.custom.compatible_ingredients.value -%}
+{%- assign caution_combinations = article.metafields.custom.caution_combinations.value -%}
+{%- assign reference_entries = article.metafields.custom.reference_entry.value -%}
+{%- assign ingredient_products = article.metafields.custom.product_reference.value -%}
 
-{%- comment %} ============================================================
-  Header — ナビゲーション + タイトル + 記事画像
-  ============================================================ {%- endcomment -%}
+{%- comment %} ── Header ────────────────────────────────────────── {%- endcomment -%}
 <div class="w-full flex flex-col items-center px-4 md:px-10">
 
-  {%- comment %} 戻るリンク {%- endcomment -%}
   <div class="w-full border-b border-stone-400 flex items-center pb-5 pt-10">
     <a
       href="{{ blog.url }}"
@@ -26,7 +31,6 @@
     </a>
   </div>
 
-  {%- comment %} タイトルエリア {%- endcomment -%}
   <div class="w-full max-w-screen-xl flex flex-col gap-10 py-8 pb-10">
     <div class="flex flex-col gap-4">
       {%- if name_en != blank -%}
@@ -38,15 +42,13 @@
     </div>
     <div class="flex items-center justify-between w-full gap-4 flex-wrap">
       <div class="flex gap-3 items-center flex-wrap">
-        {%- for tag in category_tags limit: 4 -%}
-          <span class="inline-flex items-center justify-center px-2 py-1 rounded-full border border-stone-900/40 text-xs font-medium tracking-wider uppercase text-stone-900">{{ tag }}</span>
+        {%- for tag in category_tags limit: 4 -%}          {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
       </div>
       <p class="text-sm font-medium text-stone-900 shrink-0">UPDATE: {{ article.updated_at | date: "%Y/%m/%d" }}</p>
     </div>
   </div>
 
-  {%- comment %} 記事アイキャッチ画像 {%- endcomment -%}
   {%- if article.image -%}
     <div class="w-full h-[250px] md:h-[400px] relative overflow-hidden">
       <img
@@ -72,18 +74,15 @@
   "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
     {"@type": "ListItem", "position": 2, "name": "成分ガイド", "item": {{ shop.url | append: blog.url | json }}},
-    {"@type": "ListItem", "position": 3, "name": {{ article.title | default: article.title | json }}, "item": {{ shop.url | append: article.url | json }}}
+    {"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ shop.url | append: article.url | json }}}
   ]
 }
 </script>
 
-{%- comment %} ============================================================
-  ブロックレンダリング
-  ============================================================ {%- endcomment -%}
+{%- comment %} ── ブロックレンダリング ───────────────────────────── {%- endcomment -%}
 <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20 gap-10 md:gap-20">
   {%- for block in section.blocks -%}
 
-    {%- comment %} テキストセクション {%- endcomment -%}
     {%- if block.type == 'text_section' -%}
       <div
         class="w-full max-w-3xl flex flex-col gap-10"
@@ -99,7 +98,6 @@
         {%- endif -%}
       </div>
 
-    {%- comment %} ベネフィットカードグループ {%- endcomment -%}
     {%- elsif block.type == 'benefits_group' -%}
       <div
         class="w-full max-w-3xl flex flex-col gap-10"
@@ -123,7 +121,7 @@
             {%- if card_title != blank -%}
               <div class="bg-stone-100 p-6 flex flex-col gap-4">
                 <div class="pb-2">
-                  {%- render 'icon', icon: card_icon, class: 'w-12 h-12' stroke_width: 1 -%}
+                  {%- render 'icon', icon: card_icon, class: 'w-12 h-12', stroke_width: 1 -%}
                 </div>
                 <h3 class="text-2xl font-medium text-stone-900">{{ card_title }}</h3>
                 {%- if card_desc != blank -%}
@@ -135,7 +133,6 @@
         </div>
       </div>
 
-    {%- comment %} 免責事項ノート {%- endcomment -%}
     {%- elsif block.type == 'disclaimer' -%}
       <div
         class="w-full max-w-3xl"
@@ -153,48 +150,100 @@
   {%- endfor -%}
 </div>
 
-{%- comment %} ============================================================
-  参考文献
-  ============================================================ {%- endcomment -%}
-{%- assign ref_blocks = section.blocks | where: 'type', 'reference_entry' -%}
-{%- if ref_blocks.size > 0 -%}
+{%- comment %} ── 相性の良い成分 ────────────────────────────────── {%- endcomment -%}
+{%- if compatible_ingredients != blank -%}
+  <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20">
+    <div class="w-full max-w-3xl flex flex-col gap-10">
+      {%- if section.settings.compatible_heading != blank -%}
+        <h2 class="text-3xl font-semibold leading-tight text-stone-900">
+          {{ section.settings.compatible_heading }}
+        </h2>
+      {%- endif -%}
+      <div class="flex flex-col divide-y divide-stone-200">
+        {%- for item in compatible_ingredients -%}
+          {%- if item.name != blank -%}
+            <div class="flex flex-col gap-2 py-5">
+              <p class="text-base font-semibold text-stone-900">{{ item.name }}</p>
+              {%- if item.reason != blank -%}
+                <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment %} ── 注意が必要な組み合わせ ───────────────────────── {%- endcomment -%}
+{%- if caution_combinations != blank -%}
+  <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20">
+    <div class="w-full max-w-3xl flex flex-col gap-10">
+      {%- if section.settings.caution_heading != blank -%}
+        <h2 class="text-3xl font-semibold leading-tight text-stone-900">
+          {{ section.settings.caution_heading }}
+        </h2>
+      {%- endif -%}
+      <div class="flex flex-col divide-y divide-stone-200">
+        {%- for item in caution_combinations -%}
+          {%- if item.name != blank -%}
+            <div class="flex flex-col gap-2 py-5">
+              <p class="text-base font-semibold text-amber-700">{{ item.name }}</p>
+              {%- if item.reason != blank -%}
+                <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
+              {%- endif -%}
+            </div>
+          {%- endif -%}
+        {%- endfor -%}
+      </div>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment %} ── 妊娠・授乳中の方へ ───────────────────────────── {%- endcomment -%}
+{%- if pregnancy_note != blank -%}
+  <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20">
+    <div class="w-full max-w-3xl flex flex-col gap-10">
+      {%- if section.settings.pregnancy_heading != blank -%}
+        <h2 class="text-3xl font-semibold leading-tight text-stone-900">
+          {{ section.settings.pregnancy_heading }}
+        </h2>
+      {%- endif -%}
+      <p class="text-base leading-relaxed text-stone-900">{{ pregnancy_note }}</p>
+    </div>
+  </div>
+{%- endif -%}
+
+{%- comment %} ── 参考文献 ──────────────────────────────────────── {%- endcomment -%}
+{%- if reference_entries != blank -%}
   <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]">
     <div class="w-full max-w-3xl flex flex-col gap-5">
       {%- if section.settings.references_heading != blank -%}
         <p class="text-base font-medium text-stone-900">{{ section.settings.references_heading }}</p>
       {%- endif -%}
       <ol class="flex flex-col gap-2 list-none">
-        {%- for block in ref_blocks -%}
-          <li class="flex gap-3" {{ block.shopify_attributes }}>
+        {%- for entry in reference_entries -%}
+          <li class="flex gap-3">
             <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
             <div class="flex flex-col gap-1 min-w-0">
-              {%- if block.settings.url != blank -%}
-                <a
-                  href="{{ block.settings.url }}"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="text-sm font-medium text-stone-900 underline underline-offset-2 break-words"
-                >{{ block.settings.title }}</a>
-              {%- else -%}
-                <p class="text-sm font-medium text-stone-900">{{ block.settings.title }}</p>
-              {%- endif -%}
+              <p class="text-sm font-medium text-stone-900">{{ entry.title }}</p>
               {%- liquid
                 assign meta_parts = ''
-                if block.settings.author != blank
-                  assign meta_parts = block.settings.author
+                if entry.authors != blank
+                  assign meta_parts = entry.authors
                 endif
-                if block.settings.journal != blank
+                if entry.journal != blank
                   if meta_parts != blank
-                    assign meta_parts = meta_parts | append: ' / ' | append: block.settings.journal
+                    assign meta_parts = meta_parts | append: ' / ' | append: entry.journal
                   else
-                    assign meta_parts = block.settings.journal
+                    assign meta_parts = entry.journal
                   endif
                 endif
-                if block.settings.year != blank
+                if entry.details != blank
                   if meta_parts != blank
-                    assign meta_parts = meta_parts | append: ', ' | append: block.settings.year
+                    assign meta_parts = meta_parts | append: ', ' | append: entry.details
                   else
-                    assign meta_parts = block.settings.year
+                    assign meta_parts = entry.details
                   endif
                 endif
               -%}
@@ -209,10 +258,7 @@
   </div>
 {%- endif -%}
 
-{%- comment %} ============================================================
-  この成分を配合した製品
-  ============================================================ {%- endcomment -%}
-{%- assign ingredient_products = article.metafields.custom.product_reference.value -%}
+{%- comment %} ── この成分を配合した商品 ─────────────────────────── {%- endcomment -%}
 {%- if ingredient_products != blank -%}
   <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
     <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
@@ -410,39 +456,26 @@
         }
       ]
     },
-    {
-      "type": "reference_entry",
-      "name": "参考文献",
-      "settings": [
-        {
-          "type": "text",
-          "id": "title",
-          "label": "論文・記事タイトル"
-        },
-        {
-          "type": "text",
-          "id": "author",
-          "label": "著者名（省略可）"
-        },
-        {
-          "type": "text",
-          "id": "journal",
-          "label": "雑誌・出版社名（省略可）"
-        },
-        {
-          "type": "text",
-          "id": "year",
-          "label": "出版年（省略可）"
-        },
-        {
-          "type": "url",
-          "id": "url",
-          "label": "URL（省略可）"
-        }
-      ]
-    }
   ],
   "settings": [
+    {
+      "type": "text",
+      "id": "compatible_heading",
+      "label": "相性の良い成分 見出し",
+      "default": "相性の良い成分"
+    },
+    {
+      "type": "text",
+      "id": "caution_heading",
+      "label": "注意が必要な組み合わせ 見出し",
+      "default": "注意が必要な組み合わせ"
+    },
+    {
+      "type": "text",
+      "id": "pregnancy_heading",
+      "label": "妊娠・授乳中の方へ 見出し",
+      "default": "妊娠・授乳中の方へ"
+    },
     {
       "type": "text",
       "id": "references_heading",
@@ -453,13 +486,13 @@
       "type": "text",
       "id": "products_heading",
       "label": "製品グリッド 見出し",
-      "default": "この成分を配合した製品"
+      "default": "この成分を配合した商品"
     },
     {
       "type": "text",
       "id": "products_subheading",
       "label": "製品グリッド サブ見出し"
-    },
+    }
   ],
   "presets": [
     {
@@ -484,34 +517,7 @@
           }
         },
         {
-          "type": "text_section",
-          "settings": {
-            "heading": "相性の良い成分"
-          }
-        },
-        {
-          "type": "text_section",
-          "settings": {
-            "heading": "注意が必要な組み合わせ"
-          }
-        },
-        {
-          "type": "text_section",
-          "settings": {
-            "heading": "妊娠・授乳中の方へ"
-          }
-        },
-        {
           "type": "disclaimer"
-        },
-        {
-          "type": "reference_entry",
-          "settings": {
-            "title": "参考文献タイトル例",
-            "author": "著者名",
-            "journal": "Journal of Example",
-            "year": "2024"
-          }
         }
       ]
     }

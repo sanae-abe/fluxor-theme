@@ -22,7 +22,12 @@
         "inci_name": {{ article.metafields.custom.inci_name | json | default: '""' }},
         "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
         "concerns": {{ article.metafields.custom.concern_tags.value | json | default: '[]' }},
-        "products": [{%- assign _prefs = article.metafields.custom.product_reference.value -%}{%- for _p in _prefs -%}{"id":{{ _p.id }},"title":{{ _p.title | json }}}{%- unless forloop.last -%},{%- endunless -%}{%- endfor -%}],
+        "products": [
+          {%- assign _prefs = article.metafields.custom.product_reference.value -%}
+          {%- for _p in _prefs -%}
+            {"id":{{ _p.id }},"title":{{ _p.title | json }}}{%- unless forloop.last -%},{%- endunless -%}
+          {%- endfor -%}
+        ],
         "date": {{ article.published_at | date: "%s" | plus: 0 }}
       }{%- unless forloop.last -%},{%- endunless -%}
       {%- endfor -%}
@@ -88,122 +93,41 @@
         {%- comment %} フィルターサイドバー（デスクトップ） {%- endcomment -%}
         <div class="hidden md:flex flex-col gap-8 w-[288px] shrink-0">
 
-          {%- comment %} 商品名アコーディオン（Alpine.js で一意の商品を動的レンダリング） {%- endcomment -%}
-          <div x-show="uniqueProducts.length > 0" x-data="{ open: true }" class="bg-white">
-            <button
-              type="button"
-              @click="open = !open"
-              class="flex items-center justify-between w-full text-sm font-medium p-4"
-              :aria-expanded="open"
-            >
-              <span class="text-stone-900">商品名</span>
-              {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: "open ? 'rotate-180' : ''", stroke_width: 1.5 -%}
-            </button>
-            <div
-              class="grid"
-              style="transition: grid-template-rows 0.3s ease;"
-              :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
-              role="region"
-              :aria-hidden="!open"
-            >
-              <div class="overflow-hidden">
-                <div
-                  class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
-                  :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-                >
-                  <template x-for="product in uniqueProducts" :key="product.id">
-                    <label class="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        :checked="selectedProducts.includes(product.id)"
-                        @change="toggle('products', product.id)"
-                        class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
-                      >
-                      <span class="text-sm text-stone-900 leading-4" x-text="product.title"></span>
-                    </label>
-                  </template>
-                </div>
-              </div>
-            </div>
-          </div>
+          {%- comment %} 商品名フィルター {%- endcomment -%}
+          {%- capture _products_items -%}
+            <template x-for="product in uniqueProducts" :key="product.id">
+              {%- render 'alpine-checkbox',
+                checked_expr: "selectedProducts.includes(product.id)",
+                change_expr: "toggle('products', product.id)",
+                label_expr: "product.title"
+              -%}
+            </template>
+          {%- endcapture -%}
+          {%- render 'filter-accordion', title: '商品名', content: _products_items, show_expr: 'uniqueProducts.length > 0' -%}
 
-          {%- comment %} カテゴリアコーディオン {%- endcomment -%}
-          <div x-show="uniqueCategories.length > 0" x-data="{ open: true }" class="bg-white">
-            <button
-              type="button"
-              @click="open = !open"
-              class="flex items-center justify-between w-full text-sm font-medium p-4"
-              :aria-expanded="open"
-            >
-              <span class="text-stone-900">カテゴリ</span>
-              {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: "open ? 'rotate-180' : ''", stroke_width: 1.5 -%}
-            </button>
-            <div
-              class="grid"
-              style="transition: grid-template-rows 0.3s ease;"
-              :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
-              role="region"
-              :aria-hidden="!open"
-            >
-              <div class="overflow-hidden">
-                <div
-                  class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
-                  :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-                >
-                  <template x-for="tag in uniqueCategories" :key="tag">
-                    <label class="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        :checked="selectedCategories.includes(tag)"
-                        @change="toggle('categories', tag)"
-                        class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
-                      >
-                      <span class="text-sm text-stone-900 leading-4" x-text="tag"></span>
-                    </label>
-                  </template>
-                </div>
-              </div>
-            </div>
-          </div>
+          {%- comment %} カテゴリフィルター {%- endcomment -%}
+          {%- capture _categories_items -%}
+            <template x-for="tag in uniqueCategories" :key="tag">
+              {%- render 'alpine-checkbox',
+                checked_expr: "selectedCategories.includes(tag)",
+                change_expr: "toggle('categories', tag)",
+                label_expr: "tag"
+              -%}
+            </template>
+          {%- endcapture -%}
+          {%- render 'filter-accordion', title: 'カテゴリ', content: _categories_items, show_expr: 'uniqueCategories.length > 0' -%}
 
-          {%- comment %} 肌悩みアコーディオン {%- endcomment -%}
-          <div x-show="uniqueConcerns.length > 0" x-data="{ open: true }" class="bg-white">
-            <button
-              type="button"
-              @click="open = !open"
-              class="flex items-center justify-between w-full text-sm font-medium p-4"
-              :aria-expanded="open"
-            >
-              <span class="text-stone-900">肌悩み</span>
-              {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: "open ? 'rotate-180' : ''", stroke_width: 1.5 -%}
-            </button>
-            <div
-              class="grid"
-              style="transition: grid-template-rows 0.3s ease;"
-              :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
-              role="region"
-              :aria-hidden="!open"
-            >
-              <div class="overflow-hidden">
-                <div
-                  class="px-4 pb-4 flex flex-col gap-3 transition duration-300"
-                  :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-                >
-                  <template x-for="tag in uniqueConcerns" :key="tag">
-                    <label class="flex items-start gap-3 cursor-pointer">
-                      <input
-                        type="checkbox"
-                        :checked="selectedConcerns.includes(tag)"
-                        @change="toggle('concerns', tag)"
-                        class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
-                      >
-                      <span class="text-sm text-stone-900 leading-4" x-text="tag"></span>
-                    </label>
-                  </template>
-                </div>
-              </div>
-            </div>
-          </div>
+          {%- comment %} 肌悩みフィルター {%- endcomment -%}
+          {%- capture _concerns_items -%}
+            <template x-for="tag in uniqueConcerns" :key="tag">
+              {%- render 'alpine-checkbox',
+                checked_expr: "selectedConcerns.includes(tag)",
+                change_expr: "toggle('concerns', tag)",
+                label_expr: "tag"
+              -%}
+            </template>
+          {%- endcapture -%}
+          {%- render 'filter-accordion', title: '肌悩み', content: _concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
 
         </div>
 
@@ -246,29 +170,6 @@
       </div>
     </div>
 
-    {%- comment %} CTAセクション {%- endcomment -%}
-    {%- if section.settings.cta_heading != blank -%}
-    <div class="w-full bg-stone-100 flex flex-col items-center overflow-hidden px-4 md:px-10 py-[60px]">
-      <div class="w-full max-w-screen-xl flex flex-col gap-10 items-center text-center">
-        <h2 class="text-[36px] leading-[45px] font-semibold tracking-[1.44px] text-stone-900">
-          {{ section.settings.cta_heading }}
-        </h2>
-        {%- if section.settings.cta_body != blank -%}
-          <p class="text-base leading-[26px] text-stone-900/80 max-w-2xl">{{ section.settings.cta_body }}</p>
-        {%- endif -%}
-        {%- if section.settings.cta_button_label != blank -%}
-          <a
-            href="{{ section.settings.cta_button_url | default: '/collections/all' }}"
-            class="inline-flex items-center gap-2 border-2 border-stone-900 px-4 py-2 text-base font-medium text-stone-900 min-h-[48px]"
-          >
-            {{ section.settings.cta_button_label }}
-            {%- render 'icon', icon: 'arrow-right', class: 'w-[18px] h-[18px]', stroke_width: 1.5 -%}
-          </a>
-        {%- endif -%}
-      </div>
-    </div>
-    {%- endif -%}
-
   </div>{%- comment %} /x-data {%- endcomment -%}
 </div>
 
@@ -284,57 +185,44 @@ function ingredientFilters() {
     sortBy: 'title-asc',
 
     init() {
-      const articleEl = document.getElementById('ingredient-data');
-      if (articleEl) this.articles = JSON.parse(articleEl.textContent);
+      const el = document.getElementById('ingredient-data');
+      if (el) this.articles = JSON.parse(el.textContent);
     },
 
     get uniqueCategories() {
-      const seen = new Set();
-      return this.articles.flatMap(a => a.categories || []).filter(c => {
-        if (seen.has(c)) return false;
-        seen.add(c);
-        return true;
-      });
+      return [...new Set(this.articles.flatMap(a => a.categories || []))];
     },
 
     get uniqueConcerns() {
-      const seen = new Set();
-      return this.articles.flatMap(a => a.concerns || []).filter(c => {
-        if (seen.has(c)) return false;
-        seen.add(c);
-        return true;
-      });
+      return [...new Set(this.articles.flatMap(a => a.concerns || []))];
     },
 
     get uniqueProducts() {
       const seen = new Set();
-      return this.articles
-        .flatMap(a => a.products || [])
-        .filter(p => {
-          if (seen.has(p.id)) return false;
-          seen.add(p.id);
-          return true;
-        });
+      return this.articles.flatMap(a => a.products || []).filter(p => {
+        if (seen.has(p.id)) return false;
+        seen.add(p.id);
+        return true;
+      });
     },
 
     get filteredAndSorted() {
-      let result = this.articles.filter(a => {
-        const productIds = (a.products || []).map(p => p.id);
-        if (this.selectedProducts.length > 0 && !this.selectedProducts.some(p => productIds.includes(p))) return false;
-        if (this.selectedCategories.length > 0 && !this.selectedCategories.some(c => (a.categories || []).includes(c))) return false;
-        if (this.selectedConcerns.length > 0 && !this.selectedConcerns.some(c => (a.concerns || []).includes(c))) return false;
-        return true;
-      });
+      const sortFns = {
+        'title-asc':  (a, b) => (a.inci_name || a.title).localeCompare(b.inci_name || b.title),
+        'title-desc': (a, b) => (b.inci_name || b.title).localeCompare(a.inci_name || a.title),
+        'newest':     (a, b) => b.date - a.date,
+        'oldest':     (a, b) => a.date - b.date,
+      };
 
-      result = [...result].sort((a, b) => {
-        if (this.sortBy === 'title-asc') return (a.inci_name || a.title).localeCompare(b.inci_name || b.title);
-        if (this.sortBy === 'title-desc') return (b.inci_name || b.title).localeCompare(a.inci_name || a.title);
-        if (this.sortBy === 'newest') return b.date - a.date;
-        if (this.sortBy === 'oldest') return a.date - b.date;
-        return 0;
-      });
-
-      return result;
+      return this.articles
+        .filter(a => {
+          const productIds = (a.products || []).map(p => p.id);
+          if (this.selectedProducts.length > 0 && !this.selectedProducts.some(id => productIds.includes(id))) return false;
+          if (this.selectedCategories.length > 0 && !this.selectedCategories.some(c => (a.categories || []).includes(c))) return false;
+          if (this.selectedConcerns.length > 0 && !this.selectedConcerns.some(c => (a.concerns || []).includes(c))) return false;
+          return true;
+        })
+        .sort(sortFns[this.sortBy] ?? (() => 0));
     },
 
     get filteredCount() {
@@ -358,9 +246,9 @@ function ingredientFilters() {
 
     toggle(group, value) {
       const map = {
-        products: 'selectedProducts',
+        products:   'selectedProducts',
         categories: 'selectedCategories',
-        concerns: 'selectedConcerns',
+        concerns:   'selectedConcerns',
       };
       const arr = this[map[group]];
       const i = arr.indexOf(value);
@@ -380,35 +268,7 @@ function ingredientFilters() {
 {% schema %}
 {
   "name": "成分ガイド一覧",
-  "settings": [
-    {
-      "type": "header",
-      "content": "CTAセクション"
-    },
-    {
-      "type": "text",
-      "id": "cta_heading",
-      "label": "見出し",
-      "default": "スキンケア製品をお探しですか？"
-    },
-    {
-      "type": "textarea",
-      "id": "cta_body",
-      "label": "本文",
-      "default": "お肌のお悩みや目的に合わせて、最適な成分が配合された製品をご提案します。"
-    },
-    {
-      "type": "text",
-      "id": "cta_button_label",
-      "label": "ボタンラベル",
-      "default": "スキンケア製品を探す"
-    },
-    {
-      "type": "url",
-      "id": "cta_button_url",
-      "label": "ボタンURL"
-    }
-  ],
+  "settings": [],
   "presets": [
     {
       "name": "成分ガイド一覧"

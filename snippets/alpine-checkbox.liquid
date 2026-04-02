@@ -1,0 +1,15 @@
+{%- comment %} alpine-checkbox.liquid — Alpine.js リアクティブチェックボックス行
+  Parameters:
+    - checked_expr : :checked に渡す Alpine 式（例: "selectedProducts.includes(product.id)"）
+    - change_expr  : @change に渡す Alpine 式（例: "toggle('products', product.id)"）
+    - label_expr   : x-text に渡す Alpine 式（例: "product.title"）
+{%- endcomment -%}
+<label class="flex items-start gap-3 cursor-pointer">
+  <input
+    type="checkbox"
+    :checked="{{ checked_expr }}"
+    @change="{{ change_expr }}"
+    class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
+  >
+  <span class="text-sm text-stone-900 leading-4" x-text="{{ label_expr }}"></span>
+</label>

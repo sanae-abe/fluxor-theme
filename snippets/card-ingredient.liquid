@@ -1,9 +1,7 @@
 {%- comment %}
   成分カード
   Parameters:
-    article:   {Object} Article object
-    name_en:   {String} 英語名（metafieldから）
-    badge_tag: {String} カテゴリバッジ用タグ
+    article: {Object} Article object
 {%- endcomment -%}
 
 {%- assign category_tags = article.metafields.custom.category_tags.value -%}
@@ -27,19 +25,21 @@
     {%- endif -%}
     {%- if category_tags != blank -%}
       <div class="absolute top-4 left-4 flex flex-col gap-2">
-      {%- for tag in category_tags limit: 4 -%}
-        {%- render 'badge', label: tag, variant: 'tertiary', size: 'sm' -%}
-      {%- endfor -%}
+        {%- for tag in category_tags limit: 4 -%}
+          {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
+        {%- endfor -%}
       </div>
     {%- endif -%}
   </div>
   <div class="flex flex-col gap-2">
     <div class="flex items-start gap-4">
-      <p class="flex-1 text-[18px] font-medium leading-[22.5px] text-stone-900 ingredient-card__title">{{ inci_name }}</p>
+      <p class="flex-1 text-lg font-medium leading-tight text-stone-900 ingredient-card__title">
+        {{- inci_name | default: article.title -}}
+      </p>
       {%- render 'icon', icon: 'arrow-right', class: 'ingredient-card__icon w-6 h-6 text-stone-900 shrink-0 mt-0.5', stroke_width: 1.5 -%}
     </div>
     {%- if inci_name != blank -%}
-      <p class="text-[14px] font-medium leading-[17.5px] text-stone-500">{{ article.title }}</p>
+      <p class="text-sm font-medium leading-tight text-stone-500">{{ article.title }}</p>
     {%- endif -%}
   </div>
 </a>

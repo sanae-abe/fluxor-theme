@@ -3,7 +3,7 @@
     "main": {
       "type": "main-ingredient-article",
       "settings": {
-        "products_heading": "この成分を配合した製品",
+        "products_heading": "この成分を配合した商品",
         "products_to_show": 4
       },
       "blocks": {
