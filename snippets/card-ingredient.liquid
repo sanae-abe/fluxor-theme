@@ -24,7 +24,7 @@
       </div>
     {%- endif -%}
     {%- if category_tags != blank -%}
-      <div class="absolute top-4 left-4 flex flex-col gap-2">
+      <div class="absolute top-4 left-4 flex flex-col items-start gap-2">
         {%- for tag in category_tags limit: 4 -%}
           {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
