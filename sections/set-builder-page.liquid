@@ -315,7 +315,7 @@
               <div class="bundle-check-dot flex-shrink-0 w-6 h-6 rounded-full border-2 flex items-center justify-center">
                 {%- render 'icon', icon: 'check', class: 'w-3.5 h-3.5 text-white', x_class: "isSelected(product) ? '' : 'hidden'", stroke_width: 3 -%}
               </div>
-              <div class="bundle-soldout-badge hidden absolute inset-0 rounded-xl flex items-center justify-center" :class="product.available ? 'hidden' : ''">
+              <div class="bundle-soldout-badge absolute inset-0 rounded-xl flex items-center justify-center" :class="product.available ? 'hidden' : ''">
                 <span class="text-xs font-semibold tracking-wide">在庫なし</span>
               </div>
             </button>

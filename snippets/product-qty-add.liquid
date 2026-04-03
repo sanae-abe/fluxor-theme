@@ -46,8 +46,8 @@
     @click="addToCart()"
     :disabled="adding || !variantAvailable"
   >
-    <span class="text-base font-medium leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
-    <span class="text-base font-medium leading-tight" x-show="adding" x-cloak>追加中…</span>
+    <span class="text-base font-medium leading-tight" :class="adding ? 'hidden' : ''" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+    <span class="text-base font-medium leading-tight" :class="adding ? '' : 'hidden'">追加中…</span>
   </button>
 
 {%- else -%}
