@@ -84,64 +84,63 @@
 </script>
 
 {%- comment %} ── ブロックレンダリング ───────────────────────────── {%- endcomment -%}
-<div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20 gap-10 md:gap-20">
-  {%- for block in section.blocks -%}
+{%- for block in section.blocks -%}
 
-    {%- if block.type == 'text_section' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- if block.type == 'article_content' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if article.content != blank -%}
+          <div class="text-base leading-relaxed text-stone-900 space-y-4 rte">{{ article.content }}</div>
+        {%- endif -%}
+      </div>
+    </div>
+
+  {%- elsif block.type == 'text_section' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if block.settings.content != blank -%}
           <div class="text-base leading-relaxed text-stone-900 space-y-4">{{ block.settings.content }}</div>
         {%- endif -%}
       </div>
+    </div>
 
-    {%- elsif block.type == 'benefits_group' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'benefits_group' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-          {%- for n in (1..4) -%}
-            {%- liquid
-              assign icon_key = 'card' | append: n | append: '_icon'
-              assign title_key = 'card' | append: n | append: '_title'
-              assign desc_key = 'card' | append: n | append: '_description'
-              assign card_icon = block.settings[icon_key]
-              assign card_title = block.settings[title_key]
-              assign card_desc = block.settings[desc_key]
-            -%}
-            {%- if card_title != blank -%}
-              <div class="bg-stone-100 p-6 flex flex-col gap-4">
-                <div class="pb-2">
-                  {%- render 'icon', icon: card_icon, class: 'w-12 h-12', stroke_width: 1 -%}
+        {%- if roles != blank -%}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {%- for role in roles -%}
+              {%- if role.fields.title.value != blank -%}
+                <div class="bg-stone-100 p-6 flex flex-col gap-4">
+                  {%- if role.fields.icon.value != blank -%}
+                    <div class="pb-2">
+                      {%- render 'icon', icon: role.fields.icon.value, class: 'w-12 h-12', stroke_width: 1 -%}
+                    </div>
+                  {%- endif -%}
+                  <h3 class="text-2xl font-medium text-stone-900">{{ role.fields.title.value }}</h3>
+                  {%- if role.fields.description.value != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-900">{{ role.fields.description.value }}</p>
+                  {%- endif -%}
                 </div>
-                <h3 class="text-2xl font-medium text-stone-900">{{ card_title }}</h3>
-                {%- if card_desc != blank -%}
-                  <p class="text-sm leading-relaxed text-stone-900">{{ card_desc }}</p>
-                {%- endif -%}
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
       </div>
+    </div>
 
-    {%- elsif block.type == 'disclaimer' -%}
-      <div
-        class="w-full max-w-3xl"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'disclaimer' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl">
         <div class="bg-stone-100 p-4 flex gap-2 items-start">
           <div class="shrink-0 pt-1">
             {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900' -%}
@@ -149,16 +148,13 @@
           <div class="flex-1 text-sm leading-relaxed text-stone-900">{{ block.settings.text }}</div>
         </div>
       </div>
+    </div>
 
-    {%- elsif block.type == 'compatible_ingredients' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'compatible_ingredients' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if compatible_ingredients != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
@@ -175,16 +171,13 @@
           </div>
         {%- endif -%}
       </div>
+    </div>
 
-    {%- elsif block.type == 'caution_combinations' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'caution_combinations' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if caution_combinations != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
@@ -201,31 +194,25 @@
           </div>
         {%- endif -%}
       </div>
+    </div>
 
-    {%- elsif block.type == 'pregnancy_note' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'pregnancy_note' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if pregnancy_note != blank -%}
           <p class="text-base leading-relaxed text-stone-900">{{ pregnancy_note }}</p>
         {%- endif -%}
       </div>
+    </div>
 
-    {%- elsif block.type == 'usage_tips' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'usage_tips' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if usage_tips != blank -%}
           <ol class="flex flex-col gap-6 list-none">
@@ -245,16 +232,13 @@
           </ol>
         {%- endif -%}
       </div>
+    </div>
 
-    {%- elsif block.type == 'roles' -%}
-      <div
-        class="w-full max-w-3xl flex flex-col gap-10"
-        {{ block.shopify_attributes }}
-      >
+  {%- elsif block.type == 'roles' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 md:py-20" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
-            {{ block.settings.heading }}
-          </h2>
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if roles != blank -%}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -276,81 +260,90 @@
           </div>
         {%- endif -%}
       </div>
-
-    {%- endif -%}
-  {%- endfor -%}
-</div>
-
-{%- comment %} ── 参考文献 ──────────────────────────────────────── {%- endcomment -%}
-{%- if reference_entries != blank -%}
-  <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]">
-    <div class="w-full max-w-3xl flex flex-col gap-5">
-      {%- if section.settings.references_heading != blank -%}
-        <p class="text-base font-medium text-stone-900">{{ section.settings.references_heading }}</p>
-      {%- endif -%}
-      <ol class="flex flex-col gap-2 list-none">
-        {%- for entry in reference_entries -%}
-          <li class="flex gap-3">
-            <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
-            <div class="flex flex-col gap-1 min-w-0">
-              <p class="text-sm font-medium text-stone-900">{{ entry.fields.title.value }}</p>
-              {%- liquid
-                assign meta_parts = ''
-                if entry.fields.authors.value != blank
-                  assign meta_parts = entry.fields.authors.value
-                endif
-                if entry.fields.journal.value != blank
-                  if meta_parts != blank
-                    assign meta_parts = meta_parts | append: ' / ' | append: entry.fields.journal.value
-                  else
-                    assign meta_parts = entry.fields.journal.value
-                  endif
-                endif
-                if entry.fields.details.value != blank
-                  if meta_parts != blank
-                    assign meta_parts = meta_parts | append: ', ' | append: entry.fields.details.value
-                  else
-                    assign meta_parts = entry.fields.details.value
-                  endif
-                endif
-              -%}
-              {%- if meta_parts != blank -%}
-                <p class="text-sm text-stone-500">{{ meta_parts }}</p>
-              {%- endif -%}
-            </div>
-          </li>
-        {%- endfor -%}
-      </ol>
-    </div>
-  </div>
-{%- endif -%}
-
-{%- comment %} ── この成分を配合した商品 ─────────────────────────── {%- endcomment -%}
-{%- if ingredient_products != blank -%}
-  <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]">
-    <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
-      {%- if section.settings.products_heading != blank -%}
-        <h2 class="text-4xl font-semibold tracking-wider text-stone-900">
-          {{ section.settings.products_heading }}
-        </h2>
-      {%- endif -%}
-      {%- if section.settings.products_subheading != blank -%}
-        <p class="text-lg text-stone-900/70">{{ section.settings.products_subheading }}</p>
-      {%- endif -%}
     </div>
 
-    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
-      {%- for product in ingredient_products -%}
-        {%- render 'card-product-4col', product: product -%}
-      {%- endfor -%}
+  {%- elsif block.type == 'references' -%}
+    <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-3xl flex flex-col gap-5">
+        {%- if block.settings.heading != blank -%}
+          <p class="text-base font-medium text-stone-900">{{ block.settings.heading }}</p>
+        {%- endif -%}
+        {%- if reference_entries != blank -%}
+          <ol class="flex flex-col gap-2 list-none">
+            {%- for entry in reference_entries -%}
+              <li class="flex gap-3">
+                <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
+                <div class="flex flex-col gap-1 min-w-0">
+                  <p class="text-sm font-medium text-stone-900">{{ entry.fields.title.value }}</p>
+                  {%- liquid
+                    assign meta_parts = ''
+                    if entry.fields.authors.value != blank
+                      assign meta_parts = entry.fields.authors.value
+                    endif
+                    if entry.fields.journal.value != blank
+                      if meta_parts != blank
+                        assign meta_parts = meta_parts | append: ' / ' | append: entry.fields.journal.value
+                      else
+                        assign meta_parts = entry.fields.journal.value
+                      endif
+                    endif
+                    if entry.fields.details.value != blank
+                      if meta_parts != blank
+                        assign meta_parts = meta_parts | append: ', ' | append: entry.fields.details.value
+                      else
+                        assign meta_parts = entry.fields.details.value
+                      endif
+                    endif
+                  -%}
+                  {%- if meta_parts != blank -%}
+                    <p class="text-sm text-stone-500">{{ meta_parts }}</p>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
     </div>
-  </section>
-{%- endif -%}
+
+  {%- elsif block.type == 'product_grid' -%}
+    <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ block.settings.heading }}</h2>
+        {%- endif -%}
+        {%- if block.settings.subheading != blank -%}
+          <p class="text-lg text-stone-900/70">{{ block.settings.subheading }}</p>
+        {%- endif -%}
+      </div>
+      {%- if ingredient_products != blank -%}
+        <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
+          {%- for product in ingredient_products -%}
+            {%- render 'card-product-4col', product: product -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
+    </section>
+
+  {%- endif -%}
+{%- endfor -%}
 
 {%- schema %}
 {
   "name": "成分ガイド記事",
   "blocks": [
+    {
+      "type": "article_content",
+      "name": "記事コンテンツ",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "この成分について"
+        }
+      ]
+    },
     {
       "type": "text_section",
       "name": "テキストセクション",
@@ -376,138 +369,6 @@
           "id": "heading",
           "label": "見出し",
           "default": "スキンケアにおける役割"
-        },
-        {
-          "type": "select",
-          "id": "card1_icon",
-          "label": "カード1 アイコン",
-          "options": [
-            { "value": "layout-grid", "label": "Layout Grid" },
-            { "value": "droplet", "label": "Droplet" },
-            { "value": "sparkle", "label": "Sparkle" },
-            { "value": "sun", "label": "Sun" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "citrus", "label": "Citrus" },
-            { "value": "flask-conical", "label": "Flask" },
-            { "value": "gem", "label": "Gem" },
-            { "value": "waves", "label": "Waves" },
-            { "value": "shield-check", "label": "Shield Check" },
-            { "value": "arrow-big-up-dash", "label": "Arrow Up" },
-            { "value": "smile", "label": "Smile" },
-            { "value": "rose", "label": "Rose" }
-          ],
-          "default": "layout-grid"
-        },
-        {
-          "type": "text",
-          "id": "card1_title",
-          "label": "カード1 タイトル",
-          "default": "肌を整える"
-        },
-        {
-          "type": "textarea",
-          "id": "card1_description",
-          "label": "カード1 説明",
-          "default": "肌のキメを整え、なめらかな肌へと導きます。健やかな肌環境を保ちます。"
-        },
-        {
-          "type": "select",
-          "id": "card2_icon",
-          "label": "カード2 アイコン",
-          "options": [
-            { "value": "layout-grid", "label": "Layout Grid" },
-            { "value": "droplet", "label": "Droplet" },
-            { "value": "sparkle", "label": "Sparkle" },
-            { "value": "sun", "label": "Sun" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "citrus", "label": "Citrus" },
-            { "value": "flask-conical", "label": "Flask" },
-            { "value": "gem", "label": "Gem" },
-            { "value": "waves", "label": "Waves" },
-            { "value": "shield-check", "label": "Shield Check" },
-            { "value": "arrow-big-up-dash", "label": "Arrow Up" },
-            { "value": "smile", "label": "Smile" },
-            { "value": "rose", "label": "Rose" }
-          ],
-          "default": "droplet"
-        },
-        {
-          "type": "text",
-          "id": "card2_title",
-          "label": "カード2 タイトル",
-          "default": "うるおいを与える"
-        },
-        {
-          "type": "textarea",
-          "id": "card2_description",
-          "label": "カード2 説明",
-          "default": "肌にうるおいを与え、しっとりとした質感を保ちます。乾燥から肌を守ります。"
-        },
-        {
-          "type": "select",
-          "id": "card3_icon",
-          "label": "カード3 アイコン",
-          "options": [
-            { "value": "layout-grid", "label": "Layout Grid" },
-            { "value": "droplet", "label": "Droplet" },
-            { "value": "sparkle", "label": "Sparkle" },
-            { "value": "sun", "label": "Sun" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "citrus", "label": "Citrus" },
-            { "value": "flask-conical", "label": "Flask" },
-            { "value": "gem", "label": "Gem" },
-            { "value": "waves", "label": "Waves" },
-            { "value": "shield-check", "label": "Shield Check" },
-            { "value": "arrow-big-up-dash", "label": "Arrow Up" },
-            { "value": "smile", "label": "Smile" },
-            { "value": "rose", "label": "Rose" }
-          ],
-          "default": "sparkle"
-        },
-        {
-          "type": "text",
-          "id": "card3_title",
-          "label": "カード3 タイトル",
-          "default": "肌を清浄にする"
-        },
-        {
-          "type": "textarea",
-          "id": "card3_description",
-          "label": "カード3 説明",
-          "default": "肌を清浄に保ち、清潔な状態を維持します。肌本来の健やかさをサポートします。"
-        },
-        {
-          "type": "select",
-          "id": "card4_icon",
-          "label": "カード4 アイコン",
-          "options": [
-            { "value": "layout-grid", "label": "Layout Grid" },
-            { "value": "droplet", "label": "Droplet" },
-            { "value": "sparkle", "label": "Sparkle" },
-            { "value": "sun", "label": "Sun" },
-            { "value": "leaf", "label": "Leaf" },
-            { "value": "citrus", "label": "Citrus" },
-            { "value": "flask-conical", "label": "Flask" },
-            { "value": "gem", "label": "Gem" },
-            { "value": "waves", "label": "Waves" },
-            { "value": "shield-check", "label": "Shield Check" },
-            { "value": "arrow-big-up-dash", "label": "Arrow Up" },
-            { "value": "smile", "label": "Smile" },
-            { "value": "rose", "label": "Rose" }
-          ],
-          "default": "sun"
-        },
-        {
-          "type": "text",
-          "id": "card4_title",
-          "label": "カード4 タイトル",
-          "default": "爽やかな香り"
-        },
-        {
-          "type": "textarea",
-          "id": "card4_description",
-          "label": "カード4 説明",
-          "default": "柑橘系の爽やかな香りが、スキンケアタイムをリフレッシュする時間へと変えます。"
         }
       ]
     },
@@ -582,36 +443,44 @@
           "default": "スキンケアにおける役割"
         }
       ]
-    }
-  ],
-  "settings": [
-    {
-      "type": "text",
-      "id": "references_heading",
-      "label": "参考文献 見出し",
-      "default": "参考文献"
     },
     {
-      "type": "text",
-      "id": "products_heading",
-      "label": "製品グリッド 見出し",
-      "default": "この成分を配合した商品"
+      "type": "references",
+      "name": "参考文献",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "参考文献"
+        }
+      ]
     },
     {
-      "type": "text",
-      "id": "products_subheading",
-      "label": "製品グリッド サブ見出し"
+      "type": "product_grid",
+      "name": "関連商品グリッド",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "この成分を配合した商品"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "サブ見出し"
+        }
+      ]
     }
   ],
+  "settings": [],
   "presets": [
     {
       "name": "成分ガイド記事",
       "blocks": [
         {
-          "type": "text_section",
-          "settings": {
-            "heading": "この成分について"
-          }
+          "type": "article_content"
         },
         {
           "type": "roles"
@@ -630,6 +499,12 @@
         },
         {
           "type": "disclaimer"
+        },
+        {
+          "type": "references"
+        },
+        {
+          "type": "product_grid"
         }
       ]
     }
