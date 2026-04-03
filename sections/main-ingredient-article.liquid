@@ -9,7 +9,7 @@
     caution_combinations    {list.metaobject_reference} → ingredient_combination { name, reason }
     usage_tips              {list.metaobject_reference} → content_item { title, description }
     roles                   {list.metaobject_reference} → role_item { title, description, icon }
-    reference_entry         {list.metaobject_reference} → reference_entry { title, authors, journal, details }
+    reference_entry         {list.metaobject_reference} → reference_entry { title, authors, journal, details, url }
 {%- endcomment %}
 
 {%- assign category_tags = article.metafields.custom.category_tags.value -%}
@@ -84,10 +84,18 @@
 </script>
 
 {%- comment %} ── ブロックレンダリング ───────────────────────────── {%- endcomment -%}
+{%- comment %} 最後の references 以外のブロックインデックスを事前計算 {%- endcomment -%}
+{%- assign last_non_ref_index = nil -%}
 {%- for block in section.blocks -%}
+  {%- unless block.type == 'references' -%}{%- assign last_non_ref_index = forloop.index0 -%}{%- endunless -%}
+{%- endfor -%}
+{%- for block in section.blocks -%}
+  {%- assign extra_style = '' -%}
+  {%- if forloop.first -%}{%- assign extra_style = 'padding-top: 80px;' -%}{%- endif -%}
+  {%- if forloop.index0 == last_non_ref_index -%}{%- assign extra_style = extra_style | append: 'padding-bottom: 80px;' -%}{%- endif -%}
 
   {%- if block.type == 'article_content' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -99,7 +107,7 @@
     </div>
 
   {%- elsif block.type == 'text_section' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -111,7 +119,7 @@
     </div>
 
   {%- elsif block.type == 'benefits_group' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -139,7 +147,7 @@
     </div>
 
   {%- elsif block.type == 'disclaimer' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl">
         <div class="bg-stone-100 p-4 flex gap-2 items-start">
           <div class="shrink-0 pt-1">
@@ -151,7 +159,7 @@
     </div>
 
   {%- elsif block.type == 'compatible_ingredients' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -174,7 +182,7 @@
     </div>
 
   {%- elsif block.type == 'caution_combinations' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -197,7 +205,7 @@
     </div>
 
   {%- elsif block.type == 'pregnancy_note' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -209,7 +217,7 @@
     </div>
 
   {%- elsif block.type == 'usage_tips' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -235,7 +243,7 @@
     </div>
 
   {%- elsif block.type == 'roles' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }}>
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -263,7 +271,7 @@
     </div>
 
   {%- elsif block.type == 'references' -%}
-    <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
+    <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-3xl flex flex-col gap-5">
         {%- if block.settings.heading != blank -%}
           <p class="text-base font-medium text-stone-900">{{ block.settings.heading }}</p>
@@ -307,7 +315,7 @@
     </div>
 
   {%- elsif block.type == 'product_grid' -%}
-    <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
+    <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }} style="{{ extra_style }}">
       <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ block.settings.heading }}</h2>
