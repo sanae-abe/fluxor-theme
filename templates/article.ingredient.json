@@ -19,12 +19,6 @@
             "content": "<p> レチナールの説明</p>"
           }
         },
-        "benefits_group_9YPPHc": {
-          "type": "benefits_group",
-          "settings": {
-            "heading": "スキンケアにおける役割"
-          }
-        },
         "usage_tips_8UKW88": {
           "type": "usage_tips",
           "settings": {
@@ -60,17 +54,24 @@
           "settings": {
             "heading": "参考文献"
           }
+        },
+        "product_grid_j68c7m": {
+          "type": "product_grid",
+          "settings": {
+            "heading": "この成分を配合した商品",
+            "subheading": ""
+          }
         }
       },
       "block_order": [
         "about",
-        "benefits_group_9YPPHc",
         "usage_tips_8UKW88",
         "compatible_ingredients_eMcXaz",
         "caution_combinations_p3fPYJ",
         "pregnancy_note_w6jjqx",
         "disclaimer",
-        "references_nQdxNc"
+        "references_nQdxNc",
+        "product_grid_j68c7m"
       ],
       "settings": {}
     }
