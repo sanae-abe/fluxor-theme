@@ -48,13 +48,6 @@
             "heading": "妊娠・授乳中の方へ"
           }
         },
-        "product_grid_j68c7m": {
-          "type": "product_grid",
-          "settings": {
-            "heading": "この成分を配合した商品",
-            "subheading": ""
-          }
-        },
         "disclaimer": {
           "type": "disclaimer",
           "settings": {
@@ -66,6 +59,13 @@
           "settings": {
             "heading": "参考文献"
           }
+        },
+        "product_grid_j68c7m": {
+          "type": "product_grid",
+          "settings": {
+            "heading": "この成分を配合した商品",
+            "subheading": ""
+          }
         }
       },
       "block_order": [
@@ -75,9 +75,9 @@
         "compatible_ingredients_eMcXaz",
         "caution_combinations_p3fPYJ",
         "pregnancy_note_w6jjqx",
-        "product_grid_j68c7m",
         "disclaimer",
-        "references_nQdxNc"
+        "references_nQdxNc",
+        "product_grid_j68c7m"
       ],
       "settings": {}
     }
