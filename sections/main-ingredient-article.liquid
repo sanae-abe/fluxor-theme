@@ -4,7 +4,7 @@
   対応メタフィールド (名前空間: custom):
     inci_name               {single_line_text_field}
     category_tags           {list.single_line_text_field}
-    pregnancy_note          {single_line_text_field}
+    pregnancy_note          {multi_line_text_field}
     compatible_ingredients  {list.metaobject_reference} → ingredient_combination { name, reason }
     caution_combinations    {list.metaobject_reference} → ingredient_combination { name, reason }
     usage_tips              {list.metaobject_reference} → content_item { title, description }
@@ -147,7 +147,7 @@
                   {%- endif -%}
                   <h3 class="text-base font-medium text-stone-900">{{ role.title }}</h3>
                   {%- if role.description != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-900">{{ role.description }}</p>
+                    <p class="text-sm leading-relaxed text-stone-900">{{ role.description | newline_to_br }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -203,7 +203,7 @@
                     <p class="text-base font-medium text-stone-900">{{ item.name }}</p>
                   </div>
                   {%- if item.reason != blank -%}
-                    <p class="text-base leading-relaxed text-stone-600">{{ item.reason }}</p>
+                    <p class="text-base leading-relaxed text-stone-600">{{ item.reason | newline_to_br }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -220,7 +220,7 @@
           <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if pregnancy_note != blank -%}
-          <p class="text-base leading-relaxed text-stone-900">{{ pregnancy_note }}</p>
+          <p class="text-base leading-relaxed text-stone-900">{{ pregnancy_note | newline_to_br }}</p>
         {%- endif -%}
       </div>
     </div>
@@ -240,7 +240,7 @@
                   <div class="flex flex-col gap-1">
                     <p class="text-base font-medium text-stone-900">{{ tip.title }}</p>
                     {%- if tip.description != blank -%}
-                      <p class="text-base leading-relaxed text-stone-600">{{ tip.description }}</p>
+                      <p class="text-base leading-relaxed text-stone-600">{{ tip.description | newline_to_br }}</p>
                     {%- endif -%}
                   </div>
                 </li>

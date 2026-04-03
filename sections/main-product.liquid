@@ -40,12 +40,6 @@
   assign ph_level           = product.metafields.custom.ph_level
   assign origin             = product.metafields.custom.origin
   assign texture            = product.metafields.custom.texture
-  assign all_ingredients    = product.metafields.custom.all_ingredients
-  assign all_ingredients_ja = product.metafields.custom.all_ingredients_ja | default: all_ingredients
-  assign usage_timing       = product.metafields.custom.usage_timing
-  assign usage_method       = product.metafields.custom.usage_method
-  assign how_to_store       = product.metafields.custom.how_to_store
-  assign precautions        = product.metafields.custom.precautions
   assign product_name_en    = product.metafields.custom.product_name_en
 
   assign sale_eligible = false
