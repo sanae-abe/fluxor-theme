@@ -350,7 +350,7 @@
               | replace: '※', _sup
             -%}
             <div class="flex items-start gap-2">
-              {%- render 'icon', icon: 'check', width: 16, height: 16, stroke: '#0f766e', class: 'shrink-0 mt-1' -%}
+              {%- render 'icon', icon: 'check', width: 16, height: 16, stroke_width: 2, class: 'shrink-0 mt-1' -%}
               <p class="text-stone-900 leading-relaxed">
                 {{- benefit_main -}}
                 {%- for i in (1..5) -%}

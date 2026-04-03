@@ -10,6 +10,7 @@
     usage_tips              {list.metaobject_reference} → content_item { title, description }
     roles                   {list.metaobject_reference} → role_item { title, description, icon }
     reference_entry         {list.metaobject_reference} → reference_entry { title, authors, journal, details, url }
+    product_reference       {list.product_reference}
 {%- endcomment -%}
 
 {%- liquid
@@ -60,7 +61,7 @@
     <div class="w-full h-[250px] md:h-[400px] relative overflow-hidden">
       <img
         src="{{ article.image | image_url: width: 1920 }}"
-        alt="{{ article.image.alt | escape | default: article.title | escape }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
         class="absolute inset-0 w-full h-full object-cover"
         loading="eager"
         fetchpriority="high"
@@ -108,9 +109,9 @@
 
   {%- if block.type == 'article_content' -%}
     <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+      <div class="w-full max-w-3xl flex flex-col gap-8">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if article.content != blank -%}
           <div class="text-base leading-relaxed text-stone-900 space-y-4 rte">{{ article.content }}</div>
@@ -120,9 +121,9 @@
 
   {%- elsif block.type == 'text_section' -%}
     <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+      <div class="w-full max-w-3xl flex flex-col gap-8">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if block.settings.content != blank -%}
           <div class="text-base leading-relaxed text-stone-900 space-y-4">{{ block.settings.content }}</div>
@@ -130,25 +131,23 @@
       </div>
     </div>
 
-  {%- elsif block.type == 'benefits_group' or block.type == 'roles' -%}
+  {%- elsif block.type == 'roles' -%}
     <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+      <div class="w-full max-w-3xl flex flex-col gap-8">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if roles != blank -%}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {%- for role in roles -%}
               {%- if role.title != blank -%}
                 <div class="bg-stone-100 p-6 flex flex-col gap-4">
                   {%- if role.icon != blank -%}
-                    <div class="pb-2">
-                      {%- render 'icon', icon: role.icon, class: 'w-12 h-12', stroke_width: 1 -%}
-                    </div>
+                    {%- render 'icon', icon: role.icon, class: 'w-10 h-10', stroke_width: 1 -%} 
                   {%- endif -%}
-                  <h3 class="text-base font-semibold text-stone-900">{{ role.title }}</h3>
+                  <h3 class="text-base font-medium text-stone-900">{{ role.title }}</h3>
                   {%- if role.description != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ role.description }}</p>
+                    <p class="text-sm leading-relaxed text-stone-900">{{ role.description }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -178,18 +177,33 @@
       endif
     -%}
     <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+      <div class="w-full max-w-3xl flex flex-col gap-8">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if combo_items != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
             {%- for item in combo_items -%}
               {%- if item.name != blank -%}
-                <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold text-stone-900">{{ item.name }}</p>
+                {%- liquid
+                  assign item_padding = 'py-5'
+                  if forloop.first
+                    assign item_padding = 'pt-0 pb-5'
+                  elsif forloop.last
+                    assign item_padding = 'pt-5 pb-0'
+                  endif
+                -%}
+                <div class="flex flex-col gap-2 {{ item_padding }}">
+                  <div class="flex items-center gap-2">
+                    {%- if block.type == 'caution_combinations' -%}
+                      {%- render 'icon', icon: 'triangle-alert', width: 16, height: 16, stroke_width: 2, class: 'flex-shrink-0' -%}
+                    {%- else -%}
+                      {%- render 'icon', icon: 'check', width: 16, height: 16, stroke_width: 2, class: 'flex-shrink-0' -%}
+                    {%- endif -%}
+                    <p class="text-base font-medium text-stone-900">{{ item.name }}</p>
+                  </div>
                   {%- if item.reason != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
+                    <p class="text-base leading-relaxed text-stone-600">{{ item.reason }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -201,9 +215,9 @@
 
   {%- elsif block.type == 'pregnancy_note' -%}
     <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+      <div class="w-full max-w-3xl flex flex-col gap-8">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if pregnancy_note != blank -%}
           <p class="text-base leading-relaxed text-stone-900">{{ pregnancy_note }}</p>
@@ -213,20 +227,20 @@
 
   {%- elsif block.type == 'usage_tips' -%}
     <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-10">
+      <div class="w-full max-w-3xl flex flex-col gap-8">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
+          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if usage_tips != blank -%}
           <ol class="flex flex-col gap-6 list-none">
             {%- for tip in usage_tips -%}
               {%- if tip.title != blank -%}
-                <li class="flex gap-4">
-                  <span class="text-sm font-semibold text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
+                <li class="flex gap-2">
+                  <span class="text-base font-medium text-stone-900 shrink-0 pt-0.5 min-w-[1.25rem] tabular-nums">{{ forloop.index }}.</span>
                   <div class="flex flex-col gap-1">
-                    <p class="text-base font-semibold text-stone-900">{{ tip.title }}</p>
+                    <p class="text-base font-medium text-stone-900">{{ tip.title }}</p>
                     {%- if tip.description != blank -%}
-                      <p class="text-sm leading-relaxed text-stone-600">{{ tip.description }}</p>
+                      <p class="text-base leading-relaxed text-stone-600">{{ tip.description }}</p>
                     {%- endif -%}
                   </div>
                 </li>
@@ -247,12 +261,12 @@
           <ol class="flex flex-col gap-2 list-none">
             {%- for entry in reference_entries -%}
               <li class="flex gap-3">
-                <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
+                <span class="text-base text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
                 <div class="flex flex-col gap-1 min-w-0">
                   {%- if entry.url != blank -%}
-                    <a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-stone-900 underline decoration-stone-400 underline-offset-2">{{ entry.title }}</a>
+                    <a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-stone-900 underline decoration-stone-400 underline-offset-2">{{ entry.title }}</a>
                   {%- else -%}
-                    <p class="text-sm font-medium text-stone-900">{{ entry.title }}</p>
+                    <p class="text-base font-medium text-stone-900">{{ entry.title }}</p>
                   {%- endif -%}
                   {%- liquid
                     assign meta_parts = ''
@@ -336,18 +350,6 @@
           "type": "richtext",
           "id": "content",
           "label": "本文"
-        }
-      ]
-    },
-    {
-      "type": "benefits_group",
-      "name": "ベネフィットカードグループ",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "見出し",
-          "default": "スキンケアにおける役割"
         }
       ]
     },
