@@ -54,17 +54,17 @@
             "text": "<p>本ページは成分の一般的な情報提供を目的としており、特定の効能・効果を保証するものではありません。また、医薬品・治療の代替となるものではありません。肌悩みや症状がある場合は、皮膚科専門医へご相談ください。</p>"
           }
         },
-        "references_nQdxNc": {
-          "type": "references",
-          "settings": {
-            "heading": "参考文献"
-          }
-        },
         "product_grid_j68c7m": {
           "type": "product_grid",
           "settings": {
             "heading": "この成分を配合した商品",
             "subheading": ""
+          }
+        },
+        "references_nQdxNc": {
+          "type": "references",
+          "settings": {
+            "heading": "参考文献"
           }
         }
       },
@@ -76,8 +76,8 @@
         "caution_combinations_p3fPYJ",
         "pregnancy_note_w6jjqx",
         "disclaimer",
-        "references_nQdxNc",
-        "product_grid_j68c7m"
+        "product_grid_j68c7m",
+        "references_nQdxNc"
       ],
       "settings": {}
     }
