@@ -25,6 +25,12 @@
             "heading": "スキンケアにおける役割"
           }
         },
+        "usage_tips_8UKW88": {
+          "type": "usage_tips",
+          "settings": {
+            "heading": "使用上のポイント"
+          }
+        },
         "compatible_ingredients_eMcXaz": {
           "type": "compatible_ingredients",
           "settings": {
@@ -59,6 +65,7 @@
       "block_order": [
         "about",
         "benefits_group_9YPPHc",
+        "usage_tips_8UKW88",
         "compatible_ingredients_eMcXaz",
         "caution_combinations_p3fPYJ",
         "pregnancy_note_w6jjqx",
