@@ -12,11 +12,10 @@
     "main": {
       "type": "main-ingredient-article",
       "blocks": {
-        "about": {
-          "type": "text_section",
+        "article_content_BPGiNQ": {
+          "type": "article_content",
           "settings": {
-            "heading": "この成分について",
-            "content": "<p> レチナールの説明</p>"
+            "heading": "この成分について"
           }
         },
         "usage_tips_8UKW88": {
@@ -64,7 +63,7 @@
         }
       },
       "block_order": [
-        "about",
+        "article_content_BPGiNQ",
         "usage_tips_8UKW88",
         "compatible_ingredients_eMcXaz",
         "caution_combinations_p3fPYJ",
