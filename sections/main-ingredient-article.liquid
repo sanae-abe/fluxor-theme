@@ -184,7 +184,7 @@
             {%- for item in caution_combinations -%}
               {%- if item.name != blank -%}
                 <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold text-amber-700">{{ item.name }}</p>
+                  <p class="text-base font-semibold">{{ item.name }}</p>
                   {%- if item.reason != blank -%}
                     <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
                   {%- endif -%}
