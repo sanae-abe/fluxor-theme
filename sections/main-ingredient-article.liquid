@@ -10,7 +10,7 @@
     usage_tips              {list.metaobject_reference} → content_item { title, description }
     roles                   {list.metaobject_reference} → role_item { title, description, icon }
     reference_entry         {list.metaobject_reference} → reference_entry { title, authors, journal, details, url }
-{%- endcomment %}
+{%- endcomment -%}
 
 {%- liquid
   assign category_tags = article.metafields.custom.category_tags.value
@@ -471,4 +471,4 @@
     }
   ]
 }
-{%- endschema %}
+{%- endschema -%}

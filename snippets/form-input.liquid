@@ -18,7 +18,7 @@
   Usage:
     {%- render 'form-input', type: 'email', id: 'ContactForm-email', name: 'contact[email]', label: 'メールアドレス', value: form.email, required: true -%}
     {%- render 'form-input', type: 'number', name: filter.min_value.param_name, placeholder: '0', min: 0 -%}
-{%- endcomment %}
+{%- endcomment -%}
 
 {%- liquid
   assign _type = type | default: 'text'

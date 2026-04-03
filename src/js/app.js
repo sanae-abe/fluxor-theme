@@ -1,18 +1,22 @@
 import '../css/app.css'
 import Alpine from 'alpinejs'
+import Focus from '@alpinejs/focus'
 
 import { cartStore }       from './stores/cart.js'
 import { saleStore }       from './stores/sale.js'
 import { siteHeader }      from './components/header.js'
 import { saleCountdown }   from './components/saleCountdown.js'
-import { announcementBar } from './components/announcementBar.js'
+import { announcementBar }   from './components/announcementBar.js'
+import { ingredientFilters } from './components/ingredientFilters.js'
 
+Alpine.plugin(Focus)
 Alpine.store('cart', cartStore)
 Alpine.store('sale', saleStore)
 Alpine.store('ui', { announcementHeight: 0 })
 Alpine.data('siteHeader', siteHeader)
 Alpine.data('saleCountdown', saleCountdown)
 Alpine.data('announcementBar', announcementBar)
+Alpine.data('ingredientFilters', ingredientFilters)
 
 document.addEventListener('alpine:init', () => {
   Alpine.store('cart').fetch()

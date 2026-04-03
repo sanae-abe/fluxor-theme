@@ -7,7 +7,7 @@
   価格: 管理画面の商品価格をそのまま使用（compare_at_price でセール表示対応）
   左カラム: 商品画像ギャラリー
   右カラム: タイトル・価格・固定商品・候補選択・カートボタン
-{%- endcomment %}
+{%- endcomment -%}
 
 {%- liquid
   assign variant = product.selected_or_first_available_variant
@@ -99,7 +99,7 @@
   endif
 -%}
 
-{%- comment %} 候補商品 JSON 配列 {%- endcomment %}
+{%- comment %} 候補商品 JSON 配列 {%- endcomment -%}
 {%- assign json_parts = '' -%}
 {%- for i in (1..8) -%}
   {%- assign key = 'product_' | append: i -%}
@@ -181,7 +181,7 @@
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-10 items-start">
 
-    {%- comment %}--- 左カラム: 画像ギャラリー ---{%- endcomment %}
+    {%- comment %}--- 左カラム: 画像ギャラリー ---{%- endcomment -%}
     <div class="w-full lg:flex-1 flex flex-col gap-4">
       <div class="aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
         {%- if product.featured_image -%}
@@ -213,10 +213,10 @@
       {%- endif -%}
     </div>
 
-    {%- comment %}--- 右カラム: バンドル情報 ---{%- endcomment %}
+    {%- comment %}--- 右カラム: バンドル情報 ---{%- endcomment -%}
     <div class="w-full lg:flex-1 flex flex-col gap-5 lg:sticky lg:top-20 min-w-0">
 
-      {%- comment %} タイトル {%- endcomment %}
+      {%- comment %} タイトル {%- endcomment -%}
       <div class="flex flex-col gap-2">
         {%- if product.vendor != blank -%}
           <p class="text-sm text-stone-500 leading-tight">{{ product.vendor }}</p>
@@ -227,7 +227,7 @@
         {%- endif -%}
       </div>
 
-      {%- comment %} 価格（管理画面設定値） {%- endcomment %}
+      {%- comment %} 価格（管理画面設定値） {%- endcomment -%}
       <div class="flex items-end gap-2 flex-wrap">
         {%- if on_sale -%}
           <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
@@ -258,7 +258,7 @@
 
       <hr class="border-stone-200">
 
-      {%- comment %} 固定商品 {%- endcomment %}
+      {%- comment %} 固定商品 {%- endcomment -%}
       <div>
         <p class="text-xs font-medium text-stone-500 uppercase tracking-wider mb-2">固定商品</p>
         <div class="flex items-center gap-3 p-3 rounded-xl border border-stone-200 bg-white">
@@ -281,7 +281,7 @@
         </div>
       </div>
 
-      {%- comment %} 候補商品選択 {%- endcomment %}
+      {%- comment %} 候補商品選択 {%- endcomment -%}
       <div>
         <div class="flex items-center justify-between mb-3">
           <p class="text-xs font-medium text-stone-500 uppercase tracking-wider">好きな2点を選んでください</p>
@@ -323,7 +323,7 @@
         </div>
       </div>
 
-      {%- comment %} カートに追加ボタン {%- endcomment %}
+      {%- comment %} カートに追加ボタン {%- endcomment -%}
       <div class="flex flex-col gap-3">
         <button
           type="button"
@@ -351,7 +351,7 @@
 </section>
 </div>
 
-{% schema %}
+{%- schema %}
 {
   "name": "バンドルページ",
   "settings": [
@@ -380,4 +380,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema -%}

@@ -109,7 +109,7 @@
     async addToCart() {
       if (this.adding) return;
       this.adding = true;
-      await $store.cart.add({{ variant.id }});
+      await this.$store.cart.add({{ variant.id }});
       this.adding = false;
     }
   }"

@@ -4,14 +4,14 @@
 >
   <div class="max-w-screen-xl mx-auto grid grid-cols-3 items-center h-14 md:h-20">
 
-    {%- comment %} 左カラム：ハンバーガー（モバイル） / ナビゲーション（デスクトップ） {%- endcomment %}
+    {%- comment %} 左カラム：ハンバーガー（モバイル） / ナビゲーション（デスクトップ） {%- endcomment -%}
     <div class="flex items-center">
       <button
         type="button"
         class="lg:hidden flex flex-col gap-1.5 p-3 text-stone-900"
         @click="mobileMenuOpen = !mobileMenuOpen"
         :aria-expanded="mobileMenuOpen"
-        aria-label="メニューを開く"
+        :aria-label="mobileMenuOpen ? 'メニューを閉じる' : 'メニューを開く'"
       >
         <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'rotate-45 translate-y-2' : ''"></span>
         <span class="block w-5 h-px bg-current transition-all duration-200" :class="mobileMenuOpen ? 'opacity-0' : ''"></span>
@@ -32,13 +32,15 @@
       </nav>
     </div>
 
-    {%- comment %} 中央カラム：ロゴ {%- endcomment %}
+    {%- comment %} 中央カラム：ロゴ {%- endcomment -%}
     {%- capture logo_inner -%}
       {%- if settings.logo -%}
+        {%- assign logo_height = settings.logo.height | times: settings.logo_width | divided_by: settings.logo.width -%}
         <img
           src="{{ settings.logo | image_url: width: settings.logo_width | times: 2 }}"
           alt="{{ shop.name | escape }}"
           width="{{ settings.logo_width }}"
+          height="{{ logo_height }}"
           loading="eager"
         >
       {%- else -%}
@@ -69,7 +71,7 @@
       {%- endif -%}
     </div>
 
-    {%- comment %} 右カラム：アイコン群 {%- endcomment %}
+    {%- comment %} 右カラム：アイコン群 {%- endcomment -%}
     <div class="col-start-3 flex items-center justify-end md:gap-2">
       <a
         href="{{ routes.search_url }}"
@@ -93,9 +95,9 @@
       >
         {%- render 'icon', icon: 'cart', class: 'w-6 h-6' -%}
         <span
-          x-show="$store.cart.itemCount > 0"
+          :class="$store.cart.itemCount > 0 ? '' : 'hidden'"
           x-text="$store.cart.itemCount"
-          class="absolute top-0 right-0 bg-stone-900 text-stone-50 text-[10px] leading-none w-4 h-4 rounded-full flex items-center justify-center"
+          class="absolute top-0 right-0 bg-stone-900 text-stone-50 text-[10px] leading-none w-4 h-4 rounded-full flex items-center justify-center hidden"
           aria-hidden="true"
         ></span>
       </button>
@@ -103,9 +105,11 @@
 
   </div>
 
-  {%- comment %} モバイルメニュードロワー {%- endcomment %}
+  {%- comment %} モバイルメニュードロワー {%- endcomment -%}
   <div
     x-show="mobileMenuOpen"
+    x-cloak
+    x-trap="mobileMenuOpen"
     x-transition:enter="transition-transform duration-300 ease-out"
     x-transition:enter-start="-translate-x-full"
     x-transition:enter-end="translate-x-0"
@@ -117,7 +121,6 @@
     aria-modal="true"
     aria-label="メニュー"
     @keydown.escape.window="mobileMenuOpen = false"
-    style="display: none;"
   >
     <div class="flex items-center justify-between px-6 pt-6 pb-4">
       <button
@@ -149,9 +152,10 @@
     </nav>
   </div>
 
-  {%- comment %} オーバーレイ {%- endcomment %}
+  {%- comment %} オーバーレイ {%- endcomment -%}
   <div
     x-show="mobileMenuOpen"
+    x-cloak
     x-transition:enter="transition-opacity duration-300"
     x-transition:enter-start="opacity-0"
     x-transition:enter-end="opacity-100"
@@ -161,12 +165,11 @@
     class="fixed inset-0 z-40 bg-stone-950/40 backdrop-blur-sm md:hidden"
     @click="mobileMenuOpen = false"
     aria-hidden="true"
-    style="display: none;"
   ></div>
 
 </header>
 
-{% schema %}
+{%- schema %}
 {
   "name": "Header",
   "settings": [
@@ -178,4 +181,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema -%}

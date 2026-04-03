@@ -5,12 +5,12 @@
     {%- form 'cart', cart -%}
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-        {%- comment %} カートアイテム一覧 {%- endcomment %}
+        {%- comment %} カートアイテム一覧 {%- endcomment -%}
         <div class="lg:col-span-2 space-y-8">
           {%- for item in cart.items -%}
             <div class="flex gap-5 pb-8 border-b border-stone-200">
 
-              {%- comment %} サムネイル {%- endcomment %}
+              {%- comment %} サムネイル {%- endcomment -%}
               <a href="{{ item.url }}" class="flex-shrink-0 w-24 h-24 bg-stone-200 overflow-hidden">
                 <img
                   src="{{ item.image | image_url: width: 240 }}"
@@ -22,7 +22,7 @@
                 >
               </a>
 
-              {%- comment %} 商品情報・操作 {%- endcomment %}
+              {%- comment %} 商品情報・操作 {%- endcomment -%}
               <div class="flex-1 min-w-0">
                 <p class="text-xs text-stone-400 mb-0.5">{{ item.vendor }}</p>
                 <a href="{{ item.url }}" class="text-sm font-medium leading-snug">{{ item.product.title }}</a>
@@ -31,7 +31,7 @@
                 {%- endunless -%}
 
                 <div class="flex items-center justify-between mt-4">
-                  {%- comment %} 数量変更 {%- endcomment %}
+                  {%- comment %} 数量変更 {%- endcomment -%}
                   <div class="flex border border-stone-200 h-9 w-28">
                     <a
                       href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | minus: 1 }}"
@@ -46,7 +46,7 @@
                     >+</a>
                   </div>
 
-                  {%- comment %} 小計 {%- endcomment %}
+                  {%- comment %} 小計 {%- endcomment -%}
                   <div class="text-right">
                     <p class="text-sm">{{ item.final_line_price | money }}</p>
                     <p class="text-xs text-stone-400">（税込）</p>
@@ -62,7 +62,7 @@
           {%- endfor -%}
         </div>
 
-        {%- comment %} 注文サマリー・チェックアウト {%- endcomment %}
+        {%- comment %} 注文サマリー・チェックアウト {%- endcomment -%}
         <div class="lg:col-span-1">
           <div class="bg-stone-100 p-6 space-y-4 sticky top-24">
             <h2 class="text-sm tracking-widest uppercase">注文内容</h2>
@@ -117,8 +117,8 @@
   {%- endif -%}
 </section>
 
-{% schema %}
+{%- schema %}
 {
   "name": "Cart"
 }
-{% endschema %}
+{%- endschema -%}

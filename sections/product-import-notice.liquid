@@ -3,7 +3,7 @@
 
   個人輸入代行に関する重要なご注意
   使用: templates/product.json に追加して使用
-{%- endcomment %}
+{%- endcomment -%}
 
 {%- if section.settings.show_import_notice -%}
 
@@ -55,7 +55,7 @@
 
 {%- endif -%}
 
-{% schema %}
+{%- schema %}
 {
   "name": "個人輸入代行注意事項",
   "settings": [
@@ -72,4 +72,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema -%}

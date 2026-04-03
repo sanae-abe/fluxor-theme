@@ -18,7 +18,7 @@
     usage_method        {multi_line_text_field}          使用方法テキスト
     how_to_store        {multi_line_text_field}          保管方法テキスト
     precautions         {multi_line_text_field}          注意事項テキスト
-{%- endcomment %}
+{%- endcomment -%}
 
 {%- liquid
   assign variant = product.selected_or_first_available_variant
@@ -127,7 +127,7 @@
   endif
 -%}
 
-{%- comment %} ※ 上付き文字変換用共通変数（※1〜※5 と ※ を <sup> タグに置換） {%- endcomment %}
+{%- comment %} ※ 上付き文字変換用共通変数（※1〜※5 と ※ を <sup> タグに置換） {%- endcomment -%}
 {%- assign _sup_open = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
 {%- assign _sup1 = _sup_open | append: '※1</sup>' -%}
 {%- assign _sup2 = _sup_open | append: '※2</sup>' -%}
@@ -136,7 +136,7 @@
 {%- assign _sup5 = _sup_open | append: '※5</sup>' -%}
 {%- assign _sup  = _sup_open | append: '※</sup>' -%}
 
-{%- comment %} 価格表示（メイン商品情報とフローティングバーで共有） {%- endcomment %}
+{%- comment %} 価格表示（メイン商品情報とフローティングバーで共有） {%- endcomment -%}
 {%- capture price_html -%}
   {%- if on_sale -%}
     <span class="text-3xl font-semibold text-stone-900 leading-none">{{ variant.price | money }}</span>
@@ -155,7 +155,7 @@
   {%- endif -%}
 {%- endcapture -%}
 
-{%- comment %} 割引バッジ（メイン商品情報とフローティングバーで共有） {%- endcomment %}
+{%- comment %} 割引バッジ（メイン商品情報とフローティングバーで共有） {%- endcomment -%}
 {%- capture discount_badge_html -%}
   {%- if on_sale -%}
     {%- assign discount_label = discount | append: '% OFF' -%}
@@ -188,14 +188,14 @@
 
 {%- comment %}====================================================
   商品情報セクション
-===================================================={%- endcomment %}
+===================================================={%- endcomment -%}
 <section
   id="product-info"
   class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col lg:flex-row gap-6 md:gap-16 items-start">
 
-    {%- comment %} 左カラム: 画像ギャラリー {%- endcomment %}
+    {%- comment %} 左カラム: 画像ギャラリー {%- endcomment -%}
     <div class="w-full lg:flex-1 flex flex-col gap-4">
 
       <div class="aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
@@ -216,7 +216,7 @@
       </div>
 
       {%- if product.images.size > 1 -%}
-        {%- comment %} サムネイル横カルーセル（4枚表示、以降は左右ボタンで切り替え） {%- endcomment %}
+        {%- comment %} サムネイル横カルーセル（4枚表示、以降は左右ボタンで切り替え） {%- endcomment -%}
         <div
           class="relative"
           x-data="{ thumbOffset: 0, maxOffset: Math.max(0, {{ product.images.size }} - 4) }"
@@ -268,7 +268,7 @@
       {%- endif -%}
     </div>
 
-    {%- comment %} 右カラム: 商品情報 {%- endcomment %}
+    {%- comment %} 右カラム: 商品情報 {%- endcomment -%}
     <div class="w-full lg:flex-1 flex flex-col gap-6 lg:sticky lg:top-20 min-w-0">
 
       <div class="flex flex-col gap-3">
@@ -362,10 +362,10 @@
         </div>
       {%- endif -%}
 
-      {%- comment %} 注目の成分カルーセル {%- endcomment %}
+      {%- comment %} 注目の成分カルーセル {%- endcomment -%}
       {%- if key_ingredients != blank -%}
         <hr class="border-stone-200">
-        {%- comment %} description を持つ成分のインデックスをカンマ区切りで収集（tooltip 表示判定に使用） {%- endcomment %}
+        {%- comment %} description を持つ成分のインデックスをカンマ区切りで収集（tooltip 表示判定に使用） {%- endcomment -%}
         {%- assign _ingredient_desc_indices = '' -%}
         {%- for _ki in key_ingredients -%}
           {%- if _ki.description != blank -%}
@@ -554,7 +554,7 @@
 
 {%- comment %}====================================================
   関連商品セクション
-===================================================={%- endcomment %}
+===================================================={%- endcomment -%}
 {%- assign related_col = collections[section.settings.related_collection] -%}
 {%- if related_col != blank -%}
   <section class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]">
@@ -579,7 +579,7 @@
 
 {%- comment %}====================================================
   フローティングカートバー（スクロール追従）
-===================================================={%- endcomment %}
+===================================================={%- endcomment -%}
 <div
   id="floating-cart-bar"
   class="fixed bottom-0 left-0 right-0 z-50 bg-stone-50 border-t border-stone-200 px-10 py-4"
@@ -621,7 +621,7 @@
   </div>
 </div>
 
-</div>{%- comment %} x-data wrapper close {%- endcomment %}
+</div>{%- comment %} x-data wrapper close {%- endcomment -%}
 
 <script>
   function ingredientCarousel(descIdx) {
@@ -707,7 +707,7 @@
 
 </script>
 
-{% schema %}
+{%- schema %}
 {
   "name": "商品詳細",
   "settings": [
@@ -737,4 +737,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema -%}

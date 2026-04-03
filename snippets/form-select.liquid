@@ -16,7 +16,7 @@
     {%- endcapture -%}
     {%- capture _onchange -%}onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"{%- endcapture -%}
     {%- render 'form-select', id: 'SortBy', options_html: _opts, attr: _onchange -%}
-{%- endcomment %}
+{%- endcomment -%}
 
 <div class="relative">
   <select

@@ -20,6 +20,7 @@ export const saleCountdown = (endDateStr) => ({
 
   init() {
     this._end = endTime(endDateStr)
+    if (isNaN(this._end)) { this.expired = true; return }
     this.update()
     if (!this.expired) {
       this._timer = setInterval(() => this.update(), MS_PER_SEC)

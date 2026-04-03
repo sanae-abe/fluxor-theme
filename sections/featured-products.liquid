@@ -4,7 +4,7 @@
 <section class="bg-stone-100 px-4 md:px-10 py-10 md:py-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
-    {%- comment %} ヘッダー行 {%- endcomment %}
+    {%- comment %} ヘッダー行 {%- endcomment -%}
     {%- assign header_align = 'center' -%}
     {%- if section.settings.show_view_all -%}{%- assign header_align = 'left' -%}{%- endif -%}
     {%- render 'section-header',
@@ -15,7 +15,7 @@
       align: header_align
     -%}
 
-    {%- comment %} 商品グリッド {%- endcomment %}
+    {%- comment %} 商品グリッド {%- endcomment -%}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-10 md:gap-y-6">
       {%- if col != blank -%}
         {%- for product in col.products limit: section.settings.products_to_show -%}
@@ -51,7 +51,7 @@
   </div>
 </section>
 
-{% schema %}
+{%- schema %}
 {
   "name": "おすすめ商品",
   "settings": [
@@ -105,4 +105,4 @@
     }
   ]
 }
-{% endschema %}
+{%- endschema -%}

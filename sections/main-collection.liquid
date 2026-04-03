@@ -15,9 +15,10 @@
   <section
     class="max-w-screen-xl mx-auto"
     x-data="{ filtersOpen: false }"
+    aria-label="商品一覧"
   >
     {%- comment %} コレクションヘッダー {%- endcomment -%}
-    <div class="py-5 md:py-10 flex flex-col gap-4 items-start justify-center text-center">
+    <div class="py-5 md:py-10 flex flex-col gap-4 justify-center">
       <h1 class="text-2xl md:text-4xl md:leading-tight font-semibold md:tracking-wider uppercase">
         {%- if collection.handle == 'all' -%}Shop All{%- else -%}{{ collection.title }}{%- endif -%}
       </h1>
@@ -101,6 +102,7 @@
         x-data="{
           nextUrl: '{{ paginate.next.url | escape }}',
           loading: false,
+          errored: false,
           done: '{{ paginate.next.url | escape }}' === '',
           init() {
             if (!window.matchMedia('(max-width: 767px)').matches) return;
@@ -113,6 +115,7 @@
           async loadMore() {
             if (this.loading || this.done || !this.nextUrl) return;
             this.loading = true;
+            this.errored = false;
             try {
               const res = await fetch(this.nextUrl);
               const html = await res.text();
@@ -123,7 +126,7 @@
               this.nextUrl = marker ? marker.dataset.url : null;
               this.done = !this.nextUrl;
             } catch(e) {
-              this.done = true;
+              this.errored = true;
             }
             this.loading = false;
           }
@@ -148,8 +151,11 @@
 
           {%- comment %} モバイル: 監視用センチネル + ローディング {%- endcomment -%}
           <div x-ref="sentinel" class="md:hidden h-px" aria-hidden="true"></div>
-          <div :class="loading ? '' : 'hidden'" class="md:hidden flex justify-center py-8 hidden">
+          <div :class="loading ? '' : 'hidden'" class="md:hidden flex justify-center py-8 hidden" aria-live="polite">
             <span class="text-sm text-stone-400">読み込み中…</span>
+          </div>
+          <div :class="errored ? '' : 'hidden'" class="md:hidden flex justify-center py-8 hidden" aria-live="assertive">
+            <span class="text-sm text-stone-500">読み込みに失敗しました。</span>
           </div>
 
           {%- comment %} デスクトップ: ページネーション {%- endcomment -%}
@@ -162,7 +168,7 @@
                 {%- if part.is_link -%}
                   <a href="{{ part.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">{{ part.title }}</a>
                 {%- elsif part.title == paginate.current_page -%}
-                  <span class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
+                  <span aria-current="page" class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
                 {%- else -%}
                   <span class="px-4 py-2 text-sm text-stone-300">{{ part.title }}</span>
                 {%- endif -%}
@@ -181,51 +187,10 @@
 
     {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
     {%- if collection.filters.size > 0 -%}
-      {%- comment %} パネル {%- endcomment -%}
-      <div
-        x-show="filtersOpen"
-        x-transition:enter="transition-transform duration-300 ease-out"
-        x-transition:enter-start="-translate-x-full"
-        x-transition:enter-end="translate-x-0"
-        x-transition:leave="transition-transform duration-200 ease-in"
-        x-transition:leave-start="translate-x-0"
-        x-transition:leave-end="-translate-x-full"
-        class="fixed inset-y-0 left-0 z-50 w-80 max-w-full bg-stone-50 shadow-2xl flex flex-col md:hidden"
-        role="dialog"
-        aria-modal="true"
-        aria-label="絞り込み"
-        @keydown.escape.window="filtersOpen = false"
-        style="display: none;"
-      >
-        <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
-          <h2 class="text-sm tracking-widest uppercase">絞り込み</h2>
-          <button
-            type="button"
-            @click="filtersOpen = false"
-            class="text-stone-500 hover:text-stone-900 transition-colors"
-            aria-label="閉じる"
-          >
-            {%- render 'icon', icon: 'x', class: 'w-5 h-5' -%}
-          </button>
-        </div>
-        <div class="flex-1 overflow-y-auto p-5">
-          {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
-        </div>
-      </div>
-      {%- comment %} オーバーレイ {%- endcomment -%}
-      <div
-        x-show="filtersOpen"
-        x-transition:enter="transition-opacity duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition-opacity duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0"
-        class="fixed inset-0 z-40 bg-stone-950/40 backdrop-blur-sm md:hidden"
-        @click="filtersOpen = false"
-        aria-hidden="true"
-        style="display: none;"
-      ></div>
+      {%- capture drawer_content -%}
+        {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
+      {%- endcapture -%}
+      {%- render 'mobile-filter-drawer', open_expr: 'filtersOpen', close_expr: 'filtersOpen = false', content: drawer_content -%}
     {%- endif -%}
   </section>
 </div>
@@ -236,12 +201,6 @@
 {
   "name": "Collection",
   "settings": [
-    {
-      "type": "text",
-      "id": "section_label",
-      "label": "セクションラベル",
-      "default": "SHOP"
-    },
     {
       "type": "range",
       "id": "products_per_page",
@@ -258,4 +217,4 @@
     }
   ]
 }
-{%- endschema %}
+{%- endschema -%}

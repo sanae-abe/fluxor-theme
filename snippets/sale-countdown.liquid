@@ -6,14 +6,14 @@
 
 {%- if settings.sale_end != blank -%}
   <div
-    x-data="saleCountdown(window.fluxorSale.end)"
+    x-data="saleCountdown(window.fluxorSale?.end)"
     x-show="!expired"
     x-cloak
     class="flex items-center gap-1 tabular-nums"
   >
     <span>終了まで</span>
     <span>
-      <span x-show="days > 0">
+      <span :class="days > 0 ? '' : 'hidden'" class="hidden">
         <span x-text="days" class="font-semibold"></span>日
       </span>
       <span x-text="hh" class="font-semibold"></span>時間

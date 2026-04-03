@@ -23,7 +23,7 @@
       item2_url: blog.url,
       item3_label: _title
     -%}
-{%- endcomment %}
+{%- endcomment -%}
 
 {%- liquid
   assign _max_w = max_w | default: 'max-w-3xl'
@@ -44,7 +44,7 @@
   assign _urls   = item1_url   | append: _sep | append: item2_url   | append: _sep | append: item3_url   | append: _sep | split: _sep
 -%}
 
-{%- comment %} モバイル: 親ページへ戻るリンク {%- endcomment %}
+{%- comment %} モバイル: 親ページへ戻るリンク {%- endcomment -%}
 {%- if _parent_url != blank -%}
   <a
     href="{{ _parent_url }}"
@@ -55,7 +55,7 @@
   </a>
 {%- endif -%}
 
-{%- comment %} デスクトップ: フルパンくず {%- endcomment %}
+{%- comment %} デスクトップ: フルパンくず {%- endcomment -%}
 <nav
   class="hidden md:flex w-full {{ _max_w }} mx-auto items-center gap-2 text-sm flex-wrap"
   aria-label="パンくずリスト"
