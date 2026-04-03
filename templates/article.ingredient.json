@@ -18,6 +18,12 @@
             "heading": "この成分について"
           }
         },
+        "roles_eqfeCg": {
+          "type": "roles",
+          "settings": {
+            "heading": "スキンケアにおける役割"
+          }
+        },
         "usage_tips_8UKW88": {
           "type": "usage_tips",
           "settings": {
@@ -64,6 +70,7 @@
       },
       "block_order": [
         "article_content_BPGiNQ",
+        "roles_eqfeCg",
         "usage_tips_8UKW88",
         "compatible_ingredients_eMcXaz",
         "caution_combinations_p3fPYJ",
