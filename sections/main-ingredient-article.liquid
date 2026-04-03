@@ -119,16 +119,16 @@
         {%- if roles != blank -%}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
             {%- for role in roles -%}
-              {%- if role.fields.title.value != blank -%}
+              {%- if role.title != blank -%}
                 <div class="bg-stone-100 p-6 flex flex-col gap-4">
-                  {%- if role.fields.icon.value != blank -%}
+                  {%- if role.icon != blank -%}
                     <div class="pb-2">
-                      {%- render 'icon', icon: role.fields.icon.value, class: 'w-12 h-12', stroke_width: 1 -%}
+                      {%- render 'icon', icon: role.icon, class: 'w-12 h-12', stroke_width: 1 -%}
                     </div>
                   {%- endif -%}
-                  <h3 class="text-2xl font-medium text-stone-900">{{ role.fields.title.value }}</h3>
-                  {%- if role.fields.description.value != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-900">{{ role.fields.description.value }}</p>
+                  <h3 class="text-2xl font-medium text-stone-900">{{ role.title }}</h3>
+                  {%- if role.description != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-900">{{ role.description }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -159,11 +159,11 @@
         {%- if compatible_ingredients != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
             {%- for item in compatible_ingredients -%}
-              {%- if item.fields.name.value != blank -%}
+              {%- if item.name != blank -%}
                 <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold text-stone-900">{{ item.fields.name.value }}</p>
-                  {%- if item.fields.reason.value != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ item.fields.reason.value }}</p>
+                  <p class="text-base font-semibold text-stone-900">{{ item.name }}</p>
+                  {%- if item.reason != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -182,11 +182,11 @@
         {%- if caution_combinations != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
             {%- for item in caution_combinations -%}
-              {%- if item.fields.name.value != blank -%}
+              {%- if item.name != blank -%}
                 <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold text-amber-700">{{ item.fields.name.value }}</p>
-                  {%- if item.fields.reason.value != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ item.fields.reason.value }}</p>
+                  <p class="text-base font-semibold text-amber-700">{{ item.name }}</p>
+                  {%- if item.reason != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -217,13 +217,13 @@
         {%- if usage_tips != blank -%}
           <ol class="flex flex-col gap-6 list-none">
             {%- for tip in usage_tips -%}
-              {%- if tip.fields.title.value != blank -%}
+              {%- if tip.title != blank -%}
                 <li class="flex gap-4">
                   <span class="text-sm font-semibold text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
                   <div class="flex flex-col gap-1">
-                    <p class="text-base font-semibold text-stone-900">{{ tip.fields.title.value }}</p>
-                    {%- if tip.fields.description.value != blank -%}
-                      <p class="text-sm leading-relaxed text-stone-600">{{ tip.fields.description.value }}</p>
+                    <p class="text-base font-semibold text-stone-900">{{ tip.title }}</p>
+                    {%- if tip.description != blank -%}
+                      <p class="text-sm leading-relaxed text-stone-600">{{ tip.description }}</p>
                     {%- endif -%}
                   </div>
                 </li>
@@ -243,16 +243,16 @@
         {%- if roles != blank -%}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {%- for role in roles -%}
-              {%- if role.fields.title.value != blank -%}
+              {%- if role.title != blank -%}
                 <div class="bg-stone-100 p-6 flex flex-col gap-4">
-                  {%- if role.fields.icon.value != blank -%}
+                  {%- if role.icon != blank -%}
                     <div class="pb-2">
-                      {%- render 'icon', icon: role.fields.icon.value, class: 'w-12 h-12', stroke_width: 1 -%}
+                      {%- render 'icon', icon: role.icon, class: 'w-12 h-12', stroke_width: 1 -%}
                     </div>
                   {%- endif -%}
-                  <p class="text-base font-semibold text-stone-900">{{ role.fields.title.value }}</p>
-                  {%- if role.fields.description.value != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ role.fields.description.value }}</p>
+                  <p class="text-base font-semibold text-stone-900">{{ role.title }}</p>
+                  {%- if role.description != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-600">{{ role.description }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -274,24 +274,24 @@
               <li class="flex gap-3">
                 <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
                 <div class="flex flex-col gap-1 min-w-0">
-                  <p class="text-sm font-medium text-stone-900">{{ entry.fields.title.value }}</p>
+                  <p class="text-sm font-medium text-stone-900">{{ entry.title }}</p>
                   {%- liquid
                     assign meta_parts = ''
-                    if entry.fields.authors.value != blank
-                      assign meta_parts = entry.fields.authors.value
+                    if entry.authors != blank
+                      assign meta_parts = entry.authors
                     endif
-                    if entry.fields.journal.value != blank
+                    if entry.journal != blank
                       if meta_parts != blank
-                        assign meta_parts = meta_parts | append: ' / ' | append: entry.fields.journal.value
+                        assign meta_parts = meta_parts | append: ' / ' | append: entry.journal
                       else
-                        assign meta_parts = entry.fields.journal.value
+                        assign meta_parts = entry.journal
                       endif
                     endif
-                    if entry.fields.details.value != blank
+                    if entry.details != blank
                       if meta_parts != blank
-                        assign meta_parts = meta_parts | append: ', ' | append: entry.fields.details.value
+                        assign meta_parts = meta_parts | append: ', ' | append: entry.details
                       else
-                        assign meta_parts = entry.fields.details.value
+                        assign meta_parts = entry.details
                       endif
                     endif
                   -%}
