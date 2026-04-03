@@ -12,15 +12,17 @@
     reference_entry         {list.metaobject_reference} → reference_entry { title, authors, journal, details, url }
 {%- endcomment %}
 
-{%- assign category_tags = article.metafields.custom.category_tags.value -%}
-{%- assign name_en = article.metafields.custom.inci_name -%}
-{%- assign pregnancy_note = article.metafields.custom.pregnancy_note -%}
-{%- assign compatible_ingredients = article.metafields.custom.compatible_ingredients.value -%}
-{%- assign caution_combinations = article.metafields.custom.caution_combinations.value -%}
-{%- assign usage_tips = article.metafields.custom.usage_tips.value -%}
-{%- assign roles = article.metafields.custom.roles.value -%}
-{%- assign reference_entries = article.metafields.custom.reference_entry.value -%}
-{%- assign ingredient_products = article.metafields.custom.product_reference.value -%}
+{%- liquid
+  assign category_tags = article.metafields.custom.category_tags.value
+  assign name_en = article.metafields.custom.inci_name
+  assign pregnancy_note = article.metafields.custom.pregnancy_note
+  assign compatible_ingredients = article.metafields.custom.compatible_ingredients.value
+  assign caution_combinations = article.metafields.custom.caution_combinations.value
+  assign usage_tips = article.metafields.custom.usage_tips.value
+  assign roles = article.metafields.custom.roles.value
+  assign reference_entries = article.metafields.custom.reference_entry.value
+  assign ingredient_products = article.metafields.custom.product_reference.value
+-%}
 
 {%- comment %} ── Header ────────────────────────────────────────── {%- endcomment -%}
 <div class="w-full flex flex-col items-center px-4 md:px-10 bg-stone-50">
@@ -46,7 +48,8 @@
     </div>
     <div class="flex items-center justify-between w-full gap-4 flex-wrap">
       <div class="flex gap-3 items-center flex-wrap">
-        {%- for tag in category_tags limit: 4 -%}          {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
+        {%- for tag in category_tags limit: 4 -%}
+          {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
       </div>
       <p class="text-sm font-medium text-stone-900 shrink-0">UPDATE: {{ article.updated_at | date: "%Y/%m/%d" }}</p>
@@ -84,18 +87,27 @@
 </script>
 
 {%- comment %} ── ブロックレンダリング ───────────────────────────── {%- endcomment -%}
-{%- comment %} 最後の references 以外のブロックインデックスを事前計算 {%- endcomment -%}
-{%- assign last_non_ref_index = nil -%}
+{%- liquid
+  assign last_non_ref_index = nil
+  for block in section.blocks
+    unless block.type == 'references'
+      assign last_non_ref_index = forloop.index0
+    endunless
+  endfor
+-%}
 {%- for block in section.blocks -%}
-  {%- unless block.type == 'references' -%}{%- assign last_non_ref_index = forloop.index0 -%}{%- endunless -%}
-{%- endfor -%}
-{%- for block in section.blocks -%}
-  {%- assign extra_style = '' -%}
-  {%- if forloop.first -%}{%- assign extra_style = 'padding-top: 80px;' -%}{%- endif -%}
-  {%- if forloop.index0 == last_non_ref_index -%}{%- assign extra_style = extra_style | append: 'padding-bottom: 80px;' -%}{%- endif -%}
+  {%- liquid
+    assign extra_class = ''
+    if forloop.first
+      assign extra_class = 'pt-20'
+    endif
+    if forloop.index0 == last_non_ref_index
+      assign extra_class = extra_class | append: ' pb-20' | strip
+    endif
+  -%}
 
   {%- if block.type == 'article_content' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -107,7 +119,7 @@
     </div>
 
   {%- elsif block.type == 'text_section' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -118,14 +130,14 @@
       </div>
     </div>
 
-  {%- elsif block.type == 'benefits_group' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+  {%- elsif block.type == 'benefits_group' or block.type == 'roles' -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if roles != blank -%}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
             {%- for role in roles -%}
               {%- if role.title != blank -%}
                 <div class="bg-stone-100 p-6 flex flex-col gap-4">
@@ -134,9 +146,9 @@
                       {%- render 'icon', icon: role.icon, class: 'w-12 h-12', stroke_width: 1 -%}
                     </div>
                   {%- endif -%}
-                  <h3 class="text-2xl font-medium text-stone-900">{{ role.title }}</h3>
+                  <h3 class="text-base font-semibold text-stone-900">{{ role.title }}</h3>
                   {%- if role.description != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-900">{{ role.description }}</p>
+                    <p class="text-sm leading-relaxed text-stone-600">{{ role.description }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -147,7 +159,7 @@
     </div>
 
   {%- elsif block.type == 'disclaimer' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl">
         <div class="bg-stone-100 p-4 flex gap-2 items-start">
           <div class="shrink-0 pt-1">
@@ -158,15 +170,21 @@
       </div>
     </div>
 
-  {%- elsif block.type == 'compatible_ingredients' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+  {%- elsif block.type == 'compatible_ingredients' or block.type == 'caution_combinations' -%}
+    {%- liquid
+      assign combo_items = compatible_ingredients
+      if block.type == 'caution_combinations'
+        assign combo_items = caution_combinations
+      endif
+    -%}
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
-        {%- if compatible_ingredients != blank -%}
+        {%- if combo_items != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
-            {%- for item in compatible_ingredients -%}
+            {%- for item in combo_items -%}
               {%- if item.name != blank -%}
                 <div class="flex flex-col gap-2 py-5">
                   <p class="text-base font-semibold text-stone-900">{{ item.name }}</p>
@@ -181,31 +199,8 @@
       </div>
     </div>
 
-  {%- elsif block.type == 'caution_combinations' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
-      <div class="w-full max-w-3xl flex flex-col gap-10">
-        {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if caution_combinations != blank -%}
-          <div class="flex flex-col divide-y divide-stone-200">
-            {%- for item in caution_combinations -%}
-              {%- if item.name != blank -%}
-                <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold">{{ item.name }}</p>
-                  {%- if item.reason != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-      </div>
-    </div>
-
   {%- elsif block.type == 'pregnancy_note' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -217,7 +212,7 @@
     </div>
 
   {%- elsif block.type == 'usage_tips' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-10">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
@@ -242,36 +237,8 @@
       </div>
     </div>
 
-  {%- elsif block.type == 'roles' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10" {{ block.shopify_attributes }} style="{{ extra_style }}">
-      <div class="w-full max-w-3xl flex flex-col gap-10">
-        {%- if block.settings.heading != blank -%}
-          <h2 class="text-3xl font-semibold leading-tight text-stone-900">{{ block.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if roles != blank -%}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {%- for role in roles -%}
-              {%- if role.title != blank -%}
-                <div class="bg-stone-100 p-6 flex flex-col gap-4">
-                  {%- if role.icon != blank -%}
-                    <div class="pb-2">
-                      {%- render 'icon', icon: role.icon, class: 'w-12 h-12', stroke_width: 1 -%}
-                    </div>
-                  {%- endif -%}
-                  <p class="text-base font-semibold text-stone-900">{{ role.title }}</p>
-                  {%- if role.description != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ role.description }}</p>
-                  {%- endif -%}
-                </div>
-              {%- endif -%}
-            {%- endfor -%}
-          </div>
-        {%- endif -%}
-      </div>
-    </div>
-
   {%- elsif block.type == 'references' -%}
-    <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-5">
         {%- if block.settings.heading != blank -%}
           <p class="text-base font-medium text-stone-900">{{ block.settings.heading }}</p>
@@ -282,7 +249,11 @@
               <li class="flex gap-3">
                 <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
                 <div class="flex flex-col gap-1 min-w-0">
-                  <p class="text-sm font-medium text-stone-900">{{ entry.title }}</p>
+                  {%- if entry.url != blank -%}
+                    <a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer" class="text-sm font-medium text-stone-900 underline decoration-stone-400 underline-offset-2">{{ entry.title }}</a>
+                  {%- else -%}
+                    <p class="text-sm font-medium text-stone-900">{{ entry.title }}</p>
+                  {%- endif -%}
                   {%- liquid
                     assign meta_parts = ''
                     if entry.authors != blank
@@ -315,7 +286,7 @@
     </div>
 
   {%- elsif block.type == 'product_grid' -%}
-    <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }} style="{{ extra_style }}">
+    <section class="w-full bg-stone-50 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px] {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
         {%- if block.settings.heading != blank -%}
           <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ block.settings.heading }}</h2>
@@ -487,33 +458,15 @@
     {
       "name": "成分ガイド記事",
       "blocks": [
-        {
-          "type": "article_content"
-        },
-        {
-          "type": "roles"
-        },
-        {
-          "type": "usage_tips"
-        },
-        {
-          "type": "compatible_ingredients"
-        },
-        {
-          "type": "caution_combinations"
-        },
-        {
-          "type": "pregnancy_note"
-        },
-        {
-          "type": "disclaimer"
-        },
-        {
-          "type": "references"
-        },
-        {
-          "type": "product_grid"
-        }
+        { "type": "article_content" },
+        { "type": "roles" },
+        { "type": "usage_tips" },
+        { "type": "compatible_ingredients" },
+        { "type": "caution_combinations" },
+        { "type": "pregnancy_note" },
+        { "type": "disclaimer" },
+        { "type": "references" },
+        { "type": "product_grid" }
       ]
     }
   ]

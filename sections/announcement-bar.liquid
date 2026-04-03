@@ -36,7 +36,7 @@
         {%- assign item_index = 0 -%}
         {%- if settings.sale_enabled and settings.sale_banner_show -%}
           <span
-            class="inline-flex items-center gap-2"
+            class="inline-flex items-center gap-x-2 gap-y-0 flex-col md:flex-row"
             :class="{{ item_index }} === current ? '' : 'hidden'"
           >
             <span>{{ settings.sale_banner_text }}</span>

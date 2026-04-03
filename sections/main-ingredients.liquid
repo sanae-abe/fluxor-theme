@@ -4,173 +4,223 @@
   対応メタフィールド (名前空間: custom):
     category_tags       {list.single_line_text_field}   カテゴリタグ一覧
     concern_tags        {list.single_line_text_field}   肌悩みタグ一覧
-    inci_name             {single_line_text_field}        成分の英語名
-    product_reference   {list.product_reference}        関連商品一覧（商品フィルターに使用）
+    inci_name           {single_line_text_field}         成分の英語名
+    product_reference   {list.product_reference}         関連商品一覧（商品フィルターに使用）
 {%- endcomment %}
 
 {%- paginate blog.articles by 100 -%}
 
-<div class="bg-[#fafaf9]">
+{%- comment %} Alpine.js 用記事データ（JSON）{%- endcomment -%}
+<script id="ingredient-data" type="application/json">
+  [
+    {%- for article in blog.articles -%}
+    {
+      "idx": {{ forloop.index0 }},
+      "title": {{ article.title | json }},
+      "inci_name": {{ article.metafields.custom.inci_name.value | json | default: '""' }},
+      "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
+      "concerns": {{ article.metafields.custom.concern_tags.value | json | default: '[]' }},
+      "products": [
+        {%- assign product_refs = article.metafields.custom.product_reference.value -%}
+        {%- for ref in product_refs -%}
+          {"id":{{ ref.id }},"title":{{ ref.title | json }}}{%- unless forloop.last -%},{%- endunless -%}
+        {%- endfor -%}
+      ],
+      "date": {{ article.published_at | date: "%s" | plus: 0 }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+</script>
 
-  {%- comment %} Alpine.js 用記事データ（JSON）{%- endcomment -%}
-  <script id="ingredient-data" type="application/json">
-    [
-      {%- for article in blog.articles -%}
-      {
-        "idx": {{ forloop.index0 }},
-        "title": {{ article.title | json }},
-        "inci_name": {{ article.metafields.custom.inci_name | json | default: '""' }},
-        "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
-        "concerns": {{ article.metafields.custom.concern_tags.value | json | default: '[]' }},
-        "products": [
-          {%- assign _prefs = article.metafields.custom.product_reference.value -%}
-          {%- for _p in _prefs -%}
-            {"id":{{ _p.id }},"title":{{ _p.title | json }}}{%- unless forloop.last -%},{%- endunless -%}
-          {%- endfor -%}
-        ],
-        "date": {{ article.published_at | date: "%s" | plus: 0 }}
-      }{%- unless forloop.last -%},{%- endunless -%}
-      {%- endfor -%}
-    ]
-  </script>
-
-  <div x-data="ingredientFilters()" x-init="init()">
-
+<div class="bg-background px-4 md:px-10 pb-10 md:pb-[60px]">
+  <section
+    class="max-w-screen-xl mx-auto"
+    x-data="ingredientFilters()"
+    x-init="init()"
+  >
     {%- comment %} ページヘッダー {%- endcomment -%}
-    <div class="w-full overflow-hidden py-10 px-4 md:px-10">
-      <div class="w-full max-w-screen-xl mx-auto">
-        <h1 class="text-[36px] leading-[45px] font-semibold tracking-[1.44px] uppercase text-stone-900">
-          Ingredients
-        </h1>
-      </div>
+    <div class="py-5 md:py-10 flex flex-col gap-4 items-start justify-center text-center">
+      <h1 class="text-2xl md:text-4xl md:leading-tight font-semibold md:tracking-wider uppercase">
+        Ingredients
+      </h1>
     </div>
-
-    <div class="px-4 md:px-10">
-      <hr class="max-w-screen-xl mx-auto border-stone-200">
-    </div>
+    <hr class="border-stone-200">
 
     {%- comment %} ツールバー {%- endcomment -%}
-    <div class="px-4 md:px-10">
-      <div class="max-w-screen-xl mx-auto flex items-center justify-between pt-10 pb-6">
-
-        {%- comment %} 左: 件数 + クリア {%- endcomment -%}
-        <div class="flex items-center gap-4 md:min-w-[288px]">
-          <p class="text-sm text-stone-500 uppercase tracking-[0.56px]">
+    <div class="flex items-center justify-between pt-10 pb-6">
+      {%- comment %} 左: 絞り込みボタン（モバイル）/ 件数 + クリア（デスクトップ） {%- endcomment -%}
+      <div class="flex items-center gap-4">
+        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
+        <button
+          type="button"
+          @click="mobileOpen = true"
+          class="flex items-center gap-2 text-sm font-medium md:hidden"
+        >
+          {%- render 'icon', icon: 'list-filter', class: 'w-4 h-4' -%}
+          絞り込み
+          <span
+            x-show="hasActiveFilters"
+            class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none"
+            x-text="selectedProducts.length + selectedCategories.length + selectedConcerns.length"
+            style="display: none;"
+          ></span>
+        </button>
+        {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
+        <div class="hidden md:flex items-center gap-4 w-72">
+          <p class="text-sm text-stone-500 uppercase tracking-wider">
             <span x-text="filteredCount"></span>件の記事
           </p>
           <button
             x-show="hasActiveFilters"
             @click="clearAll()"
-            class="text-sm text-stone-500 underline uppercase tracking-[0.56px]"
+            class="text-sm text-stone-500 underline uppercase tracking-wider"
             type="button"
+            style="display: none;"
           >
             すべてクリア
           </button>
         </div>
+        {%- comment %} 件数（モバイル） {%- endcomment -%}
+        <p class="md:hidden text-sm text-stone-500">
+          <span x-text="filteredCount"></span>件の記事
+        </p>
+      </div>
 
-        {%- comment %} 右: ソート {%- endcomment -%}
-        <div class="relative border border-stone-900/40 overflow-hidden">
-          <select
-            x-model="sortBy"
-            class="bg-white h-8 pl-2 pr-6 py-1 text-sm text-stone-900 uppercase tracking-[0.56px] appearance-none cursor-pointer outline-none"
-          >
-            <option value="title-asc">タイトル: A〜Z</option>
-            <option value="title-desc">タイトル: Z〜A</option>
-            <option value="newest">新しい順</option>
-            <option value="oldest">古い順</option>
-          </select>
-          <div class="absolute right-1 top-1/2 -translate-y-1/2 pointer-events-none">
-            {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900', stroke_width: 1.5 -%}
-          </div>
-        </div>
+      {%- comment %} ソート {%- endcomment -%}
+      <div class="flex items-center">
+        {%- capture sort_options -%}
+          <option value="title-asc">タイトル: A〜Z</option>
+          <option value="title-desc">タイトル: Z〜A</option>
+          <option value="newest">新しい順</option>
+          <option value="oldest">古い順</option>
+        {%- endcapture -%}
+        {%- capture sort_attr -%}x-model="sortBy"{%- endcapture -%}
+        {%- render 'form-select', id: 'IngredientSortBy', options_html: sort_options, attr: sort_attr -%}
       </div>
     </div>
 
-    {%- comment %} コンテンツエリア {%- endcomment -%}
-    <div class="px-4 md:px-10 pb-[60px]">
-      <div class="max-w-screen-xl mx-auto flex gap-16 items-start">
+    <div class="flex gap-16">
+      {%- comment %} デスクトップサイドバー {%- endcomment -%}
+      <aside class="hidden md:flex flex-col gap-8 w-[calc(25%-2rem)] flex-shrink-0">
 
-        {%- comment %} フィルターサイドバー（デスクトップ） {%- endcomment -%}
-        <div class="hidden md:flex flex-col gap-8 w-[288px] shrink-0">
+        {%- comment %} 商品名フィルター {%- endcomment -%}
+        {%- capture products_items -%}
+          <template x-for="product in uniqueProducts" :key="product.id">
+            {%- render 'alpine-checkbox',
+              checked_expr: "selectedProducts.includes(product.id)",
+              change_expr: "toggle('products', product.id)",
+              label_expr: "product.title"
+            -%}
+          </template>
+        {%- endcapture -%}
+        {%- render 'filter-accordion', title: '商品名', content: products_items, show_expr: 'uniqueProducts.length > 0' -%}
 
-          {%- comment %} 商品名フィルター {%- endcomment -%}
-          {%- capture _products_items -%}
-            <template x-for="product in uniqueProducts" :key="product.id">
-              {%- render 'alpine-checkbox',
-                checked_expr: "selectedProducts.includes(product.id)",
-                change_expr: "toggle('products', product.id)",
-                label_expr: "product.title"
-              -%}
-            </template>
-          {%- endcapture -%}
-          {%- render 'filter-accordion', title: '商品名', content: _products_items, show_expr: 'uniqueProducts.length > 0' -%}
+        {%- comment %} カテゴリフィルター {%- endcomment -%}
+        {%- capture categories_items -%}
+          <template x-for="tag in uniqueCategories" :key="tag">
+            {%- render 'alpine-checkbox',
+              checked_expr: "selectedCategories.includes(tag)",
+              change_expr: "toggle('categories', tag)",
+              label_expr: "tag"
+            -%}
+          </template>
+        {%- endcapture -%}
+        {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
 
-          {%- comment %} カテゴリフィルター {%- endcomment -%}
-          {%- capture _categories_items -%}
-            <template x-for="tag in uniqueCategories" :key="tag">
-              {%- render 'alpine-checkbox',
-                checked_expr: "selectedCategories.includes(tag)",
-                change_expr: "toggle('categories', tag)",
-                label_expr: "tag"
-              -%}
-            </template>
-          {%- endcapture -%}
-          {%- render 'filter-accordion', title: 'カテゴリ', content: _categories_items, show_expr: 'uniqueCategories.length > 0' -%}
+        {%- comment %} 肌悩みフィルター {%- endcomment -%}
+        {%- capture concerns_items -%}
+          <template x-for="tag in uniqueConcerns" :key="tag">
+            {%- render 'alpine-checkbox',
+              checked_expr: "selectedConcerns.includes(tag)",
+              change_expr: "toggle('concerns', tag)",
+              label_expr: "tag"
+            -%}
+          </template>
+        {%- endcapture -%}
+        {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
 
-          {%- comment %} 肌悩みフィルター {%- endcomment -%}
-          {%- capture _concerns_items -%}
-            <template x-for="tag in uniqueConcerns" :key="tag">
-              {%- render 'alpine-checkbox',
-                checked_expr: "selectedConcerns.includes(tag)",
-                change_expr: "toggle('concerns', tag)",
-                label_expr: "tag"
-              -%}
-            </template>
-          {%- endcapture -%}
-          {%- render 'filter-accordion', title: '肌悩み', content: _concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
+      </aside>
 
-        </div>
+      {%- comment %} 成分カードグリッド {%- endcomment -%}
+      <div class="flex-1 min-w-0">
 
-        {%- comment %} 成分カードグリッド {%- endcomment -%}
-        <div class="flex-1 min-w-0">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
-          {%- comment %} モバイル: フィルターボタン {%- endcomment -%}
-          <div class="md:hidden flex items-center justify-between mb-6">
-            <p class="text-sm text-stone-500 uppercase tracking-[0.56px]">
-              <span x-text="filteredCount"></span>件の記事
-            </p>
-          </div>
+          {%- for article in blog.articles -%}
+            {%- assign inci_name = article.metafields.custom.inci_name.value | default: '' -%}
+            {%- assign badge_tag = article.metafields.custom.category_tags.value | first | default: '' -%}
 
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-
-            {%- for article in blog.articles -%}
-              {%- assign _inci_name = article.metafields.custom.inci_name.value | default: '' -%}
-
-              {%- assign _badge_tag = article.metafields.custom.category_tags.value | first | default: '' -%}
-
-              <div
-                x-show="isVisible({{ forloop.index0 }})"
-                :style="`order: ${getOrder({{ forloop.index0 }})}`"
-              >
-                {%- render 'card-ingredient', article: article, inci_name: _inci_name, badge_tag: _badge_tag -%}
-              </div>
-            {%- endfor -%}
-
-          </div>
-
-          {%- comment %} 空ステート {%- endcomment -%}
-          <p
-            x-show="filteredCount === 0"
-            class="text-sm text-stone-400 py-20 text-center"
-          >
-            条件に一致する成分がありません。
-          </p>
+            <div
+              x-show="isVisible({{ forloop.index0 }})"
+              :style="`order: ${getOrder({{ forloop.index0 }})}`"
+            >
+              {%- render 'card-ingredient', article: article, inci_name: inci_name, badge_tag: badge_tag -%}
+            </div>
+          {%- endfor -%}
 
         </div>
+
+        {%- comment %} 空ステート {%- endcomment -%}
+        <p
+          x-show="filteredCount === 0"
+          class="text-sm text-stone-400 py-20 text-center"
+          style="display: none;"
+        >
+          条件に一致する成分がありません。
+        </p>
+
       </div>
     </div>
 
-  </div>{%- comment %} /x-data {%- endcomment -%}
+    {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
+    <div
+      x-show="mobileOpen"
+      x-transition:enter="transition-transform duration-300 ease-out"
+      x-transition:enter-start="-translate-x-full"
+      x-transition:enter-end="translate-x-0"
+      x-transition:leave="transition-transform duration-200 ease-in"
+      x-transition:leave-start="translate-x-0"
+      x-transition:leave-end="-translate-x-full"
+      class="fixed inset-y-0 left-0 z-50 w-80 max-w-full bg-stone-50 shadow-2xl flex flex-col md:hidden"
+      role="dialog"
+      aria-modal="true"
+      aria-label="絞り込み"
+      @keydown.escape.window="mobileOpen = false"
+      style="display: none;"
+    >
+      <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
+        <h2 class="text-sm tracking-widest uppercase">絞り込み</h2>
+        <button
+          type="button"
+          @click="mobileOpen = false"
+          class="text-stone-500 hover:text-stone-900 transition-colors"
+          aria-label="閉じる"
+        >
+          {%- render 'icon', icon: 'x', class: 'w-5 h-5' -%}
+        </button>
+      </div>
+      <div class="flex-1 overflow-y-auto p-5">
+        {%- render 'filter-accordion', title: '商品名', content: products_items, show_expr: 'uniqueProducts.length > 0' -%}
+        {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
+        {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
+      </div>
+    </div>
+    {%- comment %} オーバーレイ {%- endcomment -%}
+    <div
+      x-show="mobileOpen"
+      x-transition:enter="transition-opacity duration-300"
+      x-transition:enter-start="opacity-0"
+      x-transition:enter-end="opacity-100"
+      x-transition:leave="transition-opacity duration-200"
+      x-transition:leave-start="opacity-100"
+      x-transition:leave-end="opacity-0"
+      class="fixed inset-0 z-40 bg-stone-950/40 backdrop-blur-sm md:hidden"
+      @click="mobileOpen = false"
+      aria-hidden="true"
+      style="display: none;"
+    ></div>
+
+  </section>
 </div>
 
 {%- endpaginate -%}
@@ -183,6 +233,7 @@ function ingredientFilters() {
     selectedCategories: [],
     selectedConcerns: [],
     sortBy: 'title-asc',
+    mobileOpen: false,
 
     init() {
       const el = document.getElementById('ingredient-data');
@@ -208,8 +259,8 @@ function ingredientFilters() {
 
     get filteredAndSorted() {
       const sortFns = {
-        'title-asc':  (a, b) => (a.inci_name || a.title).localeCompare(b.inci_name || b.title),
-        'title-desc': (a, b) => (b.inci_name || b.title).localeCompare(a.inci_name || a.title),
+        'title-asc':  (a, b) => (a.inci_name || a.title).localeCompare(b.inci_name || b.title, 'en'),
+        'title-desc': (a, b) => (b.inci_name || b.title).localeCompare(a.inci_name || a.title, 'en'),
         'newest':     (a, b) => b.date - a.date,
         'oldest':     (a, b) => a.date - b.date,
       };
@@ -240,8 +291,9 @@ function ingredientFilters() {
     },
 
     getOrder(idx) {
+      const HIDDEN_ORDER = 9999;
       const pos = this.filteredAndSorted.findIndex(a => a.idx === idx);
-      return pos === -1 ? 9999 : pos;
+      return pos === -1 ? HIDDEN_ORDER : pos;
     },
 
     toggle(group, value) {
@@ -265,7 +317,7 @@ function ingredientFilters() {
 }
 </script>
 
-{% schema %}
+{%- schema %}
 {
   "name": "成分ガイド一覧",
   "settings": [],
@@ -275,4 +327,4 @@ function ingredientFilters() {
     }
   ]
 }
-{% endschema %}
+{%- endschema %}

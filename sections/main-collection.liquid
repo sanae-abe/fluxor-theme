@@ -18,7 +18,7 @@
   >
     {%- comment %} コレクションヘッダー {%- endcomment -%}
     <div class="py-5 md:py-10 flex flex-col gap-4 items-start justify-center text-center">
-      <h1 class="text-2xl md:text-[36px] md:leading-[45px] font-semibold md:tracking-[1.44px] uppercase">
+      <h1 class="text-2xl md:text-4xl md:leading-tight font-semibold md:tracking-wider uppercase">
         {%- if collection.handle == 'all' -%}Shop All{%- else -%}{{ collection.title }}{%- endif -%}
       </h1>
     </div>
@@ -55,13 +55,13 @@
         {%- endif -%}
         {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
         <div class="hidden md:flex items-center gap-4{%- if collection.filters.size > 0 %} w-72{%- endif %}">
-          <p class="text-sm text-stone-500 uppercase tracking-[0.56px]">{{ paginate.items }}点の商品</p>
+          <p class="text-sm text-stone-500 uppercase tracking-wider">{{ paginate.items }}点の商品</p>
           {%- if active_filter_count > 0 -%}
-            <a href="{{ collection.url }}" class="text-sm text-stone-500 underline uppercase tracking-[0.56px]">すべてクリア</a>
+            <a href="{{ collection.url }}" class="text-sm text-stone-500 underline uppercase tracking-wider">すべてクリア</a>
           {%- endif -%}
         </div>
         {%- comment %} 件数（モバイル） {%- endcomment -%}
-        <p class="md:hidden text-sm text-stone-500">{{ paginate.items }}点の商品</p>
+        <p class="md:hidden text-sm text-stone-500 tracking-wider">{{ paginate.items }}点の商品</p>
       </div>
 
       {%- comment %} ソート {%- endcomment -%}
