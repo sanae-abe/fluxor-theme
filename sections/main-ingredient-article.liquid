@@ -5,9 +5,11 @@
     inci_name               {single_line_text_field}
     category_tags           {list.single_line_text_field}
     pregnancy_note          {single_line_text_field}
-    compatible_ingredients  {JSON}  [{ "name":"", "reason": "" }, ...]
-    caution_combinations    {JSON}  [{ "name":"", "reason": "" }, ...]
-    reference_entry         {JSON}  [{ "authors": "", "title": "", "journal": "", "details": "" }, ...]
+    compatible_ingredients  {list.metaobject_reference} → ingredient_combination { name, reason }
+    caution_combinations    {list.metaobject_reference} → ingredient_combination { name, reason }
+    usage_tips              {list.metaobject_reference} → content_item { title, description }
+    roles                   {list.metaobject_reference} → role_item { title, description, icon }
+    reference_entry         {list.metaobject_reference} → reference_entry { title, authors, journal, details }
 {%- endcomment %}
 
 {%- assign category_tags = article.metafields.custom.category_tags.value -%}
@@ -15,11 +17,13 @@
 {%- assign pregnancy_note = article.metafields.custom.pregnancy_note -%}
 {%- assign compatible_ingredients = article.metafields.custom.compatible_ingredients.value -%}
 {%- assign caution_combinations = article.metafields.custom.caution_combinations.value -%}
+{%- assign usage_tips = article.metafields.custom.usage_tips.value -%}
+{%- assign roles = article.metafields.custom.roles.value -%}
 {%- assign reference_entries = article.metafields.custom.reference_entry.value -%}
 {%- assign ingredient_products = article.metafields.custom.product_reference.value -%}
 
 {%- comment %} ── Header ────────────────────────────────────────── {%- endcomment -%}
-<div class="w-full flex flex-col items-center px-4 md:px-10">
+<div class="w-full flex flex-col items-center px-4 md:px-10 bg-stone-50">
 
   <div class="w-full border-b border-stone-400 flex items-center pb-5 pt-10">
     <a
@@ -159,11 +163,11 @@
         {%- if compatible_ingredients != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
             {%- for item in compatible_ingredients -%}
-              {%- if item.name != blank -%}
+              {%- if item.fields.name.value != blank -%}
                 <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold text-stone-900">{{ item.name }}</p>
-                  {%- if item.reason != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
+                  <p class="text-base font-semibold text-stone-900">{{ item.fields.name.value }}</p>
+                  {%- if item.fields.reason.value != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-600">{{ item.fields.reason.value }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -185,11 +189,11 @@
         {%- if caution_combinations != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
             {%- for item in caution_combinations -%}
-              {%- if item.name != blank -%}
+              {%- if item.fields.name.value != blank -%}
                 <div class="flex flex-col gap-2 py-5">
-                  <p class="text-base font-semibold text-amber-700">{{ item.name }}</p>
-                  {%- if item.reason != blank -%}
-                    <p class="text-sm leading-relaxed text-stone-600">{{ item.reason }}</p>
+                  <p class="text-base font-semibold text-amber-700">{{ item.fields.name.value }}</p>
+                  {%- if item.fields.reason.value != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-600">{{ item.fields.reason.value }}</p>
                   {%- endif -%}
                 </div>
               {%- endif -%}
@@ -213,6 +217,66 @@
         {%- endif -%}
       </div>
 
+    {%- elsif block.type == 'usage_tips' -%}
+      <div
+        class="w-full max-w-3xl flex flex-col gap-10"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
+            {{ block.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if usage_tips != blank -%}
+          <ol class="flex flex-col gap-6 list-none">
+            {%- for tip in usage_tips -%}
+              {%- if tip.fields.title.value != blank -%}
+                <li class="flex gap-4">
+                  <span class="text-sm font-semibold text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
+                  <div class="flex flex-col gap-1">
+                    <p class="text-base font-semibold text-stone-900">{{ tip.fields.title.value }}</p>
+                    {%- if tip.fields.description.value != blank -%}
+                      <p class="text-sm leading-relaxed text-stone-600">{{ tip.fields.description.value }}</p>
+                    {%- endif -%}
+                  </div>
+                </li>
+              {%- endif -%}
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
+
+    {%- elsif block.type == 'roles' -%}
+      <div
+        class="w-full max-w-3xl flex flex-col gap-10"
+        {{ block.shopify_attributes }}
+      >
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-3xl font-semibold leading-tight text-stone-900">
+            {{ block.settings.heading }}
+          </h2>
+        {%- endif -%}
+        {%- if roles != blank -%}
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {%- for role in roles -%}
+              {%- if role.fields.title.value != blank -%}
+                <div class="bg-stone-100 p-6 flex flex-col gap-4">
+                  {%- if role.fields.icon.value != blank -%}
+                    <div class="pb-2">
+                      {%- render 'icon', icon: role.fields.icon.value, class: 'w-12 h-12', stroke_width: 1 -%}
+                    </div>
+                  {%- endif -%}
+                  <p class="text-base font-semibold text-stone-900">{{ role.fields.title.value }}</p>
+                  {%- if role.fields.description.value != blank -%}
+                    <p class="text-sm leading-relaxed text-stone-600">{{ role.fields.description.value }}</p>
+                  {%- endif -%}
+                </div>
+              {%- endif -%}
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+      </div>
+
     {%- endif -%}
   {%- endfor -%}
 </div>
@@ -229,24 +293,24 @@
           <li class="flex gap-3">
             <span class="text-sm text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
             <div class="flex flex-col gap-1 min-w-0">
-              <p class="text-sm font-medium text-stone-900">{{ entry.title }}</p>
+              <p class="text-sm font-medium text-stone-900">{{ entry.fields.title.value }}</p>
               {%- liquid
                 assign meta_parts = ''
-                if entry.authors != blank
-                  assign meta_parts = entry.authors
+                if entry.fields.authors.value != blank
+                  assign meta_parts = entry.fields.authors.value
                 endif
-                if entry.journal != blank
+                if entry.fields.journal.value != blank
                   if meta_parts != blank
-                    assign meta_parts = meta_parts | append: ' / ' | append: entry.journal
+                    assign meta_parts = meta_parts | append: ' / ' | append: entry.fields.journal.value
                   else
-                    assign meta_parts = entry.journal
+                    assign meta_parts = entry.fields.journal.value
                   endif
                 endif
-                if entry.details != blank
+                if entry.fields.details.value != blank
                   if meta_parts != blank
-                    assign meta_parts = meta_parts | append: ', ' | append: entry.details
+                    assign meta_parts = meta_parts | append: ', ' | append: entry.fields.details.value
                   else
-                    assign meta_parts = entry.details
+                    assign meta_parts = entry.fields.details.value
                   endif
                 endif
               -%}
@@ -494,6 +558,30 @@
           "default": "妊娠・授乳中の方へ"
         }
       ]
+    },
+    {
+      "type": "usage_tips",
+      "name": "使用上のポイント",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "使用上のポイント"
+        }
+      ]
+    },
+    {
+      "type": "roles",
+      "name": "スキンケアにおける役割",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "スキンケアにおける役割"
+        }
+      ]
     }
   ],
   "settings": [
@@ -526,16 +614,10 @@
           }
         },
         {
-          "type": "benefits_group",
-          "settings": {
-            "heading": "スキンケアにおける役割"
-          }
+          "type": "roles"
         },
         {
-          "type": "text_section",
-          "settings": {
-            "heading": "使用上のポイント"
-          }
+          "type": "usage_tips"
         },
         {
           "type": "compatible_ingredients"
