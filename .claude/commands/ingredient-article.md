@@ -77,7 +77,11 @@ description: 成分ガイド記事のShopify管理画面入力コンテンツを
 
 各 reference_entry:
 - title: 論文タイトル（英語）
-- authors: 著者名（筆頭著者 et al. 形式可）
+- authors: 著者名。以下の形式に統一する:
+  - 著者1名または2名: 全員列挙（et al. 不要）
+  - 著者3名以上: 筆頭著者のみ + `, et al.`（例: `Tanno O, et al.`）
+  - 団体著者（例: AAD）: そのまま記載
+  - 注意: カンマの後に `et al.` を置く（`Smith B et al.` は不可、`Smith B, et al.` が正しい）
 - journal: 掲載誌名
 - details: 発行年; 巻(号): ページ
 - url: PubMed または PMC の直接URL
