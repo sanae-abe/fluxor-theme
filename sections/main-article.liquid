@@ -49,6 +49,18 @@
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
+    {"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ shop.url | append: blog.url | json }}},
+    {"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ shop.url | append: article.url | json }}}
+  ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
   "@type": "Article",
   "headline": {{ article.title | json }},
   "description": {{ article.excerpt | strip_html | json }},
@@ -105,21 +117,6 @@
   </section>
 {%- endif -%}
 
-{%- comment %} ── おすすめの商品（featured コレクション） ─────── {%- endcomment -%}
-{%- assign featured_collection = collections['featured'] -%}
-{%- if featured_collection != empty and featured_collection.products.size > 0 -%}
-  <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-[60px]">
-    <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
-      <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ section.settings.products_heading }}</h2>
-    </div>
-    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
-      {%- for product in featured_collection.products limit: 4 -%}
-        {%- render 'card-product-4col', product: product -%}
-      {%- endfor -%}
-    </div>
-  </section>
-{%- endif -%}
-
 {%- schema %}
 {
   "name": "Journal 記事",
@@ -129,12 +126,6 @@
       "id": "related_heading",
       "label": "関連記事 見出し",
       "default": "関連記事"
-    },
-    {
-      "type": "text",
-      "id": "products_heading",
-      "label": "おすすめ商品 見出し",
-      "default": "おすすめの商品"
     }
   ],
   "presets": [
