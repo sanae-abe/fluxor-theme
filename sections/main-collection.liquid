@@ -91,7 +91,7 @@
     <div class="flex gap-16">
       {%- comment %} デスクトップサイドバー {%- endcomment -%}
       {%- if collection.filters.size > 0 -%}
-        <aside class="hidden md:block w-[calc(25%-2rem)] flex-shrink-0">
+        <aside class="hidden md:block w-[calc(25%-2rem)] flex-shrink-0 sticky top-32 self-start">
           {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
         </aside>
       {%- endif -%}
