@@ -18,6 +18,12 @@
             "heading": "この成分について"
           }
         },
+        "concern_tags_hTaLBr": {
+          "type": "concern_tags",
+          "settings": {
+            "heading": "この成分が働きかける悩み"
+          }
+        },
         "roles_eqfeCg": {
           "type": "roles",
           "settings": {
@@ -70,6 +76,7 @@
       },
       "block_order": [
         "article_content_BPGiNQ",
+        "concern_tags_hTaLBr",
         "roles_eqfeCg",
         "usage_tips_8UKW88",
         "compatible_ingredients_eMcXaz",
