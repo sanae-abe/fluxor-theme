@@ -53,6 +53,14 @@
         {%- for tag in category_tags limit: 4 -%}
           {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
+        {%- if concern_tags != blank -%}
+          {%- if category_tags != blank -%}
+            <span class="text-stone-300 select-none">|</span>
+          {%- endif -%}
+          {%- for tag in concern_tags limit: 4 -%}
+            {%- render 'badge', label: tag, variant: 'teal', size: 'sm' -%}
+          {%- endfor -%}
+        {%- endif -%}
       </div>
       <p class="text-sm font-medium text-stone-900 shrink-0">UPDATE: {{ article.updated_at | date: "%Y/%m/%d" }}</p>
     </div>
@@ -511,7 +519,6 @@
       "name": "Ingredients 記事",
       "blocks": [
         { "type": "article_content" },
-        { "type": "concern_tags" },
         { "type": "roles" },
         { "type": "usage_tips" },
         { "type": "compatible_ingredients" },
