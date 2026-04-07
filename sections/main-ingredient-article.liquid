@@ -42,11 +42,11 @@
   <div class="w-full max-w-screen-xl flex flex-col gap-10 py-8 pb-10">
     <div class="flex flex-col gap-4">
       {%- if name_en != blank -%}
-        <h1 class="text-4xl md:text-5xl font-semibold tracking-wider text-stone-900 leading-tight">
+        <p class="text-4xl md:text-5xl font-semibold tracking-wider text-stone-900 leading-tight">
           {{ name_en }}
-        </h1>
+        </p>
       {%- endif -%}
-      <p class="text-lg font-medium text-stone-900">{{ article.title }}</p>
+      <h1 class="text-lg font-medium text-stone-500 tracking-widest">{{ article.title }}</h1>
     </div>
     <div class="flex items-center justify-between w-full gap-4 flex-wrap">
       <div class="flex gap-3 items-center flex-wrap">
@@ -93,6 +93,27 @@
     {"@type": "ListItem", "position": 2, "name": "Ingredients", "item": {{ shop.url | append: blog.url | json }}},
     {"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ shop.url | append: article.url | json }}}
   ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt | strip_html | json }},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S+09:00' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S+09:00' }}",
+  "url": {{ shop.url | append: article.url | json }},
+  "author": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  }{%- if article.image -%},
+  "image": {{ article.image | image_url: width: 1200 | json }}{%- endif -%}
 }
 </script>
 
@@ -163,40 +184,6 @@
             {%- endfor -%}
           </div>
         {%- endif -%}
-      </div>
-    </div>
-
-  {%- elsif block.type == 'concern_tags' -%}
-    {%- liquid
-      assign all_concerns = 'くすみ,ハリ・弾力の低下,乾燥による小じわ,乾燥・かさつき,毛穴の開き' | split: ','
-      if concern_tags != blank
-        assign concern_tags_joined = concern_tags | join: '|'
-      else
-        assign concern_tags_joined = ''
-      endif
-    -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
-        {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
-        {%- endif -%}
-        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-          {%- for concern in all_concerns -%}
-            {%- if concern_tags_joined contains concern -%}
-              <div class="flex items-center gap-3 p-4 bg-teal-50 border border-teal-200">
-                {%- render 'icon', icon: 'check', class: 'w-5 h-5 text-teal-700 flex-shrink-0', stroke_width: 2 -%}
-                <span class="text-base font-medium text-teal-900">{{ concern }}</span>
-              </div>
-            {%- else -%}
-              <div class="flex items-center gap-3 p-4 bg-stone-100">
-                <div class="w-5 h-5 flex-shrink-0 flex items-center justify-center">
-                  <span class="block w-3 h-px bg-stone-300"></span>
-                </div>
-                <span class="text-base text-stone-400">{{ concern }}</span>
-              </div>
-            {%- endif -%}
-          {%- endfor -%}
-        </div>
       </div>
     </div>
 
@@ -396,18 +383,6 @@
           "type": "richtext",
           "id": "content",
           "label": "本文"
-        }
-      ]
-    },
-    {
-      "type": "concern_tags",
-      "name": "この成分が働きかける悩み",
-      "settings": [
-        {
-          "type": "text",
-          "id": "heading",
-          "label": "見出し",
-          "default": "この成分が働きかける悩み"
         }
       ]
     },
