@@ -9,10 +9,22 @@ Review the article provided in $ARGUMENTS or in the conversation for scientific 
 
 ## Execution Flow
 
-1. Parse input from $ARGUMENTS (file path or article text in conversation)
-2. If file path provided: Read the file
-3. Run all review checks in parallel
-4. Output structured findings by category
+1. Parse input from $ARGUMENTS:
+   - 数字のみ（例: `638688002247`）→ Shopify記事IDとして処理
+   - `https://admin.shopify.com/...` URLを含む → URLから記事IDを抽出
+   - ファイルパス（`/` or `~` 始まり）→ ファイルを Read
+   - テキスト → そのまま記事本文として使用
+   - 空 → 会話中のテキストをレビュー
+
+2. Shopify記事IDの場合、Bash で記事を取得する:
+   ```bash
+   set -a && source .env && set +a && node tmp/fetch-article.mjs ARTICLE_ID
+   ```
+   出力テキスト（本文 + 参考文献）をレビュー対象とする
+
+3. ファイルパスの場合: Read でファイルを読む
+
+4. 全レビューチェックを実行して構造化レポートを出力する
 
 ## Review Checklist
 
@@ -143,6 +155,7 @@ If article text too short (< 100 characters): ask user to provide complete artic
 
 ## Examples
 
-/article-review → Review article text provided in the current conversation
-/article-review ~/articles/retinal.md → Review article from file
-/article-review "この成分について..." → Review article text provided as argument
+/article-review 638688002247 → Shopify記事IDで取得してレビュー
+/article-review https://admin.shopify.com/store/fluxor-test/blogs/99628613831/articles/638688002247 → URLから記事IDを抽出してレビュー
+/article-review ~/articles/retinal.md → ファイルからレビュー
+/article-review → 会話中のテキストをレビュー

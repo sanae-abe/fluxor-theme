@@ -1,6 +1,6 @@
 ---
 name: ingredient-article
-description: 成分ガイド記事のShopify管理画面入力コンテンツを生成する
+description: 成分ガイド記事を生成してShopifyに直接作成する
 ---
 
 # Ingredient Article Generator
@@ -11,97 +11,107 @@ description: 成分ガイド記事のShopify管理画面入力コンテンツを
 
 1. $ARGUMENTS が空の場合、AskUserQuestion で成分名を確認する
 2. `sections/main-ingredient-article.liquid` を Read してフィールド構造を確認する
-3. 成分の科学的知識を基に、以下の全フィールドのコンテンツを生成する
-4. 管理画面入力順に整理して出力する
+3. WebFetch で cosmetic-info.jp からINCIを取得する:
+   ```
+   URL: https://www.cosmetic-info.jp/jcln/result.php?nameOp=cn&name={URLエンコードした成分名}&-f=name&-d=asc&-r=20&-p=1
+   ```
+   - 取得できた場合: そのINCIをそのまま `inci_name` に使用する
+   - 見つからない場合: 科学的知識から生成し「⚠️ INCI未確認」と明記する
+4. Bash で NCBI E-utilities API を使い PubMed 論文を収集する（**コンテンツ生成より先に実行**）:
+   - 検索クエリ例（INCI英語名を使用）:
+     - `"[INCI名] skin"`
+     - `"[INCI名] skincare moisturizing"`
+     - `"[INCI名] skin barrier"`
+     - `"[INCI名] anti-inflammatory wound healing"`
+   - 各クエリ上位5件、合計20件程度を取得
+   - PMC あり優先・成分に直接関連するものを優先して **4件を選定**
+   - 選定した4件の書誌情報（title / authors / journal / volume / issue / pages / pubdate / pmid / pmc）を確定する
+5. 選定した論文を参考文献として、成分の科学的知識を基にすべてのフィールドコンテンツを生成する:
+   - reference_entries は手順4で確定した論文情報をそのまま使用（URLも確定済み）
+   - roles・body_html の記述は選定論文が対象とする研究内容に即して書く
+6. 生成したデータを `tmp/article-data.json` に Write する
+7. Bash で Shopify に記事を作成する:
+   ```bash
+   set -a && source .env && set +a && node tmp/create-ingredient-article.mjs
+   ```
+8. 作成された記事IDを取得し、Unsplashでサムネイルを検索・設定する:
+   ```bash
+   set -a && source .env && set +a && node tmp/search-unsplash.mjs "ENGLISH_QUERY" ARTICLE_ID
+   ```
+   クエリは成分の英語名または用途（例: `salicylic acid skincare`、`moisturizing serum`）
 
-## 出力する項目（すべて必須）
+## コンテンツ生成規則
 
-### 基本情報
+### 記事タイトル
+日本語の成分名（例: サリチル酸）
 
-- **記事タイトル**: 日本語の成分名
-- **custom.inci_name**: INCI命名法による英語名（すべて大文字）
-- **記事抜粋（excerpt）**: 80〜100文字。記事一覧での表示用
+### custom.inci_name
+cosmetic-info.jp の表示名称データベースで確認した値を優先する。各単語の先頭のみ大文字（例: Melaleuca Alternifolia (Tea Tree) Leaf Extract）。
 
-### タグ設定
+### 記事抜粋（excerpt）
+80〜100文字。記事一覧での表示用。メタディスクリプションにも同じ内容を使用する。
 
-**custom.category_tags**（下記5つから該当するもの最大2つ）:
+### custom.category_tags（最大2つ）
 - ビタミン類
 - 保湿・バリア成分
 - ペプチド・アミノ酸類
 - 植物エキス・オイル
 - 先端・その他の成分
 
-**concern_tags**（下記5つから該当するもの最大4つ、合理的な理由があるもののみ）:
+### custom.concern_tags（最大4つ、合理的な理由があるもののみ）
 - くすみ
 - ハリ・弾力の低下
 - 乾燥による小じわ
 - 乾燥・かさつき
 - 毛穴の開き
 
-### 記事本文（article.content）
-
-200〜400文字。「この成分について」セクションの本文。
+### 記事本文（body_html）
+200〜400文字。HTMLの `<p>` タグで囲む。
 成分の化学的性質・代謝経路・スキンケア成分としての位置づけを教育的に説明する。
 
-### custom.roles（3〜5項目）
+**引用形式**: 論文に基づく記述の句読点の直前に、半角スペース + `[n]` の形式で引用番号を挿入する。
+- 複数論文が根拠の場合: `[1, 2]`
+- 引用番号は `reference_entries` の配列順（1始まり）に対応する
+- 例: `…チロシナーゼへの競合的な作用が知られています [4]。`
+- 一般的な化学構造の説明など、特定論文に帰属しない記述には引用不要
 
-各 role_item:
+### custom.roles（3〜5項目）
+各 role（型: `role`）:
 - title: 〜へのアプローチ・〜への作用など
-- description: 研究・文献に基づく説明（80〜120文字）
+- description: 研究・文献に基づく説明（80〜120文字）。論文に基づく記述の句読点直前に `[n]` 形式の引用番号を挿入する（body_html と同じ形式）。
 - icon: Lucideアイコン名（refresh-cw / layers / shield / droplets / sparkles / sun / leaf / zap など）
 
 ### custom.usage_tips（4〜6項目）
-
-各 content_item:
+各 content_item（型: `content_item`）:
 - title: ポイントのタイトル
-- description: 具体的な説明（80〜150文字）
+- description: 具体的な説明（80〜150文字）。論文に基づく記述の句読点直前に `[n]` 形式の引用番号を挿入する。
 
 ### custom.compatible_ingredients（3〜5項目）
-
-各 ingredient_combination:
+各 ingredient_combination（型: `ingredient_combination`）:
 - name: 成分名
-- reason: 相性が良い理由（60〜120文字）
+- reason: 相性が良い理由（60〜120文字）。論文に基づく記述の句読点直前に `[n]` 形式の引用番号を挿入する。
 
 ### custom.caution_combinations（2〜4項目）
-
-各 ingredient_combination:
+各 ingredient_combination（型: `ingredient_combination`）:
 - name: 成分名
-- reason: 注意すべき理由（60〜120文字）
+- reason: 注意すべき理由（60〜120文字）。論文に基づく記述の句読点直前に `[n]` 形式の引用番号を挿入する。
 
 ### custom.pregnancy_note
-
 100〜150文字。妊娠・授乳中の安全性に関する注意喚起。
-成分の特性に基づいて「使用を控えることを推奨」または「皮膚科専門医に相談」のいずれかで締める。
+「使用を控えることを推奨」または「皮膚科専門医に相談」のいずれかで締める。
 
-### custom.reference_entry（4件）
+### custom.reference_entries（4件）
+手順4のPubMed検索で確定した論文を使用する。LLMの知識から論文タイトルを生成しない。
 
-各 reference_entry:
-- title: 論文タイトル（英語）
-- authors: 著者名。以下の形式に統一する:
-  - 著者1名または2名: 全員列挙（et al. 不要）
-  - 著者3名以上: 筆頭著者のみ + `, et al.`（例: `Tanno O, et al.`）
-  - 団体著者（例: AAD）: そのまま記載
-  - 注意: カンマの後に `et al.` を置く（`Smith B et al.` は不可、`Smith B, et al.` が正しい）
-- journal: 掲載誌名
-- details: 発行年; 巻(号): ページ
-- url: PubMed または PMC の直接URL
-
-**参考文献の限界（重要）**:
-Claudeは学習データの記憶から論文を提案するため、以下の制限がある:
-- リアルタイムでPubMedにアクセスできない
-- 引用数・最新性は確認できない
-- PMIDを誤って生成する可能性がある（ハルシネーション）
-- PMC掲載論文はオープンアクセスのため記憶の精度がやや高いが、保証はない
-
-**必ずユーザーがPubMedで各論文のタイトル・著者・URL を確認してから入力すること。**
-URLが確認できない場合は url フィールドを空欄にする。
-
-## 参考文献と本文の整合性ルール（必ず守ること）
-
-- 各参考文献が何を対象とした研究か明確にする（成分A の論文を成分B の根拠に使わない）
-- 本文中の具体的な数値・比率（例：「〇倍速く変換される」）は、引用した論文に直接記載がある場合のみ使用する。出典が特定できない数値は記載しない
-- レビュー論文（総説）を引用する場合、「ビタミンA誘導体として」「レチノイド全般として」など対象範囲を明示した表現に合わせる
-- 引用した論文と本文の記述の対応を出力末尾に一覧で示す（「〇〇の記述 → reference N が根拠」）
+各 reference_entry（型: `reference_entry`）:
+- title: 論文タイトル（英語・PubMed取得値そのまま）
+- authors: 著者名。形式:
+  - 1〜2名: 全員列挙（et al. 不要）
+  - 3名以上: 筆頭著者のみ + `, et al.`
+- journal: 掲載誌名（PubMed の fulljournalname）
+- details: 発行年; 巻(号): ページ（PubMed の pubdate / volume / issue / pages から構成）
+- url: PMC URL優先（`https://www.ncbi.nlm.nih.gov/pmc/articles/PMCID/`）、PMCなしはPubMed URL（`https://pubmed.ncbi.nlm.nih.gov/PMID/`）
+- accessed_on: PMC URL のみ当日日付、PubMed URLは空文字
 
 ## 薬機法遵守ルール（必ず守ること）
 
@@ -116,61 +126,59 @@ URLが確認できない場合は url フィールドを空欄にする。
 - 「〜への作用が知られています」「〜の可能性があるとされています」
 - 「〜をサポートします」「〜に働きかけます」
 
-### 参考文献のルール
-- PubMed / PMC 掲載の査読済み論文のみ記載する
-- URL は `https://pubmed.ncbi.nlm.nih.gov/PMID/` または `https://www.ncbi.nlm.nih.gov/pmc/articles/PMCID/` 形式
-- PMIDは自信を持って特定できるものだけ記載する。不確かな場合はURLを空欄にして「※ PubMedで著者名・年・誌名で検索して正しいURLを確認してから入力してください」と必ず注記する
-- PMCIDが確認できる論文は PMC URL を優先する（フルテキスト参照しやすいため）
-- データベースや機関のトップページは参考文献として記載しない
+## 参考文献と本文の整合性ルール
 
-## 出力フォーマット
+- 各参考文献が何を対象とした研究か明確にする
+- 本文中の具体的な数値は、引用した論文に記載がある場合のみ使用する
+- 出典が特定できない数値は記載しない
+- body_html / roles / usage_tips / compatible_ingredients / caution_combinations のすべてにおいて、論文に基づく記述には必ず引用番号 `[n]` を付ける（上記「記事本文」の引用形式を参照）
+- 「文献で検討されており」「研究で報告されています」などの表現がある場合は必ず対応する引用番号を付与する
 
-各フィールドを以下の形式で出力する:
+## JSON出力形式（tmp/article-data.json）
 
-```
-### 基本情報
-
-| フィールド | 入力値 |
-|---|---|
-| 記事タイトル | 〇〇 |
-| INCI名 | 〇〇〇 |
-
----
-
-### 記事抜粋（excerpt）
-
-〇〇〇...（約〇〇文字）
-
----
-
-### custom.category_tags
-1. 〇〇
-2. 〇〇
-
-### concern_tags
-1. 〇〇
-2. 〇〇
-
----
-
-### 記事本文（article.content）
-
-〇〇〇...
-
----
-
-### custom.roles
-
-**role_item 1:**
-- title: `〇〇`
-- description: `〇〇`
-- icon: `〇〇`
-...
-
----
-
-（以降同様）
+```json
+{
+  "title": "成分名",
+  "inci_name": "Ingredient Name",
+  "excerpt": "記事抜粋...",
+  "body_html": "<p>本文...（論文に基づく記述には [n] 形式の引用番号を句読点直前に挿入）...</p>",
+  "category_tags": ["タグ1"],
+  "concern_tags": ["タグ1", "タグ2"],
+  "pregnancy_note": "妊娠中の注意...",
+  "roles": [
+    { "title": "〇〇へのアプローチ", "description": "〇〇...", "icon": "refresh-cw" }
+  ],
+  "usage_tips": [
+    { "title": "〇〇", "description": "〇〇..." }
+  ],
+  "compatible_ingredients": [
+    { "name": "〇〇", "reason": "〇〇..." }
+  ],
+  "caution_combinations": [
+    { "name": "〇〇", "reason": "〇〇..." }
+  ],
+  "reference_entries": [
+    {
+      "title": "Paper title in English",
+      "authors": "Author A, et al.",
+      "journal": "Journal Name",
+      "details": "2024; 10(1): 1–10",
+      "url": "https://www.ncbi.nlm.nih.gov/pmc/articles/PMCxxxxxxx/",
+      "accessed_on": "2026-04-06"
+    }
+  ]
+}
 ```
 
-管理画面への入力はユーザーが行うため、Liquid・HTMLコードは生成しない。
-最後に薬機法チェックポイントの確認表を出力する。
+## PubMed 論文不足時の対応
+
+成分によっては論文が4件未満の場合がある:
+- 3件しか見つからない場合: 3件で reference_entries を構成する（無理に4件にしない）
+- 直接関連する論文がない場合: 含有成分・代謝産物・類縁成分の論文で代替し、その旨をユーザーに伝える
+- LLMの知識から論文タイトルを生成することは禁止
+
+## 実行後の出力
+
+- 作成された記事の管理画面URL
+- 選定した参考文献とカバーするroleの対応表
+- 薬機法チェックポイント確認表
