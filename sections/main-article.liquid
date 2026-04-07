@@ -1,61 +1,145 @@
-<article class="max-w-2xl mx-auto px-5 py-12">
-  <header class="mb-10 space-y-4">
-    {%- if article.tags.size > 0 -%}
-      <p class="text-xs tracking-widest uppercase text-stone-400">{{ article.tags | join: ' / ' }}</p>
-    {%- endif -%}
-    <h1 class="text-3xl font-semibold leading-tight">{{ article.title }}</h1>
-    <div class="flex items-center gap-3 text-xs text-stone-400">
-      <time datetime="{{ article.published_at | date: '%Y-%m-%d' }}">{{ article.published_at | date: '%Y.%m.%d' }}</time>
-      {%- if article.author != blank -%}
-        <span>by {{ article.author }}</span>
-      {%- endif -%}
-    </div>
-  </header>
+{%- comment %} ── Header ────────────────────────────────────────── {%- endcomment -%}
+<div class="w-full bg-stone-50 flex flex-col items-center px-4 md:px-10">
 
-  {%- if article.image -%}
-    <div class="aspect-[16/9] overflow-hidden bg-stone-200 mb-10">
-      <img
-        src="{{ article.image | image_url: width: 1200 }}"
-        alt="{{ article.image.alt | escape | default: article.title }}"
-        class="w-full h-full object-cover"
-        loading="eager"
-        width="1200"
-        height="675"
-      >
-    </div>
-  {%- endif -%}
-
-  <div class="prose prose-sm max-w-none text-stone-700 leading-relaxed">
-    {{ article.content }}
+  <div class="w-full border-b border-stone-200 flex items-center pb-5 pt-10">
+    <a
+      href="{{ blog.url }}"
+      class="link-back inline-flex items-center gap-1 text-sm text-stone-500"
+    >
+      {%- render 'icon', icon: 'arrow-left', class: 'link-back__icon w-5 h-5 flex-shrink-0', stroke_width: 1.5 -%}
+      <span>記事一覧に戻る</span>
+    </a>
   </div>
 
-  {%- if article.tags.size > 0 -%}
-    <div class="flex flex-wrap gap-2 mt-12 pt-8 border-t border-stone-200">
-      {%- for tag in article.tags -%}
-        <a
-          href="{{ blog.url }}/tagged/{{ tag | handle }}"
-          class="text-xs border border-stone-200 px-3 py-1 hover:border-stone-900 transition-colors"
-        >
-          {{ tag }}
-        </a>
-      {%- endfor -%}
+  <div class="w-full max-w-[768px] flex flex-col gap-10 pt-8 pb-10">
+    <h1 class="text-3xl font-semibold leading-snug text-stone-900">{{ article.title }}</h1>
+    <div class="flex items-center justify-between w-full gap-4 flex-wrap">
+      {%- if article.tags.size > 0 -%}
+        <div class="flex gap-3 items-center flex-wrap">
+          {%- for tag in article.tags -%}
+            {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
+          {%- endfor -%}
+        </div>
+      {%- else -%}
+        <div></div>
+      {%- endif -%}
+      <p class="text-sm font-medium text-stone-900 shrink-0">PUBLISHED: {{ article.published_at | date: '%Y/%m/%d' }}</p>
     </div>
+  </div>
+
+  {%- if article.image -%}
+    <div class="w-full max-w-[768px] overflow-hidden">
+      <img
+        src="{{ article.image | image_url: width: 1200 }}"
+        alt="{{ article.image.alt | default: article.title | escape }}"
+        class="w-full h-auto object-cover"
+        loading="eager"
+        fetchpriority="high"
+        width="1200"
+        height="800"
+      >
+    </div>
+  {%- else -%}
+    <div class="w-full max-w-[768px] aspect-[3/2] bg-stone-200"></div>
   {%- endif -%}
 
-  <nav class="flex justify-between mt-10 pt-8 border-t border-stone-200 text-sm">
-    {%- if blog.previous_article -%}
-      <a href="{{ blog.previous_article }}" class="text-stone-400 hover:text-stone-900 transition-colors">← 前の記事</a>
-    {%- else -%}
-      <span></span>
+</div>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": {{ article.title | json }},
+  "description": {{ article.excerpt | strip_html | json }},
+  "datePublished": "{{ article.published_at | date: '%Y-%m-%dT%H:%M:%S+09:00' }}",
+  "dateModified": "{{ article.updated_at | date: '%Y-%m-%dT%H:%M:%S+09:00' }}",
+  "url": {{ shop.url | append: article.url | json }},
+  "author": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": {{ shop.name | json }}
+  }{%- if article.image -%},
+  "image": {{ article.image | image_url: width: 1200 | json }}{%- endif -%}
+}
+</script>
+
+{%- comment %} ── 本文 ──────────────────────────────────────────── {%- endcomment -%}
+<div class="w-full flex flex-col items-center px-4 md:px-10 py-20">
+  <div class="w-full max-w-[768px] text-base leading-[1.75] text-stone-900 rte">
+    {{ article.content }}
+  </div>
+</div>
+
+{%- comment %} ── 関連記事（タグ一致、最大4件） ─────────────────── {%- endcomment -%}
+{%- capture related_grid -%}
+  {%- assign _count = 0 -%}
+  {%- for related in blog.articles -%}
+    {%- if _count >= 4 -%}{%- break -%}{%- endif -%}
+    {%- if related.id == article.id -%}{%- continue -%}{%- endif -%}
+    {%- assign _match = false -%}
+    {%- for tag in article.tags -%}
+      {%- if related.tags contains tag -%}
+        {%- assign _match = true -%}
+        {%- break -%}
+      {%- endif -%}
+    {%- endfor -%}
+    {%- if _match -%}
+      {%- render 'card-article', article: related -%}
+      {%- assign _count = _count | plus: 1 -%}
     {%- endif -%}
-    {%- if blog.next_article -%}
-      <a href="{{ blog.next_article }}" class="text-stone-400 hover:text-stone-900 transition-colors">次の記事 →</a>
-    {%- endif -%}
-  </nav>
-</article>
+  {%- endfor -%}
+{%- endcapture -%}
+
+{%- if related_grid != blank -%}
+  <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-[60px]">
+    <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
+      <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ section.settings.related_heading }}</h2>
+    </div>
+    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
+      {{ related_grid }}
+    </div>
+  </section>
+{%- endif -%}
+
+{%- comment %} ── おすすめの商品（featured コレクション） ─────── {%- endcomment -%}
+{%- assign featured_collection = collections['featured'] -%}
+{%- if featured_collection != empty and featured_collection.products.size > 0 -%}
+  <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-[60px]">
+    <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
+      <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ section.settings.products_heading }}</h2>
+    </div>
+    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
+      {%- for product in featured_collection.products limit: 4 -%}
+        {%- render 'card-product-4col', product: product -%}
+      {%- endfor -%}
+    </div>
+  </section>
+{%- endif -%}
 
 {%- schema %}
 {
-  "name": "Article"
+  "name": "Journal 記事",
+  "settings": [
+    {
+      "type": "text",
+      "id": "related_heading",
+      "label": "関連記事 見出し",
+      "default": "関連記事"
+    },
+    {
+      "type": "text",
+      "id": "products_heading",
+      "label": "おすすめ商品 見出し",
+      "default": "おすすめの商品"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Journal 記事"
+    }
+  ]
 }
 {%- endschema -%}

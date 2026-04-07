@@ -62,7 +62,7 @@
           {%- endfor -%}
         {%- endif -%}
       </div>
-      <p class="text-sm font-medium text-stone-900 shrink-0">UPDATE: {{ article.updated_at | date: "%Y/%m/%d" }}</p>
+      <p class="flex items-center gap-4 text-sm font-medium text-stone-900 shrink-0 uppercase"><span>Updated: {{ article.updated_at | date: "%Y/%m/%d" }}</span><span>Published: {{ article.published_at | date: "%Y/%m/%d" }}</span></p>
     </div>
   </div>
 
