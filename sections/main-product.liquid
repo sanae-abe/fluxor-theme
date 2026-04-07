@@ -195,7 +195,7 @@
       <div class="aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
         {%- if product.featured_image -%}
           <img
-            src="{{ product.featured_image | image_url: width: 800 }}"
+            src="{{ product.featured_image | image_url: width: 800, format: 'webp' }}"
             :src="activeImage"
             alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
             class="w-full h-full object-cover"
@@ -230,7 +230,7 @@
           <div class="overflow-hidden" x-ref="thumbTrack">
             <div class="flex gap-3">
               {%- for image in product.images limit: 12 -%}
-                {%- assign thumb_url = image | image_url: width: 800 -%}
+                {%- assign thumb_url = image | image_url: width: 800, format: 'webp' -%}
                 <button
                   type="button"
                   class="w-[calc(25%-9px)] shrink-0 aspect-square overflow-hidden bg-stone-100 border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1 [transform:translateZ(0)]"
@@ -239,7 +239,7 @@
                   aria-label="{{ image.alt | escape | default: product.title | escape }}"
                 >
                   <img
-                    src="{{ image | image_url: width: 300 }}"
+                    src="{{ image | image_url: width: 300, format: 'webp' }}"
                     alt="{{ image.alt | escape | default: product.title | escape }}"
                     class="w-full h-full object-cover"
                     loading="lazy"
@@ -415,7 +415,7 @@
                   >
                     {%- if key_ingredient.thumbnail != blank -%}
                       <img
-                        src="{{ key_ingredient.thumbnail | image_url: width: 96, height: 96, crop: 'center' }}"
+                        src="{{ key_ingredient.thumbnail | image_url: width: 96, height: 96, crop: 'center', format: 'webp' }}"
                         alt="{{ key_ingredient.ingredient }}"
                         class="w-12 h-12 rounded-full object-cover shrink-0"
                         width="48" height="48" loading="lazy"
@@ -589,7 +589,7 @@
       <div class="w-[67px] h-[67px] shrink-0 overflow-hidden bg-stone-100">
         {%- if product.featured_image -%}
           <img
-            src="{{ product.featured_image | image_url: width: 200 }}"
+            src="{{ product.featured_image | image_url: width: 200, format: 'webp' }}"
             alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
             class="w-full h-full object-cover"
             width="67"
@@ -644,7 +644,7 @@
     return {
       variants: {{ product.variants | json }},
       selectedOptions: {{ variant.options | json }},
-      activeImage: "{{ product.featured_image | image_url: width: 800 }}",
+      activeImage: "{{ product.featured_image | image_url: width: 800, format: 'webp' }}",
       qty: 1,
       adding: false,
       get selectedVariant() {

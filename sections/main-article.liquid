@@ -30,7 +30,8 @@
   {%- if article.image -%}
     <div class="w-full max-w-[768px] overflow-hidden">
       <img
-        src="{{ article.image | image_url: width: 1200 }}"
+        src="{{ article.image | image_url: width: 1200, format: 'webp' }}"
+        srcset="{{ article.image | image_url: width: 1200, format: 'webp' }} 1x, {{ article.image | image_url: width: 2400, format: 'webp' }} 2x"
         alt="{{ article.image.alt | default: article.title | escape }}"
         class="w-full h-auto object-cover"
         loading="eager"

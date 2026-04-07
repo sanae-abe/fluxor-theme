@@ -107,7 +107,7 @@
   {%- if p != blank -%}
     {%- assign pv = p.selected_or_first_available_variant -%}
     {%- if json_parts != '' -%}{%- assign json_parts = json_parts | append: ',' -%}{%- endif -%}
-    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"priceFormatted":{{ pv.price | money_without_trailing_zeros | json }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400 | json }},"available":{{ pv.available }}}{%- endcapture -%}
+    {%- capture entry -%}{"id":{{ p.id }},"title":{{ p.title | json }},"priceFormatted":{{ pv.price | money_without_trailing_zeros | json }},"variantId":{{ pv.id }},"image":{{ p.featured_image | image_url: width: 400, format: 'webp' | json }},"available":{{ pv.available }}}{%- endcapture -%}
     {%- assign json_parts = json_parts | append: entry -%}
   {%- endif -%}
 {%- endfor -%}
@@ -186,7 +186,7 @@
       <div class="aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
         {%- if product.featured_image -%}
           <img
-            src="{{ product.featured_image | image_url: width: 800 }}"
+            src="{{ product.featured_image | image_url: width: 800, format: 'webp' }}"
             alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
             class="w-full h-full object-cover"
             width="800"
@@ -200,7 +200,7 @@
           {%- for image in product.images limit: 8 -%}
             <div class="aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
               <img
-                src="{{ image | image_url: width: 300 }}"
+                src="{{ image | image_url: width: 300, format: 'webp' }}"
                 alt="{{ image.alt | escape | default: product.title | escape }}"
                 class="w-full h-full object-cover"
                 loading="lazy"
@@ -264,7 +264,7 @@
         <div class="flex items-center gap-3 p-3 rounded-xl border border-stone-200 bg-white">
           {%- if fp.featured_image -%}
             <img
-              src="{{ fp.featured_image | image_url: width: 96 }}"
+              src="{{ fp.featured_image | image_url: width: 96, format: 'webp' }}"
               alt="{{ fp.featured_image.alt | escape }}"
               width="64" height="64"
               class="w-16 h-16 object-cover rounded-lg flex-shrink-0"

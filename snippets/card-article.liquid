@@ -13,7 +13,8 @@
     {%- if article.image -%}
       <div class="aspect-[4/3] overflow-hidden bg-stone-200">
         <img
-          src="{{ article.image | image_url: width: 800 }}"
+          src="{{ article.image | image_url: width: 800, format: 'webp' }}"
+          srcset="{{ article.image | image_url: width: 800, format: 'webp' }} 1x, {{ article.image | image_url: width: 1600, format: 'webp' }} 2x"
           alt="{{ article.image.alt | escape | default: article.title }}"
           class="card-article__img w-full h-full object-cover"
           loading="lazy"

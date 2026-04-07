@@ -32,7 +32,7 @@
     >
       {%- if block.settings.image -%}
         <img
-          src="{{ block.settings.image | image_url: width: 2400 }}"
+          src="{{ block.settings.image | image_url: width: 2400, format: 'webp' }}"
           alt="{{ block.settings.heading | escape }}"
           class="absolute inset-0 w-full h-full object-cover"
           loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"

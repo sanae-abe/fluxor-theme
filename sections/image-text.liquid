@@ -14,7 +14,7 @@
       {%- if s.image != blank -%}
         <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
           <img
-            src="{{ s.image | image_url: width: 800 }}"
+            src="{{ s.image | image_url: width: 800, format: 'webp' }}"
             alt="{{ s.image.alt | escape | default: s.heading | escape }}"
             class="w-full h-full object-cover"
             loading="lazy"

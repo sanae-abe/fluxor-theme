@@ -13,7 +13,7 @@
               {%- comment %} サムネイル {%- endcomment -%}
               <a href="{{ item.url }}" class="flex-shrink-0 w-24 h-24 bg-stone-200 overflow-hidden">
                 <img
-                  src="{{ item.image | image_url: width: 240 }}"
+                  src="{{ item.image | image_url: width: 240, format: 'webp' }}"
                   alt="{{ item.title | escape }}"
                   class="w-full h-full object-cover"
                   loading="lazy"

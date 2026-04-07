@@ -11,7 +11,7 @@
           <div class="w-full aspect-square rounded-full bg-stone-50 overflow-hidden [transform:translateZ(0)]">
             {%- if block.settings.image -%}
               <img
-                src="{{ block.settings.image | image_url: width: 500 }}"
+                src="{{ block.settings.image | image_url: width: 500, format: 'webp' }}"
                 alt="{{ block.settings.label | escape }}"
                 class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
                 loading="lazy"

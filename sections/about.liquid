@@ -21,7 +21,7 @@
   {%- if section.settings.background_image != blank -%}
     <div class="absolute inset-0">
       <img
-        src="{{ section.settings.background_image | image_url: width: 2400 }}"
+        src="{{ section.settings.background_image | image_url: width: 2400, format: 'webp' }}"
         alt=""
         class="w-full h-full object-cover"
         loading="lazy"
