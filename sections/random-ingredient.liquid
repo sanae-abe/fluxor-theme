@@ -1,0 +1,233 @@
+{%- liquid
+  assign s              = section.settings
+  assign ingredient_blog = blogs['ingredients']
+  assign flex_dir       = 'md:flex-row'
+  if s.image_position == 'right'
+    assign flex_dir = 'md:flex-row-reverse'
+  endif
+-%}
+
+{%- comment %} 成分記事データ（JSON） — Alpine.jsがランダム選択に使用 {%- endcomment -%}
+<script id="random-ingredient-data-{{ section.id }}" type="application/json">
+  [
+    {%- for article in ingredient_blog.articles limit: 50 -%}
+      {%- liquid
+        if article.excerpt != blank
+          assign excerpt = article.excerpt | strip_html | truncate: 200
+        else
+          assign excerpt = article.content | strip_html | truncate: 200
+        endif
+        assign inci = article.metafields.custom.inci_name.value | default: ''
+      -%}
+      {
+        "title":    {{ article.title | json }},
+        "inci_name": {{ inci | json }},
+        "image":    {%- if article.image != blank -%}{{ article.image | image_url: width: 800, format: 'webp' | json }}{%- else -%}null{%- endif -%},
+        "excerpt":  {{ excerpt | json }},
+        "url":      {{ article.url | json }}
+      }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+</script>
+
+<section
+  class="{{ s.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]"
+  x-data="randomIngredient('{{ section.id }}')"
+>
+
+  <div class="flex flex-col {{ flex_dir }} items-center gap-6 md:gap-10">
+
+    {%- comment %} 画像エリア {%- endcomment -%}
+    <div class="md:w-1/2 flex-shrink-0">
+      <template x-if="article && article.image">
+        <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
+          <a :href="article.url">
+            <img
+              :src="article.image"
+              :alt="article.inci_name || article.title"
+              class="w-full h-full object-cover"
+              loading="lazy"
+              width="800"
+              height="534"
+            >
+          </a>
+        </div>
+      </template>
+      <template x-if="!article || !article.image">
+        <div class="w-full aspect-[640/427] bg-stone-100 flex items-center justify-center">
+          {%- render 'icon', icon: 'flask-conical', class: 'w-16 h-16 text-stone-300' -%}
+        </div>
+      </template>
+    </div>
+
+    {%- comment %} テキストエリア {%- endcomment -%}
+    <div class="md:w-1/2 flex flex-col gap-10 px-4 md:px-10 max-w-[640px]">
+
+      <div class="flex flex-col items-center md:items-start gap-5">
+        {%- if s.badge_label != blank -%}
+          {%- render 'badge',
+            label: s.badge_label,
+            variant: s.badge_variant,
+            size: 'md',
+            icon_left: s.badge_icon_left,
+            icon_right: s.badge_icon_right
+          -%}
+        {%- endif -%}
+
+        <div class="flex flex-col items-center md:items-start gap-1">
+          <h2
+            class="text-2xl md:text-4xl font-semibold leading-tight text-stone-900 palt tracking-wider"
+            x-text="article ? (article.inci_name || article.title) : ''"
+          ></h2>
+          <p
+            class="text-base text-stone-500 tracking-widest"
+            x-show="article && article.inci_name"
+            x-text="article ? article.title : ''"
+          ></p>
+        </div>
+
+        <p
+          class="text-base leading-relaxed text-stone-900"
+          x-text="article ? article.excerpt : ''"
+        ></p>
+      </div>
+
+      <div class="flex w-full md:justify-start" x-show="article">
+        <a
+          :href="article ? article.url : '#'"
+          class="btn-slide inline-flex items-center justify-center border font-sans tracking-wider select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt transition-all duration-300 h-12 px-4 text-base gap-2 border-2 font-medium bg-transparent text-stone-900 border-stone-900 self-start w-full md:w-auto"
+          style="--hover-bg: #1c1917; --hover-text: #fafaf9;"
+        >
+          {%- if s.button_icon_left != blank -%}
+            {%- render 'icon', icon: s.button_icon_left, class: 'w-[18px] h-[18px] flex-shrink-0 stroke-2' -%}
+          {%- endif -%}
+          <span>{{ s.button_label }}</span>
+          {%- if s.button_icon_right != blank -%}
+            {%- render 'icon', icon: s.button_icon_right, class: 'w-[18px] h-[18px] flex-shrink-0 stroke-2' -%}
+          {%- endif -%}
+        </a>
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{%- schema %}
+{
+  "name": "ランダム成分",
+  "settings": [
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "背景色",
+      "options": [
+        { "value": "bg-stone-50",  "label": "ライト（デフォルト）" },
+        { "value": "bg-stone-100", "label": "ライトグレー" },
+        { "value": "bg-stone-200", "label": "グレー" },
+        { "value": "bg-stone-950", "label": "ダーク" }
+      ],
+      "default": "bg-stone-50"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "画像位置",
+      "options": [
+        { "value": "left",  "label": "左" },
+        { "value": "right", "label": "右" }
+      ],
+      "default": "left"
+    },
+    {
+      "type": "header",
+      "content": "バッジ"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "バッジテキスト",
+      "default": "Ingredient"
+    },
+    {
+      "type": "select",
+      "id": "badge_variant",
+      "label": "バッジカラー",
+      "options": [
+        { "value": "default",   "label": "ダーク（黒）" },
+        { "value": "secondary", "label": "セカンダリ（灰色枠線）" },
+        { "value": "tertiary",  "label": "ターシャリ（灰色背景 枠線なし）" },
+        { "value": "ghost",     "label": "ゴースト（白枠線）" },
+        { "value": "accent",    "label": "アクセント（濃グリーン）" },
+        { "value": "premium",   "label": "プレミアム（濃ローズ）" },
+        { "value": "teal",      "label": "ティール（薄グリーン）" }
+      ],
+      "default": "accent"
+    },
+    {
+      "type": "select",
+      "id": "badge_icon_left",
+      "label": "バッジ 左アイコン",
+      "options": [
+        { "value": "",              "label": "なし" },
+        { "value": "flask-conical", "label": "三角フラスコ" },
+        { "value": "arrow-left",    "label": "矢印（左）" },
+        { "value": "arrow-right",   "label": "矢印（右）" },
+        { "value": "star",          "label": "スター" },
+        { "value": "gem",           "label": "ジェム" }
+      ],
+      "default": "flask-conical"
+    },
+    {
+      "type": "select",
+      "id": "badge_icon_right",
+      "label": "バッジ 右アイコン",
+      "options": [
+        { "value": "",              "label": "なし" },
+        { "value": "flask-conical", "label": "三角フラスコ" },
+        { "value": "arrow-left",    "label": "矢印（左）" },
+        { "value": "arrow-right",   "label": "矢印（右）" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "ボタン"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンテキスト",
+      "default": "成分について詳しく見る"
+    },
+    {
+      "type": "select",
+      "id": "button_icon_left",
+      "label": "ボタン 左アイコン",
+      "options": [
+        { "value": "",            "label": "なし" },
+        { "value": "arrow-left",  "label": "矢印（左）" },
+        { "value": "arrow-right", "label": "矢印（右）" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "button_icon_right",
+      "label": "ボタン 右アイコン",
+      "options": [
+        { "value": "",            "label": "なし" },
+        { "value": "arrow-left",  "label": "矢印（左）" },
+        { "value": "arrow-right", "label": "矢印（右）" }
+      ],
+      "default": "arrow-right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "ランダム成分"
+    }
+  ]
+}
+{%- endschema -%}

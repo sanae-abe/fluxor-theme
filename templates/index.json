@@ -47,18 +47,14 @@
       }
     },
     "ingredient-guide": {
-      "type": "image-text",
+      "type": "random-ingredient",
       "settings": {
         "color_scheme": "bg-stone-50",
         "image_position": "left",
-        "image": "shopify://shop_images/home-ingredient-image_compressed.webp",
         "badge_label": "Ingredient",
         "badge_variant": "accent",
         "badge_icon_left": "flask-conical",
         "badge_icon_right": "",
-        "heading": "レチノール",
-        "paragraph": "<p>科学的に研究が進む美容成分の一つ。使い続けることで肌のキメを整え、うるおいとともにハリ感をサポートします。</p>",
-        "button_url": "shopify://blogs/ingredients/retinol",
         "button_label": "成分について詳しく見る",
         "button_icon_left": "",
         "button_icon_right": "arrow-right"
