@@ -80,6 +80,44 @@ HTML コメント `<!-- -->` は**禁止**。ブラウザに送信される。
 {%- comment %} Liquid コメントを使う {%- endcomment %}
 ```
 
+## Shopify Admin API
+
+認証情報は `.env` に記載:
+- `SHOPIFY_TOKEN` — Admin API アクセストークン
+- `SHOPIFY_STORE` — ストアドメイン（`fluxor-test.myshopify.com`）
+- エンドポイント: `https://{SHOPIFY_STORE}/admin/api/2025-01/graphql.json`
+
+### ネストされた article_reference は Liquid で解決不可
+
+ネストされたメタオブジェクト（例: `key_ingredient` の `article` フィールド）の
+`article_reference` 型は Liquid でオブジェクトとして解決されない。
+
+```liquid
+{{ key_ingredient.article.url }}  {%- comment %} → 空になる {%- endcomment %}
+```
+
+GID 文字列（`gid://shopify/Article/...`）が返るだけで、`url` や `handle` にアクセスできない。
+
+**解決策**: Admin API で記事URLを取得し、`url` 型フィールドに別途保存する。
+
+### url 型メタフィールドは絶対 URL 必須
+
+`url` 型フィールドは `https://` スキームが必要。相対パス（`/blogs/...`）は保存不可。
+
+### key_ingredient メタオブジェクト構成
+
+定義ID: `gid://shopify/MetaobjectDefinition/15877308615`
+
+| フィールド    | 型                  | 備考                                       |
+|-------------|---------------------|--------------------------------------------|
+| article     | article_reference   | Liquid で解決不可 → `article_url` を使う   |
+| article_url | single_line_text    | 記事の相対パス（例: `/blogs/ingredients/niacinamide`）|
+| description | multi_line_text     |                                            |
+| display_name | single_line_text   |                                            |
+| ingredient  | single_line_text    |                                            |
+| amount      | single_line_text    |                                            |
+| thumbnail   | file_reference      |                                            |
+
 ## Tailwind CSS
 
 設定: `tailwind.config.js`

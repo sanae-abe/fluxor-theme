@@ -57,7 +57,7 @@
     {%- section 'header' -%}
     {%- section 'cart-drawer' -%}
 
-    <main id="MainContent" tabindex="-1">
+    <main id="MainContent" tabindex="-1" class="{% unless template.name == 'index' %}pt-14 md:pt-20{% endunless %}">
       {{ content_for_layout }}
     </main>
 
