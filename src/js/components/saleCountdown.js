@@ -1,9 +1,9 @@
+import { parseJSTDate } from '../utils/date.js'
+
 const MS_PER_DAY  = 86_400_000
 const MS_PER_HOUR = 3_600_000
 const MS_PER_MIN  = 60_000
 const MS_PER_SEC  = 1_000
-
-const endTime = (endDateStr) => new Date(endDateStr).getTime()
 
 export const saleCountdown = (endDateStr) => ({
   days: 0,
@@ -19,7 +19,7 @@ export const saleCountdown = (endDateStr) => ({
   get ss() { return String(this.seconds).padStart(2, '0') },
 
   init() {
-    this._end = endTime(endDateStr)
+    this._end = parseJSTDate(endDateStr) ?? NaN
     if (isNaN(this._end)) { this.expired = true; return }
     this.update()
     if (!this.expired) {

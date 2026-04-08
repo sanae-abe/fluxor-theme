@@ -1,15 +1,10 @@
 import { formatJPY } from '../utils/money.js'
+import { parseJSTDate } from '../utils/date.js'
 
 const cfg = window.fluxorSale || { enabled: false }
 
-const parseDate = (str) => {
-  if (!str) return null
-  const ms = new Date(str).getTime()
-  return isNaN(ms) ? null : ms
-}
-
-const startMs = parseDate(cfg.start)
-const endMs = parseDate(cfg.end)
+const startMs = parseJSTDate(cfg.start)
+const endMs = parseJSTDate(cfg.end)
 
 export const saleStore = {
   isActive() {

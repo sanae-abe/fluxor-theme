@@ -13,7 +13,7 @@
   >
     <span>終了まで</span>
     <span>
-      <span :class="days > 0 ? '' : 'hidden'" class="hidden">
+      <span :class="{ 'hidden': days === 0 }">
         <span x-text="days" class="font-semibold"></span>日
       </span>
       <span x-text="hh" class="font-semibold"></span>時間
