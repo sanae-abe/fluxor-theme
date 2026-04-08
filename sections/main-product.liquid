@@ -235,7 +235,7 @@
         {%- comment %} サムネイル横カルーセル（4枚表示、以降は左右ボタンで切り替え） {%- endcomment -%}
         <div
           class="relative"
-          x-data="{ thumbOffset: 0, maxOffset: Math.max(0, {{ product.images.size }} - 4) }"
+          x-data="{ thumbOffset: 0, maxOffset: Math.max(0, {{ product.images.size }} - 4), scrollToThumb(index) { const t = this.$refs.thumbTrack; const thumbs = t.querySelectorAll('button'); const thumb = thumbs[index]; if (!thumb) return; const cardW = (thumbs[0] ? thumbs[0].offsetWidth : 0) + 12; if (thumb.offsetLeft < t.scrollLeft) { this.thumbOffset = Math.max(0, this.thumbOffset - 1); t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' }); } else if (thumb.offsetLeft + thumb.offsetWidth > t.scrollLeft + t.clientWidth) { this.thumbOffset = Math.min(this.maxOffset, this.thumbOffset + 1); t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' }); } } }"
         >
           <button
             type="button"
@@ -255,7 +255,7 @@
                   type="button"
                   class="w-[calc((100%-42px)/4.5)] shrink-0 aspect-square overflow-hidden bg-stone-100 border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1 [transform:translateZ(0)]"
                   :class="activeImageIndex === {{ forloop.index0 }} ? 'border-stone-900' : 'border-transparent'"
-                  @click="activeImageIndex = {{ forloop.index0 }}"
+                  @click="activeImageIndex = {{ forloop.index0 }}; scrollToThumb({{ forloop.index0 }})"
                   aria-label="{{ image.alt | escape | default: product.title | escape }}"
                 >
                   <img
@@ -426,7 +426,7 @@
                 {%- assign ing_idx = forloop.index0 -%}
                 <div
                   class="flex-none w-[calc((100%-16px)/2.5)] {% if key_ingredient.description != blank %}cursor-pointer{% else %}cursor-default{% endif %} select-none"
-                  @click.stop="active = {{ ing_idx }}"
+                  @click.stop="active = {{ ing_idx }}; scrollToCard({{ ing_idx }})"
                 >
                   <div
                     class="bg-white rounded-lg border p-2 flex items-center gap-2 transition-colors duration-150 h-[64px] relative"
@@ -680,6 +680,22 @@
         }
         this.atStart = t.scrollLeft <= 0;
         this.atEnd   = t.scrollLeft >= t.scrollWidth - t.clientWidth - 1;
+      },
+      scrollToCard(index) {
+        const t = this.$refs.track;
+        const cards = t.querySelectorAll('.flex-none');
+        const card = cards[index];
+        if (!card) return;
+        const cardLeft  = card.offsetLeft;
+        const cardRight = cardLeft + card.offsetWidth;
+        const viewLeft  = t.scrollLeft;
+        const viewRight = viewLeft + t.clientWidth;
+        if (cardLeft < viewLeft) {
+          t.scrollTo({ left: t.scrollLeft - this.cardW, behavior: 'smooth' });
+        } else if (cardRight > viewRight) {
+          t.scrollTo({ left: t.scrollLeft + this.cardW, behavior: 'smooth' });
+        }
+        this.$nextTick(() => this.updateNav());
       },
       autoOpen() {
         if (this.descIdx.length > 0) {
