@@ -1,0 +1,221 @@
+{%- liquid
+  assign s        = section.settings
+  assign the_blog = blogs[s.blog_handle]
+  assign latest   = the_blog.articles | first
+  assign flex_dir = 'md:flex-row'
+  if s.image_position == 'right'
+    assign flex_dir = 'md:flex-row-reverse'
+  endif
+-%}
+
+{%- if latest != blank -%}
+
+<section class="{{ s.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
+
+  <div class="flex flex-col {{ flex_dir }} items-center gap-6 md:gap-10">
+
+    {%- comment %} 画像エリア {%- endcomment -%}
+    <div class="md:w-1/2 flex-shrink-0">
+      {%- if latest.image != blank -%}
+        <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
+          <img
+            src="{{ latest.image | image_url: width: 800, format: 'webp' }}"
+            alt="{{ latest.image.alt | escape | default: latest.title | escape }}"
+            class="w-full h-full object-cover"
+            loading="lazy"
+            width="800"
+            height="534"
+          >
+        </div>
+      {%- elsif s.fallback_image != blank -%}
+        <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
+          <img
+            src="{{ s.fallback_image | image_url: width: 800, format: 'webp' }}"
+            alt="{{ s.fallback_image.alt | escape }}"
+            class="w-full h-full object-cover"
+            loading="lazy"
+            width="800"
+            height="534"
+          >
+        </div>
+      {%- else -%}
+        <div class="w-full aspect-[640/427] bg-stone-100 flex items-center justify-center">
+          {%- render 'icon', icon: 'notebook-pen', class: 'w-16 h-16 text-stone-300' -%}
+        </div>
+      {%- endif -%}
+    </div>
+
+    {%- comment %} テキストエリア {%- endcomment -%}
+    <div class="md:w-1/2 flex flex-col gap-10 px-4 md:px-10 max-w-[640px]">
+
+      <div class="flex flex-col items-center md:items-start gap-5">
+        {%- if s.badge_label != blank -%}
+          {%- render 'badge',
+            label: s.badge_label,
+            variant: s.badge_variant,
+            size: 'md',
+            icon_left: s.badge_icon_left,
+            icon_right: s.badge_icon_right
+          -%}
+        {%- endif -%}
+
+        <h2 class="text-2xl md:text-4xl font-semibold leading-tight text-stone-900 palt tracking-wider">
+          {{ latest.title }}
+        </h2>
+
+        {%- liquid
+          if latest.excerpt != blank
+            assign excerpt_text = latest.excerpt | strip_html
+          else
+            assign excerpt_text = latest.content | strip_html | truncate: 200
+          endif
+        -%}
+        <p class="text-base leading-relaxed text-stone-900">{{ excerpt_text }}</p>
+      </div>
+
+      <div class="flex w-full md:justify-start">
+        {%- render 'button',
+          label: s.button_label,
+          url: latest.url,
+          variant: 'outline',
+          color: 'dark',
+          icon_left: s.button_icon_left,
+          icon_right: s.button_icon_right,
+          class: 'self-start w-full md:w-auto'
+        -%}
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+{%- endif -%}
+
+{%- schema %}
+{
+  "name": "最新記事",
+  "settings": [
+    {
+      "type": "text",
+      "id": "blog_handle",
+      "label": "ブログのハンドル",
+      "default": "journal"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "背景色",
+      "options": [
+        { "value": "bg-stone-50",  "label": "ライト（デフォルト）" },
+        { "value": "bg-stone-100", "label": "ライトグレー" },
+        { "value": "bg-stone-200", "label": "グレー" },
+        { "value": "bg-stone-950", "label": "ダーク" }
+      ],
+      "default": "bg-stone-50"
+    },
+    {
+      "type": "select",
+      "id": "image_position",
+      "label": "画像位置",
+      "options": [
+        { "value": "left",  "label": "左" },
+        { "value": "right", "label": "右" }
+      ],
+      "default": "right"
+    },
+    {
+      "type": "image_picker",
+      "id": "fallback_image",
+      "label": "フォールバック画像（記事に画像がない場合に使用）"
+    },
+    {
+      "type": "header",
+      "content": "バッジ"
+    },
+    {
+      "type": "text",
+      "id": "badge_label",
+      "label": "バッジテキスト",
+      "default": "Journal"
+    },
+    {
+      "type": "select",
+      "id": "badge_variant",
+      "label": "バッジカラー",
+      "options": [
+        { "value": "default",   "label": "ダーク（黒）" },
+        { "value": "secondary", "label": "セカンダリ（灰色枠線）" },
+        { "value": "tertiary",  "label": "ターシャリ（灰色背景 枠線なし）" },
+        { "value": "ghost",     "label": "ゴースト（白枠線）" },
+        { "value": "accent",    "label": "アクセント（濃グリーン）" },
+        { "value": "premium",   "label": "プレミアム（濃ローズ）" },
+        { "value": "teal",      "label": "ティール（薄グリーン）" }
+      ],
+      "default": "accent"
+    },
+    {
+      "type": "select",
+      "id": "badge_icon_left",
+      "label": "バッジ 左アイコン",
+      "options": [
+        { "value": "",             "label": "なし" },
+        { "value": "notebook-pen", "label": "ノート" },
+        { "value": "arrow-left",   "label": "矢印（左）" },
+        { "value": "arrow-right",  "label": "矢印（右）" },
+        { "value": "star",         "label": "スター" }
+      ],
+      "default": "notebook-pen"
+    },
+    {
+      "type": "select",
+      "id": "badge_icon_right",
+      "label": "バッジ 右アイコン",
+      "options": [
+        { "value": "",            "label": "なし" },
+        { "value": "arrow-left",  "label": "矢印（左）" },
+        { "value": "arrow-right", "label": "矢印（右）" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "header",
+      "content": "ボタン"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "ボタンテキスト",
+      "default": "記事を詳しく見る"
+    },
+    {
+      "type": "select",
+      "id": "button_icon_left",
+      "label": "ボタン 左アイコン",
+      "options": [
+        { "value": "",            "label": "なし" },
+        { "value": "arrow-left",  "label": "矢印（左）" },
+        { "value": "arrow-right", "label": "矢印（右）" }
+      ],
+      "default": ""
+    },
+    {
+      "type": "select",
+      "id": "button_icon_right",
+      "label": "ボタン 右アイコン",
+      "options": [
+        { "value": "",            "label": "なし" },
+        { "value": "arrow-left",  "label": "矢印（左）" },
+        { "value": "arrow-right", "label": "矢印（右）" }
+      ],
+      "default": "arrow-right"
+    }
+  ],
+  "presets": [
+    {
+      "name": "最新記事"
+    }
+  ]
+}
+{%- endschema -%}
