@@ -149,8 +149,8 @@
             {%- assign badge_tag = article.metafields.custom.category_tags.value | first | default: '' -%}
 
             <div
-              x-show="isVisible({{ forloop.index0 }})"
-              :style="`order: ${getOrder({{ forloop.index0 }})}`"
+              x-show="_filteredIds.includes({{ forloop.index0 }})"
+              :style="{ order: _order[{{ forloop.index0 }}] ?? 9999 }"
             >
               {%- render 'card-ingredient', article: article, inci_name: inci_name, badge_tag: badge_tag -%}
             </div>

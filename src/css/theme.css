@@ -266,6 +266,15 @@ body {
   }
 }
 
+/* ===== 記事本文（RTE） ===== */
+
+.rte h2 {
+  margin-top: theme('spacing.20');
+  margin-bottom: theme('spacing.8');
+  font-size: theme('fontSize.2xl');
+  font-weight: theme('fontWeight.semibold');
+}
+
 /* ===== フォーム ===== */
 
 .form-select:focus:not(:focus-visible) {
