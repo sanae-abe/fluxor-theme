@@ -392,7 +392,7 @@
         <div
           class="min-w-0 relative"
           x-data="ingredientCarousel([{{ _ingredient_desc_indices }}])"
-          x-init="$nextTick(() => { updateNav(); autoOpen(); })"
+          x-init="$nextTick(() => { updateNav(); })"
           @click.outside="active = null"
         >
 
@@ -453,7 +453,7 @@
 
                     {%- if key_ingredient.description != blank -%}
                       <span class="absolute top-1 right-1 text-stone-300">
-                        {%- render 'icon', icon: 'info', class: 'w-3 h-3' -%}
+                        {%- render 'icon', icon: 'info', class: 'w-4 h-4' -%}
                       </span>
                     {%- endif -%}
                   </div>
@@ -696,11 +696,6 @@
           t.scrollTo({ left: t.scrollLeft + this.cardW, behavior: 'smooth' });
         }
         this.$nextTick(() => this.updateNav());
-      },
-      autoOpen() {
-        if (this.descIdx.length > 0) {
-          this.active = this.descIdx[0];
-        }
       },
       tooltipLeft() {
         if (this.active === null || !this.$refs.track) return 0;
