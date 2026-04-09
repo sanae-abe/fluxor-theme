@@ -1,10 +1,14 @@
 {%- comment %} 引数: filters, sort_by {%- endcomment -%}
 <div class="space-y-6">
   {%- for filter in filters -%}
-    <div class="bg-white" x-data="{ open: true }">
+    {%- assign _fso = forloop.first | json -%}
+    {%- assign _fsid = filter.label | handleize -%}
+    <div class="bg-white" x-data="{ open: {{ _fso }}, _aid: '{{ _fsid }}' }"
+      @filter-accordion-open.window="if ($event.detail.id !== _aid) open = false"
+    >
       <button
         type="button"
-        @click="open = !open"
+        @click="open = !open; if (open) $dispatch('filter-accordion-open', { id: _aid })"
         class="flex items-center justify-between w-full text-sm font-medium p-4"
       >
         {{ filter.label }}

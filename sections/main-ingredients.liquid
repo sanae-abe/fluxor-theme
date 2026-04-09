@@ -111,7 +111,7 @@
             -%}
           </template>
         {%- endcapture -%}
-        {%- render 'filter-accordion', title: '商品名', content: products_items, show_expr: 'uniqueProducts.length > 0' -%}
+        {%- render 'filter-accordion', title: '商品名', content: products_items, show_expr: 'uniqueProducts.length > 0', open_default: true -%}
 
         {%- comment %} カテゴリフィルター {%- endcomment -%}
         {%- capture categories_items -%}
@@ -171,7 +171,7 @@
 
     {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
     {%- capture drawer_content -%}
-      {%- render 'filter-accordion', title: '商品名', content: products_items, show_expr: 'uniqueProducts.length > 0' -%}
+      {%- render 'filter-accordion', title: '商品名', content: products_items, show_expr: 'uniqueProducts.length > 0', open_default: true -%}
       {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
       {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
     {%- endcapture -%}

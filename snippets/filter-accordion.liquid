@@ -11,9 +11,10 @@
 {%- endcomment -%}
 
 {%- assign _aid = title | handleize -%}
+{%- assign _open = open_default | default: false -%}
 
 <div
-  x-data="{ open: true, _aid: '{{ _aid }}' }"
+  x-data="{ open: {{ _open | json }}, _aid: '{{ _aid }}' }"
   @filter-accordion-open.window="if ($event.detail.id !== _aid) open = false"
   {%- if show_expr != blank %} x-show="{{ show_expr }}"{% endif %}
   class="bg-white"
