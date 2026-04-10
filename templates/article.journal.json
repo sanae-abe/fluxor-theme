@@ -31,23 +31,9 @@
         "related_articles_default"
       ],
       "settings": {}
-    },
-    "featured_products_kzcCP6": {
-      "type": "featured-products",
-      "name": "おすすめ商品",
-      "settings": {
-        "heading": "おすすめの商品",
-        "subheading": "",
-        "collection": "featured-collection",
-        "show_view_all": false,
-        "products_to_show": 4,
-        "link_url": "",
-        "link_label": "すべて見る"
-      }
     }
   },
   "order": [
-    "main",
-    "featured_products_kzcCP6"
+    "main"
   ]
 }
