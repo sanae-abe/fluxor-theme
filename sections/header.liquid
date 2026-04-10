@@ -5,7 +5,7 @@
 <header
   class="w-full fixed left-0 right-0 z-30 pl-1 pr-1 md:pl-10 md:pr-10 transition-[background-color,border-color,color,backdrop-filter] duration-300 border-b"
   :class="scrolled ? 'bg-stone-100/95 backdrop-blur-sm border-stone-900/10 text-stone-900' : '{% if header_transparent %}bg-transparent border-transparent text-white{% else %}bg-stone-100 border-stone-900/10 text-stone-900{% endif %}'"
-  :style="{ top: (scrolled ? 0 : $store.ui.announcementHeight) + 'px' }"
+  :style="{ top: headerTop + 'px' }"
   x-data="siteHeader"
 >
   <div class="max-w-screen-xl mx-auto grid grid-cols-3 items-center h-14 md:h-20">
