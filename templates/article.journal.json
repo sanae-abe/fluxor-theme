@@ -18,17 +18,34 @@
             "heading": "参考文献"
           }
         },
+        "product_grid_UNwx7U": {
+          "type": "product_grid",
+          "settings": {
+            "heading": "おすすめ商品",
+            "collection": ""
+          }
+        },
         "related_articles_default": {
           "type": "related_articles",
           "settings": {
             "heading": "関連記事",
             "count": 4
           }
+        },
+        "related_ingredients_ncFkqG": {
+          "type": "related_ingredients",
+          "settings": {
+            "heading": "関連成分",
+            "blog": "ingredients",
+            "count": 4
+          }
         }
       },
       "block_order": [
         "references_default",
-        "related_articles_default"
+        "product_grid_UNwx7U",
+        "related_articles_default",
+        "related_ingredients_ncFkqG"
       ],
       "settings": {}
     }
