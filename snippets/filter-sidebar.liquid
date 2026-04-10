@@ -1,7 +1,19 @@
 {%- comment %} 引数: filters, sort_by {%- endcomment -%}
 <div class="space-y-6">
   {%- for filter in filters -%}
-    {%- assign _fso = forloop.first | json -%}
+    {%- assign _has_active = false -%}
+    {%- if filter.active_values.size > 0 -%}
+      {%- assign _has_active = true -%}
+    {%- elsif filter.type == 'price_range' -%}
+      {%- if filter.min_value.value != blank or filter.max_value.value != blank -%}
+        {%- assign _has_active = true -%}
+      {%- endif -%}
+    {%- endif -%}
+    {%- if forloop.first or _has_active -%}
+      {%- assign _fso = true -%}
+    {%- else -%}
+      {%- assign _fso = false -%}
+    {%- endif -%}
     {%- assign _fsid = filter.label | handleize -%}
     <div class="bg-white" x-data="{ open: {{ _fso }} }">
       <button
