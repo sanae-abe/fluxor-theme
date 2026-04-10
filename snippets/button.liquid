@@ -86,42 +86,42 @@
   case btn_color
   when 'light'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-50 border-stone-50'
+      assign color_cls = 'bg-transparent text-stone-50 border border-stone-50'
       assign hover_bg = '#fafaf9'
       assign hover_text = '#1c1917'
     else
-      assign color_cls = 'bg-stone-50 text-stone-900 border-stone-50'
+      assign color_cls = 'bg-stone-50 text-stone-900 border-none'
       assign hover_bg = '#e7e5e4'
       assign hover_text = '#1c1917'
     endif
   when 'teal'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-teal-700 border-teal-700'
+      assign color_cls = 'bg-transparent text-teal-700 border border-teal-700'
       assign hover_bg = '#134e4a'
       assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-teal-700 text-stone-50 border-teal-700'
+      assign color_cls = 'bg-teal-700 text-stone-50 border border-teal-700'
       assign hover_bg = '#115e59'
       assign hover_text = '#fafaf9'
     endif
   when 'muted'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-400 border-stone-400'
+      assign color_cls = 'bg-transparent text-stone-400 border border-stone-400'
       assign hover_bg = '#a8a29e'
       assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-stone-400 text-stone-50 border-stone-400'
+      assign color_cls = 'bg-stone-400 text-stone-50 border border-stone-400'
       assign hover_bg = '#78716c'
       assign hover_text = '#fafaf9'
     endif
   else
     # dark（デフォルト）
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-900 border-stone-900'
+      assign color_cls = 'bg-transparent text-stone-900 border border-stone-900'
       assign hover_bg = '#1c1917'
       assign hover_text = '#fafaf9'
     else
-      assign color_cls = 'bg-stone-900 text-stone-50 border-stone-900'
+      assign color_cls = 'bg-stone-900 text-stone-50 border border-stone-900'
       assign hover_bg = '#ffffff'
       assign hover_text = '#0c0a09'
     endif
@@ -137,7 +137,7 @@
     assign disabled_cls = 'opacity-40 cursor-not-allowed pointer-events-none'
   endif
 
-  assign base_cls = 'btn-slide inline-flex items-center justify-center border font-sans tracking-wider select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt transition-all duration-300'
+  assign base_cls = 'btn-slide inline-flex items-center justify-center font-sans tracking-wider select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt transition-all duration-300'
   assign icon_svg_cls = icon_cls | append: ' flex-shrink-0 stroke-2'
 -%}
 

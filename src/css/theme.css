@@ -1,3 +1,28 @@
+/* ===== アクセシビリティ：スキップリンク ===== */
+
+body:not(.no-outline) .skip-link:focus {
+    clip: auto;
+    width: auto;
+    height: auto;
+    margin: 0;
+    color: theme('colors.stone.900');
+    background-color: theme('colors.white');
+    padding: 10px;
+    opacity: 1;
+    z-index: 10000;
+    transition: none;
+}
+
+.skip-link {
+    position: absolute !important;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+    height: 1px;
+    width: 1px;
+    margin: -1px;
+    padding: 0;
+    border: 0;
+}
 
 /* ===== Hero：見出しフォント（DM Serif Display + Zen Old Mincho） ===== */
 
