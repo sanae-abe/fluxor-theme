@@ -12,6 +12,18 @@
     "hero": {
       "type": "hero",
       "blocks": {
+        "slide_TnChNN": {
+          "type": "slide",
+          "settings": {
+            "image": "shopify://shop_images/Gemini_Generated_Image_f6e4agf6e4agf6e4_compressed.webp",
+            "eyebrow": "FLUXOR",
+            "heading": "テストスト",
+            "subheading": "テストストテストストテストスト",
+            "cta_label": "商品を見る",
+            "cta_url": "shopify://products/oil-free-moisturizer",
+            "cta_target": false
+          }
+        },
         "slide_RE7HbH": {
           "type": "slide",
           "settings": {
@@ -26,6 +38,7 @@
         }
       },
       "block_order": [
+        "slide_TnChNN",
         "slide_RE7HbH"
       ],
       "settings": {
