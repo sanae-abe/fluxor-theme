@@ -3,7 +3,6 @@
 
   対応メタフィールド (名前空間: custom):
     category_tags   {list.single_line_text_field}   カテゴリタグ一覧
-    skin_concerns   {list.single_line_text_field}   肌悩みタグ一覧
 {%- endcomment -%}
 
 {%- paginate blog.articles by 250 -%}
@@ -16,7 +15,7 @@
       "idx": {{ forloop.index0 }},
       "title": {{ article.title | json }},
       "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
-      "concerns": {{ article.metafields.custom.skin_concerns.value | json | default: '[]' }},
+      "tags": {{ article.tags | json | default: '[]' }},
       "date": {{ article.published_at | date: "%s" | plus: 0 }}
     }{%- unless forloop.last -%},{%- endunless -%}
     {%- endfor -%}
@@ -52,7 +51,7 @@
           <span
             :class="hasActiveFilters ? '' : 'hidden'"
             class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none hidden"
-            x-text="selectedCategories.length + selectedConcerns.length"
+            x-text="selectedCategories.length + selectedTags.length"
           ></span>
         </button>
         {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
@@ -94,27 +93,27 @@
 
         {%- comment %} カテゴリフィルター {%- endcomment -%}
         {%- capture categories_items -%}
-          <template x-for="tag in uniqueCategories" :key="tag">
+          <template x-for="category in uniqueCategories" :key="category">
             {%- render 'alpine-checkbox',
-              checked_expr: "selectedCategories.includes(tag)",
-              change_expr: "toggle('categories', tag)",
-              label_expr: "tag"
+              checked_expr: "selectedCategories.includes(category)",
+              change_expr: "toggle('categories', category)",
+              label_expr: "category"
             -%}
           </template>
         {%- endcapture -%}
         {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
 
-        {%- comment %} 肌悩みフィルター {%- endcomment -%}
-        {%- capture concerns_items -%}
-          <template x-for="tag in uniqueConcerns" :key="tag">
+        {%- comment %} タグフィルター {%- endcomment -%}
+        {%- capture tag_items -%}
+          <template x-for="tag in uniqueTags" :key="tag">
             {%- render 'alpine-checkbox',
-              checked_expr: "selectedConcerns.includes(tag)",
-              change_expr: "toggle('concerns', tag)",
+              checked_expr: "selectedTags.includes(tag)",
+              change_expr: "toggle('tags', tag)",
               label_expr: "tag"
             -%}
           </template>
         {%- endcapture -%}
-        {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
+        {%- render 'filter-accordion', title: 'タグ', content: tag_items, show_expr: 'uniqueTags.length > 0' -%}
 
       </aside>
 
@@ -148,7 +147,7 @@
     {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
     {%- capture drawer_content -%}
       {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
-      {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
+      {%- render 'filter-accordion', title: 'タグ', content: tag_items, show_expr: 'uniqueTags.length > 0' -%}
     {%- endcapture -%}
     {%- render 'mobile-filter-drawer', open_expr: 'mobileOpen', close_expr: 'mobileOpen = false', content: drawer_content -%}
 
