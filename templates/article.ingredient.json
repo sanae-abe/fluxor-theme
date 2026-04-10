@@ -66,6 +66,13 @@
             "heading": "この成分を配合した商品",
             "subheading": ""
           }
+        },
+        "related_articles_default": {
+          "type": "related_articles",
+          "settings": {
+            "heading": "関連成分",
+            "count": 4
+          }
         }
       },
       "block_order": [
@@ -77,7 +84,8 @@
         "pregnancy_note_w6jjqx",
         "disclaimer",
         "references_nQdxNc",
-        "product_grid_j68c7m"
+        "product_grid_j68c7m",
+        "related_articles_default"
       ],
       "settings": {}
     }
