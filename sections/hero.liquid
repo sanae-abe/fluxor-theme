@@ -1,7 +1,7 @@
 {%- assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0 -%}
 
 <section
-  class="relative min-h-screen overflow-hidden"
+  class="relative hero-cinematic overflow-hidden"
   x-data="{
     current: 0,
     total: {{ section.blocks.size }},
@@ -52,26 +52,29 @@
   {%- comment %} コンテンツレイヤー {%- endcomment -%}
   {%- for block in section.blocks -%}
     <div
-      class="absolute inset-0 flex items-center transition-opacity duration-700 px-4 md:px-10"
+      class="absolute inset-0 flex items-end transition-opacity duration-700 px-4 md:px-10"
       :class="current === {{ forloop.index0 }} ? 'opacity-100' : 'opacity-0 pointer-events-none'"
     >
-      <div class="max-w-screen-xl mx-auto py-10 md:py-[60px] w-full">
-        <div class="max-w-[640px] flex flex-col gap-8 items-center md:items-start">
+      <div class="max-w-screen-xl mx-auto pb-10 md:pb-20 w-full">
+        <div
+            class="max-w-[640px] flex flex-col gap-6 items-center md:items-start"
+            :class="current === {{ forloop.index0 }} ? 'hero-slide-active' : ''"
+          >
 
           {%- comment %} テキストグループ {%- endcomment -%}
           <div class="flex flex-col gap-5 items-center md:items-start">
             {%- if block.settings.eyebrow != blank -%}
-              <p class="text-stone-50 text-sm md:text-base tracking-wider">{{ block.settings.eyebrow }}</p>
+              <p class="hero-text-item hero-text-eyebrow text-stone-50 text-sm md:text-base tracking-wider">{{ block.settings.eyebrow }}</p>
             {%- endif -%}
 
             {%- if block.settings.heading != blank -%}
-              <h2 class="text-stone-50 text-4xl md:text-7xl font-semibold leading-tight palt tracking-wider text-center md:text-left">
+              <h2 class="hero-text-item hero-text-heading hero-heading text-stone-50 text-4xl md:text-6xl leading-tight tracking-wide text-center md:text-left uppercase">
                 {{ block.settings.heading }}
               </h2>
             {%- endif -%}
 
             {%- if block.settings.subheading != blank -%}
-              <p class="text-stone-200 text-lg md:text-2xl leading-tight">
+              <p class="hero-text-item hero-text-subheading text-stone-50 text-base md:text-lg leading-tight">
                 {{ block.settings.subheading }}
               </p>
             {%- endif -%}
@@ -83,16 +86,18 @@
             {%- if block.settings.cta_target -%}
               {%- assign cta_attr = 'target="_blank" rel="noopener noreferrer"' -%}
             {%- endif -%}
-            {%- render 'button',
-              label: block.settings.cta_label,
-              url: block.settings.cta_url,
-              variant: 'outline',
-              color: 'light',
-              size: 'md',
-              size_mobile: 'md',
-              icon_right: 'arrow-right',
-              attr: cta_attr
-            -%}
+            <div class="hero-text-item hero-text-cta">
+              {%- render 'button',
+                label: block.settings.cta_label,
+                url: block.settings.cta_url,
+                variant: 'outline',
+                color: 'light',
+                size: 'md',
+                size_mobile: 'md',
+                icon_right: 'arrow-right',
+                attr: cta_attr
+              -%}
+            </div>
           {%- endif -%}
 
         </div>

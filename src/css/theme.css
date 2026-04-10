@@ -1,4 +1,57 @@
 
+/* ===== Hero：見出しフォント（DM Serif Display + Zen Old Mincho） ===== */
+
+.hero-heading {
+  font-family: 'DM Serif Display', 'Zen Old Mincho', serif;
+}
+
+/* ===== Hero：シネマスコープ比率（21:9） ===== */
+
+.hero-cinematic {
+  min-height: calc(100vw * 3 / 4); /* モバイル: 4:3 */
+}
+
+@media (min-width: 768px) {
+  .hero-cinematic {
+    min-height: calc(100vw * 9 / 21); /* PC: 21:9 シネマスコープ */
+  }
+}
+
+/* ===== Hero：テキストフェードアップアニメーション ===== */
+
+@keyframes hero-text-up {
+  from {
+    opacity: 0;
+    transform: translateY(1.25rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hero-text-item {
+  opacity: 0;
+}
+
+.hero-slide-active .hero-text-item {
+  animation: hero-text-up 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+.hero-slide-active .hero-text-eyebrow   { animation-delay: 0.3s; }
+.hero-slide-active .hero-text-heading   { animation-delay: 0.5s; }
+.hero-slide-active .hero-text-subheading { animation-delay: 0.7s; }
+.hero-slide-active .hero-text-cta       { animation-delay: 0.9s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-text-item {
+    opacity: 1;
+  }
+  .hero-slide-active .hero-text-item {
+    animation: none;
+  }
+}
+
 /* ===== Hero：ページロード時のズーム＆フェードイン ===== */
 
 @keyframes hero-entrance {
@@ -162,6 +215,7 @@ body {
   white-space: nowrap;
   align-items: center;
   animation: marquee 30s linear infinite;
+  font-family: 'Zen Old Mincho', serif;
 }
 
 @media (any-hover: hover) {

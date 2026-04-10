@@ -19,7 +19,7 @@
     x-cloak
     {%- if settings.sale_enabled %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
   >
-    <div class="marquee-track text-xs font-semibold tracking-wide" style="font-family: 'Zen Kaku Gothic New', serif;">
+    <div class="marquee-track text-xs font-semibold tracking-wide">
 
       {%- comment %} 1回目（実コンテンツ・Shopify属性付き） {%- endcomment -%}
       <span class="marquee-content">
