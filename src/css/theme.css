@@ -24,6 +24,25 @@ body:not(.no-outline) .skip-link:focus {
     border: 0;
 }
 
+/* ===== アナウンスメントバー marquee ドット ===== */
+
+.marquee-track .dot {
+  position: relative;
+}
+
+.marquee-track .dot::after {
+  display: block;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  content: '';
+  width: 4px;
+  height: 4px;
+  background-color: theme('colors.white');
+  border-radius: 9999px;
+}
+
 /* ===== Hero：見出しフォント（DM Serif Display + Zen Old Mincho） ===== */
 
 .hero-heading {

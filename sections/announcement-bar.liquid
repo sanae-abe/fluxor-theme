@@ -28,12 +28,12 @@
             {{ settings.sale_banner_text }}
             {%- render 'sale-countdown' -%}
           </span>
-          <span class="px-2 opacity-30" aria-hidden="true">·</span>
+          <span class="dot px-2" aria-hidden="true">·</span>
         {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.text != blank -%}
             <span class="px-10" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
-            <span class="px-2 opacity-30" aria-hidden="true">·</span>
+            <span class="dot px-2" aria-hidden="true">·</span>
           {%- endif -%}
         {%- endfor -%}
       </span>
@@ -45,12 +45,12 @@
             {{ settings.sale_banner_text }}
             {%- render 'sale-countdown' -%}
           </span>
-          <span class="px-2 opacity-30">·</span>
+          <span class="dot px-2">·</span>
         {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.text != blank -%}
             <span class="px-10">{{ block.settings.text }}</span>
-            <span class="px-2 opacity-30">·</span>
+            <span class="dot px-2">·</span>
           {%- endif -%}
         {%- endfor -%}
       </span>
