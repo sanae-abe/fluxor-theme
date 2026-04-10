@@ -13,9 +13,9 @@
   {%- assign particle_color = '#79716b' -%}
 {%- endif -%}
 
-{%- assign heading_class = 'font-semibold leading-tight palt tracking-wider ' | append: text_color -%}
+{%- assign heading_class = 'about-heading font-semibold leading-tight palt tracking-wider ' | append: text_color -%}
 
-<section class="relative {{ section.settings.color_scheme }} px-4 md:px-10 py-10 md:py-20 overflow-hidden">
+<section class="relative {{ section.settings.color_scheme }} px-4 md:px-10 py-10 md:py-20 overflow-hidden border-b border-stone-200">
 
   {%- comment %} 背景画像 {%- endcomment -%}
   {%- if section.settings.background_image != blank -%}

@@ -482,3 +482,10 @@ body {
   outline-offset: -1px;
   border-color: theme('colors.stone.500');
 }
+
+/* ===== 見出しフォント ===== */
+
+.about-heading,
+.cta-heading {
+  font-family: 'DM Serif Display', 'Zen Old Mincho', serif;
+}
