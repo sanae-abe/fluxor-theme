@@ -64,7 +64,8 @@
           "type": "product_grid",
           "settings": {
             "heading": "関連商品",
-            "subheading": ""
+            "subheading": "",
+            "collection": "featured-collection"
           }
         },
         "related_articles_default": {
