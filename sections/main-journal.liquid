@@ -101,7 +101,7 @@
             -%}
           </template>
         {%- endcapture -%}
-        {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
+        {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0', open_default: true -%}
 
         {%- comment %} タグフィルター {%- endcomment -%}
         {%- capture tags_items -%}
