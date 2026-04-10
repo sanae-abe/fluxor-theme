@@ -21,13 +21,15 @@
           height="600"
         >
       {%- else -%}
-        <div class="w-full h-full bg-stone-100"></div>
+      <div class="w-full h-full bg-stone-200 flex items-center justify-center">
+        {%- render 'icon', icon: 'notebook-pen', class: 'w-12 h-12 text-stone-400', stroke_width: 1 -%}
+      </div>
       {%- endif -%}
 
       {%- if category_tags != blank -%}
         <div class="absolute top-4 left-4 flex flex-col items-start gap-2">
           {%- for tag in category_tags limit: 2 -%}
-            {%- render 'badge', label: tag, variant: 'tertiary', size: 'sm' -%}
+            {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
           {%- endfor -%}
         </div>
       {%- endif -%}
