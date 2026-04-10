@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ 'gift_cards.issued.title' | t: value: gift_card.initial_value | money_without_trailing_zeros | strip_html }}</title>
+
+    {{ content_for_header }}
+
+    {{ 'app.css' | asset_url | stylesheet_tag }}
+  </head>
+
+  <body class="bg-background text-text">
+    <main class="min-h-screen flex items-center justify-center py-16 px-4">
+      <div class="max-w-md w-full text-center">
+        <h1 class="text-2xl font-medium mb-2">
+          {{ 'gift_cards.issued.subtext' | t }}
+        </h1>
+
+        <p class="text-text-muted mb-8">
+          {{ 'gift_cards.issued.sent_to' | t: email: gift_card.recipient.email }}
+        </p>
+
+        <div class="bg-surface rounded-2xl p-8 mb-8">
+          <p class="text-sm text-text-muted mb-1">{{ 'gift_cards.issued.initial_value' | t }}</p>
+          <p class="text-4xl font-semibold mb-6">
+            {{ gift_card.initial_value | money }}
+          </p>
+
+          {%- if gift_card.enabled -%}
+            {%- assign gift_card_balance = gift_card.balance | money -%}
+            {%- if gift_card.balance != gift_card.initial_value -%}
+              <p class="text-sm text-text-muted mb-4">
+                {{ 'gift_cards.issued.remaining_html' | t: balance: gift_card_balance }}
+              </p>
+            {%- endif -%}
+          {%- endif -%}
+
+          <img
+            src="{{ gift_card.qr_identifier | image_url: width: 200 }}"
+            alt="{{ 'gift_cards.issued.qr_image_alt' | t }}"
+            width="200"
+            height="200"
+            class="mx-auto mb-6"
+          >
+
+          <p class="text-xs text-text-subtle tracking-widest font-mono">
+            {{ gift_card.code | format_code }}
+          </p>
+        </div>
+
+        {%- if gift_card.pass_url -%}
+          <a href="{{ gift_card.pass_url }}" class="block mb-4">
+            <img
+              src="{{ 'gift-card/add-to-apple-wallet.svg' | shopify_asset_url }}"
+              width="120"
+              height="40"
+              alt="{{ 'gift_cards.issued.add_to_apple_wallet' | t }}"
+              class="mx-auto"
+            >
+          </a>
+        {%- endif -%}
+
+        <div class="flex flex-col gap-3">
+          <a
+            href="{{ shop.url }}"
+            class="inline-flex items-center justify-center px-6 py-3 bg-accent text-white rounded-full text-sm font-medium"
+          >
+            {{ 'gift_cards.issued.shop_link' | t }}
+          </a>
+
+          <button
+            onclick="window.print()"
+            class="inline-flex items-center justify-center px-6 py-3 border border-muted rounded-full text-sm font-medium"
+          >
+            {{ 'gift_cards.issued.print' | t }}
+          </button>
+        </div>
+      </div>
+    </main>
+  </body>
+</html>
