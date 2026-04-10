@@ -22,7 +22,7 @@
           "type": "product_grid",
           "settings": {
             "heading": "おすすめ商品",
-            "collection": ""
+            "collection": "featured-collection"
           }
         },
         "related_articles_default": {
