@@ -1,42 +1,43 @@
 {%- comment %}
-  Renders an article card.
-
-  Accepts:
-  - article: {Object} Article object
-
-  Usage:
-  {% render 'card-article', article: article %}
+  Journal 記事カード
+  Parameters:
+    article: {Object} Article object
 {%- endcomment -%}
 
+{%- assign category_tags = article.metafields.custom.category_tags.value -%}
+
 <article>
-  <a href="{{ article.url }}" class="card-article block space-y-4">
-    {%- if article.image -%}
-      <div class="aspect-[4/3] overflow-hidden bg-stone-200">
+  <a href="{{ article.url }}" class="card-article flex flex-col gap-4">
+
+    {%- comment %} 画像エリア（正方形 + カテゴリバッジオーバーレイ） {%- endcomment -%}
+    <div class="relative overflow-hidden bg-white aspect-square">
+      {%- if article.image -%}
         <img
-          src="{{ article.image | image_url: width: 800, format: 'webp' }}"
-          srcset="{{ article.image | image_url: width: 800, format: 'webp' }} 1x, {{ article.image | image_url: width: 1600, format: 'webp' }} 2x"
-          alt="{{ article.image.alt | escape | default: article.title }}"
+          src="{{ article.image | image_url: width: 600, format: 'webp' }}"
+          alt="{{ article.image.alt | escape | default: article.title | escape }}"
           class="card-article__img w-full h-full object-cover"
           loading="lazy"
-          width="800"
+          width="600"
           height="600"
         >
-      </div>
-    {%- else -%}
-      <div class="aspect-[4/3] bg-stone-200"></div>
-    {%- endif -%}
+      {%- else -%}
+        <div class="w-full h-full bg-stone-100"></div>
+      {%- endif -%}
 
-    <div class="space-y-2">
-      {%- if article.tags.size > 0 -%}
-        <p class="text-xs tracking-widest uppercase text-stone-400">{{ article.tags.first }}</p>
+      {%- if category_tags != blank -%}
+        <div class="absolute top-4 left-4 flex flex-col items-start gap-2">
+          {%- for tag in category_tags limit: 2 -%}
+            {%- render 'badge', label: tag, variant: 'tertiary', size: 'sm' -%}
+          {%- endfor -%}
+        </div>
       {%- endif -%}
-      <h3 class="card-article__title text-base font-medium leading-snug">{{ article.title }}</h3>
-      {%- if article.excerpt != blank -%}
-        <p class="text-sm text-stone-500 leading-relaxed line-clamp-2">{{ article.excerpt }}</p>
-      {%- endif -%}
-      <time class="text-xs text-stone-400" datetime="{{ article.published_at | date: '%Y-%m-%d' }}">
-        {{ article.published_at | date: '%Y.%m.%d' }}
-      </time>
     </div>
+
+    {%- comment %} タイトル + 矢印アイコン {%- endcomment -%}
+    <div class="flex items-start gap-4">
+      <h3 class="flex-1 text-base font-medium leading-5 text-stone-900">{{ article.title }}</h3>
+      {%- render 'icon', icon: 'arrow-right', class: 'card-article__icon w-6 h-6 text-stone-900 shrink-0 mt-0.5', stroke_width: 1.5 -%}
+    </div>
+
   </a>
 </article>

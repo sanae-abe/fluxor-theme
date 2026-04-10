@@ -1,13 +1,10 @@
 {%- comment %}
   Journal 一覧 (main-journal.liquid)
 
-  対応データ:
-    categories  article.tags の cat- プレフィックスタグ → 日本語ラベルに変換
-    concerns    article.metafields.custom.skin_concerns {list.single_line_text_field}
+  対応メタフィールド (名前空間: custom):
+    category_tags   {list.single_line_text_field}   カテゴリタグ一覧
+    skin_concerns   {list.single_line_text_field}   肌悩みタグ一覧
 {%- endcomment -%}
-
-{%- comment %} cat- タグ → 表示ラベル マッピング {%- endcomment -%}
-{%- assign cat_map = 'cat-vitamin:ビタミン類,cat-moisturizing:保湿・バリア成分,cat-peptide:ペプチド・アミノ酸類,cat-botanical:植物エキス・オイル,cat-advanced:先端・その他の成分' | split: ',' -%}
 
 {%- paginate blog.articles by 250 -%}
 
@@ -15,23 +12,10 @@
 <script id="journal-articles-data" type="application/json">
   [
     {%- for article in blog.articles -%}
-      {%- comment %} cat- タグを日本語ラベルに変換 {%- endcomment -%}
-      {%- assign article_cats_arr = '' -%}
-      {%- for tag in article.tags -%}
-        {%- if tag contains 'cat-' -%}
-          {%- for mapping in cat_map -%}
-            {%- assign parts = mapping | split: ':' -%}
-            {%- if parts[0] == tag -%}
-              {%- unless article_cats_arr == '' -%}{%- assign article_cats_arr = article_cats_arr | append: ',' -%}{%- endunless -%}
-              {%- assign article_cats_arr = article_cats_arr | append: '"' | append: parts[1] | append: '"' -%}
-            {%- endif -%}
-          {%- endfor -%}
-        {%- endif -%}
-      {%- endfor -%}
     {
       "idx": {{ forloop.index0 }},
       "title": {{ article.title | json }},
-      "categories": [{{ article_cats_arr }}],
+      "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
       "concerns": {{ article.metafields.custom.skin_concerns.value | json | default: '[]' }},
       "date": {{ article.published_at | date: "%s" | plus: 0 }}
     }{%- unless forloop.last -%},{%- endunless -%}

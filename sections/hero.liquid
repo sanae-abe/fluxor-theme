@@ -1,7 +1,7 @@
 {%- assign overlay_opacity = section.settings.overlay_opacity | divided_by: 100.0 -%}
 
 <section
-  class="relative min-h-[619px] overflow-hidden"
+  class="relative min-h-screen overflow-hidden"
   x-data="{
     current: 0,
     total: {{ section.blocks.size }},
@@ -34,14 +34,14 @@
         <img
           src="{{ block.settings.image | image_url: width: 2400, format: 'webp' }}"
           alt="{{ block.settings.heading | escape }}"
-          class="absolute inset-0 w-full h-full object-cover"
+          class="absolute inset-0 w-full h-full object-cover{% if forloop.first %} hero-image-entrance{% endif %}"
           loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"
           {% if forloop.first %}fetchpriority="high"{% endif %}
           width="2400"
           height="1600"
         >
       {%- else -%}
-        <div class="absolute inset-0 bg-stone-800"></div>
+        <div class="absolute inset-0 bg-stone-800{% if forloop.first %} hero-image-entrance{% endif %}"></div>
       {%- endif -%}
 
       {%- comment %} オーバーレイ {%- endcomment -%}
