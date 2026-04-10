@@ -1,5 +1,5 @@
 {%- comment %}
-  Journal 一覧 (main-journal.liquid)
+  Journal 記事 (main-article.liquid)
 
   対応メタフィールド (名前空間: custom):
     category_tags   {list.single_line_text_field}   カテゴリタグ一覧
@@ -32,9 +32,7 @@
           {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
         {%- if category_tags != blank -%}
-          {%- if category_tags != blank -%}
-            <span class="text-stone-300 select-none">|</span>
-          {%- endif -%}
+          <span class="text-stone-300 select-none">|</span>
           {%- for tag in category_tags limit: 4 -%}
             {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
           {%- endfor -%}

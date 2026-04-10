@@ -55,9 +55,7 @@
           {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
         {%- if skin_concerns != blank -%}
-          {%- if skin_concerns != blank -%}
-            <span class="text-stone-300 select-none">|</span>
-          {%- endif -%}
+          <span class="text-stone-300 select-none">|</span>
           {%- for tag in skin_concerns limit: 4 -%}
             {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
           {%- endfor -%}

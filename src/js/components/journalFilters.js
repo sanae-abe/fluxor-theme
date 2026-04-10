@@ -44,7 +44,7 @@ export const journalFilters = () => ({
     return [...new Set(this.articles.flatMap(a => a.categories || []))];
   },
 
-  get uniquetags() {
+  get uniqueTags() {
     return [...new Set(this.articles.flatMap(a => a.tags || []))];
   },
 
