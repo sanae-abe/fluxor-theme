@@ -11,9 +11,26 @@
   "sections": {
     "main": {
       "type": "main-article",
-      "settings": {
-        "related_heading": "関連記事"
-      }
+      "blocks": {
+        "references_default": {
+          "type": "references",
+          "settings": {
+            "heading": "参考文献"
+          }
+        },
+        "related_articles_default": {
+          "type": "related_articles",
+          "settings": {
+            "heading": "関連記事",
+            "count": 4
+          }
+        }
+      },
+      "block_order": [
+        "references_default",
+        "related_articles_default"
+      ],
+      "settings": {}
     },
     "featured_products_kzcCP6": {
       "type": "featured-products",

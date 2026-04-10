@@ -86,48 +86,125 @@
   </div>
 </div>
 
-{%- comment %} ── 関連記事（タグ一致、最大4件） ─────────────────── {%- endcomment -%}
-{%- capture related_grid -%}
-  {%- assign _count = 0 -%}
-  {%- for related in blog.articles -%}
-    {%- if _count >= 4 -%}{%- break -%}{%- endif -%}
-    {%- if related.id == article.id -%}{%- continue -%}{%- endif -%}
-    {%- assign _match = false -%}
-    {%- for tag in article.tags -%}
-      {%- if related.tags contains tag -%}
-        {%- assign _match = true -%}
-        {%- break -%}
-      {%- endif -%}
-    {%- endfor -%}
-    {%- if _match -%}
-      {%- render 'card-article', article: related -%}
-      {%- assign _count = _count | plus: 1 -%}
-    {%- endif -%}
-  {%- endfor -%}
-{%- endcapture -%}
+{%- comment %} ── ブロックレンダリング ─────────────────────────── {%- endcomment -%}
+{%- for block in section.blocks -%}
+  {%- if block.type == 'references' -%}
+    {%- assign reference_entries = article.metafields.custom.reference_entry.value -%}
+    <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-[768px] flex flex-col gap-5">
+        {%- if block.settings.heading != blank -%}
+          <p class="text-base font-medium text-stone-900">{{ block.settings.heading }}</p>
+        {%- endif -%}
+        {%- if reference_entries != blank -%}
+          <ol class="flex flex-col gap-2 list-none">
+            {%- for entry in reference_entries -%}
+              <li class="flex gap-3">
+                <span class="text-base text-stone-400 shrink-0 pt-0.5 min-w-[1.5rem] tabular-nums">{{ forloop.index }}.</span>
+                <div class="flex flex-col gap-1 min-w-0">
+                  {%- if entry.url != blank -%}
+                    <a href="{{ entry.url }}" target="_blank" rel="noopener noreferrer" class="text-base font-medium text-stone-900 underline decoration-stone-400 underline-offset-2">{{ entry.title }}</a>
+                  {%- else -%}
+                    <p class="text-base font-medium text-stone-900">{{ entry.title }}</p>
+                  {%- endif -%}
+                  {%- liquid
+                    assign meta_parts = ''
+                    if entry.authors != blank
+                      assign meta_parts = entry.authors
+                    endif
+                    if entry.journal != blank
+                      if meta_parts != blank
+                        assign meta_parts = meta_parts | append: ' / ' | append: entry.journal
+                      else
+                        assign meta_parts = entry.journal
+                      endif
+                    endif
+                    if entry.details != blank
+                      if meta_parts != blank
+                        assign meta_parts = meta_parts | append: ', ' | append: entry.details
+                      else
+                        assign meta_parts = entry.details
+                      endif
+                    endif
+                  -%}
+                  {%- if meta_parts != blank -%}
+                    <p class="text-sm text-stone-500">{{ meta_parts }}</p>
+                  {%- endif -%}
+                  {%- if entry.accessed_on != blank -%}
+                    <p class="text-sm text-stone-500">[アクセス日：{{ entry.accessed_on }}]</p>
+                  {%- endif -%}
+                </div>
+              </li>
+            {%- endfor -%}
+          </ol>
+        {%- endif -%}
+      </div>
+    </div>
 
-{%- if related_grid != blank -%}
-  <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-[60px]">
-    <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
-      <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ section.settings.related_heading }}</h2>
-    </div>
-    <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
-      {{ related_grid }}
-    </div>
-  </section>
-{%- endif -%}
+  {%- elsif block.type == 'related_articles' -%}
+    {%- liquid
+      assign related_limit = block.settings.count | default: 4
+      assign related_fetch_limit = related_limit | plus: 1
+      assign rendered_count = 0
+    -%}
+    <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-[60px]" {{ block.shopify_attributes }}>
+      <div class="w-full max-w-screen-xl flex flex-col gap-10">
+        {%- if block.settings.heading != blank -%}
+          <h2 class="text-4xl font-semibold tracking-wider text-stone-900 text-center">{{ block.settings.heading }}</h2>
+        {%- endif -%}
+        <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-10 md:gap-y-8">
+          {%- for related_article in blog.articles limit: related_fetch_limit -%}
+            {%- unless related_article.id == article.id -%}
+              {%- if rendered_count < related_limit -%}
+                {%- render 'card-article', article: related_article -%}
+                {%- assign rendered_count = rendered_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endfor -%}
+        </div>
+      </div>
+    </section>
+  {%- endif -%}
+{%- endfor -%}
 
 {%- schema %}
 {
   "name": "Journal 記事",
-  "settings": [
+  "blocks": [
     {
-      "type": "text",
-      "id": "related_heading",
-      "label": "関連記事 見出し",
-      "default": "関連記事"
+      "type": "references",
+      "name": "参考文献",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "参考文献"
+        }
+      ]
+    },
+    {
+      "type": "related_articles",
+      "name": "関連記事",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "関連記事"
+        },
+        {
+          "type": "range",
+          "id": "count",
+          "label": "表示件数",
+          "min": 2,
+          "max": 8,
+          "step": 1,
+          "default": 4
+        }
+      ]
     }
   ],
+  "settings": [],
   "presets": [
     {
       "name": "Journal 記事"
