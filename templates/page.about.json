@@ -1,9 +1,102 @@
 {
   "sections": {
-    "main": {
-      "type": "main-page",
-      "settings": {}
+    "hero": {
+      "type": "about",
+      "settings": {
+        "color_scheme": "bg-stone-50",
+        "enable_particles": true,
+        "heading": "信頼できるものだけを",
+        "tagline": "",
+        "paragraph": "<p>成分表を読んでも、どのブランドが信頼できるのか、なかなか答えが見つからない。<br>その問いから、Fluxorは生まれました。</p>",
+        "button_label": "",
+        "button_url": null
+      }
+    },
+    "methods": {
+      "type": "about-methods",
+      "settings": {
+        "heading": "私たちの調査方法",
+        "paragraph": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
+      },
+      "blocks": {
+        "brand-research": {
+          "type": "item",
+          "settings": {
+            "icon": "book-marked",
+            "title": "ブランドリサーチ",
+            "description": "世界観・哲学を調査。ブランドが何を大切にしているかを多角的に確認します"
+          }
+        },
+        "ingredient-check": {
+          "type": "item",
+          "settings": {
+            "icon": "flask-conical",
+            "title": "成分チェック",
+            "description": "成分表を読み込み、配合の目的や特徴を調査。気になる成分は信頼できる情報源で確認します。"
+          }
+        },
+        "usage-test": {
+          "type": "item",
+          "settings": {
+            "icon": "pipette",
+            "title": "実使用テスト",
+            "description": "実際に商品を使用。使用感・テクスチャー・肌への馴染み方を自分たちで体感します。"
+          }
+        },
+        "review-research": {
+          "type": "item",
+          "settings": {
+            "icon": "message-square",
+            "title": "評判リサーチ",
+            "description": "レビューやSNSを幅広く収集。実際のユーザーの声を丁寧に参考にします。"
+          }
+        }
+      },
+      "blocks_order": ["brand-research", "ingredient-check", "usage-test", "review-research"]
+    },
+    "transparency": {
+      "type": "about-transparency",
+      "settings": {
+        "heading": "透明性へのこだわり",
+        "paragraph": "調査したこと、確かめたこと、そして分からなかったことも、ありのままにお伝えします。"
+      },
+      "blocks": {
+        "honest": {
+          "type": "item",
+          "settings": {
+            "icon": "check",
+            "title": "正直な言葉で",
+            "description": "効果を誇張せず、実際の使用感や特徴を率直にお伝えします。"
+          }
+        },
+        "open": {
+          "type": "item",
+          "settings": {
+            "icon": "shield",
+            "title": "知りうる限りオープンに",
+            "description": "ブランド情報や成分について、把握できる範囲で透明性を持ってご紹介します"
+          }
+        },
+        "unknown": {
+          "type": "item",
+          "settings": {
+            "icon": "info",
+            "title": "分からないことは、分からないと",
+            "description": "確認できないことは、臆せずそのままお伝えします。"
+          }
+        }
+      },
+      "blocks_order": ["honest", "open", "unknown"]
+    },
+    "cta": {
+      "type": "cta-banner",
+      "settings": {
+        "heading": "一緒に学びましょう",
+        "body": "私たちも日々学んでいます。気になった情報、お客様からのフィードバック、気づいたこと——できる限りお伝えしていきます。一緒により良いスキンケアを見つけていきませんか？",
+        "button_label": "スキンケア製品を探す",
+        "button_url": "/collections/all"
+      }
     }
   },
-  "order": ["main"]
+  "order": ["hero", "methods", "transparency", "cta"]
 }

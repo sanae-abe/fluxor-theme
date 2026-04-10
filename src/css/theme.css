@@ -240,7 +240,6 @@ body {
   white-space: nowrap;
   align-items: center;
   animation: marquee 30s linear infinite;
-  font-family: 'Zen Old Mincho', serif;
 }
 
 @media (any-hover: hover) {

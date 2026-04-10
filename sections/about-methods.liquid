@@ -1,0 +1,128 @@
+{%- comment %} About — 調査方法グリッドセクション {%- endcomment -%}
+
+<section class="w-full px-4 md:px-10 py-20">
+  <div class="w-full max-w-3xl mx-auto flex flex-col gap-8">
+
+    {%- if section.settings.heading != blank -%}
+      <h2 class="text-2xl font-medium text-stone-900 text-center">
+        {{ section.settings.heading }}
+      </h2>
+    {%- endif -%}
+
+    {%- if section.settings.paragraph != blank -%}
+      <p class="text-base text-stone-900 text-center">
+        {{ section.settings.paragraph }}
+      </p>
+    {%- endif -%}
+
+    {%- if section.blocks.size > 0 -%}
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {%- for block in section.blocks -%}
+          <div class="bg-stone-100 p-6 flex flex-col gap-4" {{ block.shopify_attributes }}>
+            {%- if block.settings.icon != blank -%}
+              {%- render 'icon',
+                icon: block.settings.icon,
+                class: 'w-10 h-10 text-stone-900',
+                stroke_width: 1
+              -%}
+            {%- endif -%}
+            {%- if block.settings.title != blank -%}
+              <h3 class="text-base font-medium text-stone-900">
+                {{ block.settings.title }}
+              </h3>
+            {%- endif -%}
+            {%- if block.settings.description != blank -%}
+              <p class="text-sm leading-relaxed text-stone-900">
+                {{ block.settings.description }}
+              </p>
+            {%- endif -%}
+          </div>
+        {%- endfor -%}
+      </div>
+    {%- endif -%}
+
+  </div>
+</section>
+
+{%- schema %}
+{
+  "name": "About — 調査方法",
+  "blocks": [
+    {
+      "type": "item",
+      "name": "調査方法アイテム",
+      "settings": [
+        {
+          "type": "text",
+          "id": "icon",
+          "label": "アイコン名",
+          "info": "利用可能: book-marked, flask-conical, pipette, message-square, check, shield, info など"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "タイトル"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "説明文"
+        }
+      ]
+    }
+  ],
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "私たちの調査方法"
+    },
+    {
+      "type": "textarea",
+      "id": "paragraph",
+      "label": "サブテキスト",
+      "default": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
+    }
+  ],
+  "presets": [
+    {
+      "name": "About — 調査方法",
+      "blocks": [
+        {
+          "type": "item",
+          "settings": {
+            "icon": "book-marked",
+            "title": "ブランドリサーチ",
+            "description": "世界観・哲学を調査。ブランドが何を大切にしているかを多角的に確認します"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "flask-conical",
+            "title": "成分チェック",
+            "description": "成分表を読み込み、配合の目的や特徴を調査。気になる成分は信頼できる情報源で確認します。"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "pipette",
+            "title": "実使用テスト",
+            "description": "実際に商品を使用。使用感・テクスチャー・肌への馴染み方を自分たちで体感します。"
+          }
+        },
+        {
+          "type": "item",
+          "settings": {
+            "icon": "message-square",
+            "title": "評判リサーチ",
+            "description": "レビューやSNSを幅広く収集。実際のユーザーの声を丁寧に参考にします。"
+          }
+        }
+      ]
+    }
+  ]
+}
+{%- endschema -%}

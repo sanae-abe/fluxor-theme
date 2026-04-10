@@ -30,7 +30,7 @@
       >
         {%- render 'icon', icon: 'search', class: 'w-6 h-6' -%}
       </a>
-      <nav class="hidden lg:flex items-center gap-8" aria-label="Main">
+      <nav class="header-nav hidden lg:flex items-center gap-8" aria-label="Main">
         {%- if section.settings.menu != blank -%}
           {%- for link in linklists[section.settings.menu].links -%}
             <a
