@@ -33,17 +33,6 @@
     "sections": {
       "announcement-bar": {
         "type": "announcement-bar",
-        "blocks": {
-          "text_PapPVq": {
-            "type": "text",
-            "settings": {
-              "text": "海外で人気のスキンケア商品をピックアップ！"
-            }
-          }
-        },
-        "block_order": [
-          "text_PapPVq"
-        ],
         "settings": {}
       },
       "header": {
