@@ -1,7 +1,7 @@
 {
   "sections": {
     "main": {
-      "type": "main-blog-journal",
+      "type": "main-journal",
       "settings": {}
     }
   },

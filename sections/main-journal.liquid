@@ -1,0 +1,186 @@
+{%- comment %}
+  Journal 一覧 (main-journal.liquid)
+
+  対応データ:
+    categories  article.tags の cat- プレフィックスタグ → 日本語ラベルに変換
+    concerns    article.metafields.custom.skin_concerns {list.single_line_text_field}
+{%- endcomment -%}
+
+{%- comment %} cat- タグ → 表示ラベル マッピング {%- endcomment -%}
+{%- assign cat_map = 'cat-vitamin:ビタミン類,cat-moisturizing:保湿・バリア成分,cat-peptide:ペプチド・アミノ酸類,cat-botanical:植物エキス・オイル,cat-advanced:先端・その他の成分' | split: ',' -%}
+
+{%- paginate blog.articles by 250 -%}
+
+{%- comment %} Alpine.js 用記事データ（JSON） {%- endcomment -%}
+<script id="journal-articles-data" type="application/json">
+  [
+    {%- for article in blog.articles -%}
+      {%- comment %} cat- タグを日本語ラベルに変換 {%- endcomment -%}
+      {%- assign article_cats_arr = '' -%}
+      {%- for tag in article.tags -%}
+        {%- if tag contains 'cat-' -%}
+          {%- for mapping in cat_map -%}
+            {%- assign parts = mapping | split: ':' -%}
+            {%- if parts[0] == tag -%}
+              {%- unless article_cats_arr == '' -%}{%- assign article_cats_arr = article_cats_arr | append: ',' -%}{%- endunless -%}
+              {%- assign article_cats_arr = article_cats_arr | append: '"' | append: parts[1] | append: '"' -%}
+            {%- endif -%}
+          {%- endfor -%}
+        {%- endif -%}
+      {%- endfor -%}
+    {
+      "idx": {{ forloop.index0 }},
+      "title": {{ article.title | json }},
+      "categories": [{{ article_cats_arr }}],
+      "concerns": {{ article.metafields.custom.skin_concerns.value | json | default: '[]' }},
+      "date": {{ article.published_at | date: "%s" | plus: 0 }}
+    }{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ]
+</script>
+
+<div class="bg-background px-4 md:px-10 pb-10 md:pb-[60px]">
+  <section
+    class="max-w-screen-xl mx-auto"
+    x-data="journalFilters"
+    aria-label="Journal 一覧"
+  >
+    {%- comment %} ページヘッダー {%- endcomment -%}
+    <div class="py-5 md:py-10 flex flex-col gap-4 justify-center">
+      <h1 class="text-2xl md:text-4xl md:leading-tight font-semibold md:tracking-wider uppercase">
+        Journal
+      </h1>
+    </div>
+    <hr class="border-stone-200">
+
+    {%- comment %} ツールバー {%- endcomment -%}
+    <div class="flex items-center justify-between pt-10 pb-6">
+      {%- comment %} 左: 絞り込みボタン（モバイル）/ 件数 + クリア（デスクトップ） {%- endcomment -%}
+      <div class="flex items-center gap-4">
+        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
+        <button
+          type="button"
+          @click="mobileOpen = true"
+          class="flex items-center gap-2 text-sm font-medium md:hidden"
+        >
+          {%- render 'icon', icon: 'list-filter', class: 'w-4 h-4' -%}
+          絞り込み
+          <span
+            :class="hasActiveFilters ? '' : 'hidden'"
+            class="bg-stone-900 text-white text-xs rounded-full w-5 h-5 flex items-center justify-center leading-none hidden"
+            x-text="selectedCategories.length + selectedConcerns.length"
+          ></span>
+        </button>
+        {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
+        <div class="hidden md:flex items-center gap-4 w-72">
+          <p class="text-sm text-stone-500 uppercase tracking-wider">
+            <span x-text="filteredCount"></span>件の記事
+          </p>
+          <button
+            :class="hasActiveFilters ? '' : 'hidden'"
+            @click="clearAll()"
+            class="text-sm text-stone-500 underline uppercase tracking-wider hidden"
+            type="button"
+          >
+            すべてクリア
+          </button>
+        </div>
+        {%- comment %} 件数（モバイル） {%- endcomment -%}
+        <p class="md:hidden text-sm text-stone-500">
+          <span x-text="filteredCount"></span>件の記事
+        </p>
+      </div>
+
+      {%- comment %} ソート {%- endcomment -%}
+      <div class="flex items-center">
+        {%- capture sort_options -%}
+          <option value="newest">新しい順</option>
+          <option value="oldest">古い順</option>
+          <option value="title-asc">タイトル: A〜Z</option>
+          <option value="title-desc">タイトル: Z〜A</option>
+        {%- endcapture -%}
+        {%- capture sort_attr -%}x-model="sortBy"{%- endcapture -%}
+        {%- render 'form-select', id: 'JournalSortBy', options_html: sort_options, attr: sort_attr -%}
+      </div>
+    </div>
+
+    <div class="flex gap-16">
+      {%- comment %} デスクトップサイドバー {%- endcomment -%}
+      <aside class="hidden md:flex flex-col gap-8 w-[calc(25%-2rem)] flex-shrink-0 sticky top-32 self-start">
+
+        {%- comment %} カテゴリフィルター {%- endcomment -%}
+        {%- capture categories_items -%}
+          <template x-for="tag in uniqueCategories" :key="tag">
+            {%- render 'alpine-checkbox',
+              checked_expr: "selectedCategories.includes(tag)",
+              change_expr: "toggle('categories', tag)",
+              label_expr: "tag"
+            -%}
+          </template>
+        {%- endcapture -%}
+        {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
+
+        {%- comment %} 肌悩みフィルター {%- endcomment -%}
+        {%- capture concerns_items -%}
+          <template x-for="tag in uniqueConcerns" :key="tag">
+            {%- render 'alpine-checkbox',
+              checked_expr: "selectedConcerns.includes(tag)",
+              change_expr: "toggle('concerns', tag)",
+              label_expr: "tag"
+            -%}
+          </template>
+        {%- endcapture -%}
+        {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
+
+      </aside>
+
+      {%- comment %} 記事カードグリッド {%- endcomment -%}
+      <div class="flex-1 min-w-0">
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+
+          {%- for article in blog.articles -%}
+            <div
+              x-show="_filteredIds.includes({{ forloop.index0 }})"
+              :style="{ order: _order[{{ forloop.index0 }}] ?? 9999 }"
+            >
+              {%- render 'card-article', article: article -%}
+            </div>
+          {%- endfor -%}
+
+        </div>
+
+        {%- comment %} 空ステート {%- endcomment -%}
+        <p
+          :class="filteredCount === 0 ? '' : 'hidden'"
+          class="text-sm text-stone-400 py-20 text-center hidden"
+        >
+          条件に一致する記事がありません。
+        </p>
+
+      </div>
+    </div>
+
+    {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
+    {%- capture drawer_content -%}
+      {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
+      {%- render 'filter-accordion', title: '肌悩み', content: concerns_items, show_expr: 'uniqueConcerns.length > 0' -%}
+    {%- endcapture -%}
+    {%- render 'mobile-filter-drawer', open_expr: 'mobileOpen', close_expr: 'mobileOpen = false', content: drawer_content -%}
+
+  </section>
+</div>
+
+{%- endpaginate -%}
+
+{%- schema %}
+{
+  "name": "Journal 一覧",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Journal 一覧"
+    }
+  ]
+}
+{%- endschema -%}
