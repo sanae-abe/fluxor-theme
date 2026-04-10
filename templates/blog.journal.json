@@ -12,7 +12,20 @@
     "main": {
       "type": "main-journal",
       "settings": {}
+    },
+    "cta_banner_c3KTNG": {
+      "type": "cta-banner",
+      "name": "CTAバナー",
+      "settings": {
+        "heading": "スキンケア製品をお探しですか？",
+        "body": "お肌のお悩みや目的に合わせて、最適な成分が配合された製品をご提案します。",
+        "button_label": "スキンケア製品を探す",
+        "button_url": "shopify://collections"
+      }
     }
   },
-  "order": ["main"]
+  "order": [
+    "main",
+    "cta_banner_c3KTNG"
+  ]
 }
