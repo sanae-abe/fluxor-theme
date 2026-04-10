@@ -3,12 +3,10 @@
   {%- for filter in filters -%}
     {%- assign _fso = forloop.first | json -%}
     {%- assign _fsid = filter.label | handleize -%}
-    <div class="bg-white" x-data="{ open: {{ _fso }}, _aid: '{{ _fsid }}' }"
-      @filter-accordion-open.window="if ($event.detail.id !== _aid) open = false"
-    >
+    <div class="bg-white" x-data="{ open: {{ _fso }} }">
       <button
         type="button"
-        @click="open = !open; if (open) $dispatch('filter-accordion-open', { id: _aid })"
+        @click="open = !open"
         class="flex items-center justify-between w-full text-sm font-medium p-4"
       >
         {{ filter.label }}

@@ -308,6 +308,16 @@ body {
   line-height: theme('lineHeight.tight');
 }
 
+.rte a {
+  color: theme('colors.sky.600');
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+.rte a:hover {
+  color: theme('colors.sky.800');
+}
+
 /* ===== フォーム ===== */
 
 .form-select:focus:not(:focus-visible) {

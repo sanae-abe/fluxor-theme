@@ -1,8 +1,5 @@
 {%- comment %}
-  フィルターアコーディオン（排他開閉型）
-
-  同一グループ内で1つのみ開く。開いたアコーディオンが window に
-  カスタムイベントを発火し、他のアコーディオンが自身を閉じる。
+  フィルターアコーディオン（複数同時開放型）
 
   Parameters:
     title:     {String} 見出しテキスト
@@ -10,18 +7,16 @@
     show_expr: {String} Alpine.js x-show 式（省略時は常に表示）
 {%- endcomment -%}
 
-{%- assign _aid = title | handleize -%}
 {%- assign _open = open_default | default: false -%}
 
 <div
-  x-data="{ open: {{ _open | json }}, _aid: '{{ _aid }}' }"
-  @filter-accordion-open.window="if ($event.detail.id !== _aid) open = false"
+  x-data="{ open: {{ _open | json }} }"
   {%- if show_expr != blank %} x-show="{{ show_expr }}"{% endif %}
   class="bg-white"
 >
   <button
     type="button"
-    @click="open = !open; if (open) $dispatch('filter-accordion-open', { id: _aid })"
+    @click="open = !open"
     class="flex items-center justify-between w-full text-sm font-medium p-4"
     :aria-expanded="open"
   >

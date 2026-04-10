@@ -59,19 +59,29 @@
           <p class="text-sm text-stone-500 uppercase tracking-wider">
             <span x-text="filteredCount"></span>件の記事
           </p>
-          <button
-            :class="hasActiveFilters ? '' : 'hidden'"
-            @click="clearAll()"
-            class="text-sm text-stone-500 underline uppercase tracking-wider hidden"
-            type="button"
-          >
-            すべてクリア
-          </button>
+          <template x-if="hasActiveFilters">
+            <button
+              @click="clearAll()"
+              class="text-sm text-stone-500 underline uppercase tracking-wider"
+              type="button"
+            >
+              すべてクリア
+            </button>
+          </template>
         </div>
-        {%- comment %} 件数（モバイル） {%- endcomment -%}
-        <p class="md:hidden text-sm text-stone-500">
-          <span x-text="filteredCount"></span>件の記事
-        </p>
+        {%- comment %} 件数 + クリア（モバイル） {%- endcomment -%}
+        <div class="md:hidden flex items-center gap-4">
+          <p class="text-sm text-stone-500"><span x-text="filteredCount"></span>件の記事</p>
+          <template x-if="hasActiveFilters">
+            <button
+              @click="clearAll()"
+              class="text-sm text-stone-500 underline uppercase tracking-wider"
+              type="button"
+            >
+              すべてクリア
+            </button>
+          </template>
+        </div>
       </div>
 
       {%- comment %} ソート {%- endcomment -%}
