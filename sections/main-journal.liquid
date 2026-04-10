@@ -39,7 +39,7 @@
     {%- comment %} ツールバー {%- endcomment -%}
     <div class="flex items-start md:items-center justify-between pt-10 pb-6">
       {%- comment %} 左: 絞り込みボタン（モバイル）/ 件数 + クリア（デスクトップ） {%- endcomment -%}
-      <div class="flex flex-col md:flex-row items-center gap-4">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
         {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
         <button
           type="button"
@@ -75,7 +75,7 @@
           <template x-if="hasActiveFilters">
             <button
               @click="clearAll()"
-              class="text-sm text-stone-500 underline uppercase tracking-wider"
+              class="text-sm text-stone-500 underline uppercase"
               type="button"
             >
               すべてクリア

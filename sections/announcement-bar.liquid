@@ -13,59 +13,47 @@
 {%- if settings.sale_enabled and settings.sale_banner_show or carousel_count > 0 -%}
   <div
     id="AnnouncementBar"
-    class="bg-stone-950 text-stone-50 py-2"
-    x-data="announcementBar({{ carousel_count }})"
+    class="bg-stone-950 text-stone-50 py-2 overflow-hidden"
+    x-data="{}"
     x-init="$nextTick(() => { $store.ui.announcementHeight = $el.offsetHeight; new ResizeObserver(() => { $store.ui.announcementHeight = $el.offsetHeight }).observe($el) })"
     x-cloak
     {%- if settings.sale_enabled %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
   >
-    <div class="relative flex items-center justify-center min-h-[24px] px-10 md:px-16 text-xs font-medium tracking-wide">
+    <div class="marquee-track text-xs font-medium tracking-wide">
 
-      {%- if carousel_count > 1 -%}
-        <button
-          type="button"
-          @click="prev()"
-          class="announcement-nav-btn absolute left-2 md:left-4 p-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-50 rounded"
-          aria-label="前のメッセージ"
-        >
-          {%- render 'icon', icon: 'chevron-left', class: 'w-4 h-4', stroke_width: 2 -%}
-        </button>
-      {%- endif -%}
-
-      <div class="text-center">
-        {%- assign item_index = 0 -%}
+      {%- comment %} 1回目（実コンテンツ・Shopify属性付き） {%- endcomment -%}
+      <span class="marquee-content">
         {%- if settings.sale_enabled and settings.sale_banner_show -%}
-          <span
-            class="inline-flex items-center gap-x-2 gap-y-0 flex-col md:flex-row"
-            :class="{{ item_index }} === current ? '' : 'hidden'"
-          >
-            <span>{{ settings.sale_banner_text }}</span>
+          <span class="inline-flex items-center gap-2 px-10">
+            {{ settings.sale_banner_text }}
             {%- render 'sale-countdown' -%}
           </span>
-          {%- assign item_index = item_index | plus: 1 -%}
+          <span class="px-2 opacity-30" aria-hidden="true">·</span>
         {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.text != blank -%}
-            <span
-              class="inline-flex items-center"
-              :class="{{ item_index }} === current ? '' : 'hidden'"
-              {{ block.shopify_attributes }}
-            >{{ block.settings.text }}</span>
-            {%- assign item_index = item_index | plus: 1 -%}
+            <span class="px-10" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            <span class="px-2 opacity-30" aria-hidden="true">·</span>
           {%- endif -%}
         {%- endfor -%}
-      </div>
+      </span>
 
-      {%- if carousel_count > 1 -%}
-        <button
-          type="button"
-          @click="next()"
-          class="announcement-nav-btn absolute right-2 md:right-4 p-1 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-stone-50 rounded"
-          aria-label="次のメッセージ"
-        >
-          {%- render 'icon', icon: 'chevron-right', class: 'w-4 h-4', stroke_width: 2 -%}
-        </button>
-      {%- endif -%}
+      {%- comment %} 2回目（シームレスループ用・スクリーンリーダー非表示） {%- endcomment -%}
+      <span class="marquee-content" aria-hidden="true">
+        {%- if settings.sale_enabled and settings.sale_banner_show -%}
+          <span class="inline-flex items-center gap-2 px-10">
+            {{ settings.sale_banner_text }}
+            {%- render 'sale-countdown' -%}
+          </span>
+          <span class="px-2 opacity-30">·</span>
+        {%- endif -%}
+        {%- for block in section.blocks -%}
+          {%- if block.settings.text != blank -%}
+            <span class="px-10">{{ block.settings.text }}</span>
+            <span class="px-2 opacity-30">·</span>
+          {%- endif -%}
+        {%- endfor -%}
+      </span>
 
     </div>
   </div>

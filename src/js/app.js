@@ -6,7 +6,6 @@ import { cartStore }       from './stores/cart.js'
 import { saleStore }       from './stores/sale.js'
 import { siteHeader }      from './components/header.js'
 import { saleCountdown }   from './components/saleCountdown.js'
-import { announcementBar }   from './components/announcementBar.js'
 import { ingredientFilters }  from './components/ingredientFilters.js'
 import { randomIngredient }   from './components/randomIngredient.js'
 import { journalFilters }     from './components/journalFilters.js'
@@ -17,7 +16,6 @@ Alpine.store('sale', saleStore)
 Alpine.store('ui', { announcementHeight: 0 })
 Alpine.data('siteHeader', siteHeader)
 Alpine.data('saleCountdown', saleCountdown)
-Alpine.data('announcementBar', announcementBar)
 Alpine.data('ingredientFilters', ingredientFilters)
 Alpine.data('randomIngredient', randomIngredient)
 Alpine.data('journalFilters', journalFilters)

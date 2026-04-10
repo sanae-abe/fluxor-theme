@@ -149,19 +149,34 @@ body {
 .ingredient-track { scrollbar-width: none; -ms-overflow-style: none; }
 .ingredient-track::-webkit-scrollbar { display: none; }
 
-/* ===== アナウンスメントバー ===== */
+/* ===== アナウンスメントバー marquee ===== */
 
-.sale-announcement-bar {
-  background-color: var(--color-accent);
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
 }
 
-.announcement-nav-btn {
-  color: theme('colors.stone.400');
-  transition: color 0.15s ease;
+.marquee-track {
+  display: flex;
+  width: max-content;
+  white-space: nowrap;
+  align-items: center;
+  animation: marquee 30s linear infinite;
 }
+
 @media (any-hover: hover) {
-  .announcement-nav-btn:hover {
-    color: theme('colors.stone.50');
+  .marquee-track:hover {
+    animation-play-state: paused;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track {
+    animation: none;
+    justify-content: center;
+    width: 100%;
+    white-space: normal;
+    flex-wrap: wrap;
   }
 }
 

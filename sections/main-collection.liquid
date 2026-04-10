@@ -39,7 +39,7 @@
     {%- comment %} ツールバー {%- endcomment -%}
     <div class="flex items-start md:items-center justify-between pt-10 pb-6">
       {%- comment %} 左側: 件数 + クリア（デスクトップ）/ 絞り込みボタン（モバイル） {%- endcomment -%}
-      <div class="flex flex-col md:flex-row items-center gap-4">
+      <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
         {%- if collection.filters.size > 0 -%}
           {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
           <button
@@ -61,8 +61,18 @@
             <a href="{{ collection.url }}" class="text-sm text-stone-500 underline uppercase tracking-wider">すべてクリア</a>
           {%- endif -%}
         </div>
-        {%- comment %} 件数（モバイル） {%- endcomment -%}
-        <p class="md:hidden text-sm text-stone-500 tracking-wider">{{ paginate.items }}点の商品</p>
+        {%- comment %} 件数 + クリア（モバイル） {%- endcomment -%}
+        <div class="md:hidden flex items-center gap-4">
+        <p class="md:hidden text-sm text-stone-500">{{ paginate.items }}点の商品</p>
+          {%- if active_filter_count > 0 -%}
+            <a href="{{ collection.url }}"
+              class="text-sm text-stone-500 underline uppercase"
+              type="button"
+            >
+              すべてクリア
+            </a>
+          {%- endif -%}
+        </div>
       </div>
 
       {%- comment %} ソート {%- endcomment -%}
