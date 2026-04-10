@@ -4,6 +4,7 @@
   対応メタフィールド (名前空間: custom):
     inci_name               {single_line_text_field}
     category_tags           {list.single_line_text_field}
+    skin_concerns           {list.single_line_text_field}
     pregnancy_note          {multi_line_text_field}
     compatible_ingredients  {list.metaobject_reference} → ingredient_combination { name, reason }
     caution_combinations    {list.metaobject_reference} → ingredient_combination { name, reason }
@@ -21,7 +22,7 @@
   assign caution_combinations = article.metafields.custom.caution_combinations.value
   assign usage_tips = article.metafields.custom.usage_tips.value
   assign roles = article.metafields.custom.roles.value
-  assign concern_tags = article.metafields.custom.concern_tags.value
+  assign skin_concerns = article.metafields.custom.skin_concerns.value
   assign reference_entries = article.metafields.custom.reference_entry.value
   assign ingredient_products = article.metafields.custom.product_reference.value
 -%}
@@ -53,11 +54,11 @@
         {%- for tag in category_tags limit: 4 -%}
           {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
-        {%- if concern_tags != blank -%}
-          {%- if category_tags != blank -%}
+        {%- if skin_concerns != blank -%}
+          {%- if skin_concerns != blank -%}
             <span class="text-stone-300 select-none">|</span>
           {%- endif -%}
-          {%- for tag in concern_tags limit: 4 -%}
+          {%- for tag in skin_concerns limit: 4 -%}
             {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
           {%- endfor -%}
         {%- endif -%}
