@@ -104,7 +104,7 @@
         {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
 
         {%- comment %} タグフィルター {%- endcomment -%}
-        {%- capture tag_items -%}
+        {%- capture tags_items -%}
           <template x-for="tag in uniqueTags" :key="tag">
             {%- render 'alpine-checkbox',
               checked_expr: "selectedTags.includes(tag)",
@@ -113,7 +113,7 @@
             -%}
           </template>
         {%- endcapture -%}
-        {%- render 'filter-accordion', title: 'タグ', content: tag_items, show_expr: 'uniqueTags.length > 0' -%}
+        {%- render 'filter-accordion', title: 'タグ', content: tags_items, show_expr: 'uniqueTags.length > 0' -%}
 
       </aside>
 
@@ -147,7 +147,7 @@
     {%- comment %} モバイルフィルタードロワー {%- endcomment -%}
     {%- capture drawer_content -%}
       {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0' -%}
-      {%- render 'filter-accordion', title: 'タグ', content: tag_items, show_expr: 'uniqueTags.length > 0' -%}
+      {%- render 'filter-accordion', title: 'タグ', content: tags_items, show_expr: 'uniqueTags.length > 0' -%}
     {%- endcapture -%}
     {%- render 'mobile-filter-drawer', open_expr: 'mobileOpen', close_expr: 'mobileOpen = false', content: drawer_content -%}
 
