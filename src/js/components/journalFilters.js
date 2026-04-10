@@ -1,7 +1,7 @@
 export const journalFilters = () => ({
   articles: [],
   selectedCategories: [],
-  selectedConcerns: [],
+  selectedTags: [],
   sortBy: 'newest',
   mobileOpen: false,
   _filteredIds: [],
@@ -13,13 +13,13 @@ export const journalFilters = () => ({
     if (el) this.articles = JSON.parse(el.textContent);
     this._refilter();
     this.$watch('selectedCategories', () => this._refilter());
-    this.$watch('selectedConcerns',   () => this._refilter());
+    this.$watch('selectedTags',   () => this._refilter());
     this.$watch('sortBy',             () => this._refilter());
   },
 
   _refilter() {
     const sc  = this.selectedCategories;
-    const sco = this.selectedConcerns;
+    const st = this.selectedTags;
     const sortFns = {
       'newest':     (a, b) => b.date - a.date,
       'oldest':     (a, b) => a.date - b.date,
@@ -30,7 +30,7 @@ export const journalFilters = () => ({
     const filtered = this.articles
       .filter(a => {
         if (sc.length  > 0 && !sc.some(c => (a.categories || []).includes(c))) return false;
-        if (sco.length > 0 && !sco.some(c => (a.concerns   || []).includes(c))) return false;
+        if (st.length > 0 && !st.some(c => (a.tags   || []).includes(c))) return false;
         return true;
       })
       .sort(sortFns[this.sortBy] ?? (() => 0));
@@ -44,12 +44,12 @@ export const journalFilters = () => ({
     return [...new Set(this.articles.flatMap(a => a.categories || []))];
   },
 
-  get uniqueConcerns() {
-    return [...new Set(this.articles.flatMap(a => a.concerns || []))];
+  get uniquetags() {
+    return [...new Set(this.articles.flatMap(a => a.tags || []))];
   },
 
   get hasActiveFilters() {
-    return this.selectedCategories.length > 0 || this.selectedConcerns.length > 0;
+    return this.selectedCategories.length > 0 || this.selectedTags.length > 0;
   },
 
   isVisible(idx) {
@@ -64,7 +64,7 @@ export const journalFilters = () => ({
   toggle(group, value) {
     const map = {
       categories: 'selectedCategories',
-      concerns:   'selectedConcerns',
+      tags:   'selectedTags',
     };
     const key = map[group];
     const i = this[key].indexOf(value);
@@ -77,6 +77,6 @@ export const journalFilters = () => ({
 
   clearAll() {
     this.selectedCategories = [];
-    this.selectedConcerns   = [];
+    this.selectedTags   = [];
   },
 });
