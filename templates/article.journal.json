@@ -28,14 +28,14 @@
         "related_articles_default": {
           "type": "related_articles",
           "settings": {
-            "heading": "関連JOURNAL記事",
+            "heading": "関連 JOURNAL",
             "count": 4
           }
         },
         "related_ingredients_ncFkqG": {
           "type": "related_ingredients",
           "settings": {
-            "heading": "関連INGREDIENTS記事",
+            "heading": "関連 INGREDIENTS",
             "blog": "ingredients",
             "count": 4
           }

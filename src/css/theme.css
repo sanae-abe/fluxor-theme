@@ -52,7 +52,7 @@ body:not(.no-outline) .skip-link:focus {
 /* ===== Hero：シネマスコープ比率（21:9） ===== */
 
 .hero-cinematic {
-  min-height: calc(100vw * 3 / 4); /* モバイル: 4:3 */
+  min-height: calc(100vw * 3 / 2); /* モバイル: 2:3 */
 }
 
 @media (min-width: 768px) {
@@ -404,20 +404,35 @@ body {
 /* ===== 記事本文（RTE） ===== */
 
 .rte h2 {
-  margin-top: theme('spacing.20');
-  margin-bottom: theme('spacing.8');
-  font-size: theme('fontSize.2xl');
+  margin-top: theme('spacing.10');
+  margin-bottom: theme('spacing.6');
+  font-size: theme('fontSize.xl');
   font-weight: theme('fontWeight.semibold');
   letter-spacing: theme('letterSpacing.wider');
   line-height: theme('lineHeight.tight');
 }
 
+@media (min-width: 768px) {
+  .rte h2 {
+    margin-top: 60px;
+    margin-bottom: theme('spacing.8');
+    font-size: theme('fontSize.2xl');
+  }
+}
+
 .rte h3 {
-  margin-top: theme('spacing.8');
+  margin-top: theme('spacing.6');
   margin-bottom: theme('spacing.2');
   font-weight: theme('fontWeight.semibold');
   letter-spacing: theme('letterSpacing.wider');
   line-height: theme('lineHeight.tight');
+}
+
+@media (min-width: 768px) {
+  .rte h3 {
+    margin-top: theme('spacing.8');
+    margin-bottom: theme('spacing.2');
+  }
 }
 
 .rte a {

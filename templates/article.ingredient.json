@@ -70,14 +70,14 @@
         "related_articles_default": {
           "type": "related_articles",
           "settings": {
-            "heading": "関連INGREDIENTS記事",
+            "heading": "関連 INGREDIENTS",
             "count": 4
           }
         },
         "related_journal_articles_q4arMG": {
           "type": "related_journal_articles",
           "settings": {
-            "heading": "関連JOURNAL記事",
+            "heading": "関連 JOURNAL",
             "blog": "journal",
             "count": 4
           }

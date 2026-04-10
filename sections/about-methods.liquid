@@ -1,16 +1,16 @@
 {%- comment %} About — 調査方法グリッドセクション {%- endcomment -%}
 
-<section class="w-full px-4 md:px-10 py-20">
-  <div class="w-full max-w-3xl mx-auto flex flex-col gap-8">
+<section class="w-full px-4 md:px-10 py-10 md:py-[60px]">
+  <div class="w-full max-w-3xl mx-auto flex flex-col gap-6 md:gap-8">
 
     {%- if section.settings.heading != blank -%}
-      <h2 class="text-3xl font-medium text-stone-900 text-center">
+      <h2 class="text-2xl md:text-3xl font-medium text-stone-900 text-center">
         {{ section.settings.heading }}
       </h2>
     {%- endif -%}
 
     {%- if section.settings.paragraph != blank -%}
-      <p class="text-base text-stone-900 text-center">
+      <p class="text-sm md:text-base text-stone-900 text-center">
         {{ section.settings.paragraph }}
       </p>
     {%- endif -%}
@@ -18,7 +18,7 @@
     {%- if section.blocks.size > 0 -%}
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         {%- for block in section.blocks -%}
-          <div class="bg-stone-100 p-6 flex flex-col gap-4" {{ block.shopify_attributes }}>
+          <div class="bg-stone-100 p-6 flex flex-col gap-4 items-center text-center md:text-left" {{ block.shopify_attributes }}>
             {%- if block.settings.icon != blank -%}
               {%- render 'icon',
                 icon: block.settings.icon,
