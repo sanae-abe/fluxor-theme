@@ -7,6 +7,7 @@
   endif
 -%}
 
+{%- capture btn_attr %}:href="article ? article.url : '#'"{% endcapture -%}
 {%- comment %} 成分記事データ（JSON） — Alpine.jsがランダム選択に使用 {%- endcomment -%}
 <script id="random-ingredient-data-{{ section.id }}" type="application/json">
   [
@@ -31,7 +32,7 @@
 </script>
 
 <section
-  class="{{ s.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]"
+  class="{{ s.color_scheme }} py-10 md:py-[60px]"
   x-data="randomIngredient('{{ section.id }}')"
 >
 
@@ -93,19 +94,16 @@
       </div>
 
       <div class="flex w-full md:justify-start" x-show="article">
-        <a
-          :href="article ? article.url : '#'"
-          class="btn-slide inline-flex items-center justify-center border font-sans tracking-wider select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt transition-all duration-300 h-12 px-4 text-base gap-2 border-2 font-medium bg-transparent text-stone-900 border-stone-900 self-start w-full md:w-auto"
-          style="--hover-bg: #1c1917; --hover-text: #fafaf9;"
-        >
-          {%- if s.button_icon_left != blank -%}
-            {%- render 'icon', icon: s.button_icon_left, class: 'w-[18px] h-[18px] flex-shrink-0 stroke-2' -%}
-          {%- endif -%}
-          <span>{{ s.button_label }}</span>
-          {%- if s.button_icon_right != blank -%}
-            {%- render 'icon', icon: s.button_icon_right, class: 'w-[18px] h-[18px] flex-shrink-0 stroke-2' -%}
-          {%- endif -%}
-        </a>
+        {%- render 'button',
+          label: s.button_label,
+          url: '#',
+          variant: 'outline',
+          color: 'dark',
+          icon_left: s.button_icon_left,
+          icon_right: s.button_icon_right,
+          class: 'self-start w-full md:w-auto',
+          attr: btn_attr
+        -%}
       </div>
 
     </div>

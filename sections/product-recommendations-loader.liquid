@@ -7,7 +7,7 @@
 
 {%- if section.settings.enabled -%}
   <div
-    id="product-recommendations"
+    id="product-recommendations-{{ section.id }}"
     data-product-id="{{ product.id }}"
     data-limit="{{ section.settings.count }}"
     data-section-id="product-recommendations"
@@ -15,25 +15,26 @@
 
   <script>
     (function () {
-      var container = document.getElementById('product-recommendations');
+      const container = document.getElementById('product-recommendations-{{ section.id }}');
       if (!container) return;
-      var productId = container.dataset.productId;
-      var limit = container.dataset.limit || 4;
-      var sectionId = container.dataset.sectionId;
-      fetch(
-        '/recommendations/products?section_id=' + sectionId +
-        '&product_id=' + productId +
-        '&limit=' + limit
-      )
-        .then(function (r) { return r.text(); })
-        .then(function (html) {
-          var doc = new DOMParser().parseFromString(html, 'text/html');
-          var content = doc.querySelector('.shopify-section');
-          if (content && content.innerHTML.trim()) {
+
+      const params = new URLSearchParams({
+        section_id: container.dataset.sectionId,
+        product_id: container.dataset.productId,
+        limit: container.dataset.limit || 4,
+      });
+
+      fetch('/recommendations/products?' + params)
+        .then((r) => r.text())
+        .then((html) => {
+          const content = new DOMParser()
+            .parseFromString(html, 'text/html')
+            .querySelector('.shopify-section');
+          if (content?.innerHTML.trim()) {
             container.innerHTML = content.innerHTML;
           }
         })
-        .catch(function () {});
+        .catch(() => {});
     })();
   </script>
 {%- endif -%}

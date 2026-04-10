@@ -1,16 +1,21 @@
-{%- if section.settings.heading != blank -%}
-<section class="w-full bg-stone-100 overflow-hidden px-4 md:px-10 py-[60px]">
+{%- liquid
+  assign heading   = section.settings.heading
+  assign body      = section.settings.body
+  assign btn_label = section.settings.button_label
+-%}
+{%- if heading != blank -%}
+<section class="w-full bg-surface overflow-hidden px-4 md:px-10 py-[60px]">
   <div class="w-full max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10 items-center text-center">
-    <h2 class="cta-heading text-3xl md:text-4xl leading-tight font-semibold tracking-wider text-stone-900">
-      {{ section.settings.heading }}
+    <h2 class="cta-heading text-3xl md:text-4xl leading-tight font-semibold tracking-wider text-text">
+      {{ heading }}
     </h2>
-    {%- if section.settings.body != blank -%}
-      <p class="text-sm md:text-base leading-relaxed text-stone-900/80 max-w-2xl">{{ section.settings.body }}</p>
+    {%- if body != blank -%}
+      <p class="text-sm md:text-base leading-relaxed text-stone-900/80 max-w-2xl">{{ body }}</p>
     {%- endif -%}
-    {%- if section.settings.button_label != blank -%}
+    {%- if btn_label != blank -%}
       {%- assign btn_url = section.settings.button_url | default: '/collections/all' -%}
       {%- render 'button',
-        label: section.settings.button_label,
+        label: btn_label,
         url: btn_url,
         variant: 'outline',
         icon_right: 'arrow-right',

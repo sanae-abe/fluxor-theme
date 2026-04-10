@@ -4,35 +4,40 @@
   Parameters:
     title              {String}  見出しテキスト
     body               {String}  本文 HTML（capture 済み）
-    index              {Number}  Alpine openItem 識別用インデックス
+    index              {Number}  Alpine openItems 識別用インデックス
     shopify_attributes {String}  テーマエディタ用属性（block.shopify_attributes）
 {%- endcomment -%}
-<div {{ shopify_attributes }} class="bg-stone-50">
+<div
+  {{ shopify_attributes }}
+  class="bg-stone-50"
+  x-data="{
+    get isOpen() { return openItems.includes({{ index }}) },
+    toggle() { openItems = this.isOpen ? openItems.filter(i => i !== {{ index }}) : [...openItems, {{ index }}] }
+  }"
+>
   <button
     type="button"
     id="accordion-btn-{{ index }}"
     class="w-full flex items-center justify-between gap-4 py-6 px-6 text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-    @click="openItems = openItems.includes({{ index }}) ? openItems.filter(i => i !== {{ index }}) : [...openItems, {{ index }}]"
-    :aria-expanded="openItems.includes({{ index }})"
+    @click="toggle()"
+    :aria-expanded="isOpen"
     aria-controls="accordion-panel-{{ index }}"
   >
     <span class="text-base font-medium text-stone-900 leading-tight">{{ title }}</span>
-    {%- capture _chevron_class -%}openItems.includes({{ index }}) ? 'rotate-180' : ''{%- endcapture -%}
-    {%- render 'icon', icon: 'chevron-down', class: 'w-5 h-5 text-stone-900 shrink-0 transition-transform duration-200', x_class: _chevron_class, stroke_width: 2 -%}
+    {%- render 'icon', icon: 'chevron-down', class: 'w-5 h-5 text-stone-900 shrink-0 transition-transform duration-200', x_class: "isOpen ? 'rotate-180' : ''", stroke_width: 2 -%}
   </button>
   <div
     id="accordion-panel-{{ index }}"
-    class="grid"
-    style="transition: grid-template-rows 0.3s ease;"
-    :style="{ 'grid-template-rows': openItems.includes({{ index }}) ? '1fr' : '0fr' }"
+    class="accordion-item__body grid"
+    :class="isOpen ? 'grid-rows-[1fr]' : 'grid-rows-[0fr]'"
     role="region"
     aria-labelledby="accordion-btn-{{ index }}"
-    :aria-hidden="openItem !== {{ index }}"
+    :aria-hidden="!isOpen"
   >
     <div class="overflow-hidden">
       <div
         class="pb-6 px-6 transition-[opacity,transform] duration-300"
-        :class="openItems.includes({{ index }}) ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
+        :class="isOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
       >
         {{ body }}
       </div>

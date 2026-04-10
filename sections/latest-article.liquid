@@ -6,32 +6,35 @@
   if s.image_position == 'right'
     assign flex_dir = 'md:flex-row-reverse'
   endif
+
+  if latest.image != blank
+    assign the_image = latest.image
+    assign img_alt   = latest.image.alt | default: latest.title
+  elsif s.fallback_image != blank
+    assign the_image = s.fallback_image
+    assign img_alt   = s.fallback_image.alt
+  endif
+
+  if latest.excerpt != blank
+    assign excerpt_text = latest.excerpt | strip_html
+  else
+    assign excerpt_text = latest.content | strip_html | truncate: 200
+  endif
 -%}
 
 {%- if latest != blank -%}
 
-<section class="{{ s.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
+<section class="{{ s.color_scheme }} py-10 md:py-[60px]">
 
   <div class="flex flex-col {{ flex_dir }} items-center gap-6 md:gap-10">
 
     {%- comment %} 画像エリア {%- endcomment -%}
     <div class="md:w-1/2 flex-shrink-0">
-      {%- if latest.image != blank -%}
+      {%- if the_image != blank -%}
         <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
           <img
-            src="{{ latest.image | image_url: width: 800, format: 'webp' }}"
-            alt="{{ latest.image.alt | escape | default: latest.title | escape }}"
-            class="w-full h-full object-cover"
-            loading="lazy"
-            width="800"
-            height="534"
-          >
-        </div>
-      {%- elsif s.fallback_image != blank -%}
-        <div class="w-full aspect-[640/427] overflow-hidden [transform:translateZ(0)]">
-          <img
-            src="{{ s.fallback_image | image_url: width: 800, format: 'webp' }}"
-            alt="{{ s.fallback_image.alt | escape }}"
+            src="{{ the_image | image_url: width: 800, format: 'webp' }}"
+            alt="{{ img_alt | escape }}"
             class="w-full h-full object-cover"
             loading="lazy"
             width="800"
@@ -63,13 +66,6 @@
           {{ latest.title }}
         </h2>
 
-        {%- liquid
-          if latest.excerpt != blank
-            assign excerpt_text = latest.excerpt | strip_html
-          else
-            assign excerpt_text = latest.content | strip_html | truncate: 200
-          endif
-        -%}
         <p class="text-base leading-relaxed text-stone-900">{{ excerpt_text }}</p>
       </div>
 

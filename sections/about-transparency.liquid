@@ -5,12 +5,12 @@
 
     <div class="flex flex-col gap-6 md:gap-8 items-center">
       {%- if section.settings.heading != blank -%}
-        <h2 class="text-2xl md:text-3xl font-medium text-stone-900 text-center">
+        <h2 class="text-2xl md:text-3xl font-medium text-text text-center">
           {{ section.settings.heading }}
         </h2>
       {%- endif -%}
       {%- if section.settings.paragraph != blank -%}
-        <p class="text-sm md:text-base text-stone-900 text-center">
+        <p class="text-sm md:text-base text-text text-center">
           {{ section.settings.paragraph }}
         </p>
       {%- endif -%}
@@ -19,24 +19,24 @@
     {%- if section.blocks.size > 0 -%}
       <div class="flex flex-col gap-6">
         {%- for block in section.blocks -%}
-          <div class="bg-stone-100 p-6 flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-left" {{ block.shopify_attributes }}>
+          <div class="bg-surface p-6 flex flex-col md:flex-row gap-4 md:gap-6 items-center text-center md:text-left" {{ block.shopify_attributes }}>
             {%- if block.settings.icon != blank -%}
               <div class="shrink-0">
                 {%- render 'icon',
                   icon: block.settings.icon,
-                  class: 'w-10 h-10 text-stone-900',
+                  class: 'w-10 h-10 text-text',
                   stroke_width: 1
                 -%}
               </div>
             {%- endif -%}
             <div class="flex flex-col gap-2">
               {%- if block.settings.title != blank -%}
-                <p class="text-base font-medium text-stone-900">
+                <p class="text-base font-medium text-text">
                   {{ block.settings.title }}
                 </p>
               {%- endif -%}
               {%- if block.settings.description != blank -%}
-                <p class="text-sm leading-relaxed text-stone-900">
+                <p class="text-sm leading-relaxed text-text">
                   {{ block.settings.description }}
                 </p>
               {%- endif -%}

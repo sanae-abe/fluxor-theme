@@ -90,7 +90,7 @@
   "@type": "BreadcrumbList",
   "itemListElement": [
     {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
-    {"@type": "ListItem", "position": 2, "name": "Ingredients", "item": {{ shop.url | append: blog.url | json }}},
+    {"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ shop.url | append: blog.url | json }}},
     {"@type": "ListItem", "position": 3, "name": {{ article.title | json }}, "item": {{ shop.url | append: article.url | json }}}
   ]
 }
@@ -125,6 +125,9 @@
       assign last_non_ref_index = forloop.index0
     endunless
   endfor
+  assign block_outer = 'w-full flex flex-col items-center px-4 md:px-10 py-10'
+  assign block_inner = 'w-full max-w-3xl flex flex-col gap-8'
+  assign h2_class = 'text-2xl font-semibold leading-tight text-stone-900 tracking-wider'
 -%}
 {%- for block in section.blocks -%}
   {%- liquid
@@ -138,10 +141,10 @@
   -%}
 
   {%- if block.type == 'article_content' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
+      <div class="{{ block_inner }}">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
+          <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if article.content != blank -%}
           <div class="text-base leading-relaxed text-stone-900 space-y-4 rte">{{ article.content }}</div>
@@ -150,10 +153,10 @@
     </div>
 
   {%- elsif block.type == 'text_section' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
+      <div class="{{ block_inner }}">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
+          <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if block.settings.content != blank -%}
           <div class="text-base leading-relaxed text-stone-900 space-y-4">{{ block.settings.content }}</div>
@@ -162,10 +165,10 @@
     </div>
 
   {%- elsif block.type == 'roles' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
+      <div class="{{ block_inner }}">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
+          <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if roles != blank -%}
           <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
@@ -173,7 +176,7 @@
               {%- if role.title != blank -%}
                 <div class="bg-stone-100 p-6 flex flex-col gap-4">
                   {%- if role.icon != blank -%}
-                    {%- render 'icon', icon: role.icon, class: 'w-10 h-10', stroke_width: 1 -%} 
+                    {%- render 'icon', icon: role.icon, class: 'w-10 h-10', stroke_width: 1 -%}
                   {%- endif -%}
                   <h3 class="text-base font-medium text-stone-900">{{ role.title }}</h3>
                   {%- if role.description != blank -%}
@@ -188,7 +191,7 @@
     </div>
 
   {%- elsif block.type == 'disclaimer' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl">
         <div class="bg-stone-100 p-4 flex gap-2 items-start">
           <div class="shrink-0 pt-1">
@@ -206,10 +209,10 @@
         assign combo_items = caution_combinations
       endif
     -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
+      <div class="{{ block_inner }}">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
+          <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if combo_items != blank -%}
           <div class="flex flex-col divide-y divide-stone-200">
@@ -244,10 +247,10 @@
     </div>
 
   {%- elsif block.type == 'pregnancy_note' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
+      <div class="{{ block_inner }}">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
+          <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if pregnancy_note != blank -%}
           <p class="text-base leading-relaxed text-stone-900">{{ pregnancy_note | newline_to_br }}</p>
@@ -256,10 +259,10 @@
     </div>
 
   {%- elsif block.type == 'usage_tips' -%}
-    <div class="w-full flex flex-col items-center px-4 md:px-10 py-10 {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-3xl flex flex-col gap-8">
+    <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
+      <div class="{{ block_inner }}">
         {%- if block.settings.heading != blank -%}
-          <h2 class="text-2xl font-semibold leading-tight text-stone-900 tracking-wider">{{ block.settings.heading }}</h2>
+          <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if usage_tips != blank -%}
           <ol class="flex flex-col gap-6 list-none">
@@ -286,7 +289,7 @@
     <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-5">
         {%- if block.settings.heading != blank -%}
-          <p class="text-base font-medium text-stone-900">{{ block.settings.heading }}</p>
+          <h2 class="text-base font-medium text-stone-900">{{ block.settings.heading }}</h2>
         {%- endif -%}
           <ol class="flex flex-col gap-2 list-none">
             {%- for entry in reference_entries -%}
@@ -339,12 +342,10 @@
       assign rj_count = 0
       assign rj_seen = ','
       assign rj_blog = blogs[block.settings.blog]
-      assign current_category_tags = article.metafields.custom.category_tags.value
-      assign current_skin_concerns = article.metafields.custom.skin_concerns.value
     -%}
     {%- capture rj_cards -%}
       {%- comment %} Priority 1: category_tags が一致するJournal記事 {%- endcomment -%}
-      {%- if rj_blog != blank and current_category_tags != blank -%}
+      {%- if rj_blog != blank and category_tags != blank -%}
         {%- for candidate in rj_blog.articles limit: rj_fetch -%}
           {%- if rj_count < rj_limit -%}
             {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
@@ -352,7 +353,7 @@
               {%- assign candidate_tags = candidate.metafields.custom.category_tags.value -%}
               {%- assign has_match = false -%}
               {%- if candidate_tags != blank -%}
-                {%- for tag in current_category_tags -%}
+                {%- for tag in category_tags -%}
                   {%- if candidate_tags contains tag -%}
                     {%- assign has_match = true -%}
                   {%- endif -%}
@@ -368,7 +369,7 @@
         {%- endfor -%}
       {%- endif -%}
       {%- comment %} Priority 2: skin_concerns が一致するJournal記事（残り枠補充） {%- endcomment -%}
-      {%- if rj_count < rj_limit and rj_blog != blank and current_skin_concerns != blank -%}
+      {%- if rj_count < rj_limit and rj_blog != blank and skin_concerns != blank -%}
         {%- for candidate in rj_blog.articles limit: rj_fetch -%}
           {%- if rj_count < rj_limit -%}
             {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
@@ -376,7 +377,7 @@
               {%- assign candidate_concerns = candidate.metafields.custom.skin_concerns.value -%}
               {%- assign has_match = false -%}
               {%- if candidate_concerns != blank -%}
-                {%- for concern in current_skin_concerns -%}
+                {%- for concern in skin_concerns -%}
                   {%- if candidate_concerns contains concern -%}
                     {%- assign has_match = true -%}
                   {%- endif -%}
@@ -499,33 +500,31 @@
       assign fetch_limit = 50
       assign rendered_count = 0
       assign seen_ids = ','
-      assign current_category_tags = article.metafields.custom.category_tags.value
-      assign current_skin_concerns = article.metafields.custom.skin_concerns.value
     -%}
     {%- capture related_cards -%}
       {%- comment %} Priority 1: category_tags が一致する記事 {%- endcomment -%}
       {%- for candidate in blog.articles limit: fetch_limit -%}
         {%- unless candidate.id == article.id -%}
           {%- if rendered_count < related_limit -%}
-            {%- liquid
-              assign candidate_tags = candidate.metafields.custom.category_tags.value
-              assign has_match = false
-              if current_category_tags != blank and candidate_tags != blank
-                for tag in current_category_tags
-                  if candidate_tags contains tag
-                    assign has_match = true
-                  endif
-                endfor
-              endif
-            -%}
-            {%- if has_match -%}
-              {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
-              {%- unless seen_ids contains id_sep -%}
+            {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
+            {%- unless seen_ids contains id_sep -%}
+              {%- liquid
+                assign candidate_tags = candidate.metafields.custom.category_tags.value
+                assign has_match = false
+                if category_tags != blank and candidate_tags != blank
+                  for tag in category_tags
+                    if candidate_tags contains tag
+                      assign has_match = true
+                    endif
+                  endfor
+                endif
+              -%}
+              {%- if has_match -%}
                 {%- render 'card-ingredient', article: candidate -%}
                 {%- assign seen_ids = seen_ids | append: candidate.id | append: ',' -%}
                 {%- assign rendered_count = rendered_count | plus: 1 -%}
-              {%- endunless -%}
-            {%- endif -%}
+              {%- endif -%}
+            {%- endunless -%}
           {%- endif -%}
         {%- endunless -%}
       {%- endfor -%}
@@ -539,8 +538,8 @@
                 {%- liquid
                   assign candidate_concerns = candidate.metafields.custom.skin_concerns.value
                   assign has_match = false
-                  if current_skin_concerns != blank and candidate_concerns != blank
-                    for concern in current_skin_concerns
+                  if skin_concerns != blank and candidate_concerns != blank
+                    for concern in skin_concerns
                       if candidate_concerns contains concern
                         assign has_match = true
                       endif
@@ -714,6 +713,11 @@
           "id": "heading",
           "label": "見出し",
           "default": "おすすめ商品"
+        },
+        {
+          "type": "text",
+          "id": "subheading",
+          "label": "サブ見出し"
         },
         {
           "type": "collection",

@@ -1,29 +1,35 @@
 {%- liquid
-  assign carousel_count = 0
-  for block in section.blocks
-    if block.settings.text != blank
-      assign carousel_count = carousel_count | plus: 1
-    endif
-  endfor
   if settings.sale_enabled and settings.sale_banner_show
-    assign carousel_count = carousel_count | plus: 1
+    assign show_sale = true
+  else
+    assign show_sale = false
   endif
+  assign has_content = show_sale
+  unless has_content
+    for block in section.blocks
+      if block.settings.text != blank
+        assign has_content = true
+        break
+      endif
+    endfor
+  endunless
 -%}
 
-{%- if settings.sale_enabled and settings.sale_banner_show or carousel_count > 0 -%}
+{%- if has_content -%}
   <div
     id="AnnouncementBar"
     class="bg-stone-950 text-stone-50 py-2 overflow-hidden"
-    x-data="{}"
+    aria-label="お知らせ"
+    x-data
     x-init="$nextTick(() => { $store.ui.announcementHeight = $el.offsetHeight; new ResizeObserver(() => { $store.ui.announcementHeight = $el.offsetHeight }).observe($el) })"
     x-cloak
     {%- if settings.sale_enabled %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
   >
-    <div class="marquee-track text-xs font-medium tracking-wide">
+    <div class="marquee-track text-xs font-medium tracking-wide" aria-label="スクロールテキスト">
 
       {%- comment %} 1回目（実コンテンツ・Shopify属性付き） {%- endcomment -%}
       <span class="marquee-content">
-        {%- if settings.sale_enabled and settings.sale_banner_show -%}
+        {%- if show_sale -%}
           <span class="inline-flex items-center gap-2 px-10">
             {{ settings.sale_banner_text }}
             {%- render 'sale-countdown' -%}
@@ -40,7 +46,7 @@
 
       {%- comment %} 2回目（シームレスループ用・スクリーンリーダー非表示） {%- endcomment -%}
       <span class="marquee-content" aria-hidden="true">
-        {%- if settings.sale_enabled and settings.sale_banner_show -%}
+        {%- if show_sale -%}
           <span class="inline-flex items-center gap-2 px-10">
             {{ settings.sale_banner_text }}
             {%- render 'sale-countdown' -%}

@@ -17,7 +17,7 @@
   <div class="flex items-center border border-stone-200 w-[144px]">
     <button
       type="button"
-      class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+      class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1"
       @click="qty = Math.max(1, qty - 1)"
       aria-label="数量を減らす"
     >
@@ -31,7 +31,7 @@
     >1</div>
     <button
       type="button"
-      class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+      class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1"
       @click="qty++"
       aria-label="数量を増やす"
     >
@@ -42,12 +42,17 @@
   <button
     type="button"
     class="btn-add-to-cart border-2 flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2"
-    :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white transition-colors duration-300'"
+    :class="{
+      'bg-stone-950 border-stone-950 text-white': adding || variantAvailable,
+      'opacity-70 cursor-wait': adding,
+      'transition-colors duration-300': !adding && variantAvailable,
+      'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed': !adding && !variantAvailable
+    }"
     @click="addToCart()"
     :disabled="adding || !variantAvailable"
   >
-    <span class="text-base font-medium leading-tight" :class="adding ? 'hidden' : ''" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
-    <span class="text-base font-medium leading-tight" :class="adding ? '' : 'hidden'">追加中…</span>
+    <span class="text-base font-medium leading-tight" :class="{ hidden: adding }" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+    <span class="text-base font-medium leading-tight" :class="{ hidden: !adding }">追加中…</span>
   </button>
 
 {%- else -%}
@@ -57,7 +62,7 @@
     <div class="flex items-center border border-stone-200 flex-shrink-0 bg-white">
       <button
         type="button"
-        class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+        class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1"
         @click="qty = Math.max(1, qty - 1)"
         aria-label="数量を減らす"
       >
@@ -71,7 +76,7 @@
       >1</div>
       <button
         type="button"
-        class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:outline-none"
+        class="flex items-center justify-center w-12 h-12 text-stone-900 transition-opacity hover:opacity-60 focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1"
         @click="qty++"
         aria-label="数量を増やす"
       >
@@ -81,13 +86,17 @@
 
     <button
       type="button"
-      class="btn-add-to-cart flex-1 border-2 flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2 palt transition-all duration-300"
-      :class="adding ? 'bg-stone-950 border-stone-950 text-white opacity-70 cursor-wait' : !variantAvailable ? 'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed' : 'bg-stone-950 border-stone-950 text-white'"
+      class="btn-add-to-cart flex-1 border-2 flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2 palt transition-colors duration-300"
+      :class="{
+        'bg-stone-950 border-stone-950 text-white': adding || variantAvailable,
+        'opacity-70 cursor-wait': adding,
+        'bg-stone-200 border-stone-200 text-stone-400 cursor-not-allowed': !adding && !variantAvailable
+      }"
       @click="addToCart()"
       :disabled="adding || !variantAvailable"
     >
-      <span class="text-base font-bold leading-tight" x-show="!adding" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
-      <span class="text-base font-bold leading-tight" x-show="adding" x-cloak>追加中…</span>
+      <span class="text-base font-bold leading-tight" :class="{ hidden: adding }" x-text="variantAvailable ? 'カートに追加' : '売り切れ'">カートに追加</span>
+      <span class="text-base font-bold leading-tight" :class="{ hidden: !adding }">追加中…</span>
     </button>
   </div>
 

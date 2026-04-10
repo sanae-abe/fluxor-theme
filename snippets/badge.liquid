@@ -3,7 +3,7 @@
   Parameters:
     label      {String}  バッジのテキスト（必須）
     variant    {String}  default | secondary | tertiary | ghost | accent | premium | sale | teal | stone（省略時: default）
-    size       {String}  sm | md（省略時: sm)
+    size       {String}  sm | md | lg（省略時: sm）
     icon_left  {String}  左側アイコン名（例: 'arrow-left'）
     icon_right {String}  右側アイコン名（例: 'arrow-right'）
 
@@ -14,8 +14,8 @@
 {%- endcomment -%}
 
 {%- liquid
-  assign badge_variant = variant | default: 'default'
   assign badge_size    = size    | default: 'sm'
+  assign badge_variant = variant | default: 'default'
 
   # ── サイズ ──────────────────────────────────────────────────────
   case badge_size
@@ -32,37 +32,28 @@
 
   # ── カラー × バリアント ─────────────────────────────────────────
   case badge_variant
-    when 'secondary'
-      assign badge_bg   = 'bg-white border border-stone-900/40'
-      assign badge_text = 'text-stone-900'
-    when 'tertiary'
-      assign badge_bg   = 'bg-stone-100'
-      assign badge_text = 'text-slate-900'
-    when 'ghost'
-      assign badge_bg   = 'bg-transparent border border-white'
-      assign badge_text = 'text-white'
-    when 'accent'
-      assign badge_bg   = 'bg-white border border-teal-700/40'
-      assign badge_text = 'text-teal-700'
-    when 'premium'
-      assign badge_bg   = 'bg-white border border-rose-700/40'
-      assign badge_text = 'text-rose-700'
-    when 'sale'
-      assign badge_bg   = 'bg-rose-700'
-      assign badge_text = 'text-white'
-    when 'stone'
-      assign badge_bg   = 'bg-stone-200'
-      assign badge_text = 'text-stone-900'
-    when 'teal'
-      assign badge_bg   = 'bg-teal-50'
-      assign badge_text = 'text-teal-700'
-    else
-      assign badge_bg   = 'bg-stone-900'
-      assign badge_text = 'text-white'
+  when 'secondary'
+    assign variant_cls = 'bg-white border border-stone-900/40 text-stone-900'
+  when 'tertiary'
+    assign variant_cls = 'bg-stone-100 text-slate-900'
+  when 'ghost'
+    assign variant_cls = 'bg-transparent border border-white text-white'
+  when 'accent'
+    assign variant_cls = 'bg-white border border-teal-700/40 text-teal-700'
+  when 'premium'
+    assign variant_cls = 'bg-white border border-rose-700/40 text-rose-700'
+  when 'sale'
+    assign variant_cls = 'bg-rose-700 text-white'
+  when 'stone'
+    assign variant_cls = 'bg-stone-200 text-stone-900'
+  when 'teal'
+    assign variant_cls = 'bg-teal-50 text-teal-700'
+  else
+    assign variant_cls = 'bg-stone-900 text-white'
   endcase
 -%}
 
-<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ badge_bg }} {{ badge_text }} font-medium palt tracking-wider leading-tight whitespace-nowrap uppercase align-middle">
+<span class="inline-flex items-center justify-center {{ size_cls }} rounded-full {{ variant_cls }} font-medium palt tracking-wider leading-tight whitespace-nowrap uppercase align-middle">
   {%- if icon_left != blank -%}
     {%- render 'icon', icon: icon_left, class: icon_cls -%}
   {%- endif -%}

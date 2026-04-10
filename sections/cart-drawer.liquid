@@ -1,6 +1,7 @@
 {%- comment %} カートドロワー（Alpine.js $store.cart で制御） {%- endcomment -%}
 <div
-  x-data
+  x-data="{}"
+  x-init="$watch('$store.cart.open', val => { if (val) $nextTick(() => $refs.closeBtn.focus()) })"
   x-show="$store.cart.open"
   x-cloak
   x-trap="$store.cart.open"
@@ -18,7 +19,7 @@
 >
   {%- comment %} ヘッダー {%- endcomment -%}
   <div class="flex items-center justify-between px-6 py-5 border-b border-stone-200">
-    <h2 class="text-sm tracking-widest uppercase">
+    <h2 class="text-base font-semibold tracking-widest uppercase">
       カート
       <span
         :class="$store.cart.itemCount > 0 ? '' : 'hidden'"
@@ -26,12 +27,32 @@
       >(<span x-text="$store.cart.itemCount"></span>)</span>
     </h2>
     <button
+      x-ref="closeBtn"
       type="button"
       @click="$store.cart.open = false"
       class="text-stone-500 hover:text-stone-900 transition-colors"
       aria-label="カートを閉じる"
     >
       {%- render 'icon', icon: 'x', class: 'w-5 h-5' -%}
+    </button>
+  </div>
+
+  {%- comment %} エラーバナー {%- endcomment -%}
+  <div
+    x-show="$store.cart.errored"
+    x-cloak
+    class="mx-4 mt-3 px-3 py-2.5 bg-red-50 border border-red-200 text-red-700 text-xs flex items-center justify-between gap-2"
+    role="alert"
+    aria-live="polite"
+  >
+    <span>エラーが発生しました。もう一度お試しください。</span>
+    <button
+      type="button"
+      @click="$store.cart.errored = false"
+      class="text-red-400 hover:text-red-700 flex-shrink-0"
+      aria-label="エラーを閉じる"
+    >
+      {%- render 'icon', icon: 'x', class: 'w-3.5 h-3.5' -%}
     </button>
   </div>
 
@@ -54,13 +75,29 @@
   {%- comment %} カートアイテム一覧 {%- endcomment -%}
   <div
     :class="$store.cart.items.length > 0 ? '' : 'hidden'"
-    class="flex-1 overflow-y-auto px-6 py-4 space-y-6"
+    :aria-busy="$store.cart.loading"
+    class="flex-1 overflow-y-auto px-6 py-4 space-y-6 relative"
   >
+    {%- comment %} ローディングオーバーレイ {%- endcomment -%}
+    <div
+      :class="$store.cart.loading ? '' : 'hidden'"
+      class="absolute inset-0 z-10 flex items-center justify-center bg-stone-50/70"
+      aria-hidden="true"
+    >
+      <svg class="w-6 h-6 text-stone-400 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+        <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+        <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+      </svg>
+    </div>
     <template x-for="item in $store.cart.items" :key="item.key">
-      <div class="flex gap-4">
-        <a :href="item.url" @click="$store.cart.open = false" class="flex-shrink-0 w-20 h-20 bg-stone-200 overflow-hidden">
+      <div class="flex gap-4" :class="$store.cart.loading ? 'opacity-50' : ''">
+        <a
+          :href="item.url"
+          @click="$store.cart.open = false"
+          class="flex-shrink-0 w-20 h-20 bg-stone-200 overflow-hidden"
+        >
           <img
-            :src="item.featured_image ? item.featured_image.url : ''"
+            :src="$store.cart.imageUrl(item.featured_image?.url, 160)"
             :alt="item.title"
             class="w-full h-full object-cover"
             width="80"
@@ -71,7 +108,12 @@
 
         <div class="flex-1 min-w-0">
           <p class="text-xs text-stone-500 mb-0.5" x-text="item.vendor"></p>
-          <a :href="item.url" @click="$store.cart.open = false" class="text-sm font-medium leading-snug" x-text="item.product_title"></a>
+          <a
+            :href="item.url"
+            @click="$store.cart.open = false"
+            class="text-sm font-medium leading-snug"
+            x-text="item.product_title"
+          ></a>
           <p
             :class="item.variant_title && item.variant_title !== 'Default Title' ? '' : 'hidden'"
             class="text-xs text-stone-500 mt-0.5"
@@ -79,17 +121,41 @@
           ></p>
 
           <div class="flex items-center justify-between mt-2">
-            <p class="text-sm">
-              <span x-text="$store.cart.formatPrice(item.final_line_price)"></span>
-              <span class="text-xs text-stone-500">（税込）</span>
-            </p>
-            <button
-              type="button"
-              @click="$store.cart.remove(item.key)"
-              class="text-xs text-stone-500 hover:text-stone-900 underline transition-colors"
-            >
-              削除
-            </button>
+            {%- comment %} 数量ステッパー {%- endcomment -%}
+            <div class="flex items-center gap-1.5">
+              <button
+                type="button"
+                @click="item.quantity <= 1 ? $store.cart.remove(item.key) : $store.cart.changeQuantity(item.key, item.quantity - 1)"
+                :disabled="$store.cart.loading"
+                :aria-label="'数量を減らす: ' + item.product_title"
+                class="w-6 h-6 flex items-center justify-center border border-stone-300 text-stone-500 hover:border-stone-900 hover:text-stone-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >−</button>
+              <span class="text-sm w-5 text-center tabular-nums" x-text="item.quantity"></span>
+              <button
+                type="button"
+                @click="$store.cart.changeQuantity(item.key, item.quantity + 1)"
+                :disabled="$store.cart.loading"
+                :aria-label="'数量を増やす: ' + item.product_title"
+                class="w-6 h-6 flex items-center justify-center border border-stone-300 text-stone-500 hover:border-stone-900 hover:text-stone-900 transition-colors disabled:opacity-40 disabled:cursor-not-allowed"
+              >+</button>
+            </div>
+
+            {%- comment %} 価格・削除 {%- endcomment -%}
+            <div class="flex items-center gap-3">
+              <p class="text-sm">
+                <span x-text="$store.cart.formatPrice(item.final_line_price)"></span>
+                <span class="text-xs text-stone-400">（税込）</span>
+              </p>
+              <button
+                type="button"
+                @click="$store.cart.remove(item.key)"
+                :disabled="$store.cart.loading"
+                :aria-label="'削除: ' + item.product_title"
+                class="text-stone-400 hover:text-stone-900 transition-colors disabled:cursor-not-allowed"
+              >
+                {%- render 'icon', icon: 'x', class: 'w-4 h-4' -%}
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -99,14 +165,15 @@
   {%- comment %} フッター {%- endcomment -%}
   <div
     :class="$store.cart.items.length > 0 ? '' : 'hidden'"
+    :aria-busy="$store.cart.loading"
     class="border-t border-stone-200 px-6 py-5 space-y-4"
   >
     <div class="flex justify-between text-sm">
       <span class="text-stone-500">小計</span>
-      <span x-text="$store.cart.formatPrice($store.cart.totalPrice())"></span>
+      <span class="text-xl" x-text="$store.cart.formatPrice($store.cart.totalPrice())"></span>
     </div>
     {%- render 'button',
-      label: '購入手続きへ',
+      label: 'カートを見る',
       url: routes.cart_url,
       full_width: true
     -%}

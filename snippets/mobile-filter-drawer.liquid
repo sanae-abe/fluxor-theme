@@ -5,6 +5,7 @@
     open_expr  : {String} x-show に渡す Alpine 式（例: "filtersOpen"）
     close_expr : {String} 閉じる操作の Alpine 式（例: "filtersOpen = false"）
     content    : {String} ドロワー本体コンテンツ HTML（capture 済み文字列）
+    clear_url  : {String} すべてクリアリンクの URL（省略時はクリアリンクを非表示）
 {%- endcomment -%}
 {%- comment %} ドロワーパネル {%- endcomment -%}
 <div
@@ -28,14 +29,32 @@
     <button
       type="button"
       @click="{{ close_expr }}"
-      class="text-stone-500 hover:text-stone-900 transition-colors"
+      class="text-stone-500 hover:text-stone-900 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-offset-2 rounded-sm"
       aria-label="閉じる"
     >
       {%- render 'icon', icon: 'x', class: 'w-5 h-5' -%}
     </button>
   </div>
-  <div class="flex-1 overflow-y-auto p-5 gap-2 space-y-6">
+  <div class="flex-1 overflow-y-auto p-5 space-y-6">
     {{ content }}
+  </div>
+  <div class="border-t border-stone-200 px-5 py-4 flex items-center gap-3 flex-shrink-0">
+    {%- if clear_url != blank -%}
+      <a
+        href="{{ clear_url }}"
+        class="flex-1 text-center text-sm text-stone-500 underline py-2"
+        @click="{{ close_expr }}"
+      >
+        すべてクリア
+      </a>
+    {%- endif -%}
+    <button
+      type="button"
+      @click="{{ close_expr }}"
+      class="flex-1 bg-stone-900 text-stone-50 text-sm py-2.5 px-4 transition-opacity hover:opacity-80"
+    >
+      閉じる
+    </button>
   </div>
 </div>
 {%- comment %} オーバーレイ {%- endcomment -%}

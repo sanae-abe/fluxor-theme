@@ -2,6 +2,13 @@
    Judge.me ウィジェット — Fluxor テーマカスタマイズ
    ===================================================== */
 
+/* ── Judge.me 固有変数 ──────────────────────────────── */
+/* テーマパレットに対応変数がない色を定義 */
+:root {
+  --jdgm-color-body: #44403c;     /* stone-700 — レビュー本文 */
+  --jdgm-color-verified: #2a3b35; /* accent-dark — Verified Buyer バッジ */
+}
+
 /* ── ベース ─────────────────────────────────────────── */
 .jdgm-widget {
   font-family: inherit;
@@ -108,8 +115,8 @@
 
 @media (any-hover: hover) {
   .jdgm-write-rev-link:hover {
-    background-color: #ffffff !important;
-    color: #0c0a09 !important;
+    background-color: var(--color-background) !important;
+    color: var(--color-text) !important;
   }
 }
 
@@ -120,8 +127,8 @@
 @media (any-hover: hover) {
   .jdgm-form__submit:hover,
   .jdgm-rev-add__submit:hover {
-    background-color: #44403c !important;
-    border-color: #44403c !important;
+    background-color: var(--jdgm-color-body) !important;
+    border-color: var(--jdgm-color-body) !important;
   }
 }
 
@@ -167,7 +174,7 @@
 /* レビュー本文 */
 .jdgm-rev__body {
   font-size: 0.9375rem;
-  color: #44403c; /* stone-700（変数なし） */
+  color: var(--jdgm-color-body);
   line-height: 1.75;
   letter-spacing: 0.02em;
 }
@@ -192,7 +199,7 @@
 .jdgm-badge-icon--verified-buyer,
 .jdgm-verified-info {
   font-size: 0.75rem;
-  color: #2a3b35 !important; /* accent dark（変数なし） */
+  color: var(--jdgm-color-verified) !important;
   letter-spacing: 0.06em;
   text-transform: uppercase;
 }
@@ -278,11 +285,18 @@ select.jdgm-sort-dropdown.jm-sort-filter__select {
   background: none !important;
 }
 
-select.jdgm-sort-dropdown.jm-sort-filter__select:hover,
-button.jm-custom-answer-filter:hover,
+/* アクティブ状態（タッチデバイス含む） */
 button.jm-custom-answer-filter--active {
   background: var(--color-text) !important;
-  color: #fff !important;
+  color: var(--color-background) !important;
+}
+
+@media (any-hover: hover) {
+  select.jdgm-sort-dropdown.jm-sort-filter__select:hover,
+  button.jm-custom-answer-filter:hover {
+    background: var(--color-text) !important;
+    color: var(--color-background) !important;
+  }
 }
 
 .jm-average-rating-display {

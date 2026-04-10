@@ -1,42 +1,75 @@
-<section class="max-w-screen-xl mx-auto py-12">
-  <div class="mb-10">
-    <h1 class="text-2xl md:text-4xl font-semibold">{{ blog.title }}</h1>
-    {%- if blog.articles_count > 0 -%}
-      <p class="mt-2 text-xs text-stone-400">{{ blog.articles_count }}記事</p>
-    {%- endif -%}
-  </div>
+{%- paginate blog.articles by 12 -%}
 
-  {%- if blog.articles.size > 0 -%}
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {%- for article in blog.articles -%}
-        {%- render 'card-article', article: article -%}
-      {%- endfor -%}
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {"@type": "ListItem", "position": 1, "name": "ホーム", "item": {{ shop.url | json }}},
+    {"@type": "ListItem", "position": 2, "name": {{ blog.title | json }}, "item": {{ shop.url | append: blog.url | json }}}
+  ]
+}
+</script>
+
+<div class="px-4 md:px-10 pb-10 md:pb-[60px]">
+  <section class="max-w-screen-xl mx-auto" aria-label="ブログ記事一覧">
+
+    {%- comment %} ページヘッダー {%- endcomment -%}
+    <div class="py-5 md:py-10 flex flex-col gap-4 justify-center">
+      <h1 class="text-2xl md:text-4xl md:leading-tight font-semibold md:tracking-wider uppercase">{{ blog.title }}</h1>
+      {%- if blog.articles_count > 0 -%}
+        <p class="text-xs text-stone-400">{{ blog.articles_count }}記事</p>
+      {%- endif -%}
     </div>
+    <hr class="border-stone-200">
 
-    {%- if paginate.pages > 1 -%}
-      <nav class="flex justify-center gap-2 mt-16" aria-label="ページネーション">
-        {%- if paginate.previous -%}
-          <a href="{{ paginate.previous.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">前へ</a>
-        {%- endif -%}
-        {%- for part in paginate.parts -%}
-          {%- if part.is_link -%}
-            <a href="{{ part.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">{{ part.title }}</a>
-          {%- else -%}
-            <span class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
-          {%- endif -%} 
+    {%- if blog.articles.size > 0 -%}
+
+      {%- comment %} 記事グリッド {%- endcomment -%}
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 pt-10">
+        {%- for article in blog.articles -%}
+          {%- render 'card-article', article: article -%}
         {%- endfor -%}
-        {%- if paginate.next -%}
-          <a href="{{ paginate.next.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">次へ</a>
-        {%- endif -%}
-      </nav>
+      </div>
+
+      {%- comment %} ページネーション {%- endcomment -%}
+      {%- if paginate.pages > 1 -%}
+        <nav class="flex justify-center gap-2 mt-16" aria-label="ページネーション">
+          {%- if paginate.previous -%}
+            <a href="{{ paginate.previous.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">前へ</a>
+          {%- endif -%}
+          {%- for part in paginate.parts -%}
+            {%- if part.is_link -%}
+              <a href="{{ part.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">{{ part.title }}</a>
+            {%- elsif part.title == paginate.current_page -%}
+              <span class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
+            {%- else -%}
+              <span class="px-4 py-2 text-sm text-stone-300">{{ part.title }}</span>
+            {%- endif -%}
+          {%- endfor -%}
+          {%- if paginate.next -%}
+            <a href="{{ paginate.next.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">次へ</a>
+          {%- endif -%}
+        </nav>
+      {%- endif -%}
+
+    {%- else -%}
+      <p class="text-sm text-stone-400 py-20 text-center">記事がありません。</p>
     {%- endif -%}
-  {%- else -%}
-    <p class="text-sm text-stone-400 py-20 text-center">記事がありません。</p>
-  {%- endif -%}
-</section>
+
+  </section>
+</div>
+
+{%- endpaginate -%}
 
 {%- schema %}
 {
-  "name": "Blog"
+  "name": "Blog",
+  "settings": [],
+  "presets": [
+    {
+      "name": "Blog"
+    }
+  ]
 }
 {%- endschema -%}

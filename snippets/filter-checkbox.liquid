@@ -1,9 +1,9 @@
 {%- comment %} filter-checkbox.liquid — フィルター用チェックボックス行
   Parameters:
-    - url      : クリック先 URL（必須）
-    - active   : 選択中かどうか（boolean）
-    - label    : 表示ラベル（必須）
-    - count    : 件数（省略時は非表示）
+    - url    : クリック先 URL（必須）
+    - active : 選択中かどうか（boolean）
+    - label  : 表示ラベル（必須）
+    - count  : 件数（省略時は非表示）
 {%- endcomment -%}
 {%- assign _disabled = false -%}
 {%- if active == false and count == 0 -%}
@@ -18,8 +18,13 @@
 {%- endif -%}
 <a
   href="{{ url }}"
-  class="flex items-center gap-2.5 group"
-  {%- if _disabled %} tabindex="-1" aria-disabled="true"{% endif %}
+  role="checkbox"
+  aria-checked="{{ active | json }}"
+  class="flex items-center gap-2.5 group{%- if _disabled %} pointer-events-none{%- endif -%}"
+  {%- if _disabled %}
+  tabindex="-1"
+  aria-disabled="true"
+  {%- endif %}
 >
   <span class="w-4 h-4 border flex-shrink-0 flex items-center justify-center transition-colors {{ _box_class }}">
     {%- if active -%}

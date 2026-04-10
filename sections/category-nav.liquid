@@ -1,39 +1,46 @@
+{%- liquid
+  if section.settings.background == 'bg-stone-950'
+    assign label_color = 'text-stone-50'
+  else
+    assign label_color = 'text-stone-900'
+  endif
+-%}
 <section class="{{ section.settings.background }} px-4 md:px-10 py-10 md:py-[60px]">
   <div class="max-w-screen-xl mx-auto">
-    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
-      {%- for block in section.blocks -%}
-        <a
-          href="{{ block.settings.url | default: '#' }}"
-          class="group flex flex-col items-center gap-4"
-          {{ block.shopify_attributes }}
-        >
-          {%- comment %} 丸画像 {%- endcomment -%}
-          <div class="w-full aspect-square rounded-full bg-stone-50 overflow-hidden [transform:translateZ(0)]">
-            {%- if block.settings.image -%}
-              <img
-                src="{{ block.settings.image | image_url: width: 500, format: 'webp' }}"
-                alt="{{ block.settings.label | escape }}"
-                class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
-                loading="lazy"
-                width="500"
-                height="500"
-              >
-            {%- else -%}
-              <div class="w-full h-full flex items-center justify-center text-stone-200">
-                {%- render 'icon', icon: 'image', class: 'w-12 h-12' -%}
-              </div>
-            {%- endif -%}
-          </div>
+    <nav aria-label="カテゴリナビゲーション">
+      <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-10">
+        {%- for block in section.blocks -%}
+          <a
+            href="{{ block.settings.url | default: '#' }}"
+            class="category-nav__item flex flex-col items-center gap-4"
+            {{ block.shopify_attributes }}
+          >
+            <div class="w-full aspect-square rounded-full bg-stone-50 overflow-hidden transform-gpu">
+              {%- if block.settings.image -%}
+                <img
+                  src="{{ block.settings.image | image_url: width: 500, format: 'webp' }}"
+                  alt="{{ block.settings.label | escape }}"
+                  class="category-nav__img w-full h-full object-cover"
+                  loading="lazy"
+                  width="500"
+                  height="500"
+                >
+              {%- else -%}
+                <div class="w-full h-full flex items-center justify-center text-stone-200">
+                  {%- render 'icon', icon: 'image', class: 'w-12 h-12' -%}
+                </div>
+              {%- endif -%}
+            </div>
 
-          {%- comment %} ラベル {%- endcomment -%}
-          {%- if block.settings.label != blank -%}
-            <p class="text-base font-medium {% if section.settings.background == 'bg-stone-950' %}text-stone-50{% else %}text-stone-900{% endif %} text-center leading-relaxed">
-              {{ block.settings.label }}
-            </p>
-          {%- endif -%}
-        </a>
-      {%- endfor -%}
-    </div>
+            {%- if block.settings.label != blank -%}
+              <p class="text-base font-medium {{ label_color }} text-center leading-relaxed">
+                {{ block.settings.label }}
+              </p>
+            {%- endif -%}
+          </a>
+        {%- endfor -%}
+      </div>
+    </nav>
   </div>
 </section>
 

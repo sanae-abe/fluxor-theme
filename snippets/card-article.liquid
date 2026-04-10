@@ -6,8 +6,8 @@
 
 {%- assign category_tags = article.metafields.custom.category_tags.value -%}
 
-<article>
-  <a href="{{ article.url }}" class="card-article flex flex-col gap-4">
+<article class="card-article">
+  <a href="{{ article.url }}" class="flex flex-col gap-4">
 
     {%- comment %} 画像エリア（正方形 + カテゴリバッジオーバーレイ） {%- endcomment -%}
     <div class="relative overflow-hidden bg-white aspect-square">
@@ -21,9 +21,9 @@
           height="600"
         >
       {%- else -%}
-      <div class="w-full h-full bg-stone-200 flex items-center justify-center">
-        {%- render 'icon', icon: 'notebook-pen', class: 'w-12 h-12 text-stone-400', stroke_width: 1 -%}
-      </div>
+        <div class="w-full h-full bg-muted flex items-center justify-center" aria-hidden="true">
+          {%- render 'icon', icon: 'notebook-pen', class: 'w-12 h-12 text-text-subtle', stroke_width: 1 -%}
+        </div>
       {%- endif -%}
 
       {%- if category_tags != blank -%}
@@ -37,8 +37,8 @@
 
     {%- comment %} タイトル + 矢印アイコン {%- endcomment -%}
     <div class="flex items-start gap-4">
-      <h3 class="flex-1 text-base font-medium leading-5 text-stone-900">{{ article.title }}</h3>
-      {%- render 'icon', icon: 'arrow-right', class: 'card-article__icon w-6 h-6 text-stone-900 shrink-0 mt-0.5', stroke_width: 1.5 -%}
+      <h3 class="flex-1 text-base font-medium leading-5 text-text">{{ article.title | escape }}</h3>
+      {%- render 'icon', icon: 'arrow-right', class: 'card-article__icon w-6 h-6 text-text shrink-0 mt-0.5', stroke_width: 1.5 -%}
     </div>
 
   </a>

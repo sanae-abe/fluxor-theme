@@ -41,85 +41,8 @@
   assign origin             = product.metafields.custom.origin
   assign texture            = product.metafields.custom.texture
   assign product_name_en    = product.metafields.custom.product_name_en
-
-  assign sale_eligible = false
-  assign sale_discount = 0
-
-  if settings.sale_enabled
-    assign _excluded = false
-    if settings.sale_exclude_handles != blank
-      assign _exclude_handle_list = settings.sale_exclude_handles | split: ','
-      for _handle in _exclude_handle_list
-        assign _handle_normalized = _handle | strip | downcase
-        if _handle_normalized == product.handle
-          assign _excluded = true
-          break
-        endif
-      endfor
-    endif
-
-    unless _excluded or settings.sale_exclude_tags == blank
-      assign _exclude_tag_list = settings.sale_exclude_tags | split: ','
-      for _exclude_tag in _exclude_tag_list
-        assign _exclude_tag_normalized = _exclude_tag | strip | downcase
-        for _product_tag in product.tags
-          assign _product_tag_normalized = _product_tag | downcase
-          if _product_tag_normalized == _exclude_tag_normalized
-            assign _excluded = true
-            break
-          endif
-        endfor
-        if _excluded
-          break
-        endif
-      endfor
-    endunless
-
-    unless _excluded
-      case settings.sale_target
-      when 'all'
-        assign sale_eligible = true
-      when 'tag'
-        if settings.sale_target_tags != blank
-          assign _target_tag_list = settings.sale_target_tags | split: ','
-          for _target_tag in _target_tag_list
-            assign _target_tag_normalized = _target_tag | strip | downcase
-            for _product_tag in product.tags
-              assign _product_tag_normalized = _product_tag | downcase
-              if _product_tag_normalized == _target_tag_normalized
-                assign sale_eligible = true
-                break
-              endif
-            endfor
-            if sale_eligible
-              break
-            endif
-          endfor
-        endif
-      when 'collection'
-        if settings.sale_target_collections != blank
-          assign _target_col_list = settings.sale_target_collections | split: ','
-          for _target_col_handle in _target_col_list
-            assign _target_col_normalized = _target_col_handle | strip | downcase
-            for _product_col in product.collections
-              if _product_col.handle == _target_col_normalized
-                assign sale_eligible = true
-                break
-              endif
-            endfor
-            if sale_eligible
-              break
-            endif
-          endfor
-        endif
-      endcase
-
-      if sale_eligible
-        assign sale_discount = settings.sale_discount_percent | plus: 0
-      endif
-    endunless
-  endif
 -%}
+{%- include 'sale-engine' -%}
 
 {%- comment %} ※ 上付き文字変換用共通変数（※1〜※5 と ※ を <sup> タグに置換） {%- endcomment -%}
 {%- assign _sup_open = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
@@ -175,6 +98,47 @@
     ,{"@type": "ListItem", "position": 2, "name": {{ product.title | json }}, "item": {{ product.url | prepend: shop.url | json }}}
     {%- endif -%}
   ]
+}
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Product",
+  "name": {{ product.title | json }},
+  "url": {{ shop.url | append: product.url | json }},
+  "description": {{ product.description | strip_html | truncate: 500 | json }},
+  {%- if product.images != blank -%}
+  "image": [
+    {%- for image in product.images limit: 5 -%}
+      {{ image | image_url: width: 1200 | json }}{%- unless forloop.last -%},{%- endunless -%}
+    {%- endfor -%}
+  ],
+  {%- endif -%}
+  {%- if product.vendor != blank -%}
+  "brand": {
+    "@type": "Brand",
+    "name": {{ product.vendor | json }}
+  },
+  {%- endif -%}
+  {%- if rating_value != blank -%}
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": {{ rating_value | round: 1 }},
+    "reviewCount": {{ rating_count | default: 0 }}
+  },
+  {%- endif -%}
+  "offers": {
+    "@type": "Offer",
+    "url": {{ shop.url | append: product.url | json }},
+    "priceCurrency": {{ cart.currency.iso_code | json }},
+    "price": {{ variant.price | divided_by: 100 }},
+    "availability": "https://schema.org/{%- if variant.available -%}InStock{%- else -%}OutOfStock{%- endif -%}",
+    "seller": {
+      "@type": "Organization",
+      "name": {{ shop.name | json }}
+    }
+  }
 }
 </script>
 
@@ -235,13 +199,13 @@
         {%- comment %} サムネイル横カルーセル（4枚表示、以降は左右ボタンで切り替え） {%- endcomment -%}
         <div
           class="relative"
-          x-data="{ thumbOffset: 0, maxOffset: Math.max(0, {{ product.images.size }} - 4), scrollToThumb(index) { const t = this.$refs.thumbTrack; const thumbs = t.querySelectorAll('button'); const thumb = thumbs[index]; if (!thumb) return; const cardW = (thumbs[0] ? thumbs[0].offsetWidth : 0) + 12; if (thumb.offsetLeft < t.scrollLeft) { this.thumbOffset = Math.max(0, this.thumbOffset - 1); t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' }); } else if (thumb.offsetLeft + thumb.offsetWidth > t.scrollLeft + t.clientWidth) { this.thumbOffset = Math.min(this.maxOffset, this.thumbOffset + 1); t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' }); } } }"
+          x-data="thumbCarousel({{ product.images.size }})"
         >
           <button
             type="button"
             class="absolute left-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
             :class="thumbOffset === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
-            @click="thumbOffset = Math.max(0, thumbOffset - 1); $refs.thumbTrack.scrollTo({ left: thumbOffset * (($refs.thumbTrack.querySelector('button')?.offsetWidth ?? 0) + 12), behavior: 'smooth' })"
+            @click="scrollPrev()"
             aria-label="前へ"
           >
             {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5' -%}
@@ -275,7 +239,7 @@
             type="button"
             class="absolute right-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
             :class="thumbOffset >= maxOffset ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
-            @click="thumbOffset = Math.min(maxOffset, thumbOffset + 1); $refs.thumbTrack.scrollTo({ left: thumbOffset * (($refs.thumbTrack.querySelector('button')?.offsetWidth ?? 0) + 12), behavior: 'smooth' })"
+            @click="scrollNext()"
             aria-label="次へ"
           >
             {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5' -%}
@@ -665,6 +629,38 @@
 </div>{%- comment %} x-data wrapper close {%- endcomment -%}
 
 <script>
+  function thumbCarousel(imageCount) {
+    return {
+      thumbOffset: 0,
+      maxOffset: Math.max(0, imageCount - 4),
+      _cardW() {
+        return (this.$refs.thumbTrack?.querySelector('button')?.offsetWidth ?? 0) + 12;
+      },
+      scrollPrev() {
+        this.thumbOffset = Math.max(0, this.thumbOffset - 1);
+        this.$refs.thumbTrack.scrollTo({ left: this.thumbOffset * this._cardW(), behavior: 'smooth' });
+      },
+      scrollNext() {
+        this.thumbOffset = Math.min(this.maxOffset, this.thumbOffset + 1);
+        this.$refs.thumbTrack.scrollTo({ left: this.thumbOffset * this._cardW(), behavior: 'smooth' });
+      },
+      scrollToThumb(index) {
+        const t = this.$refs.thumbTrack;
+        const thumbs = t.querySelectorAll('button');
+        const thumb = thumbs[index];
+        if (!thumb) return;
+        const cardW = this._cardW();
+        if (thumb.offsetLeft < t.scrollLeft) {
+          this.thumbOffset = Math.max(0, this.thumbOffset - 1);
+          t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' });
+        } else if (thumb.offsetLeft + thumb.offsetWidth > t.scrollLeft + t.clientWidth) {
+          this.thumbOffset = Math.min(this.maxOffset, this.thumbOffset + 1);
+          t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' });
+        }
+      }
+    };
+  }
+
   function ingredientCarousel(descIdx) {
     return {
       active: null,

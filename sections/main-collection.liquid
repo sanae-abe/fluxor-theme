@@ -54,23 +54,11 @@
             {%- endif -%}
           </button>
         {%- endif -%}
-        {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
-        <div class="hidden md:flex items-center gap-4{%- if collection.filters.size > 0 %} w-72{%- endif %}">
-          <p class="text-sm text-stone-500 uppercase tracking-wider">{{ paginate.items }}点の商品</p>
+        {%- comment %} 件数 + クリア {%- endcomment -%}
+        <div class="flex items-center gap-4{%- if collection.filters.size > 0 %} md:w-72{%- endif %}">
+          <p class="text-sm text-stone-500 md:uppercase md:tracking-wider">{{ paginate.items }}点の商品</p>
           {%- if active_filter_count > 0 -%}
-            <a href="{{ collection.url }}" class="text-sm text-stone-500 underline uppercase tracking-wider">すべてクリア</a>
-          {%- endif -%}
-        </div>
-        {%- comment %} 件数 + クリア（モバイル） {%- endcomment -%}
-        <div class="md:hidden flex items-center gap-4">
-        <p class="md:hidden text-sm text-stone-500">{{ paginate.items }}点の商品</p>
-          {%- if active_filter_count > 0 -%}
-            <a href="{{ collection.url }}"
-              class="text-sm text-stone-500 underline uppercase"
-              type="button"
-            >
-              すべてクリア
-            </a>
+            <a href="{{ collection.url }}" class="text-sm text-stone-500 underline md:uppercase md:tracking-wider">すべてクリア</a>
           {%- endif -%}
         </div>
       </div>
@@ -94,6 +82,7 @@
           {%- endfor -%}
         {%- endcapture -%}
         {%- capture _sort_onchange -%}onchange="const u = new URL(window.location.href); u.searchParams.set('sort_by', this.value); window.location.href = u.toString();"{%- endcapture -%}
+        <label for="SortBy" class="sr-only">並び替え</label>
         {%- render 'form-select', id: 'SortBy', options_html: _sort_options, attr: _sort_onchange -%}
       </div>
     </div>
@@ -109,38 +98,7 @@
       {%- comment %} 商品グリッド {%- endcomment -%}
       <div
         class="flex-1 min-w-0"
-        x-data="{
-          nextUrl: '{{ paginate.next.url | escape }}',
-          loading: false,
-          errored: false,
-          done: '{{ paginate.next.url | escape }}' === '',
-          init() {
-            if (!window.matchMedia('(max-width: 767px)').matches) return;
-            if (this.done) return;
-            const obs = new IntersectionObserver(entries => {
-              if (entries[0].isIntersecting) this.loadMore();
-            }, { rootMargin: '400px' });
-            obs.observe(this.$refs.sentinel);
-          },
-          async loadMore() {
-            if (this.loading || this.done || !this.nextUrl) return;
-            this.loading = true;
-            this.errored = false;
-            try {
-              const res = await fetch(this.nextUrl);
-              const html = await res.text();
-              const doc = new DOMParser().parseFromString(html, 'text/html');
-              const grid = doc.querySelector('[data-product-grid]');
-              if (grid) [...grid.children].forEach(el => this.$refs.grid.appendChild(el));
-              const marker = doc.getElementById('js-next-url');
-              this.nextUrl = marker ? marker.dataset.url : null;
-              this.done = !this.nextUrl;
-            } catch(e) {
-              this.errored = true;
-            }
-            this.loading = false;
-          }
-        }"
+        x-data="productGrid('{{ paginate.next.url | escape }}')"
       >
         {%- if collection.products.size > 0 -%}
 
@@ -200,7 +158,11 @@
       {%- capture drawer_content -%}
         {%- render 'filter-sidebar', filters: collection.filters, sort_by: collection.sort_by -%}
       {%- endcapture -%}
-      {%- render 'mobile-filter-drawer', open_expr: 'filtersOpen', close_expr: 'filtersOpen = false', content: drawer_content -%}
+      {%- if active_filter_count > 0 -%}
+        {%- render 'mobile-filter-drawer', open_expr: 'filtersOpen', close_expr: 'filtersOpen = false', content: drawer_content, clear_url: collection.url -%}
+      {%- else -%}
+        {%- render 'mobile-filter-drawer', open_expr: 'filtersOpen', close_expr: 'filtersOpen = false', content: drawer_content -%}
+      {%- endif -%}
     {%- endif -%}
   </section>
 </div>

@@ -4,11 +4,11 @@
   Accepts:
   - product: {Object} Product object
   - variant: {Object} Variant object (optional, overrides product)
-  - class: {String} Extra CSS classes
+  - class:   {String} Extra CSS classes
 
   Usage:
-  {% render 'price', product: product %}
-  {% render 'price', variant: product.selected_or_first_available_variant %}
+  {%- render 'price', product: product -%}
+  {%- render 'price', variant: product.selected_or_first_available_variant -%}
 {%- endcomment -%}
 {%- liquid
   if variant
@@ -16,47 +16,44 @@
   elsif product
     assign target = product.selected_or_first_available_variant
   endif
-
-  assign price        = target.price
-  assign compare_price = target.compare_at_price
-  assign available    = target.available
-
-  assign on_sale = false
-  if compare_price > price
-    assign on_sale = true
-  endif
-
-  assign price_classes = 'price'
-  if class != blank
-    assign price_classes = price_classes | append: ' ' | append: class
-  endif
-  if on_sale
-    assign price_classes = price_classes | append: ' price--on-sale'
-  endif
-  unless available
-    assign price_classes = price_classes | append: ' price--sold-out'
-  endunless
 -%}
+{%- if target -%}
+  {%- liquid
+    assign on_sale = false
+    if target.compare_at_price > target.price
+      assign on_sale = true
+    endif
 
-<div class="{{ price_classes }}">
-  {%- if on_sale -%}
-    <span class="price__sale">
-      <span class="sr-only">セール価格</span>
-      {{ price | money }}
-      <span class="price__tax-note">（税込）</span>
-    </span>
-    <span class="price__compare">
-      <span class="sr-only">通常価格</span>
-      <s>{{ compare_price | money }}</s>
-    </span>
-  {%- else -%}
-    <span class="price__regular">
-      {{ price | money }}
-      <span class="price__tax-note">（税込）</span>
-    </span>
-  {%- endif -%}
-
-  {%- unless available -%}
-    <span class="price__badge-sold-out">売り切れ</span>
-  {%- endunless -%}
-</div>
+    assign price_classes = 'price'
+    if class != blank
+      assign price_classes = price_classes | append: ' ' | append: class
+    endif
+    if on_sale
+      assign price_classes = price_classes | append: ' price--on-sale'
+    endif
+    unless target.available
+      assign price_classes = price_classes | append: ' price--sold-out'
+    endunless
+  -%}
+  <div class="{{ price_classes }}">
+    {%- if on_sale -%}
+      <span class="price__sale">
+        <span class="sr-only">セール価格</span>
+        {{ target.price | money }}
+        <span class="price__tax-note">（税込）</span>
+      </span>
+      <span class="price__compare">
+        <span class="sr-only">通常価格</span>
+        <s>{{ target.compare_at_price | money }}</s>
+      </span>
+    {%- else -%}
+      <span class="price__regular">
+        {{ target.price | money }}
+        <span class="price__tax-note">（税込）</span>
+      </span>
+    {%- endif -%}
+    {%- unless target.available -%}
+      <span class="price__badge-sold-out">売り切れ</span>
+    {%- endunless -%}
+  </div>
+{%- endif -%}

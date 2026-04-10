@@ -1,6 +1,7 @@
 {%- comment %} 引数: filters, sort_by {%- endcomment -%}
 <div class="space-y-6">
   {%- for filter in filters -%}
+    {%- comment %} アクティブフィルターがあれば初期展開 {%- endcomment -%}
     {%- assign _has_active = false -%}
     {%- if filter.active_values.size > 0 -%}
       {%- assign _has_active = true -%}
@@ -10,77 +11,60 @@
       {%- endif -%}
     {%- endif -%}
     {%- if forloop.first or _has_active -%}
-      {%- assign _fso = true -%}
+      {%- assign _open_default = true -%}
     {%- else -%}
-      {%- assign _fso = false -%}
+      {%- assign _open_default = false -%}
     {%- endif -%}
-    {%- assign _fsid = filter.label | handleize -%}
-    <div class="bg-white" x-data="{ open: {{ _fso }} }">
-      <button
-        type="button"
-        @click="open = !open"
-        class="flex items-center justify-between w-full text-sm font-medium p-4"
-      >
-        {{ filter.label }}
-        {%- capture _fac -%}open ? 'rotate-180' : ''{%- endcapture -%}
-        {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: _fac, stroke_width: 1.5 -%}
-      </button>
 
-      <div
-        class="grid"
-        style="transition: grid-template-rows 0.3s ease;"
-        :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
-      >
-        <div class="overflow-hidden">
-          <div
-            class="px-4 pb-4 transition duration-300"
-            :class="open ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'"
-          >
-        {%- if filter.type == 'price_range' -%}
-          <form action="{{ collection.url }}" method="get" class="space-y-3">
-            {%- comment %} 他のアクティブフィルターを保持 {%- endcomment -%}
-            {%- for f in filters -%}
-              {%- if f.type != 'price_range' -%}
-                {%- for v in f.active_values -%}
-                  <input type="hidden" name="{{ v.param_name }}" value="{{ v.value }}">
-                {%- endfor -%}
-              {%- endif -%}
-            {%- endfor -%}
-            {%- if sort_by != blank -%}
-              <input type="hidden" name="sort_by" value="{{ sort_by }}">
+    {%- capture _filter_content -%}
+      {%- if filter.type == 'price_range' -%}
+        <form action="{{ collection.url }}" method="get" class="space-y-3">
+          {%- comment %} 他のアクティブフィルターを保持 {%- endcomment -%}
+          {%- for f in filters -%}
+            {%- if f.type != 'price_range' -%}
+              {%- for v in f.active_values -%}
+                <input type="hidden" name="{{ v.param_name }}" value="{{ v.value }}">
+              {%- endfor -%}
             {%- endif -%}
-            <div class="flex items-center gap-1.5">
-              {%- assign _min_val = filter.min_value.value | money_without_currency | replace: ',', '' -%}
-              {%- assign _min_ph  = filter.range_min | money_without_currency | replace: ',', '' -%}
-              {%- render 'form-input', type: 'number', name: filter.min_value.param_name, value: _min_val, placeholder: _min_ph, min: 0, variant: 'bordered', size: 'sm' -%}
-              <span class="text-stone-400 text-xs flex-shrink-0">〜</span>
-              {%- assign _max_val = filter.max_value.value | money_without_currency | replace: ',', '' -%}
-              {%- assign _max_ph  = filter.range_max | money_without_currency | replace: ',', '' -%}
-              {%- render 'form-input', type: 'number', name: filter.max_value.param_name, value: _max_val, placeholder: _max_ph, min: 0, variant: 'bordered', size: 'sm' -%}
-            </div>
-            {%- render 'button', label: '適用', type: 'submit', variant: 'outline', size: 'sm', full_width: true -%}
-          </form>
-        {%- else -%}
-          <ul class="space-y-2">
-            {%- for value in filter.values -%}
-              {%- if value.active -%}
-                {%- assign _url = value.url_to_remove -%}
-              {%- else -%}
-                {%- assign _url = value.url_to_add -%}
-              {%- endif -%}
-              <li>
-                {%- render 'filter-checkbox',
-                  url: _url,
-                  active: value.active,
-                  label: value.label
-                -%}
-              </li>
-            {%- endfor -%}
-          </ul>
-        {%- endif -%}
+          {%- endfor -%}
+          {%- if sort_by != blank -%}
+            <input type="hidden" name="sort_by" value="{{ sort_by }}">
+          {%- endif -%}
+          <div class="flex items-center gap-1.5">
+            {%- assign _min_val = filter.min_value.value | money_without_currency | replace: ',', '' -%}
+            {%- assign _min_ph  = filter.range_min | money_without_currency | replace: ',', '' -%}
+            {%- render 'form-input', type: 'number', name: filter.min_value.param_name, value: _min_val, placeholder: _min_ph, min: 0, variant: 'bordered', size: 'sm' -%}
+            <span class="text-stone-400 text-xs flex-shrink-0">〜</span>
+            {%- assign _max_val = filter.max_value.value | money_without_currency | replace: ',', '' -%}
+            {%- assign _max_ph  = filter.range_max | money_without_currency | replace: ',', '' -%}
+            {%- render 'form-input', type: 'number', name: filter.max_value.param_name, value: _max_val, placeholder: _max_ph, min: 0, variant: 'bordered', size: 'sm' -%}
           </div>
-        </div>
-      </div>
-    </div>
+          {%- render 'button', label: '適用', type: 'submit', variant: 'outline', size: 'sm', full_width: true -%}
+        </form>
+      {%- else -%}
+        <ul class="space-y-2">
+          {%- for value in filter.values -%}
+            {%- if value.active -%}
+              {%- assign _url = value.url_to_remove -%}
+            {%- else -%}
+              {%- assign _url = value.url_to_add -%}
+            {%- endif -%}
+            <li>
+              {%- render 'filter-checkbox',
+                url: _url,
+                active: value.active,
+                label: value.label
+              -%}
+            </li>
+          {%- endfor -%}
+        </ul>
+      {%- endif -%}
+    {%- endcapture -%}
+
+    {%- render 'filter-accordion',
+      title: filter.label,
+      content: _filter_content,
+      open_default: _open_default
+    -%}
   {%- endfor -%}
 </div>

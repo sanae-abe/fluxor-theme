@@ -155,14 +155,11 @@
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
 
           {%- for article in blog.articles -%}
-            {%- assign inci_name = article.metafields.custom.inci_name.value | default: '' -%}
-            {%- assign badge_tag = article.metafields.custom.category_tags.value | first | default: '' -%}
-
             <div
-              x-show="_filteredIds.includes({{ forloop.index0 }})"
+              x-show="isVisible({{ forloop.index0 }})"
               :style="{ order: _order[{{ forloop.index0 }}] ?? 9999 }"
             >
-              {%- render 'card-ingredient', article: article, inci_name: inci_name, badge_tag: badge_tag -%}
+              {%- render 'card-ingredient', article: article -%}
             </div>
           {%- endfor -%}
 

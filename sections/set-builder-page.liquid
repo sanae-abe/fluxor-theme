@@ -327,7 +327,7 @@
       <div class="flex flex-col gap-3">
         <button
           type="button"
-          class="btn-add-to-cart w-full bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2 palt transition-all duration-300"
+          class="btn-add-to-cart w-full bg-stone-950 border-2 border-stone-950 text-white flex items-center justify-center min-h-[48px] px-4 py-2 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-2 palt transition-opacity duration-300"
           :class="(selected.length < 2 || adding) ? 'opacity-50 cursor-not-allowed' : ''"
           :disabled="selected.length < 2 || adding"
           @click="addBundle"

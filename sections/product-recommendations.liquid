@@ -6,7 +6,10 @@
 {%- endcomment -%}
 
 {%- if recommendations.performed? and recommendations.products_count > 0 -%}
-  <section class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]">
+  <section
+    class="bg-stone-50 px-4 md:px-10 py-10 md:py-[60px]"
+    aria-label="{{ section.settings.heading | escape }}"
+  >
     <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
       {%- render 'section-header', heading: section.settings.heading -%}
@@ -31,6 +34,11 @@
       "label": "見出し",
       "default": "あなたへのおすすめ"
     }
+  ],
+  "presets": [
+    {
+      "name": "おすすめ商品（S&D）"
+    }
   ]
 }
-{%- endschema -%}
+{%- endschema %}

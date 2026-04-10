@@ -48,7 +48,7 @@
 {%- if _parent_url != blank -%}
   <a
     href="{{ _parent_url }}"
-    class="md:hidden w-full {{ _max_w }} mx-auto flex items-center gap-1 text-sm text-stone-500 hover:text-stone-900 transition-colors"
+    class="breadcrumb-link md:hidden w-full {{ _max_w }} mx-auto flex items-center gap-1 text-sm"
   >
     {%- render 'icon', icon: 'arrow-left', class: 'w-3.5 h-3.5 flex-shrink-0', stroke_width: 2 -%}
     <span>{{ _parent_label }} に戻る</span>
@@ -68,7 +68,7 @@
       {%- render 'icon', icon: 'chevron-right', class: 'w-3.5 h-3.5 text-stone-300 flex-shrink-0', stroke_width: 2 -%}
     {%- endunless -%}
     {%- if _url != blank -%}
-      <a href="{{ _url }}" class="text-stone-500 hover:text-stone-900 transition-colors">{{ _label }}</a>
+      <a href="{{ _url }}" class="breadcrumb-link">{{ _label }}</a>
     {%- else -%}
       <span class="text-stone-900" aria-current="page">{{ _label }}</span>
     {%- endif -%}

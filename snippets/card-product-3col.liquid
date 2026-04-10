@@ -5,7 +5,6 @@
     rank    {Number}  ランク番号（省略時はバッジ非表示）
 {%- endcomment -%}
 
-{%- comment %} Shopify ネイティブセール判定 {%- endcomment -%}
 {%- assign variant = product.selected_or_first_available_variant -%}
 {%- assign on_sale = false -%}
 {%- if variant.compare_at_price > variant.price -%}
@@ -98,27 +97,33 @@
   {%- endcapture -%}
 {%- endif -%}
 
-
 <article
-  class="group overflow-hidden [transform:translateZ(0)]"
+  class="group"
   x-data="{
     adding: false,
+    addError: false,
     saleEligible: {{ sale_eligible | json }},
     saleDiscount: {{ sale_discount | default: 0 }},
     isSaleActive() { return this.saleEligible && this.$store.sale.isActive(); },
     async addToCart() {
       if (this.adding) return;
       this.adding = true;
+      this.addError = false;
       await this.$store.cart.add({{ variant.id }});
+      if (this.$store.cart.errored) {
+        this.addError = true;
+      }
       this.adding = false;
     }
   }"
 >
 
   {%- comment %} 画像エリア {%- endcomment -%}
-  <div
-    class="relative w-full aspect-square cursor-pointer"
-    @click="window.location.href='{{ product.url }}'"
+  <a
+    href="{{ product.url }}"
+    class="relative w-full aspect-square block overflow-hidden [transform:translateZ(0)]"
+    aria-hidden="true"
+    tabindex="-1"
   >
 
     {%- comment %} ランクバッジ {%- endcomment -%}
@@ -154,7 +159,7 @@
         height="600"
       >
     {%- else -%}
-      <div class="w-full h-full flex items-center justify-center text-stone-300 bg-stone-100 ">
+      <div class="w-full h-full flex items-center justify-center text-stone-300 bg-stone-100">
         {%- render 'icon', icon: 'image', class: 'w-12 h-12' -%}
       </div>
     {%- endif -%}
@@ -171,7 +176,7 @@
       >
     {%- endif -%}
 
-  </div>
+  </a>
 
   {%- comment %} 商品情報 + カートボタン {%- endcomment -%}
   <div>
@@ -215,21 +220,35 @@
         {%- if product.available -%}
           <button
             type="button"
-            class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-sm text-white tracking-wider font-medium flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 palt transition-all duration-300 leading-tight"
-            :class="adding ? 'opacity-70 cursor-wait' : ''"
+            class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-sm text-white tracking-wider font-medium flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 palt transition-opacity duration-300 leading-tight"
+            :class="{ 'opacity-70 cursor-wait': adding }"
             @click.stop="addToCart()"
             :disabled="adding"
+            aria-label="{{ product.title | escape }}をカートに追加"
           >
-            <span :class="adding ? 'hidden' : ''">カートに追加</span>
-            <span :class="adding ? '' : 'hidden'" class="hidden">追加中…</span>
+            <span :class="{ 'hidden': adding }">カートに追加</span>
+            <span class="hidden" :class="{ 'hidden': !adding }">追加中…</span>
           </button>
         {%- else -%}
-          <span class="flex-shrink-0 border-2 bg-stone-200 border-stone-200 text-sm text-stone-400 tracking-wider font-medium cursor-not-allowed flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 leading-tight">
+          <span
+            class="flex-shrink-0 border-2 bg-stone-200 border-stone-200 text-sm text-stone-400 tracking-wider font-medium cursor-not-allowed flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 leading-tight"
+            role="img"
+            aria-label="{{ product.title | escape }}: 売り切れ"
+          >
             売り切れ
           </span>
         {%- endif -%}
 
       </div>
+
+      {%- comment %} カート追加エラーメッセージ {%- endcomment -%}
+      <p
+        x-show="addError"
+        x-cloak
+        class="text-xs text-red-600 mt-1 text-right"
+        role="alert"
+      >追加に失敗しました。再度お試しください。</p>
+
     </div>
   </div>
 </article>

@@ -9,10 +9,7 @@
 {%- endcomment -%}
 
 {%- if heading != blank or subheading != blank -%}
-  {%- assign is_left = false -%}
-  {%- if align == 'left' -%}{%- assign is_left = true -%}{%- endif -%}
-
-  <div class="{% if is_left %}flex flex-col md:flex-row md:items-end justify-between gap-6{% else %}flex flex-col gap-4 md:items-center md:text-center{% endif %}">
+  <div class="{% if align == 'left' %}flex flex-col md:flex-row md:items-end justify-between gap-6{% else %}flex flex-col gap-4 md:items-center md:text-center{% endif %}">
     <div class="flex flex-col gap-4">
       {%- if heading != blank -%}
         <h2 class="text-2xl md:text-4xl font-semibold leading-tight text-stone-900 palt tracking-wider">{{ heading }}</h2>
@@ -21,7 +18,7 @@
         <p class="text-sm leading-tight text-stone-500">{{ subheading }}</p>
       {%- endif -%}
     </div>
-    {%- if is_left and link_label != blank and link_url != blank -%}
+    {%- if align == 'left' and link_label != blank and link_url != blank -%}
       {%- render 'link-view-all', url: link_url, label: link_label, class: 'hidden md:flex' -%}
     {%- endif -%}
   </div>

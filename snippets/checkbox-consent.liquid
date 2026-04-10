@@ -1,31 +1,21 @@
 {%- comment %} checkbox-consent.liquid — プライバシーポリシー同意チェックボックス
   Parameters:
     - privacy_url : プライバシーポリシー URL（省略時はリンクなしテキスト）
-    - id          : input の id（light variant で label の for 属性と対応）
+    - id          : input の id（label の for 属性と対応）
     - required    : required 属性（boolean）
     - x_model     : Alpine.js x-model の値（例: 'agreed'）
     - variant     : 'light'（デフォルト）| 'dark'
 {%- endcomment -%}
 {%- assign _variant = variant | default: 'light' -%}
-{%- if _variant == 'dark' -%}
-  {%- assign _link_class = 'underline hover:opacity-70 transition-opacity duration-200' -%}
-{%- else -%}
-  {%- assign _link_class = 'underline hover:text-stone-900 transition-colors' -%}
-{%- endif -%}
 {%- assign _icon_class = 'opacity-0 group-has-[input:checked]:opacity-100 transition-opacity duration-150' -%}
-{%- capture _privacy_text -%}
-  {%- if privacy_url != blank -%}
-    <a href="{{ privacy_url }}" class="{{ _link_class }}" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
-  {%- else -%}
-    プライバシーポリシーに同意します
-  {%- endif -%}
-{%- endcapture -%}
 
 {%- if _variant == 'dark' -%}
 
   <label class="flex items-center gap-1.5 mt-4 cursor-pointer group">
     <input
       type="checkbox"
+      {%- if id != blank %} id="{{ id }}"{% endif %}
+      {%- if required %} required{% endif %}
       {%- if x_model != blank %} x-model="{{ x_model }}"{% endif %}
       class="sr-only peer"
     >
@@ -38,7 +28,13 @@
     >
       {%- render 'icon', icon: 'check', width: 10, height: 10, stroke: '#1c1917', stroke_width: 3, class: _icon_class -%}
     </span>
-    <span class="text-xs text-stone-200 leading-tight">{{ _privacy_text }}</span>
+    <span class="text-xs text-stone-200 leading-tight">
+      {%- if privacy_url != blank -%}
+        <a href="{{ privacy_url }}" class="consent-link--dark" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
+      {%- else -%}
+        プライバシーポリシーに同意します
+      {%- endif -%}
+    </span>
   </label>
 
 {%- else -%}
@@ -63,7 +59,13 @@
     <label
       {%- if id != blank %} for="{{ id }}"{% endif %}
       class="text-sm text-stone-900 leading-relaxed cursor-pointer"
-    >{{ _privacy_text }}</label>
+    >
+      {%- if privacy_url != blank -%}
+        <a href="{{ privacy_url }}" class="consent-link" target="_blank" rel="noopener noreferrer">プライバシーポリシー</a>に同意します
+      {%- else -%}
+        プライバシーポリシーに同意します
+      {%- endif -%}
+    </label>
   </div>
 
 {%- endif -%}

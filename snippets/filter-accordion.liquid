@@ -2,15 +2,18 @@
   フィルターアコーディオン（複数同時開放型）
 
   Parameters:
-    title:     {String} 見出しテキスト
-    content:   {String} コンテンツ HTML（capture 済み文字列）
-    show_expr: {String} Alpine.js x-show 式（省略時は常に表示）
+    title:        {String}  見出しテキスト（必須）
+    content:      {String}  コンテンツ HTML（capture 済み文字列）
+    show_expr:    {String}  Alpine.js x-show 式（省略時は常に表示）
+    open_default: {Boolean} 初期展開状態（省略時: false）
 {%- endcomment -%}
 
 {%- assign _open = open_default | default: false -%}
+{%- assign _icon_class = "open ? 'rotate-180' : ''" -%}
 
 <div
   x-data="{ open: {{ _open | json }} }"
+  x-id="['accordion']"
   {%- if show_expr != blank %} x-show="{{ show_expr }}"{% endif %}
   class="bg-white"
 >
@@ -19,12 +22,13 @@
     @click="open = !open"
     class="flex items-center justify-between w-full text-sm font-medium p-4"
     :aria-expanded="open"
+    :aria-controls="$id('accordion')"
   >
     <span class="text-stone-900">{{ title }}</span>
-    {%- capture _fac -%}open ? 'rotate-180' : ''{%- endcapture -%}
-    {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: _fac, stroke_width: 1.5 -%}
+    {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-stone-900 shrink-0 transition-transform duration-200', x_class: _icon_class, stroke_width: 1.5 -%}
   </button>
   <div
+    :id="$id('accordion')"
     class="grid filter-accordion__body"
     :style="{ 'grid-template-rows': open ? '1fr' : '0fr' }"
     role="region"

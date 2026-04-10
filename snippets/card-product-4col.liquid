@@ -102,22 +102,29 @@
   class="group"
   x-data="{
     adding: false,
+    addError: false,
     saleEligible: {{ sale_eligible | json }},
     saleDiscount: {{ sale_discount | default: 0 }},
     isSaleActive() { return this.saleEligible && this.$store.sale.isActive(); },
     async addToCart() {
       if (this.adding) return;
       this.adding = true;
+      this.addError = false;
       await this.$store.cart.add({{ variant.id }});
+      if (this.$store.cart.errored) {
+        this.addError = true;
+      }
       this.adding = false;
     }
   }"
 >
 
-  {%- comment %} 画像エリア（クリックで商品ページへ） {%- endcomment -%}
-  <div
-    class="relative w-full aspect-square bg-stone-50 overflow-hidden [transform:translateZ(0)] cursor-pointer"
-    @click="window.location.href='{{ product.url }}'"
+  {%- comment %} 画像エリア {%- endcomment -%}
+  <a
+    href="{{ product.url }}"
+    class="relative w-full aspect-square bg-stone-50 overflow-hidden [transform:translateZ(0)] block"
+    aria-hidden="true"
+    tabindex="-1"
   >
     {%- comment %} 1枚目 {%- endcomment -%}
     {%- if product.featured_image -%}
@@ -130,7 +137,7 @@
         height="600"
       >
     {%- else -%}
-      <div class="w-full h-full flex items-center justify-center text-stone-300 bg-stone-100 ">
+      <div class="w-full h-full flex items-center justify-center text-stone-300 bg-stone-100">
         {%- render 'icon', icon: 'image', class: 'w-12 h-12' -%}
       </div>
     {%- endif -%}
@@ -165,35 +172,33 @@
       {%- comment %} カートに追加ボタン（モバイル: 画像右下アイコン） {%- endcomment -%}
       <button
         type="button"
-        class="md:hidden absolute bottom-2 right-2 z-10 w-9 h-9 rounded-full bg-stone-900 shadow-md flex items-center justify-center text-white palt transition-all duration-300"
-        :class="adding ? 'opacity-70 cursor-wait' : ''"
+        class="md:hidden absolute bottom-2 right-2 z-10 w-9 h-9 rounded-full bg-stone-900 shadow-md flex items-center justify-center text-white palt transition-opacity duration-300"
+        :class="{ 'opacity-70 cursor-wait': adding }"
         @click.stop="addToCart()"
         :disabled="adding"
-        aria-label="カートに追加"
+        aria-label="{{ product.title | escape }}をカートに追加"
       >
         {%- render 'icon', icon: 'cart', class: 'w-4 h-4', x_class: "adding ? 'hidden' : ''" -%}
-        <svg :class="adding ? '' : 'hidden'" class="w-4 h-4 animate-spin hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" aria-hidden="true">
-          <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
-          <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path>
-        </svg>
+        {%- render 'icon', icon: 'refresh-cw', class: 'w-4 h-4 animate-spin hidden', x_class: "adding ? '' : 'hidden'" -%}
       </button>
       {%- comment %} カートに追加ボタン（デスクトップ: hover時に中央表示） {%- endcomment -%}
       <div class="absolute inset-0 hidden md:flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
         <button
           type="button"
-          class="btn-card-add bg-stone-900 border-2 border-stone-900 text-white text-[15px] leading-tight font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 palt transition-all duration-300"
-          :class="adding ? 'opacity-70 cursor-wait' : ''"
+          class="btn-card-add bg-stone-900 border-2 border-stone-900 text-white text-[15px] leading-tight font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 palt transition-opacity duration-300"
+          :class="{ 'opacity-70 cursor-wait': adding }"
           @click.stop="addToCart()"
           :disabled="adding"
+          aria-label="{{ product.title | escape }}をカートに追加"
         >
-          <span :class="adding ? 'hidden' : ''">カートに追加</span>
-          <span :class="adding ? '' : 'hidden'" class="hidden">追加中…</span>
+          <span :class="{ 'hidden': adding }">カートに追加</span>
+          <span class="hidden" :class="{ 'hidden': !adding }">追加中…</span>
         </button>
       </div>
     {%- endif -%}
-  </div>
+  </a>
 
-  {%- comment %} 商品情報（クリックで商品ページへ） {%- endcomment -%}
+  {%- comment %} 商品情報 {%- endcomment -%}
   <a href="{{ product.url }}" class="flex flex-col gap-1 md:gap-2 mt-2 md:mt-4">
 
     {%- if product.vendor != blank -%}
@@ -228,5 +233,13 @@
     </div>
 
   </a>
+
+  {%- comment %} カート追加エラーメッセージ {%- endcomment -%}
+  <p
+    x-show="addError"
+    x-cloak
+    class="text-xs text-red-600 mt-1"
+    role="alert"
+  >追加に失敗しました。再度お試しください。</p>
 
 </article>

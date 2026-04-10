@@ -1,7 +1,7 @@
 <footer id="site-footer" class="bg-stone-900 px-4 md:px-10 pt-8 pb-10 md:pt-[60px] md:pb-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
-    {%- comment %} 3カラム：Quick Links / Information / メルマガ＋SNS {%- endcomment -%}
+    {%- comment %} ナビゲーション / メルマガ＋SNS {%- endcomment -%}
     <div class="flex flex-col md:flex-row md:gap-10 items-start">
 
       {%- for n in (1..2) -%}
@@ -9,13 +9,23 @@
         {%- assign title_key   = 'menu_' | append: n | append: '_title' -%}
         {%- assign menu_handle = section.settings[menu_key] -%}
         {%- if menu_handle != blank -%}
+          {%- assign nav_id = 'footer-nav-' | append: n -%}
           <div
-            x-data="{ open: window.matchMedia('(min-width: 768px)').matches }"
+            x-data="{
+              open: window.matchMedia('(min-width: 768px)').matches,
+              init() {
+                window.matchMedia('(min-width: 768px)').addEventListener('change', e => {
+                  this.open = e.matches;
+                });
+              }
+            }"
             class="w-full md:w-auto flex-1 flex flex-col gap-2 md:gap-4 md:border-0 md:pb-0"
           >
             <button
-              @click="if (window.matchMedia('(max-width: 767px)').matches) open = !open"
+              type="button"
+              @click="if (!window.matchMedia('(min-width: 768px)').matches) open = !open"
               :aria-expanded="open.toString()"
+              aria-controls="{{ nav_id }}"
               class="flex items-center justify-between w-full text-left py-4 md:py-0 md:cursor-default"
             >
               <span class="text-sm font-medium text-white md:text-stone-500 uppercase leading-tight">
@@ -26,6 +36,7 @@
               </span>
             </button>
             <ul
+              id="{{ nav_id }}"
               x-show="open"
               x-cloak
               x-transition:enter="transition ease-out duration-200"
@@ -66,41 +77,37 @@
               {%- if form.posted_successfully? -%}
                 <p class="text-sm text-stone-200 py-3">ご登録ありがとうございます。</p>
               {%- else -%}
-
-                {%- comment %} メールアドレス入力 + 送信ボタン {%- endcomment -%}
                 <div class="flex items-center border border-stone-500 gap-3 h-10 focus-within:border-stone-200">
                   <input
                     type="email"
                     name="contact[email]"
                     placeholder="メールアドレスを入力"
-                    class="flex-1 bg-transparent text-white placeholder-[rgba(246,244,240,0.5)] text-sm outline-none px-4 py-2"
+                    class="flex-1 bg-transparent text-white placeholder-stone-50/50 text-sm outline-none px-4 py-2"
                     required
                     autocomplete="email"
                   >
                   <button
                     type="submit"
-                    class="flex-shrink-0 w-11 h-11 flex items-center justify-center text-white transition-opacity duration-200"
-                    :class="!agreed ? 'opacity-30 cursor-not-allowed' : 'hover:opacity-60'"
+                    :class="agreed ? 'hover:opacity-60' : 'opacity-30 cursor-not-allowed'"
                     :disabled="!agreed"
                     aria-label="メルマガ登録"
+                    class="flex-shrink-0 w-11 h-11 flex items-center justify-center text-white transition-opacity duration-200"
                   >
                     {%- render 'icon', icon: 'arrow-right', class: 'w-6 h-6' -%}
                   </button>
                 </div>
 
-                {%- comment %} プライバシーポリシー同意 {%- endcomment -%}
                 {%- render 'checkbox-consent',
                   privacy_url: section.settings.privacy_url,
                   x_model: 'agreed',
                   variant: 'dark'
                 -%}
-
               {%- endif -%}
             {%- endform -%}
           </div>
         </div>
 
-        {%- comment %} SNSアイコン {%- endcomment -%}
+        {%- comment %} SNSリンク {%- endcomment -%}
         {%- assign social_platforms = 'instagram,twitter,tiktok' | split: ',' -%}
         {%- assign social_icons     = 'instagram,x-twitter,tiktok' | split: ',' -%}
         {%- assign social_labels    = 'Instagram,X (Twitter),TikTok' | split: ',' -%}
@@ -132,7 +139,7 @@
       </div>
     </div>
 
-    {%- comment %} 決済アイコン {%- endcomment -%}
+    {%- comment %} 決済方法アイコン {%- endcomment -%}
     {%- unless shop.enabled_payment_types == empty -%}
       <div class="flex items-center gap-4 flex-wrap pb-6 md:pb-0">
         {%- for type in shop.enabled_payment_types -%}
@@ -159,7 +166,7 @@
       </div>
     {%- endif -%}
 
-    {%- comment %} ボトムバー（コピーライト） {%- endcomment -%}
+    {%- comment %} コピーライト {%- endcomment -%}
     <div class="border-t border-stone-500 pt-10 flex items-center justify-center">
       <p class="text-xs md:text-sm text-stone-500 leading-5">
         &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}

@@ -6,7 +6,7 @@
   endif
 -%}
 
-<section class="{{ s.color_scheme }} pb-10 md:pt-[60px] md:pb-[60px]">
+<section class="{{ s.color_scheme }} py-10 md:py-[60px]">
 
   <div class="flex flex-col {{ flex_dir }} items-center gap-6 md:gap-10">
 
@@ -74,7 +74,7 @@
 
 {%- schema %}
 {
-  "name": "Ingredient",
+  "name": "Image + Text",
   "settings": [
     {
       "type": "select",
@@ -124,7 +124,7 @@
         { "value": "ghost",     "label": "ゴースト（白枠線）" },
         { "value": "accent",    "label": "アクセント（濃グリーン）" },
         { "value": "premium",   "label": "プレミアム（濃ローズ）" },
-        { "value": "teal",      "label": "ティール（薄グリーン）" },
+        { "value": "teal",      "label": "ティール（薄グリーン）" }
       ],
       "default": "teal"
     },
@@ -262,7 +262,7 @@
   ],
   "presets": [
     {
-      "name": "Ingredient"
+      "name": "Image + Text"
     }
   ]
 }

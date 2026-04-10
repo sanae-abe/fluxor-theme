@@ -1,4 +1,3 @@
-{%- assign particle_color = '#79716b' -%}
 {%- assign is_dark = false -%}
 {%- if section.settings.color_scheme == 'bg-stone-950' or section.settings.background_image != blank -%}
   {%- assign is_dark = true -%}
@@ -7,16 +6,22 @@
 {%- if is_dark -%}
   {%- assign text_color = 'text-stone-50' -%}
   {%- assign btn_color = 'light' -%}
+  {%- assign particle_color = '#a8a29e' -%}
 {%- else -%}
   {%- assign text_color = 'text-stone-900' -%}
   {%- assign btn_color = 'dark' -%}
+  {%- assign particle_color = '#79716b' -%}
 {%- endif -%}
 
 {%- assign heading_class = 'about-heading font-medium leading-tight palt tracking-wider ' | append: text_color -%}
+{%- if section.settings.tagline != blank -%}
+  {%- assign heading_size = 'text-3xl md:text-5xl' -%}
+{%- else -%}
+  {%- assign heading_size = 'text-3xl md:text-4xl' -%}
+{%- endif -%}
 
 <section class="relative {{ section.settings.color_scheme }} px-4 md:px-10 py-10 md:py-20 overflow-hidden border-b border-stone-200">
 
-  {%- comment %} 背景画像 {%- endcomment -%}
   {%- if section.settings.background_image != blank -%}
     <div class="absolute inset-0">
       <img
@@ -32,7 +37,6 @@
     </div>
   {%- endif -%}
 
-  {%- comment %} パーティクル（分子ネットワーク） {%- endcomment -%}
   {%- if section.settings.enable_particles -%}
     <div
       id="about-ptcl-{{ section.id }}"
@@ -102,18 +106,11 @@
   <div class="relative max-w-screen-xl mx-auto flex items-center justify-center">
     <div class="w-full flex flex-col items-center gap-6 md:gap-10 text-center">
 
-      {%- comment %} Heading + Tagline {%- endcomment -%}
       <div class="flex flex-col gap-6 w-full">
         {%- if section.settings.heading != blank -%}
-          {%- if section.settings.tagline != blank -%}
-            <h2 class="text-3xl md:text-5xl {{ heading_class }}">
-              {{ section.settings.heading }}
-            </h2>
-          {%- else -%}
-            <h2 class="text-3xl md:text-4xl {{ heading_class }}">
-              {{ section.settings.heading }}
-            </h2>
-          {%- endif -%}
+          <h2 class="{{ heading_size }} {{ heading_class }}">
+            {{ section.settings.heading }}
+          </h2>
         {%- endif -%}
         {%- if section.settings.tagline != blank -%}
           <p class="text-lg md:text-3xl {{ heading_class }}">
@@ -122,14 +119,12 @@
         {%- endif -%}
       </div>
 
-      {%- comment %} Paragraph {%- endcomment -%}
       {%- if section.settings.paragraph != blank -%}
         <div class="text-sm md:text-base leading-relaxed {{ text_color }} opacity-80 [&_p]:mb-0">
           {{ section.settings.paragraph }}
         </div>
       {%- endif -%}
 
-      {%- comment %} Button {%- endcomment -%}
       {%- if section.settings.button_label != blank and section.settings.button_url != blank -%}
         {%- render 'button',
           label: section.settings.button_label,

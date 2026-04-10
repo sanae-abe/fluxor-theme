@@ -7,12 +7,14 @@
 {%- if settings.sale_end != blank -%}
   <div
     x-data="saleCountdown(window.fluxorSale?.end)"
-    x-show="!expired"
+    :class="{ 'hidden': expired }"
     x-cloak
     class="flex items-center gap-1 tabular-nums"
+    role="timer"
+    aria-label="セール終了まで"
   >
     <span>終了まで</span>
-    <span>
+    <span aria-live="off">
       <span :class="{ 'hidden': days === 0 }">
         <span x-text="days" class="font-semibold"></span>日
       </span>

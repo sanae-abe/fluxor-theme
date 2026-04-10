@@ -2,14 +2,14 @@
   Button component — Figma node 3083:6379
 
   Accepts:
-  - label:      {String}  ボタンテキスト（必須）
-  - url:        {String}  URLを指定すると<a>、省略すると<button>
-  - variant:    {String}  'solid' | 'outline'  （デフォルト: 'solid'）
-  - color:      {String}  'dark' | 'light' | 'teal' | 'muted'  （デフォルト: 'dark'）
-  - size:       {String}  'lg' | 'md' | 'sm' | 'xs'  （デフォルト: 'md'）
-  - icon_left:  {String}  左側アイコン名（例: 'arrow-left'）
-  - icon_right: {String}  右側アイコン名（例: 'arrow-right'）
-  - type:       {String}  button の type 属性  （デフォルト: 'button'）
+  - label:       {String}  ボタンテキスト（必須）
+  - url:         {String}  URLを指定すると<a>、省略すると<button>
+  - variant:     {String}  'solid' | 'outline'  （デフォルト: 'solid'）
+  - color:       {String}  'dark' | 'light' | 'teal' | 'muted'  （デフォルト: 'dark'）
+  - size:        {String}  'lg' | 'md' | 'sm' | 'xs'  （デフォルト: 'md'）
+  - icon_left:   {String}  左側アイコン名（例: 'arrow-left'）
+  - icon_right:  {String}  右側アイコン名（例: 'arrow-right'）
+  - type:        {String}  button の type 属性  （デフォルト: 'button'）
   - disabled:    {Boolean} 非活性状態
   - full_width:  {Boolean} 横幅100%
   - size_mobile: {String}  モバイル時のサイズ（md未満）。省略時は size と同じ
@@ -28,142 +28,119 @@
 {% endcomment %}
 
 {%- liquid
-  assign btn_variant  = variant  | default: 'solid'
-  assign btn_color    = color    | default: 'dark'
-  assign btn_size     = size     | default: 'md'
+  assign btn_variant = variant | default: 'solid'
+  assign btn_color   = color   | default: 'dark'
+  assign btn_size    = size    | default: 'md'
 
-  # ── サイズ ──────────────────────────────────────────────────────
+  # ── サイズ（モバイル・デスクトップ両クラスを一度に定義）───────────
   case btn_size
   when 'lg'
-    assign size_cls = 'h-[60px] px-[18px] text-lg gap-3 border-2 font-medium'
-    assign icon_cls = 'w-5 h-5'
+    assign size_cls      = 'h-[60px] px-[18px] text-lg gap-3 border-2 font-medium'
+    assign icon_cls      = 'w-5 h-5'
+    assign desk_size_cls = 'md:h-[60px] md:px-[18px] md:text-lg md:gap-3'
+    assign desk_icon_cls = 'md:w-5 md:h-5'
   when 'sm'
-    assign size_cls = 'h-8 px-[14px] text-sm gap-1'
-    assign icon_cls = 'w-4 h-4'
+    assign size_cls      = 'h-8 px-[14px] text-sm gap-1'
+    assign icon_cls      = 'w-4 h-4'
+    assign desk_size_cls = 'md:h-8 md:px-[14px] md:text-sm md:gap-1'
+    assign desk_icon_cls = 'md:w-4 md:h-4'
   when 'xs'
-    assign size_cls = 'h-7 px-[6px] text-xs gap-1'
-    assign icon_cls = 'w-[14px] h-[14px]'
+    assign size_cls      = 'h-7 px-[6px] text-xs gap-1'
+    assign icon_cls      = 'w-[14px] h-[14px]'
+    assign desk_size_cls = 'md:h-7 md:px-[6px] md:text-xs md:gap-1'
+    assign desk_icon_cls = 'md:w-[14px] md:h-[14px]'
   else
-    assign size_cls = 'h-12 px-4 text-base gap-2 border-2 font-medium'
-    assign icon_cls = 'w-[18px] h-[18px]'
+    assign size_cls      = 'h-12 px-4 text-base gap-2 border-2 font-medium'
+    assign icon_cls      = 'w-[18px] h-[18px]'
+    assign desk_size_cls = 'md:h-12 md:px-4 md:text-base md:gap-2'
+    assign desk_icon_cls = 'md:w-[18px] md:h-[18px]'
   endcase
 
-  # ── レスポンシブサイズ（size_mobile が指定された場合） ──────────
+  # ── size_mobile が指定された場合、モバイル用クラスで上書き ────────
   if size_mobile != blank and size_mobile != btn_size
     case size_mobile
     when 'lg'
-      assign mob_size_cls = 'h-[60px] px-[18px] text-lg gap-3 border-2 font-medium'
-      assign mob_icon_cls = 'w-5 h-5'
+      assign size_cls = 'h-[60px] px-[18px] text-lg gap-3 border-2 font-medium'
+      assign icon_cls = 'w-5 h-5'
     when 'sm'
-      assign mob_size_cls = 'h-8 px-[14px] text-sm gap-1'
-      assign mob_icon_cls = 'w-4 h-4'
+      assign size_cls = 'h-8 px-[14px] text-sm gap-1'
+      assign icon_cls = 'w-4 h-4'
     when 'xs'
-      assign mob_size_cls = 'h-7 px-[6px] text-xs gap-1'
-      assign mob_icon_cls = 'w-[14px] h-[14px]'
+      assign size_cls = 'h-7 px-[6px] text-xs gap-1'
+      assign icon_cls = 'w-[14px] h-[14px]'
     else
-      assign mob_size_cls = 'h-12 px-4 text-base gap-2 border-2 font-medium'
-      assign mob_icon_cls = 'w-[18px] h-[18px]'
+      assign size_cls = 'h-12 px-4 text-base gap-2 border-2 font-medium'
+      assign icon_cls = 'w-[18px] h-[18px]'
     endcase
-    case btn_size
-    when 'lg'
-      assign desk_size_cls = 'md:h-[60px] md:px-[18px] md:text-lg md:gap-3'
-      assign desk_icon_cls = 'md:w-5 md:h-5'
-    when 'sm'
-      assign desk_size_cls = 'md:h-8 md:px-[14px] md:text-sm md:gap-1'
-      assign desk_icon_cls = 'md:w-4 md:h-4'
-    when 'xs'
-      assign desk_size_cls = 'md:h-7 md:px-[6px] md:text-xs md:gap-1'
-      assign desk_icon_cls = 'md:w-[14px] md:h-[14px]'
-    else
-      assign desk_size_cls = 'md:h-12 md:px-4 md:text-base md:gap-2'
-      assign desk_icon_cls = 'md:w-[18px] md:h-[18px]'
-    endcase
-    assign size_cls = mob_size_cls | append: ' ' | append: desk_size_cls
-    assign icon_cls = mob_icon_cls | append: ' ' | append: desk_icon_cls
+    assign size_cls = size_cls | append: ' ' | append: desk_size_cls
+    assign icon_cls = icon_cls | append: ' ' | append: desk_icon_cls
   endif
 
   # ── カラー × バリアント ─────────────────────────────────────────
   case btn_color
   when 'light'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-50 border border-stone-50'
-      assign hover_bg = '#fafaf9'
-      assign hover_text = '#1c1917'
+      assign color_cls  = 'bg-transparent text-stone-50 border border-stone-50'
     else
-      assign color_cls = 'bg-stone-50 text-stone-900 border-none'
-      assign hover_bg = '#e7e5e4'
-      assign hover_text = '#1c1917'
+      assign color_cls  = 'bg-stone-50 text-stone-900 border-none'
     endif
   when 'teal'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-teal-700 border border-teal-700'
-      assign hover_bg = '#134e4a'
-      assign hover_text = '#fafaf9'
+      assign color_cls  = 'bg-transparent text-teal-700 border border-teal-700'
     else
-      assign color_cls = 'bg-teal-700 text-stone-50 border border-teal-700'
-      assign hover_bg = '#115e59'
-      assign hover_text = '#fafaf9'
+      assign color_cls  = 'bg-teal-700 text-stone-50 border border-teal-700'
     endif
   when 'muted'
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-400 border border-stone-400'
-      assign hover_bg = '#a8a29e'
-      assign hover_text = '#fafaf9'
+      assign color_cls  = 'bg-transparent text-stone-400 border border-stone-400'
     else
-      assign color_cls = 'bg-stone-400 text-stone-50 border border-stone-400'
-      assign hover_bg = '#78716c'
-      assign hover_text = '#fafaf9'
+      assign color_cls  = 'bg-stone-400 text-stone-50 border border-stone-400'
     endif
   else
     # dark（デフォルト）
     if btn_variant == 'outline'
-      assign color_cls = 'bg-transparent text-stone-900 border border-stone-900'
-      assign hover_bg = '#1c1917'
-      assign hover_text = '#fafaf9'
+      assign color_cls  = 'bg-transparent text-stone-900 border border-stone-900'
     else
-      assign color_cls = 'bg-stone-900 text-stone-50 border border-stone-900'
-      assign hover_bg = '#ffffff'
-      assign hover_text = '#0c0a09'
+      assign color_cls  = 'bg-stone-900 text-stone-50 border border-stone-900'
     endif
   endcase
 
-  assign width_cls   = ''
-  if full_width
-    assign width_cls = 'w-full'
-  endif
-
-  assign disabled_cls = ''
-  if disabled
-    assign disabled_cls = 'opacity-40 cursor-not-allowed pointer-events-none'
-  endif
-
+  # ── クラス組み立て ────────────────────────────────────────────────
   assign base_cls = 'btn-slide inline-flex items-center justify-center font-sans tracking-wider select-none focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 palt'
   assign icon_svg_cls = icon_cls | append: ' flex-shrink-0 stroke-2'
+
+  assign all_cls = base_cls | append: ' ' | append: size_cls | append: ' ' | append: color_cls
+  if full_width
+    assign all_cls = all_cls | append: ' w-full'
+  endif
+  if disabled
+    assign all_cls = all_cls | append: ' opacity-40 cursor-not-allowed pointer-events-none'
+  endif
+  if class != blank
+    assign all_cls = all_cls | append: ' ' | append: class
+  endif
 -%}
 
 {%- capture btn_inner -%}
   {%- if icon_left != blank -%}
     {%- render 'icon', icon: icon_left, class: icon_svg_cls -%}
   {%- endif -%}
-
   <span>{{ label }}</span>
-
   {%- if icon_right != blank -%}
     {%- render 'icon', icon: icon_right, class: icon_svg_cls -%}
   {%- endif -%}
 {%- endcapture -%}
 
-{%- assign all_cls = base_cls | append: ' ' | append: size_cls | append: ' ' | append: color_cls | append: ' ' | append: width_cls | append: ' ' | append: disabled_cls | append: ' ' | append: class -%}
-
 {%- if url and disabled != true -%}
-  <a href="{{ url }}" class="{{ all_cls }}" style="--hover-bg: {{ hover_bg }}; --hover-text: {{ hover_text }};" {{ attr }}>
+  <a href="{{ url }}" class="{{ all_cls }}" data-color="{{ btn_color }}" data-variant="{{ btn_variant }}" {{ attr }}>
     {{ btn_inner }}
   </a>
 {%- else -%}
   <button
     type="{{ type | default: 'button' }}"
     class="{{ all_cls }}"
-    style="--hover-bg: {{ hover_bg }}; --hover-text: {{ hover_text }};"
+    data-color="{{ btn_color }}"
+    data-variant="{{ btn_variant }}"
     {% if disabled %}disabled aria-disabled="true"{% endif %}
     {{ attr }}
   >

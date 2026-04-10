@@ -38,9 +38,8 @@
 
     {%- comment %} ツールバー {%- endcomment -%}
     <div class="flex items-start md:items-center justify-between pt-10 pb-6">
-      {%- comment %} 左: 絞り込みボタン（モバイル）/ 件数 + クリア（デスクトップ） {%- endcomment -%}
       <div class="flex flex-col md:flex-row items-start md:items-center gap-4">
-        {%- comment %} 絞り込みボタン（モバイル） {%- endcomment -%}
+        {%- comment %} 絞り込みボタン（モバイルのみ） {%- endcomment -%}
         <button
           type="button"
           @click="mobileOpen = true"
@@ -54,8 +53,8 @@
             x-text="selectedCategories.length + selectedTags.length"
           ></span>
         </button>
-        {%- comment %} 件数 + クリア（デスクトップ） {%- endcomment -%}
-        <div class="hidden md:flex items-center gap-4 w-72">
+        {%- comment %} 件数 + クリア {%- endcomment -%}
+        <div class="flex items-center gap-4 md:w-72">
           <p class="text-sm text-stone-500 uppercase tracking-wider">
             <span x-text="filteredCount"></span>件の記事
           </p>
@@ -63,19 +62,6 @@
             <button
               @click="clearAll()"
               class="text-sm text-stone-500 underline uppercase tracking-wider"
-              type="button"
-            >
-              すべてクリア
-            </button>
-          </template>
-        </div>
-        {%- comment %} 件数 + クリア（モバイル） {%- endcomment -%}
-        <div class="md:hidden flex items-center gap-4">
-          <p class="text-sm text-stone-500"><span x-text="filteredCount"></span>件の記事</p>
-          <template x-if="hasActiveFilters">
-            <button
-              @click="clearAll()"
-              class="text-sm text-stone-500 underline uppercase"
               type="button"
             >
               すべてクリア
@@ -97,34 +83,30 @@
       </div>
     </div>
 
+    {%- capture categories_items -%}
+      <template x-for="category in uniqueCategories" :key="category">
+        {%- render 'alpine-checkbox',
+          checked_expr: "selectedCategories.includes(category)",
+          change_expr: "toggle('categories', category)",
+          label_expr: "category"
+        -%}
+      </template>
+    {%- endcapture -%}
+    {%- capture tags_items -%}
+      <template x-for="tag in uniqueTags" :key="tag">
+        {%- render 'alpine-checkbox',
+          checked_expr: "selectedTags.includes(tag)",
+          change_expr: "toggle('tags', tag)",
+          label_expr: "tag"
+        -%}
+      </template>
+    {%- endcapture -%}
+
     <div class="flex gap-16">
       {%- comment %} デスクトップサイドバー {%- endcomment -%}
       <aside class="hidden md:flex flex-col gap-8 w-[calc(25%-2rem)] flex-shrink-0 sticky top-32 self-start">
-
-        {%- comment %} カテゴリフィルター {%- endcomment -%}
-        {%- capture categories_items -%}
-          <template x-for="category in uniqueCategories" :key="category">
-            {%- render 'alpine-checkbox',
-              checked_expr: "selectedCategories.includes(category)",
-              change_expr: "toggle('categories', category)",
-              label_expr: "category"
-            -%}
-          </template>
-        {%- endcapture -%}
         {%- render 'filter-accordion', title: 'カテゴリ', content: categories_items, show_expr: 'uniqueCategories.length > 0', open_default: true -%}
-
-        {%- comment %} タグフィルター {%- endcomment -%}
-        {%- capture tags_items -%}
-          <template x-for="tag in uniqueTags" :key="tag">
-            {%- render 'alpine-checkbox',
-              checked_expr: "selectedTags.includes(tag)",
-              change_expr: "toggle('tags', tag)",
-              label_expr: "tag"
-            -%}
-          </template>
-        {%- endcapture -%}
         {%- render 'filter-accordion', title: 'タグ', content: tags_items, show_expr: 'uniqueTags.length > 0' -%}
-
       </aside>
 
       {%- comment %} 記事カードグリッド {%- endcomment -%}
@@ -134,8 +116,8 @@
 
           {%- for article in blog.articles -%}
             <div
-              x-show="_filteredIds.includes({{ forloop.index0 }})"
-              :style="{ order: _order[{{ forloop.index0 }}] ?? 9999 }"
+              x-show="isVisible({{ forloop.index0 }})"
+              :style="{ order: getOrder({{ forloop.index0 }}) }"
             >
               {%- render 'card-article', article: article -%}
             </div>

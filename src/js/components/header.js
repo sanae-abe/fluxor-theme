@@ -9,12 +9,11 @@ export const siteHeader = () => ({
       this.headerTop = Math.max(0, barHeight - scrollY)
       this.scrolled = scrollY >= barHeight
     }
-    this.$watch('$store.ui.announcementHeight', () => this._updateTop())
-    this._onScroll = () => this._updateTop()
+    this.$watch('$store.ui.announcementHeight', this._updateTop)
+    window.addEventListener('scroll', this._updateTop, { passive: true })
     this._updateTop()
-    window.addEventListener('scroll', this._onScroll, { passive: true })
   },
   destroy() {
-    window.removeEventListener('scroll', this._onScroll)
+    window.removeEventListener('scroll', this._updateTop)
   }
 })

@@ -16,6 +16,7 @@
     --color-dark:        theme('colors.stone.900'); /* #1c1917 */
     --color-accent:      #0f766e; /* teal-700 */
     --color-sale:        #be123c; /* rose-700 — セール・割引バッジ */
+    --color-premium:     theme('colors.amber.400'); /* #fbbf24 — スター評価 */
   }
 }
 

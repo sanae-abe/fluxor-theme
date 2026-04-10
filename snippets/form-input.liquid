@@ -31,7 +31,7 @@
     assign _size_cls = 'min-h-10 px-3 py-2 text-base'
   endcase
 
-  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 focus:outline-none focus:border-stone-500 transition-colors ' | append: _size_cls
+  assign _input_cls = 'appearance-none w-full bg-transparent border border-stone-200 focus-visible:outline-none focus-visible:border-stone-500 focus-visible:ring-1 focus-visible:ring-stone-500 transition-colors ' | append: _size_cls
   if class != blank
     assign _input_cls = _input_cls | append: ' ' | append: class
   endif
@@ -50,7 +50,7 @@
     {%- if name != blank %} name="{{ name }}"{%- endif %}
     rows="{{ _rows }}"
     class="{{ _input_cls }} resize-none"
-    {%- if placeholder != blank %} placeholder="{{ placeholder }}"{%- endif %}
+    {%- if placeholder != blank %} placeholder="{{ placeholder | escape }}"{%- endif %}
     {%- if required %} required{%- endif %}
     {{- attr }}
   >{{ value | escape }}</textarea>
@@ -60,7 +60,7 @@
     {%- if id != blank %} id="{{ id }}"{%- endif %}
     {%- if name != blank %} name="{{ name }}"{%- endif %}
     {%- if value != blank %} value="{{ value | escape }}"{%- endif %}
-    {%- if placeholder != blank %} placeholder="{{ placeholder }}"{%- endif %}
+    {%- if placeholder != blank %} placeholder="{{ placeholder | escape }}"{%- endif %}
     {%- if min != blank %} min="{{ min }}"{%- endif %}
     class="{{ _input_cls }}"
     {%- if required %} required{%- endif %}

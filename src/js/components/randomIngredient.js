@@ -1,17 +1,16 @@
 export const randomIngredient = (sectionId) => ({
-  articles: [],
   article: null,
 
   init() {
     const el = document.getElementById(`random-ingredient-data-${sectionId}`);
     if (!el) return;
+    let articles;
     try {
-      this.articles = JSON.parse(el.textContent);
+      articles = JSON.parse(el.textContent);
     } catch {
       return;
     }
-    if (this.articles.length === 0) return;
-    const idx = Math.floor(Math.random() * this.articles.length);
-    this.article = this.articles[idx];
+    if (articles.length === 0) return;
+    this.article = articles[Math.floor(Math.random() * articles.length)];
   },
 });

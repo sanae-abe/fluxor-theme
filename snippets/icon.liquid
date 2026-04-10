@@ -1,4 +1,4 @@
-{% comment %}
+{%- comment -%}
   Icon snippet — Lucide アイコン集
   Parameters:
     icon         {String}  アイコン名（必須）
@@ -14,13 +14,13 @@
     arrow-big-up-dash, arrow-left, arrow-right,
     book-marked, cart, check, chevron-down, chevron-left, chevron-right,
     circle-check, circle-chevron-left, circle-chevron-right, circle-question-mark, citrus,
-    droplet, eye, flask-conical, gem, hash, image, info, instagram,
+    droplet, droplets, external-link, eye, flask-conical, gem, hash, image, info, instagram,
     layers, layout-grid, leaf, list-filter,
     message-square, minus, notebook-pen, pipette, plus, refresh-cw, rose,
     search, shield, smile, sparkle, sparkles, star, sun,
     tiktok, trending-up, triangle-alert,
-    user, van, waves, x, x-twitter, grid-triangle, peel-off
-{% endcomment %}
+    user, van, waves, x, x-twitter, zap
+{%- endcomment -%}
 {%- assign _stroke = stroke | default: 'currentColor' -%}
 {%- assign _stroke_width = stroke_width | default: 1.5 -%}
 {%- assign _fill = fill | default: 'none' -%}
@@ -124,7 +124,7 @@
       <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
       <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
       <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-    {%- when 'layers' %}
+    {%- when 'layers' -%}
       <path d="M12.83 2.18a2 2 0 0 0-1.66 0L2.6 6.08a1 1 0 0 0 0 1.83l8.58 3.91a2 2 0 0 0 1.66 0l8.58-3.9a1 1 0 0 0 0-1.83z"/>
       <path d="M2 12a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 12"/>
       <path d="M2 17a1 1 0 0 0 .58.91l8.6 3.91a2 2 0 0 0 1.65 0l8.58-3.9A1 1 0 0 0 22 17"/>
@@ -150,7 +150,7 @@
     {%- when 'plus' -%}
       <path d="M5 12h14"/>
       <path d="M12 5v14"/>
-    {%- when 'refresh-cw' %}
+    {%- when 'refresh-cw' -%}
       <path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/>
       <path d="M21 3v5h-5"/>
       <path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/>

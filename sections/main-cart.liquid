@@ -1,124 +1,151 @@
-<section class="max-w-screen-xl mx-auto px-4 md:px-6 py-12">
+<section x-data class="max-w-screen-xl mx-auto px-4 md:px-6 py-12">
   <h1 class="text-2xl md:text-4xl font-semibold mb-10">カート</h1>
 
-  {%- if cart.item_count > 0 -%}
-    {%- form 'cart', cart -%}
-      <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
+  {%- comment %} ローディング {%- endcomment -%}
+  <div x-cloak x-show="$store.cart.loading" class="flex flex-col items-center justify-center gap-3 py-32">
+    <svg class="w-6 h-6 text-stone-400 animate-spin" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+      <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="3"></circle>
+      <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+    </svg>
+    <p class="text-sm text-stone-400">読み込み中...</p>
+  </div>
 
-        {%- comment %} カートアイテム一覧 {%- endcomment -%}
-        <div class="lg:col-span-2 space-y-8">
-          {%- for item in cart.items -%}
-            <div class="flex gap-5 pb-8 border-b border-stone-200">
+  {%- comment %} カートが空 {%- endcomment -%}
+  <div
+    x-cloak
+    x-show="!$store.cart.loading && $store.cart.itemCount === 0"
+    class="flex flex-col items-center justify-center py-32 gap-6 text-center"
+  >
+    <p class="text-sm text-stone-400">カートに商品がありません</p>
+    {%- render 'button',
+      label: '商品を見る',
+      url: routes.all_products_collection_url,
+      variant: 'outline',
+      size: 'lg'
+    -%}
+  </div>
 
-              {%- comment %} サムネイル {%- endcomment -%}
-              <a href="{{ item.url }}" class="flex-shrink-0 w-24 h-24 bg-stone-200 overflow-hidden">
-                <img
-                  src="{{ item.image | image_url: width: 240, format: 'webp' }}"
-                  alt="{{ item.title | escape }}"
-                  class="w-full h-full object-cover"
-                  loading="lazy"
-                  width="240"
-                  height="240"
-                >
-              </a>
+  {%- comment %} カートアイテム {%- endcomment -%}
+  <div x-cloak x-show="!$store.cart.loading && $store.cart.itemCount > 0">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-12">
 
-              {%- comment %} 商品情報・操作 {%- endcomment -%}
-              <div class="flex-1 min-w-0">
-                <p class="text-xs text-stone-400 mb-0.5">{{ item.vendor }}</p>
-                <a href="{{ item.url }}" class="text-sm font-medium leading-snug">{{ item.product.title }}</a>
-                {%- unless item.variant.title == 'Default Title' -%}
-                  <p class="text-xs text-stone-400 mt-0.5">{{ item.variant.title }}</p>
-                {%- endunless -%}
+      {%- comment %} アイテム一覧 {%- endcomment -%}
+      <div class="lg:col-span-2 space-y-8">
+        <template x-for="item in $store.cart.items" :key="item.key">
+          <div class="flex gap-5 pb-8 border-b border-stone-200">
 
-                <div class="flex items-center justify-between mt-4">
-                  {%- comment %} 数量変更 {%- endcomment -%}
-                  <div class="flex border border-stone-200 h-9 w-28">
-                    <a
-                      href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | minus: 1 }}"
-                      class="cart-qty-btn w-9 flex items-center justify-center text-stone-400 text-lg"
-                      aria-label="数量を減らす"
-                    >−</a>
-                    <span class="flex-1 flex items-center justify-center text-sm border-x border-stone-200">{{ item.quantity }}</span>
-                    <a
-                      href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity={{ item.quantity | plus: 1 }}"
-                      class="cart-qty-btn w-9 flex items-center justify-center text-stone-400 text-lg"
-                      aria-label="数量を増やす"
-                    >+</a>
-                  </div>
+            {%- comment %} サムネイル {%- endcomment -%}
+            <a :href="item.url" class="flex-shrink-0 w-24 h-24 bg-stone-200 overflow-hidden">
+              <img
+                :src="$store.cart.imageUrl(item.featured_image?.url, 240)"
+                :alt="item.featured_image?.alt || item.title"
+                class="w-full h-full object-cover"
+                loading="lazy"
+                width="240"
+                height="240"
+              >
+            </a>
 
-                  {%- comment %} 小計 {%- endcomment -%}
-                  <div class="text-right">
-                    <p class="text-sm">{{ item.final_line_price | money }}</p>
-                    <p class="text-xs text-stone-400">（税込）</p>
-                  </div>
+            {%- comment %} 商品情報・操作 {%- endcomment -%}
+            <div class="flex-1 min-w-0">
+              <p class="text-xs text-stone-400 mb-0.5" x-text="item.vendor"></p>
+              <a :href="item.url" class="text-sm font-medium leading-snug" x-text="item.product_title"></a>
+              <p
+                class="text-xs text-stone-400 mt-0.5"
+                x-show="item.variant_title"
+                x-text="item.variant_title"
+              ></p>
+
+              <div class="flex items-center justify-between mt-4">
+                {%- comment %} 数量変更 {%- endcomment -%}
+                <div class="flex border border-stone-200 h-9 w-28">
+                  <button
+                    type="button"
+                    @click="item.quantity <= 1 ? $store.cart.remove(item.key) : $store.cart.changeQuantity(item.key, item.quantity - 1)"
+                    class="cart-qty-btn w-9 flex items-center justify-center text-stone-400 text-lg"
+                    aria-label="数量を減らす"
+                  >−</button>
+                  <span
+                    class="flex-1 flex items-center justify-center text-sm border-x border-stone-200"
+                    x-text="item.quantity"
+                  ></span>
+                  <button
+                    type="button"
+                    @click="$store.cart.changeQuantity(item.key, item.quantity + 1)"
+                    class="cart-qty-btn w-9 flex items-center justify-center text-stone-400 text-lg"
+                    aria-label="数量を増やす"
+                  >+</button>
                 </div>
 
-                <a
-                  href="{{ routes.cart_change_url }}?id={{ item.key }}&quantity=0"
-                  class="cart-text-link inline-block mt-3 text-xs text-stone-400 underline"
-                >削除</a>
+                {%- comment %} 小計 {%- endcomment -%}
+                <div class="text-right">
+                  <p class="text-sm" x-text="$store.cart.formatPrice(item.final_line_price)"></p>
+                  <p class="text-xs text-stone-400">（税込）</p>
+                </div>
               </div>
-            </div>
-          {%- endfor -%}
-        </div>
 
-        {%- comment %} 注文サマリー・チェックアウト {%- endcomment -%}
-        <div class="lg:col-span-1">
-          <div class="bg-stone-100 p-6 space-y-4 sticky top-32">
-            <h2 class="text-sm tracking-widest uppercase">注文内容</h2>
-
-            <div class="space-y-2 text-sm">
-              {%- for item in cart.items -%}
-                <div class="flex justify-between text-stone-500">
-                  <span>{{ item.product.title | truncate: 24 }} ×{{ item.quantity }}</span>
-                  <span>{{ item.final_line_price | money }}</span>
-                </div>
-              {%- endfor -%}
+              <button
+                type="button"
+                @click="$store.cart.remove(item.key)"
+                :aria-label="'削除: ' + item.product_title"
+                class="cart-text-link inline-block mt-3 text-xs text-stone-400 underline"
+              >削除</button>
             </div>
 
-            <div class="border-t border-stone-200 pt-4 flex justify-between font-medium">
-              <span class="text-sm">小計</span>
-              <span class="text-sm">
-                {{ cart.total_price | money }}<span class="text-xs font-normal text-stone-400 ml-1">（税込）</span>
-              </span>
-            </div>
+          </div>
+        </template>
+      </div>
 
-            <p class="text-xs text-stone-400">¥5,500（税込）以上で送料無料</p>
+      {%- comment %} 注文サマリー・チェックアウト {%- endcomment -%}
+      <div class="lg:col-span-1">
+        <div class="bg-stone-100 p-6 space-y-4 sticky top-32">
+          <h2 class="text-base tracking-widest uppercase">注文内容</h2>
 
+          <div class="space-y-2 text-sm">
+            <template x-for="item in $store.cart.items" :key="item.key">
+              <div class="flex justify-between text-stone-500">
+                <span x-text="$store.cart.truncate(item.product_title, 24) + ' ×' + item.quantity"></span>
+                <span x-text="$store.cart.formatPrice(item.final_line_price)"></span>
+              </div>
+            </template>
+          </div>
+
+          <div class="border-t border-stone-200 pt-4 flex justify-between font-medium">
+            <span class="text-sm">小計</span>
+            <span class="text-sm">
+              <span class="text-base" x-text="$store.cart.formatPrice($store.cart.totalPrice())"></span>
+              <span class="text-xs font-normal text-stone-400 ml-1">（税込）</span>
+            </span>
+          </div>
+
+          {%- form 'cart', cart -%}
             {%- render 'button',
               label: '購入手続きへ',
               type: 'submit',
               attr: 'name="checkout"',
-              size: 'lg',
+              size: 'md',
               full_width: true
             -%}
+          {%- endform -%}
 
-            <a
-              href="{{ routes.all_products_collection_url }}"
-              class="cart-text-link block text-center text-xs text-stone-400 underline"
-            >
-              ショッピングを続ける
-            </a>
-          </div>
+          <a
+            href="{{ routes.all_products_collection_url }}"
+            class="cart-text-link block text-center text-sm text-stone-400 underline"
+          >
+            ショッピングを続ける
+          </a>
         </div>
-
       </div>
-    {%- endform -%}
-  {%- else -%}
-    <div class="flex flex-col items-center justify-center py-32 gap-6 text-center">
-      <p class="text-sm text-stone-400">カートに商品がありません</p>
-      {%- render 'button',
-        label: '商品を見る',
-        url: routes.all_products_collection_url,
-        variant: 'outline',
-        size: 'lg'
-      -%}
+
     </div>
-  {%- endif -%}
+  </div>
 </section>
 
 {%- schema %}
 {
-  "name": "Cart"
+  "name": "Cart",
+  "presets": [
+    { "name": "Cart" }
+  ]
 }
 {%- endschema -%}

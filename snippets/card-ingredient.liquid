@@ -2,44 +2,54 @@
   成分カード
   Parameters:
     article: {Object} Article object
+    loading: {String} img の loading 属性 (default: 'lazy')
 {%- endcomment -%}
 
-{%- assign category_tags = article.metafields.custom.category_tags.value -%}
-{%- assign inci_name = article.metafields.custom.inci_name -%}
+{%- liquid
+  assign category_tags = article.metafields.custom.category_tags.value
+  assign inci_name = article.metafields.custom.inci_name
+  assign loading = loading | default: 'lazy'
+-%}
 
-<a href="{{ article.url }}" class="ingredient-card flex flex-col gap-4 group">
-  <div class="relative overflow-hidden bg-white aspect-square">
-    {%- if article.image -%}
-      <img
-        src="{{ article.image | image_url: width: 600, format: 'webp' }}"
-        alt="{{ article.image.alt | escape | default: article.title | escape }}"
-        class="ingredient-card__img w-full h-full object-cover"
-        loading="lazy"
-        width="600"
-        height="600"
-      >
-    {%- else -%}
-      <div class="w-full h-full bg-stone-200 flex items-center justify-center">
-        {%- render 'icon', icon: 'flask-conical', class: 'w-12 h-12 text-stone-400', stroke_width: 1 -%}
-      </div>
-    {%- endif -%}
-    {%- if category_tags != blank -%}
-      <div class="absolute top-4 left-4 flex flex-col items-start gap-2">
-        {%- for tag in category_tags limit: 2 -%}
-          {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
-        {%- endfor -%}
-      </div>
-    {%- endif -%}
-  </div>
-  <div class="flex flex-col gap-2">
-    <div class="flex items-start gap-4">
-      <p class="flex-1 text-lg font-medium leading-tight text-stone-900 ingredient-card__title">
-        {{- inci_name | default: article.title -}}
-      </p>
-      {%- render 'icon', icon: 'arrow-right', class: 'ingredient-card__icon w-6 h-6 text-stone-900 shrink-0 mt-0.5', stroke_width: 1.5 -%}
+<article class="card-ingredient">
+  <a href="{{ article.url }}" class="flex flex-col gap-4">
+
+    <div class="relative overflow-hidden bg-white aspect-square">
+      {%- if article.image -%}
+        <img
+          src="{{ article.image | image_url: width: 600, format: 'webp' }}"
+          alt="{{ article.image.alt | escape | default: article.title | escape }}"
+          class="card-ingredient__img w-full h-full object-cover"
+          loading="{{ loading }}"
+          width="600"
+          height="600"
+        >
+      {%- else -%}
+        <div class="w-full h-full bg-muted flex items-center justify-center" aria-hidden="true">
+          {%- render 'icon', icon: 'flask-conical', class: 'w-12 h-12 text-text-subtle', stroke_width: 1 -%}
+        </div>
+      {%- endif -%}
+
+      {%- if category_tags != blank -%}
+        <div class="absolute top-4 left-4 flex flex-col items-start gap-2">
+          {%- for tag in category_tags limit: 2 -%}
+            {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
+          {%- endfor -%}
+        </div>
+      {%- endif -%}
     </div>
-    {%- if inci_name != blank -%}
-      <p class="text-sm font-medium leading-tight text-stone-500">{{ article.title }}</p>
-    {%- endif -%}
-  </div>
-</a>
+
+    <div class="flex flex-col gap-2">
+      <div class="flex items-start gap-4">
+        <h3 class="flex-1 text-lg font-medium leading-tight text-text">
+          {{- inci_name | default: article.title | escape -}}
+        </h3>
+        {%- render 'icon', icon: 'arrow-right', class: 'card-ingredient__icon w-6 h-6 text-text shrink-0 mt-0.5', stroke_width: 1.5 -%}
+      </div>
+      {%- if inci_name != blank -%}
+        <p class="text-sm font-medium leading-tight text-text-muted">{{ article.title | escape }}</p>
+      {%- endif -%}
+    </div>
+
+  </a>
+</article>

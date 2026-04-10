@@ -2,7 +2,8 @@
   Parameters:
     - checked_expr : :checked に渡す Alpine 式（例: "selectedProducts.includes(product.id)"）
     - change_expr  : @change に渡す Alpine 式（例: "toggle('products', product.id)"）
-    - label_expr   : x-text に渡す Alpine 式（例: "product.title"）
+    - label_expr   : 動的ラベル用 Alpine 式（例: "product.title"）
+    - label        : 静的ラベルテキスト（Liquid 値）—— label_expr が空のとき使用
 {%- endcomment -%}
 <label class="flex items-start gap-3 cursor-pointer">
   <input
@@ -11,5 +12,9 @@
     @change="{{ change_expr }}"
     class="mt-0.5 shrink-0 w-4 h-4 border border-stone-200 accent-stone-900"
   >
-  <span class="text-sm text-stone-900 leading-4" x-text="{{ label_expr }}"></span>
+  {%- if label_expr != blank -%}
+    <span class="text-sm text-stone-900 leading-4" x-text="{{ label_expr }}"></span>
+  {%- else -%}
+    <span class="text-sm text-stone-900 leading-4">{{ label }}</span>
+  {%- endif -%}
 </label>

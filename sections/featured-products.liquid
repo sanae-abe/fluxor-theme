@@ -1,12 +1,16 @@
 {%- assign col = collections[section.settings.collection] -%}
 {%- assign link_url = section.settings.link_url | default: col.url -%}
+{%- assign limit = section.settings.products_to_show -%}
 
 <section class="bg-stone-100 px-4 md:px-10 py-10 md:py-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
     {%- comment %} ヘッダー行 {%- endcomment -%}
-    {%- assign header_align = 'center' -%}
-    {%- if section.settings.show_view_all -%}{%- assign header_align = 'left' -%}{%- endif -%}
+    {%- if section.settings.show_view_all -%}
+      {%- assign header_align = 'left' -%}
+    {%- else -%}
+      {%- assign header_align = 'center' -%}
+    {%- endif -%}
     {%- render 'section-header',
       heading: section.settings.heading,
       subheading: section.settings.subheading,
@@ -18,13 +22,14 @@
     {%- comment %} 商品グリッド {%- endcomment -%}
     <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-x-10 md:gap-y-6">
       {%- if col != blank -%}
-        {%- for product in col.products limit: section.settings.products_to_show -%}
+        {%- for product in col.products limit: limit -%}
           {%- render 'card-product-4col', product: product -%}
         {%- else -%}
           <p class="col-span-4 text-stone-400">コレクションに商品がありません。</p>
         {%- endfor -%}
       {%- else -%}
-        {%- for i in (1..section.settings.products_to_show) -%}
+        {%- comment %} コレクション未選択時のスケルトン（エディタープレビュー用） {%- endcomment -%}
+        {%- for i in (1..limit) -%}
           <div class="flex flex-col gap-4">
             <div class="w-full aspect-square rounded-2xl bg-stone-200 animate-pulse"></div>
             <div class="flex flex-col gap-2">
