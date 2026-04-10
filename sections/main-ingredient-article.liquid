@@ -282,12 +282,12 @@
     </div>
 
   {%- elsif block.type == 'references' -%}
+    {%- if reference_entries != blank -%}
     <div class="w-full bg-stone-100 flex flex-col items-center px-4 md:px-10 py-10 md:py-[60px]" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl flex flex-col gap-5">
         {%- if block.settings.heading != blank -%}
           <p class="text-base font-medium text-stone-900">{{ block.settings.heading }}</p>
         {%- endif -%}
-        {%- if reference_entries != blank -%}
           <ol class="flex flex-col gap-2 list-none">
             {%- for entry in reference_entries -%}
               <li class="flex gap-3">
@@ -328,52 +328,177 @@
               </li>
             {%- endfor -%}
           </ol>
-        {%- endif -%}
       </div>
     </div>
+    {%- endif -%}
 
   {%- elsif block.type == 'product_grid' -%}
-    <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px] {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
-        {%- if block.settings.heading != blank -%}
-          <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ block.settings.heading }}</h2>
-        {%- endif -%}
-        {%- if block.settings.subheading != blank -%}
-          <p class="text-lg text-stone-900/70">{{ block.settings.subheading }}</p>
-        {%- endif -%}
-      </div>
+    {%- liquid
+      assign fc_max = 4
+      assign fc_ids = ','
+      assign fc_count = 0
+      assign fc_collection = collections[block.settings.collection]
+    -%}
+    {%- capture product_cards -%}
+      {%- comment %} Priority 1: product_reference {%- endcomment -%}
       {%- if ingredient_products != blank -%}
-        <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
-          {%- for product in ingredient_products -%}
-            {%- render 'card-product-4col', product: product -%}
-          {%- endfor -%}
-        </div>
+        {%- for product in ingredient_products -%}
+          {%- if fc_count < fc_max -%}
+            {%- assign id_with_sep = product.id | prepend: ',' | append: ',' -%}
+            {%- unless fc_ids contains id_with_sep -%}
+              {%- render 'card-product-4col', product: product -%}
+              {%- assign fc_ids = fc_ids | append: product.id | append: ',' -%}
+              {%- assign fc_count = fc_count | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
       {%- endif -%}
-    </section>
+      {%- comment %} Priority 2: skin_concerns が同じ商品（featured collection 内） {%- endcomment -%}
+      {%- if fc_count < fc_max and fc_collection != blank and skin_concerns != blank -%}
+        {%- for product in fc_collection.products -%}
+          {%- if fc_count < fc_max -%}
+            {%- assign id_with_sep = product.id | prepend: ',' | append: ',' -%}
+            {%- unless fc_ids contains id_with_sep -%}
+              {%- assign product_concerns = product.metafields.custom.skin_concerns.value -%}
+              {%- assign has_match = false -%}
+              {%- if product_concerns != blank -%}
+                {%- for concern in skin_concerns -%}
+                  {%- if product_concerns contains concern -%}
+                    {%- assign has_match = true -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if has_match -%}
+                {%- render 'card-product-4col', product: product -%}
+                {%- assign fc_ids = fc_ids | append: product.id | append: ',' -%}
+                {%- assign fc_count = fc_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- comment %} Priority 3: featured collection の残り商品 {%- endcomment -%}
+      {%- if fc_count < fc_max and fc_collection != blank -%}
+        {%- for product in fc_collection.products -%}
+          {%- if fc_count < fc_max -%}
+            {%- assign id_with_sep = product.id | prepend: ',' | append: ',' -%}
+            {%- unless fc_ids contains id_with_sep -%}
+              {%- render 'card-product-4col', product: product -%}
+              {%- assign fc_ids = fc_ids | append: product.id | append: ',' -%}
+              {%- assign fc_count = fc_count | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if fc_count > 0 -%}
+      <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px] {{ extra_class }}" {{ block.shopify_attributes }}>
+        <div class="w-full max-w-screen-xl flex flex-col gap-2 items-center text-center">
+          {%- if block.settings.heading != blank -%}
+            <h2 class="text-4xl font-semibold tracking-wider text-stone-900">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          {%- if block.settings.subheading != blank -%}
+            <p class="text-lg text-stone-900/70">{{ block.settings.subheading }}</p>
+          {%- endif -%}
+        </div>
+        <div class="w-full max-w-screen-xl grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
+          {{ product_cards }}
+        </div>
+      </section>
+    {%- endif -%}
 
   {%- elsif block.type == 'related_articles' -%}
     {%- liquid
       assign related_limit = block.settings.count | default: 4
-      assign related_fetch_limit = related_limit | plus: 1
+      assign fetch_limit = 50
       assign rendered_count = 0
+      assign seen_ids = ','
+      assign current_category_tags = article.metafields.custom.category_tags.value
+      assign current_skin_concerns = article.metafields.custom.skin_concerns.value
     -%}
-    <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px] {{ extra_class }}" {{ block.shopify_attributes }}>
-      <div class="w-full max-w-screen-xl flex flex-col gap-10">
-        {%- if block.settings.heading != blank -%}
-          <h2 class="text-4xl font-semibold tracking-wider text-stone-900 text-center">{{ block.settings.heading }}</h2>
-        {%- endif -%}
-        <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-10 md:gap-y-8">
-          {%- for related_article in blog.articles limit: related_fetch_limit -%}
-            {%- unless related_article.id == article.id -%}
-              {%- if rendered_count < related_limit -%}
-                {%- render 'card-ingredient', article: related_article -%}
+    {%- capture related_cards -%}
+      {%- comment %} Priority 1: category_tags が一致する記事 {%- endcomment -%}
+      {%- for candidate in blog.articles limit: fetch_limit -%}
+        {%- unless candidate.id == article.id -%}
+          {%- if rendered_count < related_limit -%}
+            {%- liquid
+              assign candidate_tags = candidate.metafields.custom.category_tags.value
+              assign has_match = false
+              if current_category_tags != blank and candidate_tags != blank
+                for tag in current_category_tags
+                  if candidate_tags contains tag
+                    assign has_match = true
+                  endif
+                endfor
+              endif
+            -%}
+            {%- if has_match -%}
+              {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
+              {%- unless seen_ids contains id_sep -%}
+                {%- render 'card-ingredient', article: candidate -%}
+                {%- assign seen_ids = seen_ids | append: candidate.id | append: ',' -%}
                 {%- assign rendered_count = rendered_count | plus: 1 -%}
-              {%- endif -%}
-            {%- endunless -%}
-          {%- endfor -%}
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endif -%}
+        {%- endunless -%}
+      {%- endfor -%}
+      {%- comment %} Priority 2: skin_concerns が一致する記事（残り枠を補充） {%- endcomment -%}
+      {%- if rendered_count < related_limit -%}
+        {%- for candidate in blog.articles limit: fetch_limit -%}
+          {%- unless candidate.id == article.id -%}
+            {%- if rendered_count < related_limit -%}
+              {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
+              {%- unless seen_ids contains id_sep -%}
+                {%- liquid
+                  assign candidate_concerns = candidate.metafields.custom.skin_concerns.value
+                  assign has_match = false
+                  if current_skin_concerns != blank and candidate_concerns != blank
+                    for concern in current_skin_concerns
+                      if candidate_concerns contains concern
+                        assign has_match = true
+                      endif
+                    endfor
+                  endif
+                -%}
+                {%- if has_match -%}
+                  {%- render 'card-ingredient', article: candidate -%}
+                  {%- assign seen_ids = seen_ids | append: candidate.id | append: ',' -%}
+                  {%- assign rendered_count = rendered_count | plus: 1 -%}
+                {%- endif -%}
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- comment %} Priority 3 & 4: 新着・その他記事（残り枠を補充） {%- endcomment -%}
+      {%- if rendered_count < related_limit -%}
+        {%- for candidate in blog.articles limit: fetch_limit -%}
+          {%- unless candidate.id == article.id -%}
+            {%- if rendered_count < related_limit -%}
+              {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
+              {%- unless seen_ids contains id_sep -%}
+                {%- render 'card-ingredient', article: candidate -%}
+                {%- assign seen_ids = seen_ids | append: candidate.id | append: ',' -%}
+                {%- assign rendered_count = rendered_count | plus: 1 -%}
+              {%- endunless -%}
+            {%- endif -%}
+          {%- endunless -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if rendered_count > 0 -%}
+      <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-10 md:py-[60px] {{ extra_class }}" {{ block.shopify_attributes }}>
+        <div class="w-full max-w-screen-xl flex flex-col gap-10">
+          {%- if block.settings.heading != blank -%}
+            <h2 class="text-4xl font-semibold tracking-wider text-stone-900 text-center">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-10 md:gap-y-8">
+            {{ related_cards }}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    {%- endif -%}
 
   {%- endif -%}
 {%- endfor -%}
@@ -508,6 +633,11 @@
           "type": "text",
           "id": "subheading",
           "label": "サブ見出し"
+        },
+        {
+          "type": "collection",
+          "id": "collection",
+          "label": "フィラーコレクション"
         }
       ]
     },
