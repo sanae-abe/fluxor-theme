@@ -71,22 +71,6 @@
     "transparency": {
       "type": "about-transparency",
       "blocks": {
-        "item_GKBjgx": {
-          "type": "item",
-          "settings": {
-            "icon": "",
-            "title": "",
-            "description": ""
-          }
-        },
-        "item_pgJBVj": {
-          "type": "item",
-          "settings": {
-            "icon": "",
-            "title": "",
-            "description": ""
-          }
-        },
         "item_BnXcQK": {
           "type": "item",
           "settings": {
@@ -94,12 +78,28 @@
             "title": "正直な言葉で",
             "description": "効果を誇張せず、実際の使用感や特徴を率直にお伝えします。"
           }
+        },
+        "item_GKBjgx": {
+          "type": "item",
+          "settings": {
+            "icon": "eye",
+            "title": "知りうる限りオープンに",
+            "description": "ブランド情報や成分について、把握できる範囲で透明性を持ってご紹介します"
+          }
+        },
+        "item_pgJBVj": {
+          "type": "item",
+          "settings": {
+            "icon": "circle-question-mark",
+            "title": "分からないことは、分からないと",
+            "description": "確認できないことは、臆せずそのままお伝えします。"
+          }
         }
       },
       "block_order": [
+        "item_BnXcQK",
         "item_GKBjgx",
-        "item_pgJBVj",
-        "item_BnXcQK"
+        "item_pgJBVj"
       ],
       "settings": {
         "heading": "透明性へのこだわり",
