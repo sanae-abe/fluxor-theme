@@ -3,7 +3,7 @@
 
   対応メタフィールド (名前空間: custom):
     category_tags       {list.single_line_text_field}   カテゴリタグ一覧
-    concern_tags        {list.single_line_text_field}   肌悩みタグ一覧
+    skin_concerns       {list.single_line_text_field}   肌悩みタグ一覧
     inci_name           {single_line_text_field}         成分の英語名
     product_reference   {list.product_reference}         関連商品一覧（商品フィルターに使用）
 {%- endcomment -%}
@@ -19,7 +19,7 @@
       "title": {{ article.title | json }},
       "inci_name": {{ article.metafields.custom.inci_name.value | json | default: '""' }},
       "categories": {{ article.metafields.custom.category_tags.value | json | default: '[]' }},
-      "concerns": {{ article.metafields.custom.concern_tags.value | json | default: '[]' }},
+      "concerns": {{ article.metafields.custom.skin_concerns.value | json | default: '[]' }},
       "products": [
         {%- assign product_refs = article.metafields.custom.product_reference.value -%}
         {%- for ref in product_refs -%}

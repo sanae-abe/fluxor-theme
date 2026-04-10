@@ -9,6 +9,7 @@ import { saleCountdown }   from './components/saleCountdown.js'
 import { announcementBar }   from './components/announcementBar.js'
 import { ingredientFilters }  from './components/ingredientFilters.js'
 import { randomIngredient }   from './components/randomIngredient.js'
+import { journalFilters }     from './components/journalFilters.js'
 
 Alpine.plugin(Focus)
 Alpine.store('cart', cartStore)
@@ -19,6 +20,7 @@ Alpine.data('saleCountdown', saleCountdown)
 Alpine.data('announcementBar', announcementBar)
 Alpine.data('ingredientFilters', ingredientFilters)
 Alpine.data('randomIngredient', randomIngredient)
+Alpine.data('journalFilters', journalFilters)
 
 document.addEventListener('alpine:init', () => {
   Alpine.store('cart').fetch()

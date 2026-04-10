@@ -1,0 +1,155 @@
+{%- comment %} Journal一覧セクション — フィルター（カテゴリ × 肌悩み）付き {%- endcomment %}
+
+{%- comment %} カテゴリフィルターの定義（cat- タグキー : 表示ラベル） {%- endcomment %}
+{%- assign cat_options = 'cat-vitamin:ビタミン類,cat-moisturizing:保湿・バリア成分,cat-peptide:ペプチド・アミノ酸類,cat-botanical:植物エキス・オイル,cat-advanced:先端・その他の成分' | split: ',' -%}
+
+{%- comment %} 肌悩みフィルターの定義（custom.skin_concerns の値と一致させる） {%- endcomment %}
+{%- assign concern_options = 'エイジングケア,くすみ・透明感,乾燥・うるおい,毛穴・肌キメ,ニキビ・肌荒れ' | split: ',' -%}
+
+{%- paginate blog.articles by 250 -%}
+
+{%- comment %} Alpine.js 用記事データ（タグ・肌悩みのみ） {%- endcomment %}
+<script id="journal-articles-data" type="application/json">
+  [
+    {%- for article in blog.articles -%}
+      {%- unless forloop.first -%},{%- endunless -%}
+      {
+        "tags": {{ article.tags | json }},
+        "skin_concerns": {%- if article.metafields.custom.skin_concerns.value != blank -%}{{ article.metafields.custom.skin_concerns.value | json }}{%- else -%}[]{%- endif -%}
+      }
+    {%- endfor -%}
+  ]
+</script>
+
+<div
+  class="max-w-[1280px] mx-auto px-10"
+  x-data="journalFilters()"
+  x-cloak
+>
+  {%- comment %} ツールバー {%- endcomment %}
+  <div class="flex items-center justify-between py-6 border-b border-stone-200">
+    <div class="flex gap-4 items-center text-sm text-stone-500 uppercase tracking-widest">
+      <span x-text="`${filteredCount}件の記事`"></span>
+      <button
+        x-show="hasActiveFilters"
+        @click="clearAll()"
+        class="underline"
+        x-transition
+        type="button"
+      >すべてクリア</button>
+    </div>
+    <div class="border border-stone-400/40 text-sm px-3 py-1 text-stone-900 uppercase tracking-widest flex items-center gap-2 select-none">
+      <span>新着順</span>
+    </div>
+  </div>
+
+  {%- comment %} メインレイアウト（サイドバー + グリッド） {%- endcomment %}
+  <div class="flex gap-16 pt-10 pb-15">
+
+    {%- comment %} サイドバー {%- endcomment %}
+    <aside class="w-72 shrink-0 flex flex-col gap-8">
+
+      {%- comment %} カテゴリフィルター {%- endcomment %}
+      <div class="bg-white">
+        <button
+          class="flex items-center justify-between w-full p-4 text-sm font-medium"
+          @click="catOpen = !catOpen"
+          type="button"
+          :aria-expanded="catOpen"
+        >
+          <span>カテゴリ</span>
+          <svg
+            class="size-4 transition-transform duration-200"
+            :class="{ 'rotate-180': catOpen }"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+        <div x-show="catOpen" class="px-4 pb-4 flex flex-col gap-3">
+          {%- for option in cat_options -%}
+            {%- assign parts = option | split: ':' -%}
+            {%- assign tag_key = parts[0] -%}
+            {%- assign tag_label = parts[1] -%}
+            <label class="flex gap-3 items-start text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                value="{{ tag_key }}"
+                x-model="selectedCats"
+                class="mt-0.5 size-4 border-stone-300 accent-stone-900 cursor-pointer"
+              >
+              <span>{{ tag_label }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      {%- comment %} 肌悩みフィルター {%- endcomment %}
+      <div class="bg-white">
+        <button
+          class="flex items-center justify-between w-full p-4 text-sm font-medium"
+          @click="concernOpen = !concernOpen"
+          type="button"
+          :aria-expanded="concernOpen"
+        >
+          <span>肌悩み</span>
+          <svg
+            class="size-4 transition-transform duration-200"
+            :class="{ 'rotate-180': concernOpen }"
+            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+            stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"
+            aria-hidden="true"
+          >
+            <polyline points="18 15 12 9 6 15"></polyline>
+          </svg>
+        </button>
+        <div x-show="concernOpen" class="px-4 pb-4 flex flex-col gap-3">
+          {%- for concern in concern_options -%}
+            <label class="flex gap-3 items-start text-sm cursor-pointer">
+              <input
+                type="checkbox"
+                value="{{ concern }}"
+                x-model="selectedConcerns"
+                class="mt-0.5 size-4 border-stone-300 accent-stone-900 cursor-pointer"
+              >
+              <span>{{ concern }}</span>
+            </label>
+          {%- endfor -%}
+        </div>
+      </div>
+
+    </aside>
+
+    {%- comment %} 記事グリッド {%- endcomment %}
+    <div class="flex-1 min-w-0">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        {%- for article in blog.articles -%}
+          <div
+            x-show="isVisible({{ forloop.index0 }})"
+            x-transition:leave="transition-opacity duration-150"
+            x-transition:leave-end="opacity-0"
+          >
+            {%- render 'card-article', article: article -%}
+          </div>
+        {%- endfor -%}
+      </div>
+
+      <p
+        x-show="filteredCount === 0"
+        class="text-center py-20 text-sm text-stone-400"
+      >該当する記事がありません。</p>
+    </div>
+
+  </div>
+</div>
+
+{%- endpaginate -%}
+
+{%- schema %}
+{
+  "name": "Journal 一覧",
+  "presets": [{ "name": "Journal 一覧" }]
+}
+{%- endschema -%}
