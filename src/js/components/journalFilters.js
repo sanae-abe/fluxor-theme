@@ -30,7 +30,7 @@ export const journalFilters = () => ({
     const filtered = this.articles
       .filter(a => {
         if (sc.length  > 0 && !sc.some(c => (a.categories || []).includes(c))) return false;
-        if (st.length > 0 && !st.some(c => (a.tags   || []).includes(c))) return false;
+        if (st.length > 0 && !st.some(c => (a.tags || []).includes(c))) return false;
         return true;
       })
       .sort(sortFns[this.sortBy] ?? (() => 0));

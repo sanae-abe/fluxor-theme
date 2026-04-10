@@ -296,6 +296,16 @@ body {
   margin-bottom: theme('spacing.8');
   font-size: theme('fontSize.2xl');
   font-weight: theme('fontWeight.semibold');
+  letter-spacing: theme('letterSpacing.wider');
+  line-height: theme('lineHeight.tight');
+}
+
+.rte h3 {
+  margin-top: theme('spacing.8');
+  margin-bottom: theme('spacing.2');
+  font-weight: theme('fontWeight.semibold');
+  letter-spacing: theme('letterSpacing.wider');
+  line-height: theme('lineHeight.tight');
 }
 
 /* ===== フォーム ===== */
