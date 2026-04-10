@@ -64,7 +64,6 @@
           "type": "product_grid",
           "settings": {
             "heading": "関連商品",
-            "subheading": "",
             "collection": "featured-collection"
           }
         },
@@ -72,6 +71,14 @@
           "type": "related_articles",
           "settings": {
             "heading": "関連成分",
+            "count": 4
+          }
+        },
+        "related_journal_articles_q4arMG": {
+          "type": "related_journal_articles",
+          "settings": {
+            "heading": "関連記事",
+            "blog": "journal",
             "count": 4
           }
         }
@@ -86,7 +93,8 @@
         "disclaimer",
         "references_nQdxNc",
         "product_grid_j68c7m",
-        "related_articles_default"
+        "related_articles_default",
+        "related_journal_articles_q4arMG"
       ],
       "settings": {}
     }
