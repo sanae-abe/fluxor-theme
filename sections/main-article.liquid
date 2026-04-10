@@ -28,12 +28,12 @@
 
     <div class="flex items-center justify-between w-full gap-4 flex-wrap">
       <div class="flex gap-3 items-center flex-wrap">
-        {%- for tag in article.tags limit: 4 -%}
+        {%- for tag in category_tags limit: 4 -%}
           {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
         {%- endfor -%}
-        {%- if category_tags != blank -%}
+        {%- if article.tags != blank -%}
           <span class="text-stone-300 select-none">|</span>
-          {%- for tag in category_tags limit: 4 -%}
+          {%- for tag in article.tags limit: 4 -%}
             {%- render 'badge', label: tag, variant: 'secondary', size: 'sm' -%}
           {%- endfor -%}
         {%- endif -%}
