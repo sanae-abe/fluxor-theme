@@ -182,6 +182,11 @@ body {
 /* Alpine.js x-cloak：JS初期化前の一瞬表示（ちらつき）を防止 */
 [x-cloak] { display: none !important; }
 
+/* フッターナビゲーション：デスクトップでは x-cloak / x-show を無視して常に表示 */
+@media (min-width: 768px) {
+  .footer-nav-list { display: flex !important; }
+}
+
 /* ===== 価格 ===== */
 
 .price--on-sale .price__compare s { color: theme('colors.stone.400'); }

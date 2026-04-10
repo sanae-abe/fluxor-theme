@@ -1,24 +1,46 @@
-<footer id="site-footer" class="bg-stone-900 px-4 md:px-10 py-10 md:py-[60px]">
+<footer id="site-footer" class="bg-stone-900 px-4 md:px-10 pt-8 pb-10 md:pt-[60px] md:pb-[60px]">
   <div class="max-w-screen-xl mx-auto flex flex-col gap-6 md:gap-10">
 
     {%- comment %} 3カラム：Quick Links / Information / メルマガ＋SNS {%- endcomment -%}
-    <div class="flex flex-col md:flex-row gap-10 items-start">
+    <div class="flex flex-col md:flex-row md:gap-10 items-start">
 
       {%- for n in (1..2) -%}
         {%- assign menu_key    = 'menu_' | append: n -%}
         {%- assign title_key   = 'menu_' | append: n | append: '_title' -%}
         {%- assign menu_handle = section.settings[menu_key] -%}
         {%- if menu_handle != blank -%}
-          <div class="flex-1 flex flex-col gap-4">
-            <p class="text-sm font-medium text-stone-500 uppercase leading-tight">
-              {{ section.settings[title_key] | default: 'Links' }}
-            </p>
-            <ul class="flex flex-col gap-4">
+          <div
+            x-data="{ open: window.matchMedia('(min-width: 768px)').matches }"
+            class="w-full md:w-auto flex-1 flex flex-col gap-2 md:gap-4 md:border-0 md:pb-0"
+          >
+            <button
+              @click="if (window.matchMedia('(max-width: 767px)').matches) open = !open"
+              :aria-expanded="open.toString()"
+              class="flex items-center justify-between w-full text-left py-4 md:py-0 md:cursor-default"
+            >
+              <span class="text-sm font-medium text-white md:text-stone-500 uppercase leading-tight">
+                {{ section.settings[title_key] | default: 'Links' }}
+              </span>
+              <span class="md:hidden transition-transform duration-200" :class="open ? 'rotate-180' : ''">
+                {%- render 'icon', icon: 'chevron-down', class: 'w-4 h-4 text-white', stroke_width: 2 -%}
+              </span>
+            </button>
+            <ul
+              x-show="open"
+              x-cloak
+              x-transition:enter="transition ease-out duration-200"
+              x-transition:enter-start="opacity-0 translate-y-2"
+              x-transition:enter-end="opacity-100 translate-y-0"
+              x-transition:leave="transition ease-in duration-150"
+              x-transition:leave-start="opacity-100 translate-y-0"
+              x-transition:leave-end="opacity-0 translate-y-2"
+              class="footer-nav-list flex flex-col gap-4 pb-2 md:pb-0"
+            >
               {%- for link in linklists[menu_handle].links -%}
                 <li>
                   <a
                     href="{{ link.url }}"
-                    class="text-sm text-stone-200 uppercase leading-tight palt tracking-wider hover:underline underline-offset-[8px]"
+                    class="text-base md:text-sm text-stone-200 uppercase leading-tight palt tracking-wider hover:underline underline-offset-[8px]"
                   >{{ link.title }}</a>
                 </li>
               {%- endfor -%}
@@ -28,12 +50,12 @@
       {%- endfor -%}
 
       {%- comment %} メルマガ登録 + SNS {%- endcomment -%}
-      <div class="flex-1 flex flex-col gap-8">
+      <div class="flex-1 flex flex-col gap-12 md:gap-8">
 
         {%- comment %} メルマガ {%- endcomment -%}
-        <div class="flex flex-col gap-4">
+        <div class="flex flex-col gap-4 pt-6 md:pt-0">
           <p class="text-sm font-medium text-stone-500 uppercase leading-tight">メルマガ登録</p>
-          <p class="text-sm text-stone-200 leading-tight">
+          <p class="text-xs md:text-sm text-stone-200 leading-tight">
             新しい商品やセールのお知らせをメールで配信しています。
           </p>
 
@@ -112,7 +134,7 @@
 
     {%- comment %} 決済アイコン {%- endcomment -%}
     {%- unless shop.enabled_payment_types == empty -%}
-      <div class="flex items-center gap-4 flex-wrap">
+      <div class="flex items-center gap-4 flex-wrap pb-6 md:pb-0">
         {%- for type in shop.enabled_payment_types -%}
           {{ type | payment_type_svg_tag: class: 'h-6' }}
         {%- endfor -%}
@@ -121,7 +143,7 @@
 
     {%- comment %} 個人輸入・薬機法 注意事項 {%- endcomment -%}
     {%- if settings.import_notice_footer != blank or settings.disclaimer != blank -%}
-      <div class="border-t border-[rgba(246,244,240,0.1)] pt-8 flex flex-col gap-8">
+      <div class="border-t border-stone-500 pt-10 pb-4 md:pt-8 md:pb-0 flex flex-col gap-8">
         {%- if settings.import_notice_footer != blank -%}
           <div class="flex flex-col gap-1">
             <p class="text-xs font-medium text-stone-500 uppercase leading-tight tracking-wider">個人輸入代行に関するご注意</p>
@@ -138,8 +160,8 @@
     {%- endif -%}
 
     {%- comment %} ボトムバー（コピーライト） {%- endcomment -%}
-    <div class="border-t border-[rgba(246,244,240,0.1)] pt-10 flex items-center justify-center">
-      <p class="text-sm text-stone-500 leading-5">
+    <div class="border-t border-stone-500 pt-10 flex items-center justify-center">
+      <p class="text-xs md:text-sm text-stone-500 leading-5">
         &copy; {{ 'now' | date: '%Y' }} {{ shop.name | upcase }}
       </p>
     </div>
