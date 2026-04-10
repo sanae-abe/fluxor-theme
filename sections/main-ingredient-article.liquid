@@ -332,7 +332,7 @@
     </div>
     {%- endif -%}
 
-  {%- elsif block.type == 'product_grid' -%}
+  {%- elsif block.type == 'related_journal_articles' -%}
     {%- liquid
       assign rj_limit = block.settings.count | default: 4
       assign rj_fetch = 50
@@ -418,7 +418,7 @@
       </section>
     {%- endif -%}
 
-  {%- elsif block.type == 'related_articles' -%}
+  {%- elsif block.type == 'product_grid' -%}
     {%- liquid
       assign fc_max = 4
       assign fc_ids = ','
@@ -493,7 +493,7 @@
       </section>
     {%- endif -%}
 
-  {%- elsif block.type == 'related_journal_articles' -%}
+  {%- elsif block.type == 'related_articles' -%}
     {%- liquid
       assign related_limit = block.settings.count | default: 4
       assign fetch_limit = 50
