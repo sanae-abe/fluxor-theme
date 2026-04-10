@@ -38,7 +38,7 @@
       "settings": {
         "heading": "おすすめの商品",
         "subheading": "",
-        "collection": "",
+        "collection": "featured-collection",
         "show_view_all": false,
         "products_to_show": 4,
         "link_url": "",
