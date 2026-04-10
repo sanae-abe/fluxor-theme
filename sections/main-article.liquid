@@ -155,7 +155,7 @@
     </div>
     {%- endif -%}
 
-  {%- elsif block.type == 'featured_collection' -%}
+  {%- elsif block.type == 'product_grid' -%}
     {%- liquid
       assign fc_max = 4
       assign fc_ids = ','
@@ -224,6 +224,67 @@
           {%- endif -%}
           <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-6 md:gap-6">
             {{ product_cards }}
+          </div>
+        </div>
+      </section>
+    {%- endif -%}
+
+  {%- elsif block.type == 'related_ingredients' -%}
+    {%- liquid
+      assign ri_limit = block.settings.count | default: 4
+      assign ri_fetch = 50
+      assign ri_count = 0
+      assign ri_seen = ','
+      assign ri_blog = blogs[block.settings.blog]
+      assign current_category_tags = article.metafields.custom.category_tags.value
+    -%}
+    {%- capture ri_cards -%}
+      {%- comment %} Priority 1: category_tags が一致する成分記事 {%- endcomment -%}
+      {%- if ri_blog != blank and current_category_tags != blank -%}
+        {%- for candidate in ri_blog.articles limit: ri_fetch -%}
+          {%- if ri_count < ri_limit -%}
+            {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
+            {%- unless ri_seen contains id_sep -%}
+              {%- assign candidate_tags = candidate.metafields.custom.category_tags.value -%}
+              {%- assign has_match = false -%}
+              {%- if candidate_tags != blank -%}
+                {%- for tag in current_category_tags -%}
+                  {%- if candidate_tags contains tag -%}
+                    {%- assign has_match = true -%}
+                  {%- endif -%}
+                {%- endfor -%}
+              {%- endif -%}
+              {%- if has_match -%}
+                {%- render 'card-ingredient', article: candidate -%}
+                {%- assign ri_seen = ri_seen | append: candidate.id | append: ',' -%}
+                {%- assign ri_count = ri_count | plus: 1 -%}
+              {%- endif -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+      {%- comment %} Fallback: 残り枠をその他成分記事で補充 {%- endcomment -%}
+      {%- if ri_count < ri_limit and ri_blog != blank -%}
+        {%- for candidate in ri_blog.articles limit: ri_fetch -%}
+          {%- if ri_count < ri_limit -%}
+            {%- assign id_sep = candidate.id | prepend: ',' | append: ',' -%}
+            {%- unless ri_seen contains id_sep -%}
+              {%- render 'card-ingredient', article: candidate -%}
+              {%- assign ri_seen = ri_seen | append: candidate.id | append: ',' -%}
+              {%- assign ri_count = ri_count | plus: 1 -%}
+            {%- endunless -%}
+          {%- endif -%}
+        {%- endfor -%}
+      {%- endif -%}
+    {%- endcapture -%}
+    {%- if ri_count > 0 -%}
+      <section class="w-full bg-stone-100 flex flex-col gap-10 items-center overflow-hidden px-4 md:px-10 py-[60px]" {{ block.shopify_attributes }}>
+        <div class="w-full max-w-screen-xl flex flex-col gap-10">
+          {%- if block.settings.heading != blank -%}
+            <h2 class="text-4xl font-semibold tracking-wider text-stone-900 text-center">{{ block.settings.heading }}</h2>
+          {%- endif -%}
+          <div class="grid grid-cols-2 lg:grid-cols-4 gap-x-4 gap-y-8 md:gap-x-10 md:gap-y-8">
+            {{ ri_cards }}
           </div>
         </div>
       </section>
@@ -341,7 +402,7 @@
       ]
     },
     {
-      "type": "featured_collection",
+      "type": "product_grid",
       "name": "おすすめ商品",
       "settings": [
         {
@@ -354,6 +415,32 @@
           "type": "collection",
           "id": "collection",
           "label": "コレクション"
+        }
+      ]
+    },
+    {
+      "type": "related_ingredients",
+      "name": "関連成分記事",
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "見出し",
+          "default": "関連成分"
+        },
+        {
+          "type": "blog",
+          "id": "blog",
+          "label": "成分ブログ"
+        },
+        {
+          "type": "range",
+          "id": "count",
+          "label": "表示件数",
+          "min": 2,
+          "max": 8,
+          "step": 1,
+          "default": 4
         }
       ]
     },
