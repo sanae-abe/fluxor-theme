@@ -1,3 +1,12 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
 {
   "sections": {
     "hero": {
@@ -8,18 +17,14 @@
         "heading": "信頼できるものだけを、あなたへ。",
         "tagline": "",
         "paragraph": "<p>成分表を読んでも、どのブランドが信頼できるのか、なかなか答えが見つからない。<br>その問いから、Fluxorは生まれました。</p>",
-        "button_label": "",
-        "button_url": null
+        "button_url": "",
+        "button_label": ""
       }
     },
     "methods": {
       "type": "about-methods",
-      "settings": {
-        "heading": "私たちの調査方法",
-        "paragraph": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
-      },
       "blocks": {
-        "brand-research": {
+        "item_ge3Pba": {
           "type": "item",
           "settings": {
             "icon": "book-marked",
@@ -27,7 +32,7 @@
             "description": "世界観・哲学を調査。ブランドが何を大切にしているかを多角的に確認します"
           }
         },
-        "ingredient-check": {
+        "item_pRnLR7": {
           "type": "item",
           "settings": {
             "icon": "flask-conical",
@@ -35,7 +40,7 @@
             "description": "成分表を読み込み、配合の目的や特徴を調査。気になる成分は信頼できる情報源で確認します。"
           }
         },
-        "usage-test": {
+        "item_zCLqNe": {
           "type": "item",
           "settings": {
             "icon": "pipette",
@@ -43,7 +48,7 @@
             "description": "実際に商品を使用。使用感・テクスチャー・肌への馴染み方を自分たちで体感します。"
           }
         },
-        "review-research": {
+        "item_hPH6Bw": {
           "type": "item",
           "settings": {
             "icon": "message-square",
@@ -52,41 +57,54 @@
           }
         }
       },
-      "blocks_order": ["brand-research", "ingredient-check", "usage-test", "review-research"]
+      "block_order": [
+        "item_ge3Pba",
+        "item_pRnLR7",
+        "item_zCLqNe",
+        "item_hPH6Bw"
+      ],
+      "settings": {
+        "heading": "私たちの調査方法",
+        "paragraph": "専門家ではないからこそ、一般消費者目線で疑問を調べ尽くします。"
+      }
     },
     "transparency": {
       "type": "about-transparency",
-      "settings": {
-        "heading": "透明性へのこだわり",
-        "paragraph": "調査したこと、確かめたこと、そして分からなかったことも、ありのままにお伝えします。"
-      },
       "blocks": {
-        "honest": {
+        "item_GKBjgx": {
           "type": "item",
           "settings": {
-            "icon": "check",
+            "icon": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "item_pgJBVj": {
+          "type": "item",
+          "settings": {
+            "icon": "",
+            "title": "",
+            "description": ""
+          }
+        },
+        "item_BnXcQK": {
+          "type": "item",
+          "settings": {
+            "icon": "circle-check",
             "title": "正直な言葉で",
             "description": "効果を誇張せず、実際の使用感や特徴を率直にお伝えします。"
           }
-        },
-        "open": {
-          "type": "item",
-          "settings": {
-            "icon": "shield",
-            "title": "知りうる限りオープンに",
-            "description": "ブランド情報や成分について、把握できる範囲で透明性を持ってご紹介します"
-          }
-        },
-        "unknown": {
-          "type": "item",
-          "settings": {
-            "icon": "info",
-            "title": "分からないことは、分からないと",
-            "description": "確認できないことは、臆せずそのままお伝えします。"
-          }
         }
       },
-      "blocks_order": ["honest", "open", "unknown"]
+      "block_order": [
+        "item_GKBjgx",
+        "item_pgJBVj",
+        "item_BnXcQK"
+      ],
+      "settings": {
+        "heading": "透明性へのこだわり",
+        "paragraph": "調査したこと、確かめたこと、そして分からなかったことも、ありのままにお伝えします。"
+      }
     },
     "cta": {
       "type": "cta-banner",
@@ -98,5 +116,10 @@
       }
     }
   },
-  "order": ["hero", "methods", "transparency", "cta"]
+  "order": [
+    "hero",
+    "methods",
+    "transparency",
+    "cta"
+  ]
 }
