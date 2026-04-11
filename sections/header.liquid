@@ -74,9 +74,13 @@
       >
         {%- render 'icon', icon: 'cart', class: 'w-6 h-6' -%}
         <span
-          :class="{ 'hidden': $store.cart.itemCount === 0 }"
+          :class="{
+            'hidden': $store.cart.itemCount === 0,
+            {% if header_transparent %}'bg-white text-stone-900': !scrolled,
+            'bg-stone-900 text-stone-50': scrolled{% else %}'bg-stone-900 text-stone-50': true{% endif %}
+          }"
           x-text="$store.cart.itemCount"
-          class="absolute top-0 right-0 bg-stone-900 text-stone-50 text-[10px] leading-none w-4 h-4 rounded-full flex items-center justify-center hidden"
+          class="absolute top-0 right-0 text-[10px] leading-none w-4 h-4 rounded-full flex items-center justify-center hidden"
           aria-hidden="true"
         ></span>
         <span
