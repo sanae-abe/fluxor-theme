@@ -688,15 +688,51 @@ body:not(.no-outline) .skip-link:focus {
 .rte table {
   width: 100%;
   border-collapse: collapse;
-  margin-top: theme('spacing.6');
-  margin-bottom: theme('spacing.6');
+  margin-top: theme('spacing.2');
+  margin-bottom: theme('spacing.2');
 }
 
 .rte table th,
 .rte table td {
-  border: 1px solid theme('colors.stone.300');
-  padding: theme('spacing.4');
+  padding: theme('spacing.4') theme('spacing.5');
   text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid theme('colors.stone.200');
+}
+
+.rte table tr:first-child th,
+.rte table tr:first-child td {
+  border-top: 1px solid theme('colors.stone.200');
+}
+
+.rte table th {
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+  background-color: theme('colors.stone.100');
+  white-space: nowrap;
+  width: 8rem;
+}
+
+.rte table td:first-child {
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+  background-color: theme('colors.stone.100');
+  white-space: nowrap;
+  width: 8rem;
+}
+
+@media (min-width: 768px) {
+  .rte table th,
+  .rte table td:first-child {
+    width: 11rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .rte table th,
+  .rte table td:first-child {
+    white-space: normal;
+  }
 }
 
 .rte img {
@@ -724,6 +760,144 @@ body:not(.no-outline) .skip-link:focus {
 @media (any-hover: hover) {
   .breadcrumb-link:hover {
     color: theme('colors.stone.900');
+  }
+}
+
+/* ===== 汎用ページコンテンツ（特定商取引法・プライバシーポリシー等） ===== */
+
+.page-content {
+  font-size: theme('fontSize.sm');
+  line-height: theme('lineHeight.relaxed');
+  color: theme('colors.stone.600');
+}
+
+@media (min-width: 768px) {
+  .page-content { font-size: theme('fontSize.base'); }
+}
+
+.page-content h2 {
+  margin-top: theme('spacing.10');
+  margin-bottom: theme('spacing.4');
+  font-size: theme('fontSize.xl');
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+}
+
+.page-content h3 {
+  margin-top: theme('spacing.6');
+  margin-bottom: theme('spacing.2');
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+}
+
+.page-content p { margin-bottom: theme('spacing.4'); }
+
+.page-content strong { color: theme('colors.stone.900'); }
+
+.page-content a {
+  color: theme('colors.sky.600');
+  text-decoration: underline;
+  transition: color 0.15s ease;
+}
+
+@media (any-hover: hover) {
+  .page-content a:hover { color: theme('colors.sky.800'); }
+}
+
+.page-content ul,
+.page-content ol {
+  margin-left: theme('spacing.5');
+  margin-top: theme('spacing.3');
+  margin-bottom: theme('spacing.3');
+}
+
+.page-content ul { list-style-type: disc; }
+.page-content ol { list-style-type: decimal; }
+
+/* 定義リスト（特定商取引法に基づく表示など） */
+
+.page-content dl {
+  margin-top: theme('spacing.2');
+  margin-bottom: theme('spacing.2');
+}
+
+.page-content dl > div {
+  display: grid;
+  grid-template-columns: 8rem 1fr;
+  border-bottom: 1px solid theme('colors.stone.200');
+}
+
+.page-content dl > div:first-child {
+  border-top: 1px solid theme('colors.stone.200');
+}
+
+.page-content dl dt {
+  padding: theme('spacing.4') theme('spacing.5');
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+  background-color: theme('colors.stone.100');
+}
+
+.page-content dl dd {
+  padding: theme('spacing.4') theme('spacing.5');
+  color: theme('colors.stone.600');
+}
+
+@media (min-width: 768px) {
+  .page-content dl > div {
+    grid-template-columns: 11rem 1fr;
+  }
+}
+
+/* テーブル（特定商取引法に基づく表示など） */
+
+.page-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: theme('spacing.2');
+  margin-bottom: theme('spacing.2');
+}
+
+.page-content table th,
+.page-content table td {
+  padding: theme('spacing.4') theme('spacing.5');
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid theme('colors.stone.200');
+}
+
+.page-content table tr:first-child th,
+.page-content table tr:first-child td {
+  border-top: 1px solid theme('colors.stone.200');
+}
+
+.page-content table th {
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+  background-color: theme('colors.stone.100');
+  white-space: nowrap;
+  width: 8rem;
+}
+
+.page-content table td:first-child {
+  font-weight: theme('fontWeight.medium');
+  color: theme('colors.stone.900');
+  background-color: theme('colors.stone.100');
+  white-space: nowrap;
+  width: 8rem;
+}
+
+@media (min-width: 768px) {
+  .page-content table th,
+  .page-content table td:first-child {
+    width: 11rem;
+  }
+}
+
+@media (max-width: 639px) {
+  .page-content table th,
+  .page-content table td:first-child {
+    white-space: normal;
   }
 }
 

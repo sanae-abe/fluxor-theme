@@ -42,7 +42,88 @@
   assign texture            = product.metafields.custom.texture
   assign product_name_en    = product.metafields.custom.product_name_en
 -%}
-{%- include 'sale-engine' -%}
+{%- comment %} スケジュールセール対象判定（include の代替としてインライン化） {%- endcomment -%}
+{%- liquid
+  assign sale_eligible = false
+  assign sale_discount = 0
+
+  if settings.sale_enabled
+
+    assign _excluded = false
+    if settings.sale_exclude_handles != blank
+      assign _exclude_handles = settings.sale_exclude_handles | split: ','
+      for _h in _exclude_handles
+        assign _h_norm = _h | strip | downcase
+        if _h_norm == product.handle
+          assign _excluded = true
+          break
+        endif
+      endfor
+    endif
+
+    if _excluded == false and settings.sale_exclude_tags != blank
+      assign _exclude_tags = settings.sale_exclude_tags | split: ','
+      for _ex_tag in _exclude_tags
+        assign _ex_tag_norm = _ex_tag | strip | downcase
+        for _p_tag in product.tags
+          assign _p_tag_norm = _p_tag | downcase
+          if _p_tag_norm == _ex_tag_norm
+            assign _excluded = true
+            break
+          endif
+        endfor
+        if _excluded
+          break
+        endif
+      endfor
+    endif
+
+    if _excluded == false
+      case settings.sale_target
+      when 'all'
+        assign sale_eligible = true
+      when 'tag'
+        if settings.sale_target_tags != blank
+          assign _target_tags = settings.sale_target_tags | split: ','
+          for _t_tag in _target_tags
+            assign _t_tag_norm = _t_tag | strip | downcase
+            for _p_tag in product.tags
+              assign _p_tag_norm = _p_tag | downcase
+              if _p_tag_norm == _t_tag_norm
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
+              break
+            endif
+          endfor
+        endif
+      when 'collection'
+        if settings.sale_target_collections != blank
+          assign _target_cols = settings.sale_target_collections | split: ','
+          for _t_col in _target_cols
+            assign _t_col_norm = _t_col | strip | downcase
+            for _p_col in product.collections
+              if _p_col.handle == _t_col_norm
+                assign sale_eligible = true
+                break
+              endif
+            endfor
+            if sale_eligible
+              break
+            endif
+          endfor
+        endif
+      endcase
+
+      if sale_eligible
+        assign sale_discount = settings.sale_discount_percent | plus: 0
+      endif
+    endif
+
+  endif
+-%}
 
 {%- comment %} ※ 上付き文字変換用共通変数（※1〜※5 と ※ を <sup> タグに置換） {%- endcomment -%}
 {%- assign _sup_open = '<sup class="text-xs font-normal text-stone-400 align-super">' -%}
@@ -176,7 +257,7 @@
         {%- if product.images.size > 1 -%}
           <button
             type="button"
-            class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
+            class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
             :class="activeImageIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
             @click="prevImage()"
             aria-label="前の画像"
@@ -185,7 +266,7 @@
           </button>
           <button
             type="button"
-            class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
+            class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
             :class="activeImageIndex >= images.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
             @click="nextImage()"
             aria-label="次の画像"
@@ -203,7 +284,7 @@
         >
           <button
             type="button"
-            class="absolute left-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
+            class="absolute left-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
             :class="thumbOffset === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
             @click="scrollPrev()"
             aria-label="前へ"
@@ -214,7 +295,6 @@
           <div class="overflow-hidden" x-ref="thumbTrack">
             <div class="flex gap-3">
               {%- for image in product.images limit: 12 -%}
-                {%- assign thumb_url = image | image_url: width: 800, format: 'webp' -%}
                 <button
                   type="button"
                   class="w-[calc((100%-42px)/4.5)] shrink-0 aspect-square overflow-hidden bg-stone-100 border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1 [transform:translateZ(0)]"
@@ -237,7 +317,7 @@
 
           <button
             type="button"
-            class="absolute right-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:outline-none"
+            class="absolute right-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
             :class="thumbOffset >= maxOffset ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
             @click="scrollNext()"
             aria-label="次へ"
@@ -372,7 +452,7 @@
 
             <button
               type="button"
-              class="absolute left-0 top-0 z-10 w-6 h-full bg-stone-50/80 flex items-center justify-center transition-opacity focus-visible:outline-none"
+              class="absolute left-0 top-0 z-10 w-6 h-full bg-stone-50/80 flex items-center justify-center transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
               :class="atStart ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500 hover:text-stone-900'"
               @click="$refs.track.scrollLeft -= cardW; $nextTick(() => updateNav())"
               aria-label="前へ"
@@ -427,7 +507,7 @@
 
             <button
               type="button"
-              class="absolute top-0 right-0 z-10 w-6 h-full bg-stone-50/80 flex items-center justify-center transition-opacity focus-visible:outline-none"
+              class="absolute top-0 right-0 z-10 w-6 h-full bg-stone-50/80 flex items-center justify-center transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
               :class="atEnd ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500 hover:text-stone-900'"
               @click="$refs.track.scrollLeft += cardW; $nextTick(() => updateNav())"
               aria-label="次へ"
@@ -498,8 +578,8 @@
       {%- unless product.has_only_default_variant -%}
         <div class="flex flex-col gap-4">
           {%- for option in product.options_with_values -%}
-            <div class="flex flex-col gap-1">
-              <p class="text-xs font-medium text-stone-900 uppercase tracking-wider">{{ option.name }}</p>
+            <fieldset class="border-0 p-0 m-0">
+              <legend class="text-xs font-medium text-stone-900 uppercase tracking-wider mb-1">{{ option.name }}</legend>
               <div class="flex flex-wrap gap-2">
                 {%- for value in option.values -%}
                   <label class="cursor-pointer">
@@ -517,7 +597,7 @@
                   </label>
                 {%- endfor -%}
               </div>
-            </div>
+            </fieldset>
           {%- endfor -%}
         </div>
       {%- endunless -%}
@@ -587,7 +667,7 @@
 ===================================================={%- endcomment -%}
 <div
   id="floating-cart-bar"
-  class="fixed bottom-0 left-0 right-0 z-50 bg-stone-50 border-t border-stone-200 px-10 py-4"
+  class="fixed bottom-0 left-0 right-0 z-50 bg-stone-50 border-t border-stone-200 px-4 md:px-10 py-4"
   role="complementary"
   aria-label="クイックカート"
   aria-hidden="true"
@@ -629,78 +709,6 @@
 </div>{%- comment %} x-data wrapper close {%- endcomment -%}
 
 <script>
-  function thumbCarousel(imageCount) {
-    return {
-      thumbOffset: 0,
-      maxOffset: Math.max(0, imageCount - 4),
-      _cardW() {
-        return (this.$refs.thumbTrack?.querySelector('button')?.offsetWidth ?? 0) + 12;
-      },
-      scrollPrev() {
-        this.thumbOffset = Math.max(0, this.thumbOffset - 1);
-        this.$refs.thumbTrack.scrollTo({ left: this.thumbOffset * this._cardW(), behavior: 'smooth' });
-      },
-      scrollNext() {
-        this.thumbOffset = Math.min(this.maxOffset, this.thumbOffset + 1);
-        this.$refs.thumbTrack.scrollTo({ left: this.thumbOffset * this._cardW(), behavior: 'smooth' });
-      },
-      scrollToThumb(index) {
-        const t = this.$refs.thumbTrack;
-        const thumbs = t.querySelectorAll('button');
-        const thumb = thumbs[index];
-        if (!thumb) return;
-        const cardW = this._cardW();
-        if (thumb.offsetLeft < t.scrollLeft) {
-          this.thumbOffset = Math.max(0, this.thumbOffset - 1);
-          t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' });
-        } else if (thumb.offsetLeft + thumb.offsetWidth > t.scrollLeft + t.clientWidth) {
-          this.thumbOffset = Math.min(this.maxOffset, this.thumbOffset + 1);
-          t.scrollTo({ left: this.thumbOffset * cardW, behavior: 'smooth' });
-        }
-      }
-    };
-  }
-
-  function ingredientCarousel(descIdx) {
-    return {
-      active: null,
-      atStart: true,
-      atEnd: false,
-      cardW: 0,
-      descIdx,
-      updateNav() {
-        const t = this.$refs.track;
-        if (!this.cardW) {
-          const card = t.querySelector('.flex-none');
-          this.cardW = card ? card.offsetWidth + 8 : 160;
-        }
-        this.atStart = t.scrollLeft <= 0;
-        this.atEnd   = t.scrollLeft >= t.scrollWidth - t.clientWidth - 1;
-      },
-      scrollToCard(index) {
-        const t = this.$refs.track;
-        const cards = t.querySelectorAll('.flex-none');
-        const card = cards[index];
-        if (!card) return;
-        const cardLeft  = card.offsetLeft;
-        const cardRight = cardLeft + card.offsetWidth;
-        const viewLeft  = t.scrollLeft;
-        const viewRight = viewLeft + t.clientWidth;
-        if (cardLeft < viewLeft) {
-          t.scrollTo({ left: t.scrollLeft - this.cardW, behavior: 'smooth' });
-        } else if (cardRight > viewRight) {
-          t.scrollTo({ left: t.scrollLeft + this.cardW, behavior: 'smooth' });
-        }
-        this.$nextTick(() => this.updateNav());
-      },
-      tooltipLeft() {
-        if (this.active === null || !this.$refs.track) return 0;
-        const cardLeft = this.active * this.cardW - this.$refs.track.scrollLeft;
-        return Math.min(Math.max(cardLeft, 0), this.$refs.track.offsetWidth - 288);
-      }
-    };
-  }
-
   function productPageData() {
     return {
       variants: {{ product.variants | json }},

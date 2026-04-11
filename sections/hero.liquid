@@ -52,7 +52,13 @@
       {%- comment %} 背景画像 {%- endcomment -%}
       {%- if block.settings.image -%}
         <img
-          src="{{ block.settings.image | image_url: width: 2400, format: 'webp' }}"
+          src="{{ block.settings.image | image_url: width: 1800, format: 'webp' }}"
+          srcset="{{ block.settings.image | image_url: width: 600, format: 'webp' }} 600w,
+                  {{ block.settings.image | image_url: width: 900, format: 'webp' }} 900w,
+                  {{ block.settings.image | image_url: width: 1200, format: 'webp' }} 1200w,
+                  {{ block.settings.image | image_url: width: 1800, format: 'webp' }} 1800w,
+                  {{ block.settings.image | image_url: width: 2400, format: 'webp' }} 2400w"
+          sizes="100vw"
           alt="{{ block.settings.heading | escape }}"
           class="absolute inset-0 w-full h-full object-cover{% if forloop.first %} hero-image-entrance{% endif %}"
           loading="{% if forloop.first %}eager{% else %}lazy{% endif %}"

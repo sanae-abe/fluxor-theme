@@ -10,6 +10,8 @@ import { ingredientFilters }  from './components/ingredientFilters.js'
 import { randomIngredient }   from './components/randomIngredient.js'
 import { journalFilters }     from './components/journalFilters.js'
 import { productGrid }        from './components/productGrid.js'
+import { thumbCarousel }      from './components/thumbCarousel.js'
+import { ingredientCarousel } from './components/ingredientCarousel.js'
 
 Alpine.plugin(Focus)
 Alpine.store('cart', cartStore)
@@ -21,6 +23,8 @@ Alpine.data('ingredientFilters', ingredientFilters)
 Alpine.data('randomIngredient', randomIngredient)
 Alpine.data('journalFilters', journalFilters)
 Alpine.data('productGrid', productGrid)
+Alpine.data('thumbCarousel', thumbCarousel)
+Alpine.data('ingredientCarousel', ingredientCarousel)
 
 document.addEventListener('alpine:init', () => {
   Alpine.store('cart').fetch()
@@ -40,8 +44,7 @@ Alpine.start()
     }
   `
 
-  function inject() {
-    const chatEl = document.querySelector('inbox-online-store-chat')
+  function inject(chatEl) {
     const shadow = chatEl?.shadowRoot
     if (!shadow || shadow.querySelector('#inbox-custom-style')) return
     const style = document.createElement('style')
@@ -50,5 +53,16 @@ Alpine.start()
     shadow.appendChild(style)
   }
 
-  ;[0, 500, 1500, 3000].forEach(delay => setTimeout(inject, delay))
+  const existing = document.querySelector('inbox-online-store-chat')
+  if (existing) {
+    inject(existing)
+  } else {
+    const observer = new MutationObserver(() => {
+      const chatEl = document.querySelector('inbox-online-store-chat')
+      if (!chatEl) return
+      observer.disconnect()
+      inject(chatEl)
+    })
+    observer.observe(document.body, { childList: true, subtree: true })
+  }
 })()

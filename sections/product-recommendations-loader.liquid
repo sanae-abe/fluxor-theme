@@ -18,23 +18,31 @@
       const container = document.getElementById('product-recommendations-{{ section.id }}');
       if (!container) return;
 
-      const params = new URLSearchParams({
-        section_id: container.dataset.sectionId,
-        product_id: container.dataset.productId,
-        limit: container.dataset.limit || 4,
-      });
+      function loadRecommendations() {
+        const params = new URLSearchParams({
+          section_id: container.dataset.sectionId,
+          product_id: container.dataset.productId,
+          limit: container.dataset.limit || 4,
+        });
 
-      fetch('/recommendations/products?' + params)
-        .then((r) => r.text())
-        .then((html) => {
-          const content = new DOMParser()
-            .parseFromString(html, 'text/html')
-            .querySelector('.shopify-section');
-          if (content?.innerHTML.trim()) {
-            container.innerHTML = content.innerHTML;
-          }
-        })
-        .catch(() => {});
+        fetch('/recommendations/products?' + params)
+          .then((r) => r.text())
+          .then((html) => {
+            const content = new DOMParser()
+              .parseFromString(html, 'text/html')
+              .querySelector('.shopify-section');
+            if (content?.children.length) {
+              [...content.children].forEach((el) => container.appendChild(el));
+            }
+          })
+          .catch(() => {});
+      }
+
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(loadRecommendations, { timeout: 3000 });
+      } else {
+        setTimeout(loadRecommendations, 200);
+      }
     })();
   </script>
 {%- endif -%}

@@ -31,14 +31,14 @@
       <span class="marquee-content">
         {%- if show_sale -%}
           <span class="inline-flex items-center gap-2 px-10">
-            {{ settings.sale_banner_text }}
+            {{ settings.sale_banner_text | escape }}
             {%- render 'sale-countdown' -%}
           </span>
           <span class="dot px-2" aria-hidden="true">·</span>
         {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.text != blank -%}
-            <span class="px-10" {{ block.shopify_attributes }}>{{ block.settings.text }}</span>
+            <span class="px-10" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
             <span class="dot px-2" aria-hidden="true">·</span>
           {%- endif -%}
         {%- endfor -%}
@@ -48,14 +48,14 @@
       <span class="marquee-content" aria-hidden="true">
         {%- if show_sale -%}
           <span class="inline-flex items-center gap-2 px-10">
-            {{ settings.sale_banner_text }}
+            {{ settings.sale_banner_text | escape }}
             {%- render 'sale-countdown' -%}
           </span>
           <span class="dot px-2">·</span>
         {%- endif -%}
         {%- for block in section.blocks -%}
           {%- if block.settings.text != blank -%}
-            <span class="px-10">{{ block.settings.text }}</span>
+            <span class="px-10">{{ block.settings.text | escape }}</span>
             <span class="dot px-2">·</span>
           {%- endif -%}
         {%- endfor -%}

@@ -9,8 +9,8 @@
     {%- endif -%}
 
     <title>
-      {{ page_title }}
-      {%- unless page_title contains shop.name %} — {{ shop.name }}{%- endunless -%}
+      {{ page_title | escape }}
+      {%- unless page_title contains shop.name %} — {{ shop.name | escape }}{%- endunless -%}
     </title>
 
     <link rel="canonical" href="{{ canonical_url }}">

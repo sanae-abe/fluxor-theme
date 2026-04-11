@@ -29,7 +29,7 @@
       {%- endif -%}
     </div>
     {%- if product.metafields.judgeme.review_widget_data -%}
-      <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data }}</script>
+      <script>jdgm.data ||= {}; jdgm.data.reviewWidget ||= {}; jdgm.data.reviewWidget[{{ product.id }}] = {{ product.metafields.judgeme.review_widget_data | json }}</script>
     {%- endif -%}
     {%- comment %} Judge.me レビューウィジェット 終了 {%- endcomment -%}
   </div>
