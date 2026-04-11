@@ -60,3 +60,34 @@ Alpine.start()
   const observer = new MutationObserver(injectAll)
   observer.observe(document.body, { childList: true, subtree: true })
 })()
+
+// フローティングカートバーとチャットアイコンの重なりを防ぐ
+;(function initChatOffset() {
+  const bar = document.getElementById('floating-cart-bar')
+  if (!bar) return
+
+  function updateOffset() {
+    const chatEl = document.querySelector('inbox-online-store-chat')
+    const shadow = chatEl?.shadowRoot
+    if (!shadow) return
+
+    let style = shadow.querySelector('#inbox-offset-style')
+    if (!style) {
+      style = document.createElement('style')
+      style.id = 'inbox-offset-style'
+      shadow.appendChild(style)
+    }
+
+    if (bar.classList.contains('is-visible')) {
+      const height = bar.getBoundingClientRect().height
+      style.textContent = `:host { bottom: ${height}px !important; transition: bottom 0.3s ease !important; }`
+    } else {
+      style.textContent = ''
+    }
+  }
+
+  new MutationObserver(updateOffset).observe(bar, {
+    attributes: true,
+    attributeFilter: ['class'],
+  })
+})()

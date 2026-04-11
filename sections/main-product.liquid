@@ -689,14 +689,14 @@
       </div>
       <div class="flex flex-col gap-2 min-w-0">
         {%- if product.vendor != blank -%}
-          <p class="text-sm text-stone-500 leading-none">{{ product.vendor }}</p>
+          <p class="text-sm text-stone-500 leading-none truncate">{{ product.vendor }}</p>
         {%- endif -%}
         <p class="text-base font-medium text-stone-900 leading-tight truncate">{{ product.title }}</p>
       </div>
     </div>
 
     <div class="flex items-center gap-4 shrink-0">
-      <div class="flex flex-col-reverse md:flex-row items-end gap-2 whitespace-nowrap">
+      <div class="flex flex-col-reverse md:flex-row items-start md:items-end gap-2 whitespace-nowrap">
         {{ price_html }}
       </div>
 
