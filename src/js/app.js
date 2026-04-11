@@ -37,8 +37,8 @@ Alpine.start()
 ;(function initInboxIconSize() {
   const CSS = `
     button.chat-toggle svg {
-      width: 24px !important;
-      height: 24px !important;
+      width: 40px !important;
+      height: 40px !important;
     }
   `
 
@@ -51,20 +51,12 @@ Alpine.start()
     shadow.appendChild(style)
   }
 
-  function injectWithRetry(chatEl) {
-    ;[0, 500, 1500, 3000].forEach(delay => setTimeout(() => inject(chatEl), delay))
+  function injectAll() {
+    document.querySelectorAll('inbox-online-store-chat').forEach(inject)
   }
 
-  const existing = document.querySelector('inbox-online-store-chat')
-  if (existing) {
-    injectWithRetry(existing)
-  } else {
-    const observer = new MutationObserver(() => {
-      const chatEl = document.querySelector('inbox-online-store-chat')
-      if (!chatEl) return
-      observer.disconnect()
-      injectWithRetry(chatEl)
-    })
-    observer.observe(document.body, { childList: true, subtree: true })
-  }
+  ;[0, 500, 1500, 3000].forEach(delay => setTimeout(injectAll, delay))
+
+  const observer = new MutationObserver(injectAll)
+  observer.observe(document.body, { childList: true, subtree: true })
 })()
