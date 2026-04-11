@@ -40,7 +40,7 @@
       {%- if search.results_count > 0 -%}
 
         {%- comment %} 件数 {%- endcomment -%}
-        <p class="text-sm text-stone-500 pb-8 uppercase tracking-wider">
+        <p class="text-sm text-stone-500 pb-8 uppercase tracking-wider text-center">
           「{{ search.terms | escape }}」の検索結果: {{ search.results_count }}件
         </p>
 
@@ -136,7 +136,7 @@
     {%- else -%}
 
       {%- comment %} 未検索状態 {%- endcomment -%}
-      <div class="py-20 text-center text-sm text-stone-400">
+      <div class="py-20 text-center text-sm text-stone-900">
         キーワードを入力して検索してください。
       </div>
 
