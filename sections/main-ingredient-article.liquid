@@ -120,6 +120,7 @@
 {%- comment %} ── ブロックレンダリング ───────────────────────────── {%- endcomment -%}
 {%- liquid
   assign last_non_ref_index = nil
+  assign disclaimer_shown = false
   for block in section.blocks
     unless block.type == 'references'
       assign last_non_ref_index = forloop.index0
@@ -191,6 +192,7 @@
     </div>
 
   {%- elsif block.type == 'disclaimer' -%}
+    {%- assign disclaimer_shown = true -%}
     <div class="{{ block_outer }} {{ extra_class }}" {{ block.shopify_attributes }}>
       <div class="w-full max-w-3xl">
         <div class="bg-stone-100 p-4 flex gap-2 items-start">
@@ -587,6 +589,20 @@
 
   {%- endif -%}
 {%- endfor -%}
+
+{%- comment %} 薬機法対応：disclaimerブロックが管理画面で削除された場合のフォールバック免責表記 {%- endcomment -%}
+{%- unless disclaimer_shown -%}
+  <div class="{{ block_outer }}">
+    <div class="w-full max-w-3xl">
+      <div class="bg-stone-100 p-4 flex gap-2 items-start">
+        <div class="shrink-0 pt-1">
+          {%- render 'icon', icon: 'info', class: 'w-4 h-4 text-stone-900' -%}
+        </div>
+        <div class="flex-1 text-sm leading-relaxed text-stone-900">本ページは成分の一般的な情報提供を目的としており、特定の効能・効果を保証するものではありません。肌悩みについては皮膚科専門医へご相談ください。</div>
+      </div>
+    </div>
+  </div>
+{%- endunless -%}
 
 {%- schema %}
 {

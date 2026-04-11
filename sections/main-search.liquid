@@ -1,0 +1,170 @@
+{%- paginate search.results by section.settings.results_per_page -%}
+
+<div class="px-4 md:px-10 pb-10 md:pb-[60px]">
+  <section class="max-w-screen-xl mx-auto" aria-label="検索">
+
+    {%- comment %} ページヘッダー {%- endcomment -%}
+    <div class="py-5 md:py-10 flex flex-col gap-4 justify-center">
+      <h1 class="text-2xl md:text-4xl md:leading-tight font-semibold md:tracking-wider uppercase">Search</h1>
+    </div>
+    <hr class="border-stone-200">
+
+    {%- comment %} 検索フォーム {%- endcomment -%}
+    <div class="flex pt-8 pb-6 max-w-2xl w-full mx-auto">
+      <form action="{{ routes.search_url }}" method="get" role="search" class="block w-full">
+        <input type="hidden" name="type" value="product,article">
+        <div class="w-full flex gap-0">
+          <label for="SearchInput" class="sr-only">キーワードで検索</label>
+          <input
+            id="SearchInput"
+            type="search"
+            name="q"
+            value="{{ search.terms | escape }}"
+            placeholder="キーワードで検索…"
+            class="flex-1 border border-stone-200 border-r-0 px-4 py-3 text-sm focus:outline-none focus:border-stone-900 transition-colors"
+            autocomplete="off"
+          >
+          <button
+            type="submit"
+            class="bg-stone-900 text-white px-5 py-3 flex items-center justify-center shrink-0 transition-colors"
+            aria-label="検索"
+          >
+            {%- render 'icon', icon: 'search', class: 'w-5 h-5' -%}
+          </button>
+        </div>
+      </form>
+    </div>
+
+    {%- if search.performed -%}
+
+      {%- if search.results_count > 0 -%}
+
+        {%- comment %} 件数 {%- endcomment -%}
+        <p class="text-sm text-stone-500 pb-8 uppercase tracking-wider">
+          「{{ search.terms | escape }}」の検索結果: {{ search.results_count }}件
+        </p>
+
+        {%- comment %} 1回のループで全グループのHTMLを組み立てる {%- endcomment -%}
+        {%- assign _products_html = '' -%}
+        {%- assign _ingredients_html = '' -%}
+        {%- assign _journal_html = '' -%}
+        {%- assign _pages_html = '' -%}
+
+        {%- for result in search.results -%}
+          {%- if result.object_type == 'product' -%}
+            {%- capture _card -%}{%- render 'card-product-4col', product: result -%}{%- endcapture -%}
+            {%- assign _products_html = _products_html | append: _card -%}
+          {%- elsif result.object_type == 'article' -%}
+            {%- capture _card -%}{%- render 'card-article', article: result -%}{%- endcapture -%}
+            {%- if result.url contains '/blogs/ingredients' -%}
+              {%- assign _ingredients_html = _ingredients_html | append: _card -%}
+            {%- elsif result.url contains '/blogs/journal' -%}
+              {%- assign _journal_html = _journal_html | append: _card -%}
+            {%- endif -%}
+          {%- elsif result.object_type == 'page' -%}
+            {%- assign _pages_html = _pages_html | append: '<li><a href="' | append: result.url | append: '" class="group flex items-center gap-3 py-4"><span class="text-sm font-medium text-stone-900 group-hover:underline">' | append: result.title | escape | append: '</span></a></li>' -%}
+          {%- endif -%}
+        {%- endfor -%}
+
+        {%- comment %} 商品 {%- endcomment -%}
+        {%- unless _products_html == blank -%}
+          <div class="mb-14">
+            <h2 class="text-lg font-semibold tracking-wider uppercase mb-6 pb-3 border-b border-stone-200">商品</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">{{ _products_html }}</div>
+          </div>
+        {%- endunless -%}
+
+        {%- comment %} 成分ガイド記事 {%- endcomment -%}
+        {%- unless _ingredients_html == blank -%}
+          <div class="mb-14">
+            <h2 class="text-lg font-semibold tracking-wider uppercase mb-6 pb-3 border-b border-stone-200">Ingredients</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">{{ _ingredients_html }}</div>
+          </div>
+        {%- endunless -%}
+
+        {%- comment %} Journal記事 {%- endcomment -%}
+        {%- unless _journal_html == blank -%}
+          <div class="mb-14">
+            <h2 class="text-lg font-semibold tracking-wider uppercase mb-6 pb-3 border-b border-stone-200">Journal</h2>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8">{{ _journal_html }}</div>
+          </div>
+        {%- endunless -%}
+
+        {%- comment %} ページ {%- endcomment -%}
+        {%- unless _pages_html == blank -%}
+          <div class="mb-14">
+            <h2 class="text-lg font-semibold tracking-wider uppercase mb-6 pb-3 border-b border-stone-200">ページ</h2>
+            <ul class="flex flex-col divide-y divide-stone-100">{{ _pages_html }}</ul>
+          </div>
+        {%- endunless -%}
+
+        {%- comment %} ページネーション {%- endcomment -%}
+        {%- if paginate.pages > 1 -%}
+          <nav class="flex justify-center gap-2 mt-8" aria-label="ページネーション">
+            {%- if paginate.previous -%}
+              <a href="{{ paginate.previous.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">前へ</a>
+            {%- endif -%}
+            {%- for part in paginate.parts -%}
+              {%- if part.is_link -%}
+                <a href="{{ part.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">{{ part.title }}</a>
+              {%- elsif part.title == paginate.current_page -%}
+                <span aria-current="page" class="border border-stone-900 bg-stone-900 text-stone-50 px-4 py-2 text-sm">{{ part.title }}</span>
+              {%- else -%}
+                <span class="px-4 py-2 text-sm text-stone-300">{{ part.title }}</span>
+              {%- endif -%}
+            {%- endfor -%}
+            {%- if paginate.next -%}
+              <a href="{{ paginate.next.url }}" class="border border-stone-200 px-4 py-2 text-sm hover:border-stone-900 transition-colors">次へ</a>
+            {%- endif -%}
+          </nav>
+        {%- endif -%}
+
+      {%- else -%}
+
+        {%- comment %} 結果なし {%- endcomment -%}
+        <div class="py-20 text-center">
+          <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-stone-100 mb-6">
+            {%- render 'icon', icon: 'search', class: 'w-7 h-7 text-stone-400' -%}
+          </div>
+          <p class="text-stone-900 font-medium mb-2">「{{ search.terms | escape }}」に一致する結果がありませんでした</p>
+          <p class="text-sm text-stone-400 mb-8">別のキーワードでお試しください。</p>
+          {%- render 'button', label: 'すべての商品を見る', url: routes.all_products_collection_url, variant: 'outline', icon_right: 'arrow-right' -%}
+        </div>
+
+      {%- endif -%}
+
+    {%- else -%}
+
+      {%- comment %} 未検索状態 {%- endcomment -%}
+      <div class="py-20 text-center text-sm text-stone-400">
+        キーワードを入力して検索してください。
+      </div>
+
+    {%- endif -%}
+
+  </section>
+</div>
+
+{%- endpaginate -%}
+
+{%- schema %}
+{
+  "name": "Search",
+  "settings": [
+    {
+      "type": "range",
+      "id": "results_per_page",
+      "label": "1ページあたりの表示件数",
+      "min": 8,
+      "max": 48,
+      "step": 4,
+      "default": 24
+    }
+  ],
+  "presets": [
+    {
+      "name": "Search"
+    }
+  ]
+}
+{%- endschema -%}

@@ -36,11 +36,9 @@ Alpine.start()
 // Shopify Inbox チャットアイコンのサイズを調整
 ;(function initInboxIconSize() {
   const CSS = `
-    button.chat-toggle svg,
-    button.chat-toggle.chat-toggle--icon-button.icon-only svg,
-    button.chat-toggle.chat-toggle--icon-button.mobile-only svg {
-      width: 40px !important;
-      height: 40px !important;
+    button.chat-toggle svg {
+      width: 24px !important;
+      height: 24px !important;
     }
   `
 
@@ -53,15 +51,19 @@ Alpine.start()
     shadow.appendChild(style)
   }
 
+  function injectWithRetry(chatEl) {
+    ;[0, 500, 1500, 3000].forEach(delay => setTimeout(() => inject(chatEl), delay))
+  }
+
   const existing = document.querySelector('inbox-online-store-chat')
   if (existing) {
-    inject(existing)
+    injectWithRetry(existing)
   } else {
     const observer = new MutationObserver(() => {
       const chatEl = document.querySelector('inbox-online-store-chat')
       if (!chatEl) return
       observer.disconnect()
-      inject(chatEl)
+      injectWithRetry(chatEl)
     })
     observer.observe(document.body, { childList: true, subtree: true })
   }
