@@ -172,10 +172,10 @@
           <h2 class="{{ h2_class }}">{{ block.settings.heading }}</h2>
         {%- endif -%}
         {%- if roles != blank -%}
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 md:gap-8">
             {%- for role in roles -%}
               {%- if role.title != blank -%}
-                <div class="bg-stone-100 p-6 flex flex-col gap-4">
+                <div class="bg-stone-100 p-6 flex flex-col gap-4 items-center md:items-start">
                   {%- if role.icon != blank -%}
                     {%- render 'icon', icon: role.icon, class: 'w-10 h-10', stroke_width: 1 -%}
                   {%- endif -%}

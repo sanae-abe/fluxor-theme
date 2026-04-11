@@ -367,7 +367,7 @@
         {%- endif -%}
 
         {%- if volume != blank -%}
-          <p class="text-stone-900 leading-relaxed">内容量：{{ volume }}</p>
+          <p class="text-stone-900 text-sm md:text-base leading-relaxed">内容量：{{ volume }}</p>
         {%- endif -%}
 
         <div style='{{ jm_style }}' class='jdgm-widget jdgm-preview-badge' data-id='{{ product.id }}' data-auto-install='false'>
@@ -409,7 +409,7 @@
             -%}
             <div class="flex items-start gap-2">
               {%- render 'icon', icon: 'check', width: 16, height: 16, stroke_width: 2, class: 'shrink-0 mt-1' -%}
-              <p class="text-stone-900 leading-relaxed">
+              <p class="text-stone-900 leading-relaxed text-sm md:text-base">
                 {{- benefit_main -}}
                 {%- for i in (1..5) -%}
                   {%- if benefit_parts[i] != blank -%}
@@ -469,7 +469,7 @@
                 {%- assign amount  = key_ingredient.amount -%}
                 {%- assign ing_idx = forloop.index0 -%}
                 <div
-                  class="flex-none w-[calc((100%-16px)/2.5)] {% if key_ingredient.description != blank %}cursor-pointer{% else %}cursor-default{% endif %} select-none"
+                  class="flex-none w-[calc((100%-16px)/1.5)] md:w-[calc((100%-16px)/2.5)] {% if key_ingredient.description != blank %}cursor-pointer{% else %}cursor-default{% endif %} select-none"
                   @click.stop="active = {{ ing_idx }}; scrollToCard({{ ing_idx }})"
                 >
                   <div
@@ -696,7 +696,7 @@
     </div>
 
     <div class="flex items-center gap-4 shrink-0">
-      <div class="flex items-end gap-2 whitespace-nowrap">
+      <div class="flex flex-col-reverse md:flex-row items-end gap-2 whitespace-nowrap">
         {{ price_html }}
       </div>
 
