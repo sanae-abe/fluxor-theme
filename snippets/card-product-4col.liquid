@@ -182,10 +182,10 @@
         {%- render 'icon', icon: 'refresh-cw', class: 'w-4 h-4 animate-spin hidden', x_class: "adding ? '' : 'hidden'" -%}
       </button>
       {%- comment %} カートに追加ボタン（デスクトップ: hover時に中央表示） {%- endcomment -%}
-      <div class="absolute inset-0 hidden md:flex items-center justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+      <div class="absolute bottom-4 left-0 right-0 px-4 hidden md:flex justify-center z-10 pointer-events-none group-hover:pointer-events-auto opacity-0 group-hover:opacity-100 translate-y-2 group-hover:translate-y-0 transition duration-300">
         <button
           type="button"
-          class="btn-card-add bg-stone-900 border-2 border-stone-900 text-white text-[15px] leading-tight font-medium flex items-center justify-center min-h-[48px] min-w-[144px] px-4 py-2 palt transition-opacity duration-300"
+          class="btn-card-add w-full bg-stone-900 border-2 border-stone-900 text-white text-[15px] leading-tight font-medium flex items-center justify-center min-h-[48px] px-4 py-2 palt transition-opacity duration-300"
           :class="{ 'opacity-70 cursor-wait': adding }"
           @click.stop="addToCart()"
           :disabled="adding"
