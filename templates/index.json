@@ -15,7 +15,7 @@
         "slide_RE7HbH": {
           "type": "slide",
           "settings": {
-            "image": "shopify://shop_images/Gemini_Generated_Image_lxxzz0lxxzz0lxxz_compressed.webp",
+            "image": "shopify://shop_images/Gemini_Generated_Image_jnqminjnqminjnqm.jpg",
             "eyebrow": "",
             "heading": "Trusted Skincare, Curated.",
             "subheading": "信頼できるものだけを、あなたへ。",
@@ -80,7 +80,6 @@
         "blog_handle": "journal",
         "color_scheme": "bg-stone-50",
         "image_position": "right",
-        "fallback_image": "shopify://shop_images/brand-story-molecules-bg_1.png",
         "badge_label": "Journal",
         "badge_variant": "accent",
         "badge_icon_left": "notebook-pen",
