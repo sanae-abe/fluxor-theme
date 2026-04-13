@@ -2,6 +2,11 @@ import { formatJPY, centsToYen } from '../utils/money.js'
 
 const JSON_HEADERS = { 'Content-Type': 'application/json' }
 
+const PLACEHOLDER = (() => {
+  const svg = '<svg width="160" height="160" viewBox="0 0 160 160" fill="none" xmlns="http://www.w3.org/2000/svg"><rect width="160" height="160" fill="#F5F5F4"/><path d="M98 86L91.828 79.828C91.0779 79.0781 90.0607 78.6569 89 78.6569C87.9393 78.6569 86.9221 79.0781 86.172 79.828L68 98M66 62H94C96.2091 62 98 63.7909 98 66V94C98 96.2091 96.2091 98 94 98H66C63.7909 98 62 96.2091 62 94V66C62 63.7909 63.7909 62 66 62ZM78 74C78 76.2091 76.2091 78 74 78C71.7909 78 70 76.2091 70 74C70 71.7909 71.7909 70 74 70C76.2091 70 78 71.7909 78 74Z" stroke="#D6D3D1" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+  return `data:image/svg+xml;base64,${btoa(svg)}`
+})()
+
 const postJSON = async (url, body) => {
   const res = await fetch(url, {
     method: 'POST',
@@ -18,6 +23,7 @@ export const cartStore = {
   errored: false,
   items: [],
   itemCount: 0,
+  placeholder: PLACEHOLDER,
 
   toggle() {
     this.open = !this.open
@@ -28,7 +34,7 @@ export const cartStore = {
   },
 
   imageUrl(url, width) {
-    if (!url) return ''
+    if (!url) return PLACEHOLDER
     try {
       const u = new URL(url)
       u.searchParams.set('width', width)
