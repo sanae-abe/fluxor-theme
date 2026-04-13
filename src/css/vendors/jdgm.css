@@ -16,8 +16,6 @@
 }
 
 /* ── スター ─────────────────────────────────────────── */
-.jdgm-star,
-.jdgm__star { color: var(--color-premium); }
 
 .jdgm-star--empty,
 .jdgm__star--empty { color: var(--color-muted); }
@@ -78,7 +76,6 @@
   height: 5px;
 }
 .jdgm-histogram__bar-fill {
-  background-color: var(--color-premium);
   border-radius: 0 !important;
 }
 .jdgm-histogram__bar-count,
