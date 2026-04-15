@@ -18,7 +18,33 @@
 
     {%- capture _filter_content -%}
       {%- if filter.type == 'price_range' -%}
-        <form action="{{ collection.url }}" method="get" class="space-y-3">
+        {%- liquid
+          assign _range_min = filter.range_min | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
+          assign _range_max = filter.range_max | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
+          if filter.min_value.value != blank
+            assign _sel_min = filter.min_value.value | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
+          else
+            assign _sel_min = _range_min
+          endif
+          if filter.max_value.value != blank
+            assign _sel_max = filter.max_value.value | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
+          else
+            assign _sel_max = _range_max
+          endif
+        -%}
+        <form
+          action="{{ collection.url }}"
+          method="get"
+          class="space-y-4"
+          x-data="{
+            rangeMin: {{ _range_min }},
+            rangeMax: {{ _range_max }},
+            low:  {{ _sel_min }},
+            high: {{ _sel_max }},
+            get pctLow()  { let d = this.rangeMax - this.rangeMin; return d ? (this.low  - this.rangeMin) / d * 100 : 0; },
+            get pctHigh() { let d = this.rangeMax - this.rangeMin; return d ? (this.high - this.rangeMin) / d * 100 : 100; }
+          }"
+        >
           {%- comment %} 他のアクティブフィルターを保持 {%- endcomment -%}
           {%- for f in filters -%}
             {%- if f.type != 'price_range' -%}
@@ -30,14 +56,42 @@
           {%- if sort_by != blank -%}
             <input type="hidden" name="sort_by" value="{{ sort_by }}">
           {%- endif -%}
-          <div class="flex items-center gap-1.5">
-            {%- assign _min_val = filter.min_value.value | money_without_currency | replace: ',', '' -%}
-            {%- assign _min_ph  = filter.range_min | money_without_currency | replace: ',', '' -%}
-            {%- render 'form-input', type: 'number', name: filter.min_value.param_name, value: _min_val, placeholder: _min_ph, min: 0, variant: 'bordered', size: 'sm' -%}
-            <span class="text-stone-400 text-xs flex-shrink-0">〜</span>
-            {%- assign _max_val = filter.max_value.value | money_without_currency | replace: ',', '' -%}
-            {%- assign _max_ph  = filter.range_max | money_without_currency | replace: ',', '' -%}
-            {%- render 'form-input', type: 'number', name: filter.max_value.param_name, value: _max_val, placeholder: _max_ph, min: 0, variant: 'bordered', size: 'sm' -%}
+          {%- comment %} フォーム送信用 hidden inputs（全範囲時は送信しない） {%- endcomment -%}
+          <input type="hidden" name="{{ filter.min_value.param_name }}" :value="low"  :disabled="low  <= rangeMin">
+          <input type="hidden" name="{{ filter.max_value.param_name }}" :value="high" :disabled="high >= rangeMax">
+
+          {%- comment %} デュアルハンドル価格スライダー {%- endcomment -%}
+          <div class="price-range-slider" role="group" aria-label="価格範囲">
+            <div class="price-range-slider__track" aria-hidden="true">
+              <div
+                class="price-range-slider__fill"
+                :style="`left: ${pctLow}%; right: ${100 - pctHigh}%`"
+              ></div>
+            </div>
+            <input
+              type="range"
+              :min="rangeMin" :max="rangeMax" step="1"
+              x-model.number="low"
+              @input="if (low > high) low = high"
+              class="price-range-slider__input"
+              :class="{ 'price-range-slider__input--top': low >= rangeMax }"
+              aria-label="最低価格"
+            >
+            <input
+              type="range"
+              :min="rangeMin" :max="rangeMax" step="1"
+              x-model.number="high"
+              @input="if (high < low) high = low"
+              class="price-range-slider__input price-range-slider__input--top"
+              :class="{ 'price-range-slider__input--top': high > rangeMin }"
+              aria-label="最高価格"
+            >
+          </div>
+
+          {%- comment %} 現在の価格範囲ラベル {%- endcomment -%}
+          <div class="flex items-center justify-between text-xs text-stone-500 -mt-1">
+            <span>¥<span x-text="low.toLocaleString('ja-JP')"></span></span>
+            <span>¥<span x-text="high.toLocaleString('ja-JP')"></span></span>
           </div>
           {%- render 'button', label: '適用', type: 'submit', variant: 'outline', size: 'sm', full_width: true -%}
         </form>
