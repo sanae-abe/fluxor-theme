@@ -19,8 +19,8 @@
     {%- capture _filter_content -%}
       {%- if filter.type == 'price_range' -%}
         {%- liquid
-          assign _range_min = filter.range_min | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
-          assign _range_max = filter.range_max | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
+          assign _range_min = 3000
+          assign _range_max = 30000
           if filter.min_value.value != blank
             assign _sel_min = filter.min_value.value | money_without_currency | replace: ',', '' | split: '.' | first | plus: 0
           else
