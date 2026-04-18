@@ -128,6 +128,7 @@
       selected: [],
       adding: false,
       added: false,
+      error: '',
       saleEligible: {{ sale_eligible | json }},
       saleDiscount: {{ sale_discount | default: 0 }},
       get salePrice() {
@@ -150,23 +151,31 @@
       async addBundle() {
         if (this.selected.length < 2 || this.adding || !this.fixedVariantId) return
         this.adding = true
+        this.error = ''
         try {
-          const items = [
-            { id: this.fixedVariantId, quantity: 1 },
-            ...this.selected.map(s => ({ id: s.variantId, quantity: 1 })),
+          const variantIds = [
+            this.fixedVariantId,
+            ...this.selected.map(s => s.variantId),
           ]
-          const res = await fetch('/cart/add.js', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ items }),
-          })
-          if (!res.ok) throw new Error('Cart add failed')
+          for (const id of variantIds) {
+            const res = await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ id, quantity: 1 }),
+            })
+            if (!res.ok) {
+              const body = await res.json().catch(() => ({}))
+              console.error('[bundlePage.addBundle] API error:', res.status, body)
+              throw new Error(body.description || 'カートへの追加に失敗しました')
+            }
+          }
           await this.$store.cart.fetch()
           this.$store.cart.open = true
           this.added = true
           setTimeout(() => { this.added = false }, 3000)
         } catch (err) {
           console.error('[bundlePage.addBundle]', err)
+          this.error = err.message || 'カートへの追加に失敗しました'
         } finally {
           this.adding = false
         }
@@ -339,6 +348,14 @@
           <span class="text-base font-bold leading-tight" :class="adding ? '' : 'hidden'">追加中…</span>
           <span class="text-base font-bold leading-tight" :class="added ? '' : 'hidden'">✓ カートに追加しました</span>
         </button>
+
+        <p
+          x-show="error"
+          x-text="error"
+          x-cloak
+          class="text-sm text-rose-700 bg-rose-50 border border-rose-200 px-3 py-2 rounded-lg"
+          role="alert"
+        ></p>
 
         <p class="flex gap-2 text-sm justify-end">
           {%- render 'icon', icon: 'van', class: 'w-5 h-5 flex-shrink-0 stroke-1.5' -%}
