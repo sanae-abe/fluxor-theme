@@ -217,27 +217,29 @@
         </div>
 
         {%- comment %} カートに追加ボタン {%- endcomment -%}
-        {%- if product.available -%}
-          <button
-            type="button"
-            class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-sm text-white tracking-wider font-medium flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 palt transition-opacity duration-300 leading-tight"
-            :class="{ 'opacity-70 cursor-wait': adding }"
-            @click.stop="addToCart()"
-            :disabled="adding"
-            aria-label="{{ product.title | escape }}をカートに追加"
-          >
-            <span :class="{ 'hidden': adding }">カートに追加</span>
-            <span class="hidden" :class="{ 'hidden': !adding }">追加中…</span>
-          </button>
-        {%- else -%}
-          <span
-            class="flex-shrink-0 border-2 bg-stone-200 border-stone-200 text-sm text-stone-400 tracking-wider font-medium cursor-not-allowed flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 leading-tight"
-            role="img"
-            aria-label="{{ product.title | escape }}: 売り切れ"
-          >
-            売り切れ
-          </span>
-        {%- endif -%}
+        {%- unless product.template_suffix == 'set-builder' -%}
+          {%- if product.available -%}
+            <button
+              type="button"
+              class="btn-card-add flex-shrink-0 bg-stone-900 border-2 border-stone-900 text-sm text-white tracking-wider font-medium flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 palt transition-opacity duration-300 leading-tight"
+              :class="{ 'opacity-70 cursor-wait': adding }"
+              @click.stop="addToCart()"
+              :disabled="adding"
+              aria-label="{{ product.title | escape }}をカートに追加"
+            >
+              <span :class="{ 'hidden': adding }">カートに追加</span>
+              <span class="hidden" :class="{ 'hidden': !adding }">追加中…</span>
+            </button>
+          {%- else -%}
+            <span
+              class="flex-shrink-0 border-2 bg-stone-200 border-stone-200 text-sm text-stone-400 tracking-wider font-medium cursor-not-allowed flex items-center justify-center min-h-9 min-w-[144px] px-4 py-2 leading-tight"
+              role="img"
+              aria-label="{{ product.title | escape }}: 売り切れ"
+            >
+              売り切れ
+            </span>
+          {%- endif -%}
+        {%- endunless -%}
 
       </div>
 

@@ -1,0 +1,107 @@
+{%- comment %}
+  snippets/product-image-gallery.liquid
+
+  商品画像ギャラリー（メイン画像 + サムネイルカルーセル）
+
+  パラメータ:
+    product {object} 必須 — 商品オブジェクト
+
+  依存する Alpine.js 親スコープのプロパティ（呼び出し元で定義すること）:
+    images          {string[]}  画像URL配列
+    activeImageIndex {number}   表示中の画像インデックス
+    activeImage     {string}    表示中の画像URL（getter）
+    prevImage()     {function}  前の画像に切り替え
+    nextImage()     {function}  次の画像に切り替え
+
+  依存する Alpine コンポーネント:
+    thumbCarousel (src/js/components/thumbCarousel.js)
+{%- endcomment -%}
+
+<div class="relative aspect-square overflow-hidden bg-stone-100 [transform:translateZ(0)]">
+  {%- if product.featured_image -%}
+    <img
+      src="{{ product.featured_image | image_url: width: 800, format: 'webp' }}"
+      :src="activeImage"
+      alt="{{ product.featured_image.alt | escape | default: product.title | escape }}"
+      class="w-full h-full object-cover"
+      width="800"
+      height="800"
+      loading="eager"
+      fetchpriority="high"
+    >
+  {%- else -%}
+    <div class="w-full h-full flex items-center justify-center text-stone-300">
+      {%- render 'icon', icon: 'image', class: 'w-16 h-16' -%}
+    </div>
+  {%- endif -%}
+  {%- if product.images.size > 1 -%}
+    <button
+      type="button"
+      class="absolute left-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
+      :class="activeImageIndex === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
+      @click="prevImage()"
+      aria-label="前の画像"
+    >
+      {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5' -%}
+    </button>
+    <button
+      type="button"
+      class="absolute right-0 top-1/2 -translate-y-1/2 z-10 w-10 h-10 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
+      :class="activeImageIndex >= images.length - 1 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
+      @click="nextImage()"
+      aria-label="次の画像"
+    >
+      {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5' -%}
+    </button>
+  {%- endif -%}
+</div>
+
+{%- if product.images.size > 1 -%}
+  <div
+    class="relative"
+    x-data="thumbCarousel({{ product.images.size }})"
+  >
+    <button
+      type="button"
+      class="absolute left-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
+      :class="thumbOffset === 0 ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
+      @click="scrollPrev()"
+      aria-label="前へ"
+    >
+      {%- render 'icon', icon: 'chevron-left', class: 'w-5 h-5' -%}
+    </button>
+
+    <div class="overflow-hidden" x-ref="thumbTrack">
+      <div class="flex gap-3">
+        {%- for image in product.images limit: 12 -%}
+          <button
+            type="button"
+            class="w-[calc((100%-42px)/4.5)] shrink-0 aspect-square overflow-hidden bg-stone-100 border-2 transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-stone-900 focus-visible:ring-offset-1 [transform:translateZ(0)]"
+            :class="activeImageIndex === {{ forloop.index0 }} ? 'border-stone-900' : 'border-transparent'"
+            @click="activeImageIndex = {{ forloop.index0 }}; scrollToThumb({{ forloop.index0 }})"
+            aria-label="{{ image.alt | escape | default: product.title | escape }}"
+          >
+            <img
+              src="{{ image | image_url: width: 300, format: 'webp' }}"
+              alt="{{ image.alt | escape | default: product.title | escape }}"
+              class="w-full h-full object-cover"
+              loading="lazy"
+              width="300"
+              height="300"
+            >
+          </button>
+        {%- endfor -%}
+      </div>
+    </div>
+
+    <button
+      type="button"
+      class="absolute right-0 top-0 z-10 h-full w-6 flex items-center justify-center bg-stone-50/80 transition-opacity focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-stone-500"
+      :class="thumbOffset >= maxOffset ? 'opacity-0 pointer-events-none' : 'opacity-100 text-stone-500'"
+      @click="scrollNext()"
+      aria-label="次へ"
+    >
+      {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5' -%}
+    </button>
+  </div>
+{%- endif -%}

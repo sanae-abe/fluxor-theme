@@ -168,7 +168,7 @@
       {%- endif -%}
     </div>
 
-    {%- if product.available -%}
+    {%- if product.available and product.template_suffix != 'set-builder' -%}
       {%- comment %} カートに追加ボタン（モバイル: 画像右下アイコン） {%- endcomment -%}
       <button
         type="button"
