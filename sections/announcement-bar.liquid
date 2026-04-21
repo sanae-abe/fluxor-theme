@@ -21,7 +21,24 @@
     class="bg-stone-950 text-stone-50 py-2 overflow-hidden"
     aria-label="お知らせ"
     x-data
-    x-init="$nextTick(() => { $store.ui.announcementHeight = $el.offsetHeight; new ResizeObserver(() => { $store.ui.announcementHeight = $el.offsetHeight }).observe($el) })"
+    x-init="$nextTick(() => {
+      $store.ui.announcementHeight = $el.offsetHeight;
+      new ResizeObserver(() => { $store.ui.announcementHeight = $el.offsetHeight }).observe($el);
+      const track = $el.querySelector('.marquee-track');
+      const orig = track.querySelector('.marquee-content');
+      if (!track || !orig) return;
+      const vw = $el.offsetWidth;
+      const cw = orig.offsetWidth;
+      const n = Math.max(2, Math.ceil(vw / cw) + 1);
+      for (let i = 1; i < n; i++) {
+        const cl = orig.cloneNode(true);
+        cl.setAttribute('aria-hidden', 'true');
+        track.appendChild(cl);
+        if (typeof Alpine !== 'undefined') Alpine.initTree(cl);
+      }
+      track.style.setProperty('--marquee-offset', `${-100 / n}%`);
+      track.style.setProperty('--marquee-duration', `${cw / 50}s`);
+    })"
     x-cloak
     {%- if settings.sale_enabled %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
   >
@@ -40,23 +57,6 @@
           {%- if block.settings.text != blank -%}
             <span class="px-10" {{ block.shopify_attributes }}>{{ block.settings.text | escape }}</span>
             <span class="dot px-2" aria-hidden="true">·</span>
-          {%- endif -%}
-        {%- endfor -%}
-      </span>
-
-      {%- comment %} 2回目（シームレスループ用・スクリーンリーダー非表示） {%- endcomment -%}
-      <span class="marquee-content" aria-hidden="true">
-        {%- if show_sale -%}
-          <span class="inline-flex items-center gap-2 px-10">
-            {{ settings.sale_banner_text | escape }}
-            {%- render 'sale-countdown' -%}
-          </span>
-          <span class="dot px-2">·</span>
-        {%- endif -%}
-        {%- for block in section.blocks -%}
-          {%- if block.settings.text != blank -%}
-            <span class="px-10">{{ block.settings.text | escape }}</span>
-            <span class="dot px-2">·</span>
           {%- endif -%}
         {%- endfor -%}
       </span>

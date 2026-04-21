@@ -56,7 +56,7 @@ body:not(.no-outline) .skip-link:focus {
 
 @keyframes marquee {
   from { transform: translateX(0); }
-  to   { transform: translateX(-50%); }
+  to   { transform: translateX(var(--marquee-offset, -50%)); }
 }
 
 .marquee-track {
@@ -64,7 +64,13 @@ body:not(.no-outline) .skip-link:focus {
   width: max-content;
   white-space: nowrap;
   align-items: center;
-  animation: marquee 30s linear infinite;
+  animation: marquee var(--marquee-duration, 30s) linear infinite;
+}
+
+.marquee-content {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
 }
 
 .marquee-track .dot {
