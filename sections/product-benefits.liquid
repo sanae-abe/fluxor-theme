@@ -106,16 +106,22 @@
 
       </div>
 
-      {%- comment %} 右カラム: 商品画像 {%- endcomment -%}
-      {%- if product.featured_image -%}
+      {%- comment %} 右カラム: 商品画像（メタフィールド優先 → featured_image フォールバック） {%- endcomment -%}
+      {%- liquid
+        assign _benefits_img = product.metafields.custom.benefits_image.value
+        unless _benefits_img != blank
+          assign _benefits_img = product.featured_image
+        endunless
+      -%}
+      {%- if _benefits_img -%}
         <div class="benefit-card overflow-hidden rounded-lg">
           <img
-            src="{{ product.featured_image | image_url: width: 900 }}"
-            srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+            src="{{ _benefits_img | image_url: width: 900 }}"
+            srcset="{{ _benefits_img | image_url: width: 600 }} 600w, {{ _benefits_img | image_url: width: 900 }} 900w, {{ _benefits_img | image_url: width: 1200 }} 1200w"
             sizes="(max-width: 1023px) calc(100vw - 2rem), 45vw"
-            alt="{{ product.featured_image.alt | default: product.title }}"
-            width="{{ product.featured_image.width }}"
-            height="{{ product.featured_image.height }}"
+            alt="{{ _benefits_img.alt | default: product.title }}"
+            width="{{ _benefits_img.width }}"
+            height="{{ _benefits_img.height }}"
             loading="lazy"
             class="w-full h-auto"
           >
