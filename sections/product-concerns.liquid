@@ -1,0 +1,124 @@
+{%- comment %}
+  お悩みセクション (product-concerns.liquid)
+  使用: templates/product.json に追加して使用
+
+  データソース: product.metafields.custom.skin_concerns (list.single_line_text_field)
+  アイコン: テキスト内のキーワードから Lucide アイコンを自動マッピング
+{%- endcomment -%}
+
+{%- assign concerns = product.metafields.custom.skin_concerns.value -%}
+{%- if concerns != blank and concerns.size > 0 -%}
+
+{%- liquid
+  assign s = section.settings
+
+  case concerns.size
+    when 1
+      assign grid_cols = 'md:max-w-md md:mx-auto'
+    when 2
+      assign grid_cols = 'md:grid-cols-2 md:max-w-2xl md:mx-auto'
+    when 4
+      assign grid_cols = 'md:grid-cols-2 lg:grid-cols-4'
+    else
+      assign grid_cols = 'md:grid-cols-3'
+  endcase
+-%}
+
+<section
+  id="product-concerns"
+  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100"
+>
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
+
+    {%- render 'section-header',
+      heading: s.heading,
+      subheading: s.subheading,
+      align: 'center'
+    -%}
+
+    <div class="concern-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
+      {%- for concern in concerns -%}
+
+        {%- liquid
+          case concern
+            when '乾燥・うるおい'
+              assign concern_icon = 'droplet'
+              assign concern_text = '乾燥やかさつきが気になる'
+            when 'くすみ・透明感'
+              assign concern_icon = 'sparkle'
+              assign concern_text = 'くすみが気になる'
+            when '毛穴・肌キメ'
+              assign concern_icon = 'layers'
+              assign concern_text = '毛穴の開きが気になる'
+            when 'エイジングケア'
+              assign concern_icon = 'sparkles'
+              assign concern_text = '年齢に応じたケアをしたい'
+            when 'ニキビ・肌荒れ'
+              assign concern_icon = 'shield'
+              assign concern_text = '繰り返す肌荒れが気になる'
+            else
+              assign concern_icon = 'flask-conical'
+              assign concern_text = concern
+          endcase
+        -%}
+
+        <div class="concern-card flex flex-col items-center text-center gap-4 p-6 md:p-8">
+          <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
+            {%- render 'icon', icon: concern_icon, class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
+          </div>
+          <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
+            {{- concern_text -}}
+          </p>
+        </div>
+
+      {%- endfor -%}
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var grid = document.querySelector('#product-concerns .concern-grid');
+    if (!grid) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          grid.classList.add('is-visible');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    observer.observe(grid);
+  })();
+</script>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "お悩み",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "こんなお悩みありませんか？"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "サブ見出し"
+    }
+  ],
+  "presets": [
+    {
+      "name": "お悩み"
+    }
+  ]
+}
+{% endschema %}

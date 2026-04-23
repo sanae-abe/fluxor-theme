@@ -17,6 +17,20 @@
         "related_products_count": 4
       }
     },
+    "concerns": {
+      "type": "product-concerns",
+      "settings": {
+        "heading": "こんなお悩みありませんか？"
+      }
+    },
+    "benefits": {
+      "type": "product-benefits",
+      "settings": {
+        "heading": "期待できること",
+        "icon_style": "check",
+        "disclaimer": "※効能効果は化粧品の範囲内での表現です"
+      }
+    },
     "accordion": {
       "type": "product-accordion",
       "blocks": {
@@ -97,6 +111,8 @@
   },
   "order": [
     "main",
+    "concerns",
+    "benefits",
     "accordion",
     "reviews",
     "recommendations",
