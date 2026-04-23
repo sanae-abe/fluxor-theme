@@ -1007,7 +1007,6 @@ body:not(.no-outline) .skip-link:focus {
 @media (any-hover: hover) {
   .inline-product-card:hover {
     border-color: theme('colors.stone.300');
-    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 }
 
