@@ -18,32 +18,38 @@
       {%- endif -%}
 
       <div class="space-y-6">
-        {%- render 'form-input',
-          type: 'text',
-          id: 'ContactForm-name',
-          name: 'contact[name]',
-          label: 'お名前',
-          value: form.name,
-          required: true
-        -%}
+        <div>
+          {%- render 'form-input',
+            type: 'text',
+            id: 'ContactForm-name',
+            name: 'contact[name]',
+            label: 'お名前',
+            value: form.name,
+            required: true
+          -%}
+        </div>
 
-        {%- render 'form-input',
-          type: 'email',
-          id: 'ContactForm-email',
-          name: 'contact[email]',
-          label: 'メールアドレス',
-          value: form.email,
-          required: true
-        -%}
+        <div>
+          {%- render 'form-input',
+            type: 'email',
+            id: 'ContactForm-email',
+            name: 'contact[email]',
+            label: 'メールアドレス',
+            value: form.email,
+            required: true
+          -%}
+        </div>
 
-        {%- render 'form-input',
-          type: 'textarea',
-          id: 'ContactForm-message',
-          name: 'contact[body]',
-          label: 'メッセージ',
-          value: form.body,
-          required: true
-        -%}
+        <div>
+          {%- render 'form-input',
+            type: 'textarea',
+            id: 'ContactForm-message',
+            name: 'contact[body]',
+            label: 'メッセージ',
+            value: form.body,
+            required: true
+          -%}
+        </div>
 
         {%- assign privacy_url = shop.privacy_policy.url | default: '/policies/privacy-policy' -%}
         {%- render 'checkbox-consent',
