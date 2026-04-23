@@ -1028,6 +1028,7 @@ body:not(.no-outline) .skip-link:focus {
   height: 100%;
   object-fit: cover;
   display: block;
+  margin: 0;
 }
 
 .inline-product-card__body {
@@ -1038,14 +1039,6 @@ body:not(.no-outline) .skip-link:focus {
   padding: theme('spacing.4') theme('spacing.5');
   flex: 1;
   min-width: 0;
-}
-
-.inline-product-card__label {
-  font-size: 0.625rem;
-  font-weight: 600;
-  letter-spacing: 0.1em;
-  color: theme('colors.stone.400');
-  text-transform: uppercase;
 }
 
 .inline-product-card__title {
@@ -1062,16 +1055,6 @@ body:not(.no-outline) .skip-link:focus {
 .inline-product-card__price {
   font-size: theme('fontSize.sm');
   color: theme('colors.stone.600');
-}
-
-.inline-product-card__cta {
-  display: inline-flex;
-  align-items: center;
-  gap: theme('spacing.1');
-  margin-top: theme('spacing.2');
-  font-size: theme('fontSize.xs');
-  font-weight: theme('fontWeight.semibold');
-  color: var(--color-accent, #0f766e);
 }
 
 /* ===== パンくずリスト ===== */
