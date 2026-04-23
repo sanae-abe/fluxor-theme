@@ -1,0 +1,150 @@
+{%- comment %}
+  注目の成分セクション (product-features.liquid)
+  使用: templates/product.json に追加して使用
+
+  データソース: product.metafields.custom.key_ingredients (list.metaobject_reference)
+  フィールド: ingredient, display_name, amount, thumbnail, description, article_url
+{%- endcomment -%}
+
+{%- assign key_ingredients = product.metafields.custom.key_ingredients.value -%}
+{%- if key_ingredients != blank and key_ingredients.size > 0 -%}
+
+{%- liquid
+  assign s = section.settings
+
+  case key_ingredients.size
+    when 1
+      assign grid_cols = 'md:max-w-md md:mx-auto'
+    when 2
+      assign grid_cols = 'md:grid-cols-2 md:max-w-2xl md:mx-auto'
+    when 4
+      assign grid_cols = 'md:grid-cols-2 lg:grid-cols-4'
+    else
+      assign grid_cols = 'md:grid-cols-3'
+  endcase
+-%}
+
+<section
+  id="product-features"
+  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100"
+>
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
+
+    {%- render 'section-header',
+      heading: s.heading,
+      subheading: s.subheading,
+      align: 'center'
+    -%}
+
+    <div class="feature-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
+      {%- for ki in key_ingredients -%}
+        {%- liquid
+          assign ing_name = ki.display_name | default: ki.ingredient
+          assign ing_amount = ki.amount
+          assign ing_desc = ki.description
+          assign ing_url = ki.article_url
+        -%}
+
+        <div class="feature-card bg-white rounded-lg border border-stone-200 p-6 flex flex-col gap-4">
+
+          {%- comment %} サムネイル + 成分名 {%- endcomment -%}
+          <div class="flex items-center gap-4">
+            {%- if ki.thumbnail != blank -%}
+              <img
+                src="{{ ki.thumbnail | image_url: width: 128, height: 128, crop: 'center', format: 'webp' }}"
+                alt="{{ ing_name }}"
+                class="w-16 h-16 rounded-full object-cover shrink-0"
+                width="64" height="64" loading="lazy"
+              >
+            {%- else -%}
+              <div class="w-16 h-16 rounded-full bg-stone-100 border border-stone-200 shrink-0 flex items-center justify-center">
+                {%- render 'icon', icon: 'flask-conical', class: 'w-6 h-6 text-stone-300' -%}
+              </div>
+            {%- endif -%}
+            <div class="flex flex-col gap-1 min-w-0">
+              <p class="text-base font-medium text-stone-900 leading-tight palt tracking-wide">{{ ing_name }}</p>
+              {%- if ing_amount != blank -%}
+                <p class="text-sm text-stone-500 leading-tight">配合量：{{ ing_amount }}</p>
+              {%- endif -%}
+            </div>
+          </div>
+
+          {%- comment %} 説明テキスト {%- endcomment -%}
+          {%- if ing_desc != blank -%}
+            <p class="text-sm text-stone-600 leading-relaxed line-clamp-3">{{ ing_desc }}</p>
+          {%- endif -%}
+
+          {%- comment %} 記事リンク {%- endcomment -%}
+          {%- if ing_url != blank -%}
+            <a
+              href="{{ ing_url }}"
+              class="feature-link inline-flex items-center gap-1 text-sm text-stone-500 mt-auto"
+            >
+              <span>詳しく見る</span>
+              {%- render 'icon', icon: 'arrow-right', class: 'feature-link__icon w-4 h-4' -%}
+            </a>
+          {%- endif -%}
+
+        </div>
+      {%- endfor -%}
+    </div>
+
+    {%- if s.disclaimer != blank -%}
+      <p class="text-xs text-stone-400 text-center leading-relaxed">{{ s.disclaimer }}</p>
+    {%- endif -%}
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var grid = document.querySelector('#product-features .feature-grid');
+    if (!grid) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          grid.classList.add('is-visible');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    observer.observe(grid);
+  })();
+</script>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "注目の成分",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "注目の成分"
+    },
+    {
+      "type": "text",
+      "id": "subheading",
+      "label": "サブ見出し"
+    },
+    {
+      "type": "textarea",
+      "id": "disclaimer",
+      "label": "注意書き",
+      "info": "セクション下部に小さく表示されます",
+      "default": "※すべて整肌・保湿成分としての配合です"
+    }
+  ],
+  "presets": [
+    {
+      "name": "注目の成分"
+    }
+  ]
+}
+{% endschema %}

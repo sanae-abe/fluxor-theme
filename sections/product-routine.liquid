@@ -1,0 +1,117 @@
+{%- comment %}
+  使い方セクション (product-routine.liquid)
+  使用: templates/product.json に追加して使用
+
+  データソース:
+    product.metafields.custom.usage_timing (multi_line_text_field)
+    product.metafields.custom.usage_method (multi_line_text_field)
+{%- endcomment -%}
+
+{%- liquid
+  assign usage_timing = product.metafields.custom.usage_timing
+  assign usage_method = product.metafields.custom.usage_method
+-%}
+{%- if usage_timing != blank or usage_method != blank -%}
+
+{%- liquid
+  assign s = section.settings
+  assign has_both = false
+  if usage_timing != blank and usage_method != blank
+    assign has_both = true
+  endif
+-%}
+
+<section
+  id="product-routine"
+  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-50"
+>
+  <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
+
+    {%- render 'section-header',
+      heading: s.heading,
+      align: 'center'
+    -%}
+
+    <div class="routine-grid grid grid-cols-1 {% if has_both %}md:grid-cols-2{% else %}md:max-w-2xl md:mx-auto{% endif %} gap-6 md:gap-8">
+
+      {%- if usage_timing != blank -%}
+        <div class="routine-card bg-stone-100 rounded-lg p-6 md:p-8 flex flex-col gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
+              {%- render 'icon', icon: 'sun', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
+            </div>
+            <h3 class="text-base font-medium text-stone-900 palt tracking-wide">{{ s.timing_heading }}</h3>
+          </div>
+          <p class="text-sm text-stone-700 leading-relaxed">{{ usage_timing | newline_to_br }}</p>
+        </div>
+      {%- endif -%}
+
+      {%- if usage_method != blank -%}
+        <div class="routine-card bg-stone-100 rounded-lg p-6 md:p-8 flex flex-col gap-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
+              {%- render 'icon', icon: 'notebook-pen', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
+            </div>
+            <h3 class="text-base font-medium text-stone-900 palt tracking-wide">{{ s.method_heading }}</h3>
+          </div>
+          <p class="text-sm text-stone-700 leading-relaxed">{{ usage_method | newline_to_br }}</p>
+        </div>
+      {%- endif -%}
+
+    </div>
+
+  </div>
+</section>
+
+<script>
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var grid = document.querySelector('#product-routine .routine-grid');
+    if (!grid) return;
+    var observer = new IntersectionObserver(function (entries) {
+      entries.forEach(function (entry) {
+        if (entry.isIntersecting) {
+          grid.classList.add('is-visible');
+          observer.disconnect();
+        }
+      });
+    }, { threshold: 0.15 });
+    observer.observe(grid);
+  })();
+</script>
+
+{%- endif -%}
+
+{% schema %}
+{
+  "name": "使い方",
+  "enabled_on": {
+    "templates": ["product"]
+  },
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "見出し",
+      "default": "使い方"
+    },
+    {
+      "type": "text",
+      "id": "timing_heading",
+      "label": "タイミング見出し",
+      "default": "いつ使う？"
+    },
+    {
+      "type": "text",
+      "id": "method_heading",
+      "label": "ガイド見出し",
+      "default": "どう使う？"
+    }
+  ],
+  "presets": [
+    {
+      "name": "使い方"
+    }
+  ]
+}
+{% endschema %}

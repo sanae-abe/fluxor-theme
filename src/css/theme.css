@@ -721,6 +721,66 @@ body:not(.no-outline) .skip-link:focus {
   }
 }
 
+/* ===== 成分ストーリー ===== */
+
+.feature-card {
+  opacity: 0;
+}
+
+.feature-grid.is-visible .feature-card {
+  animation: benefit-fade-up 0.6s ease-out forwards;
+}
+
+.feature-grid.is-visible .feature-card:nth-child(1) { animation-delay: 0.1s; }
+.feature-grid.is-visible .feature-card:nth-child(2) { animation-delay: 0.2s; }
+.feature-grid.is-visible .feature-card:nth-child(3) { animation-delay: 0.3s; }
+.feature-grid.is-visible .feature-card:nth-child(4) { animation-delay: 0.4s; }
+.feature-grid.is-visible .feature-card:nth-child(5) { animation-delay: 0.5s; }
+
+.feature-link__icon {
+  transition: transform 0.2s;
+}
+
+@media (any-hover: hover) {
+  .feature-link:hover .feature-link__icon {
+    transform: translateX(0.25rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .feature-card {
+    opacity: 1;
+  }
+  .feature-grid.is-visible .feature-card {
+    animation: none;
+  }
+  .feature-link__icon {
+    transition: none;
+  }
+}
+
+/* ===== 使い方 ===== */
+
+.routine-card {
+  opacity: 0;
+}
+
+.routine-grid.is-visible .routine-card {
+  animation: benefit-fade-up 0.6s ease-out forwards;
+}
+
+.routine-grid.is-visible .routine-card:nth-child(1) { animation-delay: 0.1s; }
+.routine-grid.is-visible .routine-card:nth-child(2) { animation-delay: 0.2s; }
+
+@media (prefers-reduced-motion: reduce) {
+  .routine-card {
+    opacity: 1;
+  }
+  .routine-grid.is-visible .routine-card {
+    animation: none;
+  }
+}
+
 /* ===== カートページ ===== */
 
 .cart-qty-btn {

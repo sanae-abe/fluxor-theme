@@ -26,9 +26,24 @@
     "benefits": {
       "type": "product-benefits",
       "settings": {
-        "heading": "期待できること",
+        "heading": "このプロダクトにできること",
         "icon_style": "check",
         "disclaimer": "※効能効果は化粧品の範囲内での表現です"
+      }
+    },
+    "features": {
+      "type": "product-features",
+      "settings": {
+        "heading": "注目の成分",
+        "disclaimer": "※すべて整肌・保湿成分としての配合です"
+      }
+    },
+    "routine": {
+      "type": "product-routine",
+      "settings": {
+        "heading": "使い方",
+        "timing_heading": "いつ使う？",
+        "method_heading": "どう使う？"
       }
     },
     "accordion": {
@@ -39,22 +54,6 @@
           "settings": {
             "title": "全成分",
             "metafield_key": "all_ingredients_ja",
-            "content": ""
-          }
-        },
-        "timing": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "使用タイミング",
-            "metafield_key": "usage_timing",
-            "content": ""
-          }
-        },
-        "method": {
-          "type": "accordion_item",
-          "settings": {
-            "title": "使用ガイド",
-            "metafield_key": "usage_method",
             "content": ""
           }
         },
@@ -77,8 +76,6 @@
       },
       "block_order": [
         "ingredients",
-        "timing",
-        "method",
         "storage",
         "precautions"
       ],
@@ -113,6 +110,8 @@
     "main",
     "concerns",
     "benefits",
+    "features",
+    "routine",
     "accordion",
     "reviews",
     "recommendations",
