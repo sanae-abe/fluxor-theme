@@ -1040,6 +1040,11 @@ body:not(.no-outline) .skip-link:focus {
   margin-bottom: theme('spacing.6');
 }
 
+
+.rte small {
+  color: theme('colors.stone.400');
+}
+
 /* ===== インライン商品カード（記事本文内埋め込み） ===== */
 
 /* .rte a のスタイルをリセット */
