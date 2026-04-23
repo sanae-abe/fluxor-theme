@@ -2,17 +2,32 @@
   お悩みセクション (product-concerns.liquid)
   使用: templates/product.json に追加して使用
 
-  データソース: product.metafields.custom.skin_concerns (list.single_line_text_field)
-  アイコン: テキスト内のキーワードから Lucide アイコンを自動マッピング
+  データソース（優先順）:
+    1. product.metafields.custom.skin_concern_items (list.metaobject_reference → skin_concern)
+       フィールド: text（表示テキスト）, icon（アイコン名）
+    2. product.metafields.custom.skin_concerns (list.single_line_text_field) — レガシーフォールバック
 {%- endcomment -%}
 
-{%- assign concerns = product.metafields.custom.skin_concerns.value -%}
-{%- if concerns != blank and concerns.size > 0 -%}
+{%- liquid
+  assign concern_items = product.metafields.custom.skin_concern_items.value
+  assign concerns_legacy = product.metafields.custom.skin_concerns.value
+  assign use_metaobject = false
+
+  if concern_items != blank and concern_items.size > 0
+    assign use_metaobject = true
+    assign concern_count = concern_items.size
+  elsif concerns_legacy != blank and concerns_legacy.size > 0
+    assign concern_count = concerns_legacy.size
+  else
+    assign concern_count = 0
+  endif
+-%}
+{%- if concern_count > 0 -%}
 
 {%- liquid
   assign s = section.settings
 
-  case concerns.size
+  case concern_count
     when 1
       assign grid_cols = 'md:max-w-md md:mx-auto'
     when 2
@@ -37,41 +52,56 @@
     -%}
 
     <div class="concern-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
-      {%- for concern in concerns -%}
 
-        {%- liquid
-          case concern
-            when '乾燥・うるおい'
-              assign concern_icon = 'droplet'
-              assign concern_text = '乾燥やかさつきが気になる'
-            when 'くすみ・透明感'
-              assign concern_icon = 'sparkle'
-              assign concern_text = 'くすみが気になる'
-            when '毛穴・肌キメ'
-              assign concern_icon = 'layers'
-              assign concern_text = '毛穴の開きが気になる'
-            when 'エイジングケア'
-              assign concern_icon = 'sparkles'
-              assign concern_text = '年齢に応じたケアをしたい'
-            when 'ニキビ・肌荒れ'
-              assign concern_icon = 'shield'
-              assign concern_text = '繰り返す肌荒れが気になる'
-            else
-              assign concern_icon = 'flask-conical'
-              assign concern_text = concern
-          endcase
-        -%}
-
-        <div class="concern-card flex flex-col items-center text-center gap-4 p-6 md:p-8">
-          <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
-            {%- render 'icon', icon: concern_icon, class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
+      {%- if use_metaobject -%}
+        {%- for item in concern_items -%}
+          <div class="concern-card flex flex-col items-center text-center gap-4 p-6 md:p-8">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-stone-200/60">
+              {%- render 'icon', icon: item.icon, class: 'w-6 h-6 text-stone-500', stroke_width: 1.5 -%}
+            </div>
+            <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
+              {{- item.text -}}
+            </p>
           </div>
-          <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
-            {{- concern_text -}}
-          </p>
-        </div>
+        {%- endfor -%}
 
-      {%- endfor -%}
+      {%- else -%}
+        {%- comment %} レガシーフォールバック（skin_concerns テキストリスト） {%- endcomment -%}
+        {%- for concern in concerns_legacy -%}
+          {%- liquid
+            case concern
+              when '乾燥・うるおい'
+                assign concern_icon = 'droplet'
+                assign concern_text = '乾燥やかさつきが気になる'
+              when 'くすみ・透明感'
+                assign concern_icon = 'sparkle'
+                assign concern_text = 'くすみが気になる'
+              when '毛穴・肌キメ'
+                assign concern_icon = 'circle-dot'
+                assign concern_text = '毛穴の開きが気になる'
+              when 'エイジングケア'
+                assign concern_icon = 'rose'
+                assign concern_text = '年齢に応じたケアをしたい'
+              when 'ニキビ・肌荒れ'
+                assign concern_icon = 'shield'
+                assign concern_text = '繰り返す肌荒れが気になる'
+              else
+                assign concern_icon = 'flask-conical'
+                assign concern_text = concern
+            endcase
+          -%}
+
+          <div class="concern-card flex flex-col items-center text-center gap-4 p-6 md:p-8">
+            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-stone-200/60">
+              {%- render 'icon', icon: concern_icon, class: 'w-6 h-6 text-stone-500', stroke_width: 1.5 -%}
+            </div>
+            <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
+              {{- concern_text -}}
+            </p>
+          </div>
+        {%- endfor -%}
+      {%- endif -%}
+
     </div>
 
   </div>

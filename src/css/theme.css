@@ -1014,6 +1014,7 @@ body:not(.no-outline) .skip-link:focus {
 .inline-product-card__image {
   flex-shrink: 0;
   width: 6rem;
+  aspect-ratio: 1 / 1;
   background-color: theme('colors.stone.100');
   overflow: hidden;
 }
