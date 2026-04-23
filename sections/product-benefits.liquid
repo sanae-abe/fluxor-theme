@@ -192,7 +192,7 @@
         endunless
       -%}
       {%- if _benefits_img -%}
-        <div class="benefit-card overflow-hidden rounded-lg">
+        <div class="benefit-card overflow-hidden">
           <img
             src="{{ _benefits_img | image_url: width: 900 }}"
             srcset="{{ _benefits_img | image_url: width: 600 }} 600w, {{ _benefits_img | image_url: width: 900 }} 900w, {{ _benefits_img | image_url: width: 1200 }} 1200w"
