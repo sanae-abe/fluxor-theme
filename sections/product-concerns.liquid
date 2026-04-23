@@ -55,9 +55,9 @@
 
       {%- if use_metaobject -%}
         {%- for item in concern_items -%}
-          <div class="concern-card flex flex-col items-center text-center gap-4 p-6 md:p-8">
-            <div class="w-12 h-12 flex items-center justify-center rounded-full bg-stone-200/60">
-              {%- render 'icon', icon: item.icon, class: 'w-6 h-6 text-stone-500', stroke_width: 1.5 -%}
+          <div class="concern-card flex flex-col items-center text-center gap-6 p-6 md:p-8">
+            <div class="w-12 h-12 flex items-center justify-center">
+              {%- render 'icon', icon: item.icon, class: 'w-10 h-10 text-stone-900', stroke_width: 1 -%}
             </div>
             {%- assign _concern_display = item.display_text | default: item.text -%}
             <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
