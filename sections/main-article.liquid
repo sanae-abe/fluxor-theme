@@ -125,10 +125,20 @@
       })
       .then(function (product) {
         var variant = product.variants[0];
-        var price = new Intl.NumberFormat('ja-JP', {
-          style: 'currency',
-          currency: product.currency || 'JPY'
-        }).format(variant.price / 100);
+        var fmt = new Intl.NumberFormat('ja-JP', { style: 'currency', currency: product.currency || 'JPY' });
+        var price = fmt.format(variant.price / 100);
+
+        var priceHtml;
+        if (variant.compare_at_price && variant.compare_at_price > variant.price) {
+          var comparePrice = fmt.format(variant.compare_at_price / 100);
+          priceHtml =
+            '<div class="inline-product-card__price flex items-center gap-2">' +
+              '<s class="text-sm text-stone-400">' + comparePrice + '</s>' +
+              '<span class="text-sm font-semibold text-stone-900">' + price + '</span>' +
+            '</div>';
+        } else {
+          priceHtml = '<p class="inline-product-card__price">' + price + '</p>';
+        }
 
         var imgHtml = product.featured_image
           ? '<img src="' + product.featured_image + '" alt="' + product.title.replace(/"/g, '&quot;') + '" loading="lazy" width="128" height="128">'
@@ -141,7 +151,7 @@
             '<div class="inline-product-card__image">' + imgHtml + '</div>' +
             '<div class="inline-product-card__body">' +
               '<p class="inline-product-card__title">' + product.title + '</p>' +
-              '<p class="inline-product-card__price">' + price + '</p>' +
+              priceHtml +
               '<span class="inline-flex items-center gap-1 text-sm text-stone-500 mt-2">詳しく見る' + arrowSvg + '</span>' +
             '</div>' +
           '</a>';
