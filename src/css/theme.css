@@ -1001,12 +1001,12 @@ body:not(.no-outline) .skip-link:focus {
   border: 1px solid theme('colors.stone.200');
   border-radius: 0.5rem;
   overflow: hidden;
-  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+  transition: border-color 0.15s ease;
 }
 
 @media (any-hover: hover) {
   .inline-product-card:hover {
-    border-color: theme('colors.stone.400');
+    border-color: theme('colors.stone.300');
     box-shadow: 0 2px 8px rgba(0,0,0,0.06);
   }
 }
@@ -1029,6 +1029,19 @@ body:not(.no-outline) .skip-link:focus {
   object-fit: cover;
   display: block;
   margin: 0;
+  transition: transform 0.3s ease;
+}
+
+@media (any-hover: hover) {
+  .inline-product-card:hover .inline-product-card__image img {
+    transform: scale(1.07);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inline-product-card__image img {
+    transition: none;
+  }
 }
 
 .inline-product-card__body {
