@@ -32,23 +32,7 @@
 
     <div class="benefit-grid grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-12 items-center">
 
-      {%- comment %} 左カラム: 商品画像 {%- endcomment -%}
-      {%- if product.featured_image -%}
-        <div class="benefit-card overflow-hidden rounded-lg">
-          <img
-            src="{{ product.featured_image | image_url: width: 900 }}"
-            srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
-            sizes="(max-width: 1023px) calc(100vw - 2rem), 45vw"
-            alt="{{ product.featured_image.alt | default: product.title }}"
-            width="{{ product.featured_image.width }}"
-            height="{{ product.featured_image.height }}"
-            loading="lazy"
-            class="w-full h-auto"
-          >
-        </div>
-      {%- endif -%}
-
-      {%- comment %} 右カラム: 見出し + ベネフィットリスト {%- endcomment -%}
+      {%- comment %} 左カラム: 見出し + ベネフィットリスト {%- endcomment -%}
       <div class="benefit-card flex flex-col gap-6 md:gap-8">
 
         {%- liquid
@@ -56,13 +40,14 @@
           if _benefits_heading == blank
             assign _benefits_heading = s.heading | replace: '{product}', product.title
           endif
-          assign _benefits_heading = _benefits_heading
-            | replace: '※1', _sup1
-            | replace: '※2', _sup2
-            | replace: '※3', _sup3
-            | replace: '※4', _sup4
-            | replace: '※5', _sup5
-            | replace: '※', _sup
+        -%}
+        {%- assign _benefits_heading = _benefits_heading
+          | replace: '※1', _sup1
+          | replace: '※2', _sup2
+          | replace: '※3', _sup3
+          | replace: '※4', _sup4
+          | replace: '※5', _sup5
+          | replace: '※', _sup
         -%}
         {%- render 'section-header',
           heading: _benefits_heading,
@@ -120,6 +105,22 @@
         {%- endif -%}
 
       </div>
+
+      {%- comment %} 右カラム: 商品画像 {%- endcomment -%}
+      {%- if product.featured_image -%}
+        <div class="benefit-card overflow-hidden rounded-lg">
+          <img
+            src="{{ product.featured_image | image_url: width: 900 }}"
+            srcset="{{ product.featured_image | image_url: width: 600 }} 600w, {{ product.featured_image | image_url: width: 900 }} 900w, {{ product.featured_image | image_url: width: 1200 }} 1200w"
+            sizes="(max-width: 1023px) calc(100vw - 2rem), 45vw"
+            alt="{{ product.featured_image.alt | default: product.title }}"
+            width="{{ product.featured_image.width }}"
+            height="{{ product.featured_image.height }}"
+            loading="lazy"
+            class="w-full h-auto"
+          >
+        </div>
+      {%- endif -%}
 
     </div>
 
