@@ -108,6 +108,50 @@
   </div>
 </div>
 
+{%- comment %} ── インライン商品カード hydration ───────────────── {%- endcomment -%}
+<script>
+(function () {
+  var placeholders = document.querySelectorAll('[data-inline-product]');
+  if (!placeholders.length) return;
+
+  placeholders.forEach(function (el) {
+    var handle = el.dataset.inlineProduct;
+    if (!handle) return;
+
+    fetch('/products/' + handle + '.js')
+      .then(function (res) {
+        if (!res.ok) throw new Error('not found');
+        return res.json();
+      })
+      .then(function (product) {
+        var variant = product.variants[0];
+        var price = new Intl.NumberFormat('ja-JP', {
+          style: 'currency',
+          currency: product.currency || 'JPY'
+        }).format(variant.price / 100);
+
+        var imgHtml = product.featured_image
+          ? '<img src="' + product.featured_image + '" alt="' + product.title.replace(/"/g, '&quot;') + '" loading="lazy" width="128" height="128">'
+          : '';
+
+        el.innerHTML =
+          '<a href="/products/' + product.handle + '" class="inline-product-card">' +
+            '<div class="inline-product-card__image">' + imgHtml + '</div>' +
+            '<div class="inline-product-card__body">' +
+              '<p class="inline-product-card__label">PRODUCT</p>' +
+              '<p class="inline-product-card__title">' + product.title + '</p>' +
+              '<p class="inline-product-card__price">' + price + '</p>' +
+              '<span class="inline-product-card__cta">詳しく見る →</span>' +
+            '</div>' +
+          '</a>';
+      })
+      .catch(function () {
+        el.remove();
+      });
+  });
+})();
+</script>
+
 {%- comment %} ── ブロックレンダリング ─────────────────────────── {%- endcomment -%}
 {%- for block in section.blocks -%}
 

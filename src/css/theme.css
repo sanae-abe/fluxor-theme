@@ -982,6 +982,97 @@ body:not(.no-outline) .skip-link:focus {
   margin-bottom: theme('spacing.6');
 }
 
+/* ===== インライン商品カード（記事本文内埋め込み） ===== */
+
+/* .rte a のスタイルをリセット */
+.rte a.inline-product-card,
+.rte a.inline-product-card:hover {
+  color: inherit;
+  text-decoration: none;
+}
+
+.inline-product-card {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+  margin-top: theme('spacing.8');
+  margin-bottom: theme('spacing.8');
+  background-color: theme('colors.stone.50');
+  border: 1px solid theme('colors.stone.200');
+  border-radius: 0.5rem;
+  overflow: hidden;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+@media (any-hover: hover) {
+  .inline-product-card:hover {
+    border-color: theme('colors.stone.400');
+    box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+  }
+}
+
+.inline-product-card__image {
+  flex-shrink: 0;
+  width: 6rem;
+  background-color: theme('colors.stone.100');
+  overflow: hidden;
+}
+
+@media (min-width: 768px) {
+  .inline-product-card__image { width: 8rem; }
+}
+
+.inline-product-card__image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.inline-product-card__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: theme('spacing.1');
+  padding: theme('spacing.4') theme('spacing.5');
+  flex: 1;
+  min-width: 0;
+}
+
+.inline-product-card__label {
+  font-size: 0.625rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  color: theme('colors.stone.400');
+  text-transform: uppercase;
+}
+
+.inline-product-card__title {
+  font-size: theme('fontSize.sm');
+  font-weight: theme('fontWeight.semibold');
+  color: theme('colors.stone.900');
+  line-height: theme('lineHeight.snug');
+}
+
+@media (min-width: 768px) {
+  .inline-product-card__title { font-size: theme('fontSize.base'); }
+}
+
+.inline-product-card__price {
+  font-size: theme('fontSize.sm');
+  color: theme('colors.stone.600');
+}
+
+.inline-product-card__cta {
+  display: inline-flex;
+  align-items: center;
+  gap: theme('spacing.1');
+  margin-top: theme('spacing.2');
+  font-size: theme('fontSize.xs');
+  font-weight: theme('fontWeight.semibold');
+  color: var(--color-accent, #0f766e);
+}
+
 /* ===== パンくずリスト ===== */
 
 .breadcrumb-link {

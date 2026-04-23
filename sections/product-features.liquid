@@ -39,7 +39,7 @@
     <div class="feature-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
       {%- for ki in key_ingredients -%}
         {%- liquid
-          assign ing_name = ki.display_name | default: ki.ingredient
+          assign ing_name = ki.name | default: ki.ingredient
           assign ing_amount = ki.amount
           assign ing_desc = ki.description
           assign ing_url = ki.article_url
