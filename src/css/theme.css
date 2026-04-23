@@ -1054,7 +1054,7 @@ body:not(.no-outline) .skip-link:focus {
 }
 
 .inline-product-card__title {
-  font-size: theme('fontSize.sm');
+  font-size: theme('fontSize.base');
   font-weight: theme('fontWeight.semibold');
   color: theme('colors.stone.900');
   line-height: theme('lineHeight.snug');
