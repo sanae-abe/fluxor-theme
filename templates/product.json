@@ -46,6 +46,14 @@
         "method_heading": "どう使う？"
       }
     },
+    "routine_set": {
+      "type": "product-routine-set",
+      "settings": {
+        "heading": "おすすめルーティン",
+        "set_label": "お得なセット",
+        "set_cta": "セットで揃える"
+      }
+    },
     "accordion": {
       "type": "product-accordion",
       "blocks": {
@@ -112,6 +120,7 @@
     "benefits",
     "features",
     "routine",
+    "routine_set",
     "accordion",
     "reviews",
     "recommendations",
