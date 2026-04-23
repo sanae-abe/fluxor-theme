@@ -56,6 +56,13 @@
           if _benefits_heading == blank
             assign _benefits_heading = s.heading | replace: '{product}', product.title
           endif
+          assign _benefits_heading = _benefits_heading
+            | replace: '※1', _sup1
+            | replace: '※2', _sup2
+            | replace: '※3', _sup3
+            | replace: '※4', _sup4
+            | replace: '※5', _sup5
+            | replace: '※', _sup
         -%}
         {%- render 'section-header',
           heading: _benefits_heading,
