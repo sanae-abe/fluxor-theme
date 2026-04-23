@@ -28,9 +28,9 @@
     -%}
 
     {%- if routine_products != blank -%}
-      <div class="routine-set-grid flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-2 max-w-3xl mx-auto">
+      <div class="routine-set-grid flex flex-col md:flex-row md:justify-center items-center md:items-start gap-4 md:gap-2 max-w-3xl mx-auto">
         {%- for rp in routine_products -%}
-          <div class="routine-set-card flex-1 min-w-0 flex flex-col items-center text-center gap-3">
+          <div class="routine-set-card flex-1 min-w-0 max-w-[200px] flex flex-col items-center text-center gap-3">
 
             {%- comment %} ステップ番号 {%- endcomment -%}
             <span class="text-base font-medium text-stone-900 uppercase tracking-widest">Step {{ forloop.index }}</span>
