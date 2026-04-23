@@ -110,11 +110,11 @@
                 {%- endcase -%}
 
                 <div class="flex flex-col gap-1">
-                  <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
+                  <p class="text-base md:text-xl font-medium text-stone-900 leading-relaxed palt tracking-wide">
                     {{- _item_title -}}
                   </p>
                   {%- if item.description != blank -%}
-                    <p class="text-sm text-stone-600 leading-relaxed">
+                    <p class="text-base text-stone-600 leading-relaxed">
                       {{- item.description | newline_to_br -}}
                     </p>
                   {%- endif -%}

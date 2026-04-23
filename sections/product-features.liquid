@@ -62,7 +62,7 @@
               </div>
             {%- endif -%}
             <div class="flex flex-col gap-1 min-w-0">
-              <p class="text-base font-medium text-stone-900 leading-tight palt tracking-wide">{{ ing_name }}</p>
+              <p class="text-lg font-medium text-stone-900 leading-tight palt tracking-wide">{{ ing_name }}</p>
               {%- if ing_amount != blank -%}
                 <p class="text-sm text-stone-500 leading-tight">配合量：{{ ing_amount }}</p>
               {%- endif -%}
@@ -71,7 +71,7 @@
 
           {%- comment %} 説明テキスト {%- endcomment -%}
           {%- if ing_desc != blank -%}
-            <p class="text-sm text-stone-900 leading-relaxed line-clamp-3">{{ ing_desc }}</p>
+            <p class="text-base text-stone-900 leading-relaxed line-clamp-3">{{ ing_desc }}</p>
           {%- endif -%}
 
           {%- comment %} 記事リンク {%- endcomment -%}
