@@ -39,14 +39,6 @@
         "disclaimer": ""
       }
     },
-    "features": {
-      "type": "product-features",
-      "settings": {
-        "heading": "注目の成分",
-        "subheading": "",
-        "disclaimer": "※すべて整肌・保湿成分としての配合です"
-      }
-    },
     "routine": {
       "type": "product-routine",
       "settings": {
@@ -118,7 +110,6 @@
     "main",
     "concerns",
     "benefits",
-    "features",
     "routine",
     "product_accordion_xJ64VX",
     "product_reviews_ExzzzF",

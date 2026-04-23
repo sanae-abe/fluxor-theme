@@ -7,7 +7,7 @@
 {%- endcomment -%}
 
 <section
-  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100"
+  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-50"
   x-data="{ openItems: [] }"
 >
   <div class="max-w-3xl mx-auto flex flex-col gap-6">
@@ -47,7 +47,7 @@
           body: _acc_body,
           index: forloop.index0,
           shopify_attributes: block.shopify_attributes,
-          bg_color: section.settings.item_bg_color
+          bg_color: 'bg-stone-100'
         -%}
       {%- endunless -%}
     {%- endfor -%}
@@ -61,14 +61,6 @@
   "enabled_on": {
     "templates": ["product"]
   },
-  "settings": [
-    {
-      "type": "color",
-      "id": "item_bg_color",
-      "label": "アイテム背景色",
-      "default": "#fafaf9"
-    }
-  ],
   "max_blocks": 10,
   "blocks": [
     {

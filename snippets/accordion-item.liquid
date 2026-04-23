@@ -10,12 +10,7 @@
 {%- endcomment -%}
 <div
   {{ shopify_attributes }}
-  {%- if bg_color != blank -%}
-    class=""
-    style="background-color: {{ bg_color }};"
-  {%- else -%}
-    class="bg-stone-50"
-  {%- endif -%}
+  class="{{ bg_color | default: 'bg-stone-50' }}"
   x-data="{
     get isOpen() { return openItems.includes({{ index }}) },
     toggle() { openItems = this.isOpen ? openItems.filter(i => i !== {{ index }}) : [...openItems, {{ index }}] }
