@@ -33,10 +33,14 @@
           <div class="routine-set-card flex-1 min-w-0 flex flex-col items-center text-center gap-3">
 
             {%- comment %} ステップ番号 {%- endcomment -%}
-            <span class="text-xs font-medium text-stone-400 uppercase tracking-widest">Step {{ forloop.index }}</span>
+            <span class="text-sm font-medium text-stone-500 uppercase tracking-widest">Step {{ forloop.index }}</span>
 
             {%- comment %} 商品画像 {%- endcomment -%}
-            <a href="{{ rp.url }}" class="routine-set-card__link block w-full overflow-hidden rounded-lg bg-white border border-stone-200">
+            {%- if rp.id == product.id -%}
+              <div class="block w-full overflow-hidden rounded-lg bg-white border-2 border-accent">
+            {%- else -%}
+              <a href="{{ rp.url }}" class="routine-set-card__link block w-full overflow-hidden rounded-lg bg-white border border-stone-200">
+            {%- endif -%}
               {%- if rp.featured_image -%}
                 <img
                   src="{{ rp.featured_image | image_url: width: 400, format: 'webp' }}"
@@ -46,16 +50,21 @@
                   class="w-full h-auto"
                 >
               {%- endif -%}
-            </a>
+            {%- if rp.id == product.id -%}
+              </div>
+            {%- else -%}
+              </a>
+            {%- endif -%}
 
             {%- comment %} 商品名 {%- endcomment -%}
-            <a href="{{ rp.url }}" class="text-sm font-medium text-stone-900 leading-snug palt tracking-wide line-clamp-2">
-              {{- rp.title -}}
-            </a>
-
-            {%- comment %} 現在の商品にハイライト {%- endcomment -%}
             {%- if rp.id == product.id -%}
-              <span class="text-xs text-stone-400">この商品</span>
+              <span class="text-sm font-medium text-stone-900 leading-snug palt tracking-wide line-clamp-2">
+                {{- rp.title -}} <span class="text-xs text-stone-400">（この商品）</span>
+              </span>
+            {%- else -%}
+              <a href="{{ rp.url }}" class="text-sm font-medium text-stone-900 leading-snug palt tracking-wide line-clamp-2">
+                {{- rp.title -}}
+              </a>
             {%- endif -%}
 
           </div>
