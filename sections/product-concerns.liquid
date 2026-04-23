@@ -59,8 +59,9 @@
             <div class="w-12 h-12 flex items-center justify-center rounded-full bg-stone-200/60">
               {%- render 'icon', icon: item.icon, class: 'w-6 h-6 text-stone-500', stroke_width: 1.5 -%}
             </div>
+            {%- assign _concern_display = item.display_text | default: item.text -%}
             <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
-              {{- item.text -}}
+              {{- _concern_display | newline_to_br -}}
             </p>
           </div>
         {%- endfor -%}
@@ -96,7 +97,7 @@
               {%- render 'icon', icon: concern_icon, class: 'w-6 h-6 text-stone-500', stroke_width: 1.5 -%}
             </div>
             <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
-              {{- concern_text -}}
+              {{- concern_text | newline_to_br  -}}
             </p>
           </div>
         {%- endfor -%}
