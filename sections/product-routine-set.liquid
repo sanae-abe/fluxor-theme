@@ -28,9 +28,9 @@
     -%}
 
     {%- if routine_products != blank -%}
-      <div class="routine-set-grid grid grid-cols-1 md:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 items-start">
+      <div class="routine-set-grid flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-2 max-w-3xl mx-auto">
         {%- for rp in routine_products -%}
-          <div class="routine-set-card flex flex-col items-center text-center gap-3">
+          <div class="routine-set-card flex-1 min-w-0 flex flex-col items-center text-center gap-3">
 
             {%- comment %} ステップ番号 {%- endcomment -%}
             <span class="text-xs font-medium text-stone-400 uppercase tracking-widest">Step {{ forloop.index }}</span>
@@ -62,8 +62,8 @@
 
           {%- comment %} ステップ間の矢印（最後以外） {%- endcomment -%}
           {%- unless forloop.last -%}
-            <div class="hidden md:flex items-center justify-center self-center pt-6">
-              {%- render 'icon', icon: 'chevron-right', class: 'w-5 h-5 text-stone-300' -%}
+            <div class="hidden md:flex items-center shrink-0 self-center">
+              {%- render 'icon', icon: 'chevron-right', class: 'w-8 h-8 text-stone-00' -%}
             </div>
           {%- endunless -%}
         {%- endfor -%}
@@ -72,37 +72,14 @@
 
     {%- comment %} セット商品 CTA {%- endcomment -%}
     {%- if recommended_set != blank -%}
-      <div class="flex flex-col md:flex-row items-center gap-4 md:gap-6 bg-white rounded-lg border border-stone-200 p-5 md:p-6">
-        {%- if recommended_set.featured_image -%}
-          <a href="{{ recommended_set.url }}" class="w-20 h-20 shrink-0 overflow-hidden rounded-lg">
-            <img
-              src="{{ recommended_set.featured_image | image_url: width: 200, format: 'webp' }}"
-              alt="{{ recommended_set.title }}"
-              width="80" height="80"
-              loading="lazy"
-              class="w-full h-full object-cover"
-            >
-          </a>
-        {%- endif -%}
-        <div class="flex flex-col gap-1 flex-1 min-w-0 text-center md:text-left">
-          <p class="text-xs font-medium text-stone-400 uppercase tracking-widest">{{ s.set_label }}</p>
-          <p class="text-base font-medium text-stone-900 leading-snug palt tracking-wide">{{ recommended_set.title }}</p>
-          {%- if recommended_set.price < recommended_set.compare_at_price -%}
-            <p class="text-sm text-stone-500">
-              <s>{{ recommended_set.compare_at_price | money }}</s>
-              <span class="text-stone-900 font-medium ml-1">{{ recommended_set.price | money }}</span>
-            </p>
-          {%- else -%}
-            <p class="text-sm text-stone-900">{{ recommended_set.price | money }}</p>
-          {%- endif -%}
-        </div>
-        <a
-          href="{{ recommended_set.url }}"
-          class="routine-set-cta shrink-0 inline-flex items-center gap-2 bg-stone-900 text-white text-sm font-medium px-6 py-3 rounded-lg"
-        >
-          <span>{{ s.set_cta }}</span>
-          {%- render 'icon', icon: 'arrow-right', class: 'routine-set-cta__icon w-4 h-4' -%}
-        </a>
+      <div class="flex justify-center">
+        {%- capture set_cta_label -%}お得なセット商品を見る{%- endcapture -%}
+        {%- render 'button',
+          label: set_cta_label,
+          url: recommended_set.url,
+          icon_right: 'arrow-right',
+          class: 'w-full md:w-auto'
+        -%}
       </div>
     {%- endif -%}
 
