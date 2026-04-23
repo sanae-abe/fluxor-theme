@@ -103,7 +103,7 @@
                     </div>
                   {%- when 'number' -%}
                     <span class="text-2xl font-light text-stone-300 leading-none tabular-nums tracking-tight shrink-0 w-8 text-center mt-0.5">
-                      {{- forloop.index | prepend: '00' | slice: -2, 2 -}}
+                      {{- forloop.index -}}
                     </span>
                   {%- when 'none' -%}
                     {%- comment %} アイコンなし {%- endcomment -%}
@@ -256,7 +256,7 @@
       "options": [
         { "value": "check",   "label": "チェックマーク" },
         { "value": "sparkle", "label": "キラキラ" },
-        { "value": "number",  "label": "番号（01, 02, 03）" },
+        { "value": "number",  "label": "番号（1, 2, 3）" },
         { "value": "none",    "label": "なし（テキストのみ）" }
       ],
       "default": "check"
