@@ -46,7 +46,8 @@
           title: block.settings.title,
           body: _acc_body,
           index: forloop.index0,
-          shopify_attributes: block.shopify_attributes
+          shopify_attributes: block.shopify_attributes,
+          bg_color: section.settings.item_bg_color
         -%}
       {%- endunless -%}
     {%- endfor -%}
@@ -60,6 +61,14 @@
   "enabled_on": {
     "templates": ["product"]
   },
+  "settings": [
+    {
+      "type": "color",
+      "id": "item_bg_color",
+      "label": "アイテム背景色",
+      "default": "#fafaf9"
+    }
+  ],
   "max_blocks": 10,
   "blocks": [
     {

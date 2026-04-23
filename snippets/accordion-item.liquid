@@ -6,10 +6,16 @@
     body               {String}  本文 HTML（capture 済み）
     index              {Number}  Alpine openItems 識別用インデックス
     shopify_attributes {String}  テーマエディタ用属性（block.shopify_attributes）
+    bg_color           {String}  背景色（CSS カラー値、省略時は bg-stone-50）
 {%- endcomment -%}
 <div
   {{ shopify_attributes }}
-  class="bg-stone-50"
+  {%- if bg_color != blank -%}
+    class=""
+    style="background-color: {{ bg_color }};"
+  {%- else -%}
+    class="bg-stone-50"
+  {%- endif -%}
   x-data="{
     get isOpen() { return openItems.includes({{ index }}) },
     toggle() { openItems = this.isOpen ? openItems.filter(i => i !== {{ index }}) : [...openItems, {{ index }}] }
