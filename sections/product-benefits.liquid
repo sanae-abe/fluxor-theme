@@ -55,12 +55,17 @@
           endif
         -%}
         {%- assign _benefits_heading = _benefits_heading
-          | replace: '※1', _sup1
-          | replace: '※2', _sup2
-          | replace: '※3', _sup3
-          | replace: '※4', _sup4
-          | replace: '※5', _sup5
+          | replace: '※1', '__S1__'
+          | replace: '※2', '__S2__'
+          | replace: '※3', '__S3__'
+          | replace: '※4', '__S4__'
+          | replace: '※5', '__S5__'
           | replace: '※', _sup
+          | replace: '__S1__', _sup1
+          | replace: '__S2__', _sup2
+          | replace: '__S3__', _sup3
+          | replace: '__S4__', _sup4
+          | replace: '__S5__', _sup5
         -%}
         {%- render 'section-header',
           heading: _benefits_heading,
@@ -73,12 +78,17 @@
           <div class="flex flex-col gap-6">
             {%- for item in benefit_items -%}
               {%- assign _item_title = item.title
-                | replace: '※1', _sup1
-                | replace: '※2', _sup2
-                | replace: '※3', _sup3
-                | replace: '※4', _sup4
-                | replace: '※5', _sup5
+                | replace: '※1', '__S1__'
+                | replace: '※2', '__S2__'
+                | replace: '※3', '__S3__'
+                | replace: '※4', '__S4__'
+                | replace: '※5', '__S5__'
                 | replace: '※', _sup
+                | replace: '__S1__', _sup1
+                | replace: '__S2__', _sup2
+                | replace: '__S3__', _sup3
+                | replace: '__S4__', _sup4
+                | replace: '__S5__', _sup5
               -%}
 
               <div class="flex items-start gap-3">
@@ -120,12 +130,17 @@
             {%- for benefit in benefits -%}
               {%- assign benefit_parts = benefit | split: ' ※' -%}
               {%- assign benefit_main = benefit_parts[0]
-                | replace: '※1', _sup1
-                | replace: '※2', _sup2
-                | replace: '※3', _sup3
-                | replace: '※4', _sup4
-                | replace: '※5', _sup5
+                | replace: '※1', '__S1__'
+                | replace: '※2', '__S2__'
+                | replace: '※3', '__S3__'
+                | replace: '※4', '__S4__'
+                | replace: '※5', '__S5__'
                 | replace: '※', _sup
+                | replace: '__S1__', _sup1
+                | replace: '__S2__', _sup2
+                | replace: '__S3__', _sup3
+                | replace: '__S4__', _sup4
+                | replace: '__S5__', _sup5
               -%}
 
               <div class="flex items-start gap-3">
