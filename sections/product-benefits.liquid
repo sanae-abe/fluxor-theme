@@ -2,13 +2,26 @@
   商品ベネフィットセクション (product-benefits.liquid)
   使用: templates/product.json に追加して使用
 
-  データソース: product.metafields.custom.product_benefits (list.single_line_text_field)
-  画像: product.featured_image（分割レイアウト）
-  注釈処理: main-product.liquid と同一の ※ 分離パターンを使用
+  データソース（優先順）:
+    1. product.metafields.custom.benefit_items (list.metaobject_reference → product_benefit_item)
+       フィールド: title（タイトル）, description（説明文）
+    2. product.metafields.custom.product_benefits (list.single_line_text_field) — レガシーフォールバック
+
+  画像: custom.benefits_image → product.featured_image
+  見出し: custom.benefits_heading → スキーマ設定
+  注釈: custom.benefits_disclaimer → スキーマ設定
 {%- endcomment -%}
 
-{%- assign benefits = product.metafields.custom.product_benefits.value -%}
-{%- if benefits != blank and benefits.size > 0 -%}
+{%- liquid
+  assign benefit_items = product.metafields.custom.benefit_items.value
+  assign benefits = product.metafields.custom.product_benefits.value
+  assign use_metaobject = false
+
+  if benefit_items != blank and benefit_items.size > 0
+    assign use_metaobject = true
+  endif
+-%}
+{%- if use_metaobject or benefits != blank and benefits.size > 0 -%}
 
 {%- liquid
   assign s = section.settings
@@ -55,53 +68,103 @@
           align: 'left'
         -%}
 
-        <div class="flex flex-col gap-5">
-          {%- for benefit in benefits -%}
-            {%- assign benefit_parts = benefit | split: ' ※' -%}
-            {%- assign benefit_main = benefit_parts[0]
-              | replace: '※1', _sup1
-              | replace: '※2', _sup2
-              | replace: '※3', _sup3
-              | replace: '※4', _sup4
-              | replace: '※5', _sup5
-              | replace: '※', _sup
-            -%}
+        {%- if use_metaobject -%}
+          {%- comment %} リッチ表示（メタオブジェクト: タイトル + 説明文） {%- endcomment -%}
+          <div class="flex flex-col gap-6">
+            {%- for item in benefit_items -%}
+              {%- assign _item_title = item.title
+                | replace: '※1', _sup1
+                | replace: '※2', _sup2
+                | replace: '※3', _sup3
+                | replace: '※4', _sup4
+                | replace: '※5', _sup5
+                | replace: '※', _sup
+              -%}
 
-            <div class="flex items-start gap-3">
-              {%- case icon_style -%}
-                {%- when 'check' -%}
-                  <div class="w-8 h-8 flex items-center justify-center rounded-full bg-stone-200/60 shrink-0 mt-0.5">
-                    {%- render 'icon', icon: 'check', class: 'w-4 h-4 text-stone-700', stroke_width: 2 -%}
-                  </div>
-                {%- when 'sparkle' -%}
-                  <div class="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
-                    {%- render 'icon', icon: 'sparkle', class: 'w-5 h-5 text-stone-400', stroke_width: 1.5 -%}
-                  </div>
-                {%- when 'number' -%}
-                  <span class="text-2xl font-light text-stone-300 leading-none tabular-nums tracking-tight shrink-0 w-8 text-center mt-0.5">
-                    {{- forloop.index | prepend: '00' | slice: -2, 2 -}}
-                  </span>
-                {%- when 'none' -%}
-                  {%- comment %} アイコンなし {%- endcomment -%}
-              {%- endcase -%}
+              <div class="flex items-start gap-3">
+                {%- case icon_style -%}
+                  {%- when 'check' -%}
+                    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-stone-200/60 shrink-0 mt-0.5">
+                      {%- render 'icon', icon: 'check', class: 'w-4 h-4 text-stone-700', stroke_width: 2 -%}
+                    </div>
+                  {%- when 'sparkle' -%}
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                      {%- render 'icon', icon: 'sparkle', class: 'w-5 h-5 text-stone-400', stroke_width: 1.5 -%}
+                    </div>
+                  {%- when 'number' -%}
+                    <span class="text-2xl font-light text-stone-300 leading-none tabular-nums tracking-tight shrink-0 w-8 text-center mt-0.5">
+                      {{- forloop.index | prepend: '00' | slice: -2, 2 -}}
+                    </span>
+                  {%- when 'none' -%}
+                    {%- comment %} アイコンなし {%- endcomment -%}
+                {%- endcase -%}
 
-              <div class="flex flex-col gap-1">
-                <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
-                  {{- benefit_main -}}
-                </p>
-                {%- for i in (1..5) -%}
-                  {%- if benefit_parts[i] != blank -%}
-                    <p class="text-xs text-stone-400 leading-relaxed">※{{ benefit_parts[i] }}</p>
+                <div class="flex flex-col gap-1">
+                  <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
+                    {{- _item_title -}}
+                  </p>
+                  {%- if item.description != blank -%}
+                    <p class="text-sm text-stone-500 leading-relaxed">
+                      {{- item.description | newline_to_br -}}
+                    </p>
                   {%- endif -%}
-                {%- endfor -%}
+                </div>
               </div>
-            </div>
 
-          {%- endfor -%}
-        </div>
+            {%- endfor -%}
+          </div>
 
-        {%- if s.disclaimer != blank -%}
-          <p class="text-xs text-stone-400 leading-relaxed">{{ s.disclaimer }}</p>
+        {%- else -%}
+          {%- comment %} シンプル表示（レガシー: テキストリスト） {%- endcomment -%}
+          <div class="flex flex-col gap-5">
+            {%- for benefit in benefits -%}
+              {%- assign benefit_parts = benefit | split: ' ※' -%}
+              {%- assign benefit_main = benefit_parts[0]
+                | replace: '※1', _sup1
+                | replace: '※2', _sup2
+                | replace: '※3', _sup3
+                | replace: '※4', _sup4
+                | replace: '※5', _sup5
+                | replace: '※', _sup
+              -%}
+
+              <div class="flex items-start gap-3">
+                {%- case icon_style -%}
+                  {%- when 'check' -%}
+                    <div class="w-8 h-8 flex items-center justify-center rounded-full bg-stone-200/60 shrink-0 mt-0.5">
+                      {%- render 'icon', icon: 'check', class: 'w-4 h-4 text-stone-700', stroke_width: 2 -%}
+                    </div>
+                  {%- when 'sparkle' -%}
+                    <div class="w-8 h-8 flex items-center justify-center shrink-0 mt-0.5">
+                      {%- render 'icon', icon: 'sparkle', class: 'w-5 h-5 text-stone-400', stroke_width: 1.5 -%}
+                    </div>
+                  {%- when 'number' -%}
+                    <span class="text-2xl font-light text-stone-300 leading-none tabular-nums tracking-tight shrink-0 w-8 text-center mt-0.5">
+                      {{- forloop.index | prepend: '00' | slice: -2, 2 -}}
+                    </span>
+                  {%- when 'none' -%}
+                    {%- comment %} アイコンなし {%- endcomment -%}
+                {%- endcase -%}
+
+                <div class="flex flex-col gap-1">
+                  <p class="text-base md:text-lg font-medium text-stone-900 leading-relaxed palt tracking-wide">
+                    {{- benefit_main -}}
+                  </p>
+                  {%- for i in (1..5) -%}
+                    {%- if benefit_parts[i] != blank -%}
+                      <p class="text-xs text-stone-400 leading-relaxed">※{{ benefit_parts[i] }}</p>
+                    {%- endif -%}
+                  {%- endfor -%}
+                </div>
+              </div>
+
+            {%- endfor -%}
+          </div>
+        {%- endif -%}
+
+        {%- assign _benefits_disclaimer = product.metafields.custom.benefits_disclaimer | default: s.disclaimer -%}
+        {%- if _benefits_disclaimer != blank -%}
+          <p class="text-xs text-stone-400 leading-relaxed">{{ _benefits_disclaimer | newline_to_br }}</p>
         {%- endif -%}
 
       </div>
