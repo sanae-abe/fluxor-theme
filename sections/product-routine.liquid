@@ -19,11 +19,18 @@
   if usage_timing != blank and usage_method != blank
     assign has_both = true
   endif
+
+  assign bg_section = 'bg-stone-50'
+  assign bg_card = 'bg-stone-100'
+  if s.color_scheme == 'dark'
+    assign bg_section = 'bg-stone-100'
+    assign bg_card = 'bg-stone-50'
+  endif
 -%}
 
 <section
   id="product-routine"
-  class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-100"
+  class="px-4 md:px-10 py-10 md:py-[60px] {{ bg_section }}"
 >
   <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
 
@@ -35,7 +42,7 @@
     <div class="routine-grid grid grid-cols-1 {% if has_both %}md:grid-cols-2{% else %}md:max-w-2xl md:mx-auto{% endif %} gap-6 md:gap-8">
 
       {%- if usage_timing != blank -%}
-        <div class="routine-card bg-stone-50 rounded-lg p-6 md:p-8 flex flex-col gap-4">
+        <div class="routine-card {{ bg_card }} rounded-lg p-6 md:p-8 flex flex-col gap-4">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
               {%- render 'icon', icon: 'clock', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
@@ -47,7 +54,7 @@
       {%- endif -%}
 
       {%- if usage_method != blank -%}
-        <div class="routine-card bg-stone-50 rounded-lg p-6 md:p-8 flex flex-col gap-4">
+        <div class="routine-card {{ bg_card }} rounded-lg p-6 md:p-8 flex flex-col gap-4">
           <div class="flex items-center gap-3">
             <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
               {%- render 'icon', icon: 'pointer', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
@@ -106,6 +113,16 @@
       "id": "method_heading",
       "label": "ガイド見出し",
       "default": "どう使う？"
+    },
+    {
+      "type": "select",
+      "id": "color_scheme",
+      "label": "配色",
+      "options": [
+        { "value": "light", "label": "ライト（デフォルト）" },
+        { "value": "dark", "label": "ダーク" }
+      ],
+      "default": "light"
     }
   ],
   "presets": [
