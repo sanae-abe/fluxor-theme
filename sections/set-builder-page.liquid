@@ -354,8 +354,81 @@
 
     </div>
   </div>
+  </div>
 </section>
 </div>
+
+{%- comment %}--- 使い方セクション（product-routine 相当） ---{%- endcomment -%}
+{%- liquid
+  assign usage_timing = product.metafields.custom.usage_timing
+  assign usage_method = product.metafields.custom.usage_method
+-%}
+{%- if usage_timing != blank or usage_method != blank -%}
+  {%- liquid
+    assign has_both_routine = false
+    if usage_timing != blank and usage_method != blank
+      assign has_both_routine = true
+    endif
+  -%}
+  <section
+    id="product-routine"
+    class="px-4 md:px-10 py-10 md:py-[60px] bg-stone-50"
+  >
+    <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
+
+      {%- render 'section-header',
+        heading: section.settings.routine_heading,
+        align: 'center'
+      -%}
+
+      <div class="routine-grid grid grid-cols-1 {% if has_both_routine %}md:grid-cols-2{% else %}md:max-w-2xl md:mx-auto{% endif %} gap-6 md:gap-8">
+
+        {%- if usage_timing != blank -%}
+          <div class="routine-card bg-stone-100 rounded-lg p-6 md:p-8 flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
+                {%- render 'icon', icon: 'clock', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
+              </div>
+              <h3 class="text-xl font-medium text-stone-900 palt tracking-wide">{{ section.settings.routine_timing_heading }}</h3>
+            </div>
+            <p class="text-sm text-stone-700 leading-relaxed">{{ usage_timing | newline_to_br }}</p>
+          </div>
+        {%- endif -%}
+
+        {%- if usage_method != blank -%}
+          <div class="routine-card bg-stone-100 rounded-lg p-6 md:p-8 flex flex-col gap-4">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
+                {%- render 'icon', icon: 'pointer', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
+              </div>
+              <h3 class="text-xl font-medium text-stone-900 palt tracking-wide">{{ section.settings.routine_method_heading }}</h3>
+            </div>
+            <p class="text-sm text-stone-700 leading-relaxed">{{ usage_method | newline_to_br }}</p>
+          </div>
+        {%- endif -%}
+
+      </div>
+
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var grid = document.querySelector('#product-routine .routine-grid');
+      if (!grid) return;
+      var observer = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            grid.classList.add('is-visible');
+            observer.disconnect();
+          }
+        });
+      }, { threshold: 0.15 });
+      observer.observe(grid);
+    })();
+  </script>
+{%- endif -%}
 
 {%- schema %}
 {
@@ -378,7 +451,29 @@
     { "type": "product", "id": "product_5", "label": "候補商品 5" },
     { "type": "product", "id": "product_6", "label": "候補商品 6" },
     { "type": "product", "id": "product_7", "label": "候補商品 7" },
-    { "type": "product", "id": "product_8", "label": "候補商品 8" }
+    { "type": "product", "id": "product_8", "label": "候補商品 8" },
+    {
+      "type": "header",
+      "content": "使い方セクション"
+    },
+    {
+      "type": "text",
+      "id": "routine_heading",
+      "label": "見出し",
+      "default": "使い方"
+    },
+    {
+      "type": "text",
+      "id": "routine_timing_heading",
+      "label": "タイミング見出し",
+      "default": "いつ使う？"
+    },
+    {
+      "type": "text",
+      "id": "routine_method_heading",
+      "label": "ガイド見出し",
+      "default": "どう使う？"
+    }
   ],
   "presets": [
     {
