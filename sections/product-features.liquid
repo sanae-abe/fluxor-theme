@@ -3,7 +3,7 @@
   使用: templates/product.json に追加して使用
 
   データソース: product.metafields.custom.key_ingredients (list.metaobject_reference)
-  フィールド: ingredient, display_name, amount, thumbnail, description, article_url
+  フィールド: ingredient, name, amount, thumbnail, description, article_url
 {%- endcomment -%}
 
 {%- assign key_ingredients = product.metafields.custom.key_ingredients.value -%}
@@ -39,7 +39,7 @@
     <div class="feature-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8" data-animate-grid>
       {%- for ki in key_ingredients -%}
         {%- liquid
-          assign ing_name = ki.display_name | default: ki.ingredient
+          assign ing_name = ki.name | default: ki.ingredient
           assign ing_amount = ki.amount
           assign ing_desc = ki.description
           assign ing_url = ki.article_url
@@ -71,7 +71,7 @@
 
           {%- comment %} 説明テキスト {%- endcomment -%}
           {%- if ing_desc != blank -%}
-            <p class="text-base text-stone-900 leading-relaxed">{{ ing_desc }}</p>
+            <p class="text-base text-stone-900 leading-relaxed">{{ ing_desc }} </p>
           {%- endif -%}
 
           {%- comment %} 記事リンク {%- endcomment -%}
