@@ -36,10 +36,10 @@
       align: 'center'
     -%}
 
-    <div class="feature-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
+    <div class="feature-grid grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8" data-animate-grid>
       {%- for ki in key_ingredients -%}
         {%- liquid
-          assign ing_name = ki.name | default: ki.ingredient
+          assign ing_name = ki.display_name | default: ki.ingredient
           assign ing_amount = ki.amount
           assign ing_desc = ki.description
           assign ing_url = ki.article_url
@@ -95,23 +95,6 @@
 
   </div>
 </section>
-
-<script>
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var grid = document.querySelector('#product-features .feature-grid');
-    if (!grid) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          grid.classList.add('is-visible');
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.15 });
-    observer.observe(grid);
-  })();
-</script>
 
 {%- endif -%}
 

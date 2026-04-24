@@ -35,7 +35,7 @@
               [...content.children].forEach((el) => container.appendChild(el));
             }
           })
-          .catch(() => {});
+          .catch(() => { console.warn('[product-recommendations] Failed to load recommendations.'); });
       }
 
       if ('requestIdleCallback' in window) {

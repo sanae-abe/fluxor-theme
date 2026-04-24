@@ -51,7 +51,7 @@
       align: 'center'
     -%}
 
-    <div class="concern-grid max-w-5xl mx-auto grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
+    <div class="concern-grid max-w-5xl mx-auto grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8" data-animate-grid>
 
       {%- if use_metaobject -%}
         {%- for item in concern_items -%}
@@ -107,23 +107,6 @@
 
   </div>
 </section>
-
-<script>
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var grid = document.querySelector('#product-concerns .concern-grid');
-    if (!grid) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          grid.classList.add('is-visible');
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.15 });
-    observer.observe(grid);
-  })();
-</script>
 
 {%- endif -%}
 

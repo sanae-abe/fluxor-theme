@@ -33,6 +33,24 @@ document.addEventListener('alpine:init', () => {
 window.Alpine = Alpine
 Alpine.start()
 
+// スクロールアニメーション（[data-animate-grid] 共通処理）
+;(function initGridAnimations() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+
+  const observer = new IntersectionObserver(function (entries) {
+    entries.forEach(function (entry) {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('is-visible')
+        observer.unobserve(entry.target)
+      }
+    })
+  }, { threshold: 0.15 })
+
+  document.querySelectorAll('[data-animate-grid]').forEach(function (el) {
+    observer.observe(el)
+  })
+})()
+
 // Shopify Inbox チャットアイコンのサイズを調整
 ;(function initInboxIconSize() {
   const CSS = `

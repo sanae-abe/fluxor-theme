@@ -39,7 +39,7 @@
       align: 'center'
     -%}
 
-    <div class="routine-grid grid grid-cols-1 {% if has_both %}md:grid-cols-2{% else %}md:max-w-2xl md:mx-auto{% endif %} gap-6 md:gap-8">
+    <div class="routine-grid grid grid-cols-1 {% if has_both %}md:grid-cols-2{% else %}md:max-w-2xl md:mx-auto{% endif %} gap-6 md:gap-8" data-animate-grid>
 
       {%- if usage_timing != blank -%}
         <div class="routine-card {{ bg_card }} p-6 md:p-8 flex flex-col gap-4">
@@ -65,23 +65,6 @@
 
   </div>
 </section>
-
-<script>
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var grid = document.querySelector('#product-routine .routine-grid');
-    if (!grid) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          grid.classList.add('is-visible');
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.15 });
-    observer.observe(grid);
-  })();
-</script>
 
 {%- endif -%}
 

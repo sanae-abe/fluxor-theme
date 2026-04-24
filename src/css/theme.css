@@ -768,6 +768,13 @@ body:not(.no-outline) .skip-link:focus {
   color: theme('colors.stone.900');
 }
 
+.feature-mark {
+  background: linear-gradient(transparent 50%, theme('colors.stone.100') 50%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+  color: theme('colors.stone.900');
+}
+
 /* ===== 使い方 ===== */
 
 .routine-card {
@@ -818,26 +825,12 @@ body:not(.no-outline) .skip-link:focus {
   transition: transform 0.4s ease;
 }
 
-.routine-set-cta {
-  transition: background-color 0.15s ease;
-}
-
-.routine-set-cta__icon {
-  transition: transform 0.2s;
-}
-
 @media (any-hover: hover) {
   .routine-set-card__link:hover {
     border-color: theme('colors.stone.400');
   }
   .routine-set-card__link:hover img {
     transform: scale(1.07);
-  }
-  .routine-set-cta:hover {
-    background-color: theme('colors.stone.700');
-  }
-  .routine-set-cta:hover .routine-set-cta__icon {
-    transform: translateX(0.25rem);
   }
 }
 
@@ -849,9 +842,7 @@ body:not(.no-outline) .skip-link:focus {
     animation: none;
   }
   .routine-set-card__link,
-  .routine-set-card__link img,
-  .routine-set-cta,
-  .routine-set-cta__icon {
+  .routine-set-card__link img {
     transition: none;
   }
 }

@@ -28,7 +28,7 @@
     -%}
 
     {%- if routine_products != blank -%}
-      <div class="routine-set-grid flex flex-col md:flex-row md:justify-center items-center md:items-start gap-4 md:gap-4 max-w-5xl mx-auto">
+      <div class="routine-set-grid flex flex-col md:flex-row md:justify-center items-center md:items-start gap-4 md:gap-4 max-w-5xl mx-auto" data-animate-grid>
         {%- for rp in routine_products -%}
           <div class="routine-set-card flex-1 min-w-0 max-w-[200px] flex flex-col items-center text-center gap-3">
 
@@ -72,7 +72,7 @@
           {%- comment %} ステップ間の矢印（最後以外） {%- endcomment -%}
           {%- unless forloop.last -%}
             <div class="hidden md:flex items-center shrink-0 self-center">
-              {%- render 'icon', icon: 'chevron-right', class: 'w-8 h-8 text-stone-00' -%}
+              {%- render 'icon', icon: 'chevron-right', class: 'w-8 h-8 text-stone-300' -%}
             </div>
           {%- endunless -%}
         {%- endfor -%}
@@ -82,7 +82,7 @@
     {%- comment %} セット商品 CTA {%- endcomment -%}
     {%- if recommended_set != blank -%}
       <div class="flex justify-center">
-        {%- capture set_cta_label -%}お得なセット商品を見る{%- endcapture -%}
+        {%- capture set_cta_label -%}{{ s.set_cta | default: 'お得なセット商品を見る' }}{%- endcapture -%}
         {%- render 'button',
           label: set_cta_label,
           url: recommended_set.url,
@@ -94,23 +94,6 @@
 
   </div>
 </section>
-
-<script>
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var grid = document.querySelector('#product-routine-set .routine-set-grid');
-    if (!grid) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          grid.classList.add('is-visible');
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.15 });
-    observer.observe(grid);
-  })();
-</script>
 
 {%- endif -%}
 

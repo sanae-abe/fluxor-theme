@@ -21,6 +21,7 @@
     assign use_metaobject = true
   endif
 -%}
+{%- comment %} and は or より優先されるため: use_metaobject or (benefits != blank and benefits.size > 0) {%- endcomment -%}
 {%- if use_metaobject or benefits != blank and benefits.size > 0 -%}
 
 {%- liquid
@@ -43,7 +44,7 @@
 >
   <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
 
-    <div class="benefit-grid grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center">
+    <div class="benefit-grid grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center" data-animate-grid>
 
       {%- comment %} 左カラム: 見出し + ベネフィットリスト {%- endcomment -%}
       <div class="benefit-card flex flex-col gap-6 md:gap-8">
@@ -222,23 +223,6 @@
 
   </div>
 </section>
-
-<script>
-  (function () {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    var grid = document.querySelector('#product-benefits .benefit-grid');
-    if (!grid) return;
-    var observer = new IntersectionObserver(function (entries) {
-      entries.forEach(function (entry) {
-        if (entry.isIntersecting) {
-          grid.classList.add('is-visible');
-          observer.disconnect();
-        }
-      });
-    }, { threshold: 0.15 });
-    observer.observe(grid);
-  })();
-</script>
 
 {%- endif -%}
 
