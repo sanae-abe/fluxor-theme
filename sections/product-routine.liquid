@@ -42,11 +42,9 @@
     <div class="routine-grid grid grid-cols-1 {% if has_both %}md:grid-cols-2{% else %}md:max-w-2xl md:mx-auto{% endif %} gap-6 md:gap-8">
 
       {%- if usage_timing != blank -%}
-        <div class="routine-card {{ bg_card }} rounded-lg p-6 md:p-8 flex flex-col gap-4">
+        <div class="routine-card {{ bg_card }} p-6 md:p-8 flex flex-col gap-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
-              {%- render 'icon', icon: 'clock', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
-            </div>
+            {%- render 'icon', icon: 'clock', class: 'w-6 h-6 text-stone-900', stroke_width: 1.5 -%}
             <h3 class="text-xl font-medium text-stone-900 palt tracking-wide">{{ s.timing_heading }}</h3>
           </div>
           <p class="text-base text-stone-700 leading-relaxed">{{ usage_timing | newline_to_br }}</p>
@@ -54,11 +52,9 @@
       {%- endif -%}
 
       {%- if usage_method != blank -%}
-        <div class="routine-card {{ bg_card }} rounded-lg p-6 md:p-8 flex flex-col gap-4">
+        <div class="routine-card {{ bg_card }} p-6 md:p-8 flex flex-col gap-4">
           <div class="flex items-center gap-3">
-            <div class="w-10 h-10 flex items-center justify-center rounded-full bg-stone-200/60">
-              {%- render 'icon', icon: 'pointer', class: 'w-5 h-5 text-stone-500', stroke_width: 1.5 -%}
-            </div>
+            {%- render 'icon', icon: 'pointer', class: 'w-6 h-6 text-stone-900', stroke_width: 1.5 -%}
             <h3 class="text-xl font-medium text-stone-900 palt tracking-wide">{{ s.method_heading }}</h3>
           </div>
           <p class="text-base text-stone-700 leading-relaxed">{{ usage_method | newline_to_br }}</p>

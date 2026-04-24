@@ -37,9 +37,9 @@
 
             {%- comment %} 商品画像 {%- endcomment -%}
             {%- if rp.id == product.id -%}
-              <div class="block w-full overflow-hidden rounded-lg bg-white border-2 border-stone-500">
+              <div class="block w-full overflow-hidden bg-white border-2 border-stone-900">
             {%- else -%}
-              <a href="{{ rp.url }}" class="routine-set-card__link block w-full overflow-hidden rounded-lg bg-white border border-stone-200">
+              <a href="{{ rp.url }}" class="routine-set-card__link block w-full overflow-hidden bg-white border border-stone-200">
             {%- endif -%}
               {%- if rp.featured_image -%}
                 <img
