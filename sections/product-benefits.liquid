@@ -114,8 +114,20 @@
                     {{- _item_title -}}
                   </p>
                   {%- if item.description != blank -%}
+                    {%- liquid
+                      assign _desc_parts = item.description | split: '**'
+                      assign _desc_marked = ''
+                      for _part in _desc_parts
+                        assign _remainder = forloop.index0 | modulo: 2
+                        if _remainder == 0
+                          assign _desc_marked = _desc_marked | append: _part
+                        else
+                          assign _desc_marked = _desc_marked | append: '<mark class="benefit-mark">' | append: _part | append: '</mark>'
+                        endif
+                      endfor
+                    -%}
                     <p class="text-base text-stone-600 leading-relaxed">
-                      {{- item.description | newline_to_br -}}
+                      {{- _desc_marked | newline_to_br -}}
                     </p>
                   {%- endif -%}
                 </div>

@@ -759,6 +759,14 @@ body:not(.no-outline) .skip-link:focus {
   }
 }
 
+/* ===== テキストマーカー（** 記法） ===== */
+
+.benefit-mark {
+  background: linear-gradient(transparent 70%, theme('colors.teal.100') 70%);
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}
+
 /* ===== 使い方 ===== */
 
 .routine-card {
