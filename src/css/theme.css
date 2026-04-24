@@ -762,7 +762,7 @@ body:not(.no-outline) .skip-link:focus {
 /* ===== テキストマーカー（** 記法） ===== */
 
 .benefit-mark {
-  background: linear-gradient(transparent 60%, theme('colors.teal.100') 60%);
+  background: linear-gradient(transparent 50%, theme('colors.teal.100') 50%);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
   color: inherit;

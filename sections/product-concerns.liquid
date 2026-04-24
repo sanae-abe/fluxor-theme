@@ -51,11 +51,11 @@
       align: 'center'
     -%}
 
-    <div class="concern-grid max-w-4xl mx-auto grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
+    <div class="concern-grid max-w-5xl mx-auto grid grid-cols-1 {{ grid_cols }} gap-6 md:gap-8">
 
       {%- if use_metaobject -%}
         {%- for item in concern_items -%}
-          <div class="concern-card flex flex-col items-center text-center gap-6 p-6 md:p-8">
+          <div class="concern-card flex flex-col items-center text-center gap-6 p-6">
             <div class="w-[120px] h-[120px] flex items-center justify-center rounded-full bg-stone-50">
               {%- render 'icon', icon: item.icon, class: 'w-10 h-10 text-stone-900', stroke_width: 1 -%}
             </div>
