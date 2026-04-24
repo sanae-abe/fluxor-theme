@@ -765,7 +765,7 @@ body:not(.no-outline) .skip-link:focus {
   background: linear-gradient(transparent 50%, theme('colors.teal.100') 50%);
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
-  color: inherit;
+  color: theme('colors.stone.900');
 }
 
 /* ===== 使い方 ===== */
