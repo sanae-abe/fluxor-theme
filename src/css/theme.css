@@ -768,13 +768,6 @@ body:not(.no-outline) .skip-link:focus {
   color: theme('colors.stone.900');
 }
 
-.feature-mark {
-  background: linear-gradient(transparent 50%, theme('colors.stone.100') 50%);
-  -webkit-box-decoration-break: clone;
-  box-decoration-break: clone;
-  color: theme('colors.stone.900');
-}
-
 /* ===== 使い方 ===== */
 
 .routine-card {
