@@ -9,7 +9,6 @@
     key_ingredients     {list.metaobject_reference}      注目成分リスト（key_ingredient: ingredient, ingredient.article, amount）
     certifications      {list.metaobject_reference}      商品ラベル（クルエルティフリー、ヴィーガン等）(certifications: name, icon, description)
     skin_type           {list.metaobject_reference}      おすすめの肌質 (suitable-for-skin-type; shopify--suitable-for-skin-type.label)
-    ph_level            {single_line_text_field}         pHレベル
     origin              {single_line_text_field}         原産国
     texture             {single_line_text_field}         テクスチャー
     all_ingredients     {multi_line_text_field}          全成分テキスト
@@ -37,7 +36,6 @@
   assign key_ingredients    = product.metafields.custom.key_ingredients.value
   assign certifications     = product.metafields.custom.certifications.value
   assign skin_types         = product.metafields.shopify.suitable-for-skin-type.value
-  assign ph_level           = product.metafields.custom.ph_level
   assign origin             = product.metafields.custom.origin
   assign texture            = product.metafields.custom.texture
   assign product_name_en    = product.metafields.custom.product_name_en
@@ -524,16 +522,11 @@
         </div>
       {%- endunless -%}
 
-      {%- if skin_types != blank or ph_level != blank or origin != blank or texture != blank -%}
+      {%- if skin_types != blank or origin != blank or texture != blank -%}
         <div class="flex flex-wrap gap-x-8 gap-y-2">
           {%- if skin_types != blank -%}
             <p class="text-sm text-stone-900 leading-relaxed">
               <span class="font-medium">おすすめの肌質：</span>{%- for skin_type in skin_types -%}{{ skin_type.label }}{%- unless forloop.last -%}、{%- endunless -%}{%- endfor -%}
-            </p>
-          {%- endif -%}
-          {%- if ph_level != blank -%}
-            <p class="text-sm text-stone-900 leading-relaxed">
-              <span class="font-medium">pHレベル：</span>{{ ph_level }}
             </p>
           {%- endif -%}
           {%- if origin != blank -%}

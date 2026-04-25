@@ -44,7 +44,12 @@
 >
   <div class="max-w-screen-xl mx-auto flex flex-col gap-8 md:gap-12">
 
-    <div class="benefit-grid grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 items-center" data-animate-grid>
+    {%- assign _benefits_imgs_pre = product.metafields.custom.benefits_images.value -%}
+    {%- assign _grid_align = 'items-center' -%}
+    {%- if _benefits_imgs_pre != blank and _benefits_imgs_pre.size >= 2 -%}
+      {%- assign _grid_align = 'items-start' -%}
+    {%- endif -%}
+    <div class="benefit-grid grid grid-cols-1 lg:grid-cols-2 gap-8 md:gap-16 {{ _grid_align }}" data-animate-grid>
 
       {%- comment %} 左カラム: 見出し + ベネフィットリスト {%- endcomment -%}
       <div class="benefit-card flex flex-col gap-6 md:gap-8">
@@ -197,14 +202,67 @@
 
       </div>
 
-      {%- comment %} 右カラム: 商品画像（メタフィールド優先 → featured_image フォールバック） {%- endcomment -%}
+      {%- comment %} 右カラム: 画像（コラージュ or 単体）
+        優先順: benefits_images (list.file_reference, 2枚以上でコラージュ)
+                → benefits_image (file_reference, 単体)
+                → product.featured_image
+      {%- endcomment -%}
       {%- liquid
-        assign _benefits_img = product.metafields.custom.benefits_image.value
+        assign _benefits_imgs = product.metafields.custom.benefits_images.value
+        assign _benefits_img  = product.metafields.custom.benefits_image.value
         unless _benefits_img != blank
           assign _benefits_img = product.featured_image
         endunless
+
+        assign _use_collage = false
+        if _benefits_imgs != blank and _benefits_imgs.size >= 2
+          assign _use_collage = true
+        endif
+
+        comment
+          単体表示用: benefits_images[0] → benefits_image → featured_image
+        endcomment
+        if _benefits_imgs != blank and _benefits_imgs.size == 1
+          assign _benefits_img = _benefits_imgs.first
+        endif
       -%}
-      {%- if _benefits_img -%}
+
+      {%- if _use_collage -%}
+        {%- liquid
+          assign _img_count = _benefits_imgs.size
+          if _img_count == 2
+            assign _grid_class = 'grid grid-cols-2 gap-2 md:gap-3'
+            assign _img_aspect = 'aspect-[1/2]'
+          elsif _img_count == 3
+            assign _grid_class = 'grid grid-cols-3 gap-2 md:gap-3'
+            assign _img_aspect = 'aspect-square'
+          elsif _img_count == 4
+            assign _grid_class = 'grid grid-cols-2 gap-2 md:gap-3'
+            assign _img_aspect = 'aspect-square'
+          elsif _img_count == 5 or _img_count == 6
+            assign _grid_class = 'grid grid-cols-3 gap-2 md:gap-3'
+            assign _img_aspect = 'aspect-[2/3]'
+          else
+            assign _grid_class = 'grid grid-cols-3 gap-2 md:gap-3'
+            assign _img_aspect = 'aspect-square'
+          endif
+        -%}
+        <div class="benefit-card {{ _grid_class }}">
+          {%- for _img in _benefits_imgs limit: 9 -%}
+            <div class="{{ _img_aspect }} relative overflow-hidden">
+              <img
+                src="{{ _img | image_url: width: 600 }}"
+                srcset="{{ _img | image_url: width: 400 }} 400w, {{ _img | image_url: width: 600 }} 600w, {{ _img | image_url: width: 900 }} 900w"
+                sizes="(max-width: 1023px) calc((100vw - 2rem) / {{ _img_count | at_most: 2 }}), calc(45vw / {{ _img_count | at_most: 2 }})"
+                alt="{{ _img.alt | default: product.title }}"
+                loading="lazy"
+                class="absolute inset-0 w-full h-full object-cover object-center"
+              >
+            </div>
+          {%- endfor -%}
+        </div>
+
+      {%- elsif _benefits_img -%}
         <div class="benefit-card overflow-hidden">
           <img
             src="{{ _benefits_img | image_url: width: 900 }}"
