@@ -4,15 +4,17 @@
   else
     assign show_sale = false
   endif
+  assign has_text_blocks = false
+  for block in section.blocks
+    if block.settings.text != blank
+      assign has_text_blocks = true
+      break
+    endif
+  endfor
   assign has_content = show_sale
-  unless has_content
-    for block in section.blocks
-      if block.settings.text != blank
-        assign has_content = true
-        break
-      endif
-    endfor
-  endunless
+  if has_text_blocks
+    assign has_content = true
+  endif
 -%}
 
 {%- if has_content -%}
@@ -40,7 +42,7 @@
       track.style.setProperty('--marquee-duration', `${cw / 50}s`);
     })"
     x-cloak
-    {%- if settings.sale_enabled %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
+    {%- if settings.sale_enabled and has_text_blocks == false %} :class="{ 'hidden': !$store.sale.isActive() }"{%- endif %}
   >
     <div class="marquee-track text-xs font-medium tracking-wide" aria-label="スクロールテキスト">
 
